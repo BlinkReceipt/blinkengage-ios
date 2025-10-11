@@ -1,0 +1,69 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+// swift-module-flags: -target x86_64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name BlinkEngage
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1.2
+import AVFoundation
+import Combine
+import Foundation
+import GoogleMobileAds
+import Swift
+import UIKit
+import WebKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_inheritsConvenienceInitializers @objc public class BlinkEngageAppearance : ObjectiveC.NSObject {
+  @objc public var offerWallHeaderBackgroundColor: UIKit.UIColor
+  @objc public var offerWallHeaderTextColor: UIKit.UIColor
+  @objc public var receiptSummaryHeaderBackgroundColor: UIKit.UIColor
+  @objc public var receiptSummaryHeaderTextColor: UIKit.UIColor
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class BlinkEngageSDK : ObjectiveC.NSObject {
+  @objc final public let user: BlinkEngage.BlinkEngageUser
+  @objc public static let shared: BlinkEngage.BlinkEngageSDK
+  @objc public var appearance: BlinkEngage.BlinkEngageAppearance
+  @objc public var rewardCurrencyName: Swift.String
+  @objc public var rewardCurrencyPerDollar: Swift.Double
+  @objc public var rewardCurrencyIcon: UIKit.UIImage?
+  @objc public var userPayoutPercentage: Swift.Double
+  @objc public var rewardCallback: ((_ context: Swift.String, _ scanResults: [Swift.String : Any]?, _ rewardAmount: Foundation.NSNumber?) -> Foundation.NSNumber?)?
+  @objc deinit
+  @_spi(BlinkReceipt) public var onMonetizationSessionCompleted: (() -> Swift.Void)?
+  @_spi(BlinkReceipt) public func setMbDeviceId(_ mbDeviceId: Swift.Int)
+  @_spi(BlinkReceipt) public func setClientUserId(_ clientUserId: Swift.String)
+  @_spi(BlinkReceipt) public func scanSessionBegan()
+  @_spi(BlinkReceipt) @_Concurrency.MainActor public func scanSessionEnded(viewController: UIKit.UIViewController)
+  @_spi(BlinkReceipt) public func scanResultsAvailable(results: [Swift.String : Any])
+}
+@objc public protocol OffersWallViewControllerDelegate {
+  @objc optional func offerWallDidSelectFloatingAction(_ viewController: BlinkEngage.OffersWallViewController)
+  @objc optional func offerWallShouldDisplayFloatingAction(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.Bool
+  @objc optional func offerWallHeaderTitle(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.String?
+  @objc optional func offerWallHeaderBackgroundColor(_ viewController: BlinkEngage.OffersWallViewController) -> UIKit.UIColor?
+  @objc func offerWallShouldDisplayHeaderView(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.Bool
+}
+@_hasMissingDesignatedInitializers @objc(OffersWallViewController) @_Concurrency.MainActor @preconcurrency public class OffersWallViewController : UIKit.UIViewController {
+  @objc @_Concurrency.MainActor @preconcurrency weak public var delegate: (any BlinkEngage.OffersWallViewControllerDelegate)?
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public init()
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class BlinkEngageUser : ObjectiveC.NSObject {
+  @objc public var emailHash: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc public var phoneHash: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc public var clientUserId: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
