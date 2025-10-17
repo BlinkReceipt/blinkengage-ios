@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/BlinkEngage-Swift.h</key>
 		<data>
-		JD+ZltDlB3+uXrIcf0FJnUVK3WA=
+		StcIvsMRNtvwjWwRXahKFGuif1g=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		fgPDCP8OkuHFoOfiBbluIMbTOZg=
+		Z+EfYAr46rS8OQ35MM5zBXYXQwk=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -18,7 +18,7 @@
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		2I+dX4DfVPOuGHW1qJY90K5bHNI=
+		ZeTqf5nj4T8u4A2JmA5iGTE1a+s=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
@@ -26,11 +26,11 @@
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		24em6ev9BOau2R/YNubTuLoJoAk=
+		ZeTqf5nj4T8u4A2JmA5iGTE1a+s=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		DxsoA8AAxIlTZh6jHzmWS9mKDwU=
+		5ikVbtsOlh6/Ou2S5Bzx3IT54vo=
 		</data>
 		<key>boost.png</key>
 		<data>
@@ -135,7 +135,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			lbNMo6mwgsJ5660s/GvDNJ2zYX/SBBcDAXxMn+apmOA=
+			pfwwV1NErb9HwndQ0/sGwK6WVofz3IwIbpytRCuVk18=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -149,7 +149,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			lz8HZqzNtxya2bwJJOYbETI6w4gCapBDTY8ZmMcU2fk=
+			hKZ3Ar8X6jbhdqLLirsVAttqfaxie1Epx5Ilw4xVAX4=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios.swiftdoc</key>
@@ -163,14 +163,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			XCACLpFrz0t9FSCZ9PRDTnbADqdEXq7YhEjbryQ/QOo=
+			hKZ3Ar8X6jbhdqLLirsVAttqfaxie1Epx5Ilw4xVAX4=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			tQKVJLN6pj24K+bGU+uSKj0Zwny+KZ38Mp5JPU3wNGU=
+			20CBZEktpf/KZEBSCcauUtuRoR9bqaw8Lu4P5JgGuAI=
 			</data>
 		</dict>
 		<key>boost.png</key>

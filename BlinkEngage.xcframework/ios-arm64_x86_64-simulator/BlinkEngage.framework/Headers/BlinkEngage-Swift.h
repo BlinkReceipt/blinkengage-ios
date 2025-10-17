@@ -372,7 +372,6 @@ SWIFT_PROTOCOL("_TtP11BlinkEngage32OffersWallViewControllerDelegate_")
 - (void)offerWallDidSelectFloatingAction:(OffersWallViewController * _Nonnull)viewController;
 - (BOOL)offerWallShouldDisplayFloatingAction:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
 - (NSString * _Nullable)offerWallHeaderTitle:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
-- (UIColor * _Nullable)offerWallHeaderBackgroundColor:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
 @required
 - (BOOL)offerWallShouldDisplayHeaderView:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
 @end
@@ -1040,7 +1039,6 @@ SWIFT_PROTOCOL("_TtP11BlinkEngage32OffersWallViewControllerDelegate_")
 - (void)offerWallDidSelectFloatingAction:(OffersWallViewController * _Nonnull)viewController;
 - (BOOL)offerWallShouldDisplayFloatingAction:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
 - (NSString * _Nullable)offerWallHeaderTitle:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
-- (UIColor * _Nullable)offerWallHeaderBackgroundColor:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
 @required
 - (BOOL)offerWallShouldDisplayHeaderView:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
 @end

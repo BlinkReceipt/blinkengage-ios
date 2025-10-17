@@ -12,11 +12,29 @@ import WebKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+@_inheritsConvenienceInitializers @objc public class BlinkEngageAppearance : ObjectiveC.NSObject {
+  @objc public var offerWallHeaderBackgroundColor: UIKit.UIColor
+  @objc public var offerWallHeaderTextColor: UIKit.UIColor
+  @objc public var receiptSummaryHeaderBackgroundColor: UIKit.UIColor
+  @objc public var receiptSummaryHeaderTextColor: UIKit.UIColor
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class BlinkEngageSDK : ObjectiveC.NSObject {
+  @objc final public let user: BlinkEngage.BlinkEngageUser
+  @objc public static let shared: BlinkEngage.BlinkEngageSDK
+  @objc public var appearance: BlinkEngage.BlinkEngageAppearance
+  @objc public var rewardCurrencyName: Swift.String
+  @objc public var rewardCurrencyPerDollar: Swift.Double
+  @objc public var rewardCurrencyIcon: UIKit.UIImage?
+  @objc public var userPayoutPercentage: Swift.Double
+  @objc public var rewardCallback: ((_ context: Swift.String, _ scanResults: [Swift.String : Any]?, _ rewardAmount: Foundation.NSNumber?) -> Foundation.NSNumber?)?
+  @objc deinit
+}
 @objc public protocol OffersWallViewControllerDelegate {
   @objc optional func offerWallDidSelectFloatingAction(_ viewController: BlinkEngage.OffersWallViewController)
   @objc optional func offerWallShouldDisplayFloatingAction(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.Bool
   @objc optional func offerWallHeaderTitle(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.String?
-  @objc optional func offerWallHeaderBackgroundColor(_ viewController: BlinkEngage.OffersWallViewController) -> UIKit.UIColor?
   @objc func offerWallShouldDisplayHeaderView(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.Bool
 }
 @_hasMissingDesignatedInitializers @objc(OffersWallViewController) @_Concurrency.MainActor @preconcurrency public class OffersWallViewController : UIKit.UIViewController {
@@ -40,24 +58,5 @@ import _SwiftConcurrencyShims
     @objc set
   }
   @objc override dynamic public init()
-  @objc deinit
-}
-@_inheritsConvenienceInitializers @objc public class BlinkEngageAppearance : ObjectiveC.NSObject {
-  @objc public var offerWallHeaderBackgroundColor: UIKit.UIColor
-  @objc public var offerWallHeaderTextColor: UIKit.UIColor
-  @objc public var receiptSummaryHeaderBackgroundColor: UIKit.UIColor
-  @objc public var receiptSummaryHeaderTextColor: UIKit.UIColor
-  @objc override dynamic public init()
-  @objc deinit
-}
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class BlinkEngageSDK : ObjectiveC.NSObject {
-  @objc final public let user: BlinkEngage.BlinkEngageUser
-  @objc public static let shared: BlinkEngage.BlinkEngageSDK
-  @objc public var appearance: BlinkEngage.BlinkEngageAppearance
-  @objc public var rewardCurrencyName: Swift.String
-  @objc public var rewardCurrencyPerDollar: Swift.Double
-  @objc public var rewardCurrencyIcon: UIKit.UIImage?
-  @objc public var userPayoutPercentage: Swift.Double
-  @objc public var rewardCallback: ((_ context: Swift.String, _ scanResults: [Swift.String : Any]?, _ rewardAmount: Foundation.NSNumber?) -> Foundation.NSNumber?)?
   @objc deinit
 }
