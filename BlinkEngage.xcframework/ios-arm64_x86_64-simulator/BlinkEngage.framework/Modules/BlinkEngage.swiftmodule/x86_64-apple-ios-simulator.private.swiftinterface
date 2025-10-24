@@ -12,6 +12,19 @@ import WebKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+@objc public protocol OffersWallViewControllerDelegate {
+  @objc optional func offerWallDidSelectFloatingAction(_ viewController: BlinkEngage.OffersWallViewController)
+  @objc optional func offerWallShouldDisplayFloatingAction(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.Bool
+  @objc optional func offerWallHeaderTitle(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.String?
+  @objc func offerWallShouldDisplayHeaderView(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.Bool
+}
+@_hasMissingDesignatedInitializers @objc(OffersWallViewController) @_Concurrency.MainActor @preconcurrency public class OffersWallViewController : UIKit.UIViewController {
+  @objc @_Concurrency.MainActor @preconcurrency weak public var delegate: (any BlinkEngage.OffersWallViewControllerDelegate)?
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public init()
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
+  @objc deinit
+}
 @_inheritsConvenienceInitializers @objc public class BlinkEngageAppearance : ObjectiveC.NSObject {
   @objc public var offerWallHeaderBackgroundColor: UIKit.UIColor
   @objc public var offerWallHeaderTextColor: UIKit.UIColor
@@ -45,18 +58,5 @@ import _SwiftConcurrencyShims
     @objc set
   }
   @objc override dynamic public init()
-  @objc deinit
-}
-@objc public protocol OffersWallViewControllerDelegate {
-  @objc optional func offerWallDidSelectFloatingAction(_ viewController: BlinkEngage.OffersWallViewController)
-  @objc optional func offerWallShouldDisplayFloatingAction(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.Bool
-  @objc optional func offerWallHeaderTitle(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.String?
-  @objc func offerWallShouldDisplayHeaderView(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.Bool
-}
-@_hasMissingDesignatedInitializers @objc(OffersWallViewController) @_Concurrency.MainActor @preconcurrency public class OffersWallViewController : UIKit.UIViewController {
-  @objc @_Concurrency.MainActor @preconcurrency weak public var delegate: (any BlinkEngage.OffersWallViewControllerDelegate)?
-  @_Concurrency.MainActor @preconcurrency @objc dynamic public init()
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
   @objc deinit
 }
