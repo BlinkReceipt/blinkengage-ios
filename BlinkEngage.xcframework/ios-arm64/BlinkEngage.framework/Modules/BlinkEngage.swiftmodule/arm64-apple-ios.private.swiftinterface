@@ -6,6 +6,7 @@ import AVFoundation
 import Combine
 import Foundation
 import GoogleMobileAds
+import Network
 import Swift
 import UIKit
 import WebKit
@@ -57,6 +58,10 @@ import _SwiftConcurrencyShims
   @objc public var rewardCurrencyPerDollar: Swift.Double
   @objc public var rewardCurrencyIcon: UIKit.UIImage?
   @objc public var userPayoutPercentage: Swift.Double
+  @objc public var debugModeEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
   @objc public var rewardCallback: ((_ context: Swift.String, _ scanResults: [Swift.String : Any]?, _ rewardAmount: Foundation.NSNumber?) -> Foundation.NSNumber?)?
   @objc deinit
 }

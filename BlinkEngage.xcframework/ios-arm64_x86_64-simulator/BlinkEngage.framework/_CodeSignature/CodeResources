@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/BlinkEngage-Swift.h</key>
 		<data>
-		t0ZbqqTkvBFKlwfoUIIYyU78HIw=
+		ur02yLMr+aXh+jlX4tq8QNLwqP8=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		OaYPLncJGgX/5fkHb+JS297dong=
+		Td18Croe8IyaoWYKZSyXCm/CyxE=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -18,19 +18,19 @@
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		4LGzUkX8RQ4NRCDjLDnaP0bNOHY=
+		PN8RxfaEMWHfW73RdgUDSa4ad3Y=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		N597rDGhP7rY0TJ7IUpS/ox31kc=
+		dBnf/tTdRO+ZWrwtpzaF2fQflRs=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		4LGzUkX8RQ4NRCDjLDnaP0bNOHY=
+		PN8RxfaEMWHfW73RdgUDSa4ad3Y=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		JhbyT0t361cYv/I7vl4hJRatAGU=
+		0Au22bSCcMaz5H+iEw7Wm5W4blU=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -38,19 +38,19 @@
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		DkxuBVWiCY4ea/HnHFW4zB00sU4=
+		AMT/tapxu+7E+2vOzb8gph6QbbA=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		QUU5ACw9X1h2wk8TBx5krc7wXHA=
+		51icTUpmaCL/Clh9mvj8Aphaz+I=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		DkxuBVWiCY4ea/HnHFW4zB00sU4=
+		AMT/tapxu+7E+2vOzb8gph6QbbA=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		IAUGhxw1GFwS6RHkfOcRmuvBy5o=
+		DR2TX0grHpX5NDT8JmhcqeQNq44=
 		</data>
 		<key>boost.png</key>
 		<data>
@@ -163,7 +163,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			cA+a23g00GBHZVTXypkiXNTH7eRx8Ab2eUNHrR87FJg=
+			bXcwQ5XPS4172kndIjiyD4TQc4fNN9+xZCbDOspx62s=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -177,28 +177,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			97DCeAgZf0ZbONFfGhCryRZEViPU/5V6FFqLo9fKaCU=
+			senIgpSmluqO1nUJmbwRECD5j5GVWpuoeMsQcWgG3iw=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2Oxct7fEKZWE3ITfcCBrcYO/hkqnpE6qqG34l3iuvPE=
+			5LlpCMo1BNSO6Vl6MC2iuzAK5RLPJyshikxdX9Oi8fs=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			97DCeAgZf0ZbONFfGhCryRZEViPU/5V6FFqLo9fKaCU=
+			senIgpSmluqO1nUJmbwRECD5j5GVWpuoeMsQcWgG3iw=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KEIYTK1jjvk/TwwnPGjY+KKY5pdJ9ER7oJuDo9JsQ9k=
+			0Z2m9lShhNbkdO9MEvlgs1TSduBIJgDjyMGxtJOF2js=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -212,28 +212,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			gGXQNYMA+dyxXYXLGVTZpzCtODcgfKNrzR3co18hfZE=
+			TxplIqQaaj7hjL8PDrBavG9Xj+wv7JEQHpyOoNohao0=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WQRzW3ezKNnw/oW6lDvv2Sx11dDNrJNYpW6kRSWCmTM=
+			l+T+H3msAS1ciOpnjy1E026s5R2JodrZxwykzqnVjkg=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gGXQNYMA+dyxXYXLGVTZpzCtODcgfKNrzR3co18hfZE=
+			TxplIqQaaj7hjL8PDrBavG9Xj+wv7JEQHpyOoNohao0=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/nNkahzzs/kBRYiypf/1orjgZN76qWkVuGsOzfiRDUc=
+			WuYnGvlZHqNRxl3uiBzHlLb6Fey/2mSSAIuk3S6rur4=
 			</data>
 		</dict>
 		<key>boost.png</key>

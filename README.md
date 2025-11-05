@@ -60,6 +60,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         BlinkEngageSDK.shared.appearance.receiptSummaryHeaderBackgroundColor = .systemGreen
         BlinkEngageSDK.shared.appearance.receiptSummaryHeaderTextColor = .white
         
+        // Optional: Enable debug mode for development (shows test ad units)
+        BlinkEngageSDK.shared.debugModeEnabled = false
+        
         // Set up reward callback
         // Depending on `context`, this callback will either solicit a reward amount from the host app, which it should return as an `NSNumber`, or it will inform the host app, via the `rewardAmount` parameter, of an amount (in host app currency) that BlinkEngage awarded to the user
         BlinkEngageSDK.shared.rewardCallback = { context, scanResults, rewardAmount in

@@ -330,6 +330,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BlinkEngageS
 @property (nonatomic) double rewardCurrencyPerDollar;
 @property (nonatomic, strong) UIImage * _Nullable rewardCurrencyIcon;
 @property (nonatomic) double userPayoutPercentage;
+/// Enable in development to show test adUnits
+@property (nonatomic) BOOL debugModeEnabled;
 /// Called when the user has earned a reward.
 /// \param context A string describing the reward context (e.g. “Promo”, “ScanFinished”, “Boost”).
 ///
