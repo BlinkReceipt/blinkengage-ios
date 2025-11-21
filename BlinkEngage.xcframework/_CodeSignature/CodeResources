@@ -6,7 +6,7 @@
 	<dict>
 		<key>ios-arm64/BlinkEngage.framework/BlinkEngage</key>
 		<data>
-		ZmxRXtj9DR7u+WMZvUwC2RcybqE=
+		FvfKpxJpOF4a4Udtetnof9Uhl78=
 		</data>
 		<key>ios-arm64/BlinkEngage.framework/Headers/BlinkEngage-Swift.h</key>
 		<data>
@@ -14,7 +14,7 @@
 		</data>
 		<key>ios-arm64/BlinkEngage.framework/Info.plist</key>
 		<data>
-		On8poJmsCxQYOhDfNqruJHG5w34=
+		JgxAIWQY9yPomx5w5aslg1gYNmw=
 		</data>
 		<key>ios-arm64/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>ios-arm64/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		uGUPXlg0Ncd6oAry+drDXzCmoBs=
+		Z9msLneUt1zs8WqgzN+Tdq28MNc=
 		</data>
 		<key>ios-arm64/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>ios-arm64/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		uGUPXlg0Ncd6oAry+drDXzCmoBs=
+		Z9msLneUt1zs8WqgzN+Tdq28MNc=
 		</data>
 		<key>ios-arm64/BlinkEngage.framework/boost.png</key>
 		<data>
@@ -60,6 +60,42 @@
 		<data>
 		xU9nx3rZMVIizAzxFF7MT6Ib0Nc=
 		</data>
+		<key>ios-arm64/BlinkEngage.framework/coin.png</key>
+		<data>
+		ops+voWRQ3rgvnO6XEQYk3+oioo=
+		</data>
+		<key>ios-arm64/BlinkEngage.framework/coin@2x.png</key>
+		<data>
+		P+Ryoc6uuhJB2eI+pptGhHAQJuA=
+		</data>
+		<key>ios-arm64/BlinkEngage.framework/coin@3x.png</key>
+		<data>
+		M0nJVDhIIes/n4xN6WvoOGdiDkE=
+		</data>
+		<key>ios-arm64/BlinkEngage.framework/coins_blow_effect.json</key>
+		<data>
+		UcSorZmY536nxgy6NovqdEDJBnY=
+		</data>
+		<key>ios-arm64/BlinkEngage.framework/confetti_1.json</key>
+		<data>
+		pnbcUqFMU0HDamMnIN5wukZmG40=
+		</data>
+		<key>ios-arm64/BlinkEngage.framework/confetti_2.json</key>
+		<data>
+		nWCqRLYSMubxMYkKpe7eyZoB+Mw=
+		</data>
+		<key>ios-arm64/BlinkEngage.framework/confetti_3.json</key>
+		<data>
+		jQDX0Zg6VFb2L8Zd5XFFbYUwA4g=
+		</data>
+		<key>ios-arm64/BlinkEngage.framework/confetti_4.json</key>
+		<data>
+		zVrjQPh0wn7QU+ZNNjru5546qxk=
+		</data>
+		<key>ios-arm64/BlinkEngage.framework/confetti_5.json</key>
+		<data>
+		GniuJK9NnbZ3g+I+dPkiU/bOdNg=
+		</data>
 		<key>ios-arm64/BlinkEngage.framework/dollarIcon.png</key>
 		<data>
 		Hyb1XxQ+T1OUKd3TJzMSEvrjG6c=
@@ -72,21 +108,17 @@
 		<data>
 		Far0XLhviu8vyvvtkol0dmHmv0g=
 		</data>
+		<key>ios-arm64/BlinkEngage.framework/fireworks.json</key>
+		<data>
+		NoKsK/t6oXbzIJokhKgx1yJ/UaU=
+		</data>
 		<key>ios-arm64/BlinkEngage.framework/footer_gradient.png</key>
 		<data>
 		Smm1q5p9iIxp2HckYg/qJk3hCII=
 		</data>
-		<key>ios-arm64/BlinkEngage.framework/labelsSeparator.png</key>
+		<key>ios-arm64/BlinkEngage.framework/gold_coin_spin.json</key>
 		<data>
-		4haP2y6Le71ynzchyss9cC5VhkI=
-		</data>
-		<key>ios-arm64/BlinkEngage.framework/labelsSeparator@2x.png</key>
-		<data>
-		tf/VWTfouKZktwyL3vRBHno75vg=
-		</data>
-		<key>ios-arm64/BlinkEngage.framework/labelsSeparator@3x.png</key>
-		<data>
-		+oPM/qDKpDtVLZrmbKUVnI3aA+w=
+		EyOyMLDYB/+lauamlgAJ9wb4w28=
 		</data>
 		<key>ios-arm64/BlinkEngage.framework/loading.gif</key>
 		<data>
@@ -136,9 +168,21 @@
 		<data>
 		rhKzU2Tvl7bvTv2fpUZdkkoS/qc=
 		</data>
+		<key>ios-arm64/BlinkEngage.framework/sparkle.json</key>
+		<data>
+		Eb2pM3x4lqOd0jd+tEt7dVDFf1w=
+		</data>
+		<key>ios-arm64/BlinkEngage.framework/star_success.json</key>
+		<data>
+		AASVVeU1TYtg7IPdBtqlLZzDR8o=
+		</data>
+		<key>ios-arm64/BlinkEngage.framework/success_confetti.json</key>
+		<data>
+		k8Bu3zzHVBDj03GV5T+9saIeXz0=
+		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/BlinkEngage</key>
 		<data>
-		37UhwUvkVqGLKkw/L6v48OfiVk0=
+		Kp0hMo4+Cyl2m0as/TA9lCx015k=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Headers/BlinkEngage-Swift.h</key>
 		<data>
@@ -146,7 +190,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Info.plist</key>
 		<data>
-		Td18Croe8IyaoWYKZSyXCm/CyxE=
+		K9txMn43tGWc1yGnL80hM1MgRnE=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -182,7 +226,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/_CodeSignature/CodeResources</key>
 		<data>
-		WYv24ldYVOVhvbuPXMD8G4X8/r0=
+		gT3WHvCr2nr0o4xkp1HgyrdajjM=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/boost.png</key>
 		<data>
@@ -212,6 +256,42 @@
 		<data>
 		xU9nx3rZMVIizAzxFF7MT6Ib0Nc=
 		</data>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/coin.png</key>
+		<data>
+		ops+voWRQ3rgvnO6XEQYk3+oioo=
+		</data>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/coin@2x.png</key>
+		<data>
+		P+Ryoc6uuhJB2eI+pptGhHAQJuA=
+		</data>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/coin@3x.png</key>
+		<data>
+		M0nJVDhIIes/n4xN6WvoOGdiDkE=
+		</data>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/coins_blow_effect.json</key>
+		<data>
+		UcSorZmY536nxgy6NovqdEDJBnY=
+		</data>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/confetti_1.json</key>
+		<data>
+		pnbcUqFMU0HDamMnIN5wukZmG40=
+		</data>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/confetti_2.json</key>
+		<data>
+		nWCqRLYSMubxMYkKpe7eyZoB+Mw=
+		</data>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/confetti_3.json</key>
+		<data>
+		jQDX0Zg6VFb2L8Zd5XFFbYUwA4g=
+		</data>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/confetti_4.json</key>
+		<data>
+		zVrjQPh0wn7QU+ZNNjru5546qxk=
+		</data>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/confetti_5.json</key>
+		<data>
+		GniuJK9NnbZ3g+I+dPkiU/bOdNg=
+		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/dollarIcon.png</key>
 		<data>
 		Hyb1XxQ+T1OUKd3TJzMSEvrjG6c=
@@ -224,21 +304,17 @@
 		<data>
 		Far0XLhviu8vyvvtkol0dmHmv0g=
 		</data>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/fireworks.json</key>
+		<data>
+		NoKsK/t6oXbzIJokhKgx1yJ/UaU=
+		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/footer_gradient.png</key>
 		<data>
 		Smm1q5p9iIxp2HckYg/qJk3hCII=
 		</data>
-		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/labelsSeparator.png</key>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/gold_coin_spin.json</key>
 		<data>
-		4haP2y6Le71ynzchyss9cC5VhkI=
-		</data>
-		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/labelsSeparator@2x.png</key>
-		<data>
-		tf/VWTfouKZktwyL3vRBHno75vg=
-		</data>
-		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/labelsSeparator@3x.png</key>
-		<data>
-		+oPM/qDKpDtVLZrmbKUVnI3aA+w=
+		EyOyMLDYB/+lauamlgAJ9wb4w28=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/loading.gif</key>
 		<data>
@@ -288,6 +364,18 @@
 		<data>
 		rhKzU2Tvl7bvTv2fpUZdkkoS/qc=
 		</data>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/sparkle.json</key>
+		<data>
+		Eb2pM3x4lqOd0jd+tEt7dVDFf1w=
+		</data>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/star_success.json</key>
+		<data>
+		AASVVeU1TYtg7IPdBtqlLZzDR8o=
+		</data>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/success_confetti.json</key>
+		<data>
+		k8Bu3zzHVBDj03GV5T+9saIeXz0=
+		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
@@ -295,11 +383,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ZmxRXtj9DR7u+WMZvUwC2RcybqE=
+			FvfKpxJpOF4a4Udtetnof9Uhl78=
 			</data>
 			<key>hash2</key>
 			<data>
-			PJ2n6Yi8JKw4yyRqRBpT9CV0Mi3p+aebbBnCuMutPdo=
+			nRtiG7MY8W5Rsci9Kbi2xYO9gMX31IxbJTGB7MmsoGw=
 			</data>
 		</dict>
 		<key>ios-arm64/BlinkEngage.framework/Headers/BlinkEngage-Swift.h</key>
@@ -317,11 +405,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			On8poJmsCxQYOhDfNqruJHG5w34=
+			JgxAIWQY9yPomx5w5aslg1gYNmw=
 			</data>
 			<key>hash2</key>
 			<data>
-			K7D9gNDqDnWV2b/JqIWogE3/7yiYvLvD0VvDkZ4elbs=
+			m1Dn5iVzneDmC58vWvgP+BmVn5oYz4VbWK2/4cnJUrs=
 			</data>
 		</dict>
 		<key>ios-arm64/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -339,11 +427,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			uGUPXlg0Ncd6oAry+drDXzCmoBs=
+			Z9msLneUt1zs8WqgzN+Tdq28MNc=
 			</data>
 			<key>hash2</key>
 			<data>
-			+YleqAoCUiZ/IjNqO/uTenreg8boOWPAhfS4imjIjwA=
+			kxbJcTrB3XxCszU9C6jZcxcFQXUuaIw4Dq7cDwqf+HQ=
 			</data>
 		</dict>
 		<key>ios-arm64/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios.swiftdoc</key>
@@ -361,11 +449,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			uGUPXlg0Ncd6oAry+drDXzCmoBs=
+			Z9msLneUt1zs8WqgzN+Tdq28MNc=
 			</data>
 			<key>hash2</key>
 			<data>
-			+YleqAoCUiZ/IjNqO/uTenreg8boOWPAhfS4imjIjwA=
+			kxbJcTrB3XxCszU9C6jZcxcFQXUuaIw4Dq7cDwqf+HQ=
 			</data>
 		</dict>
 		<key>ios-arm64/BlinkEngage.framework/boost.png</key>
@@ -445,6 +533,105 @@
 			PO0K+nRX7KdKvNxUDjceIJgv0XnbvoHTDAWyoxy21GU=
 			</data>
 		</dict>
+		<key>ios-arm64/BlinkEngage.framework/coin.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ops+voWRQ3rgvnO6XEQYk3+oioo=
+			</data>
+			<key>hash2</key>
+			<data>
+			VRqaX3HbCxm1Xc7zAFWhjGXNwVJQkUnS9rB68dOgqQk=
+			</data>
+		</dict>
+		<key>ios-arm64/BlinkEngage.framework/coin@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			P+Ryoc6uuhJB2eI+pptGhHAQJuA=
+			</data>
+			<key>hash2</key>
+			<data>
+			uLwsbqxG9EMdorxEBwnfQDgC1uScMuG96MOoXxCg7Y4=
+			</data>
+		</dict>
+		<key>ios-arm64/BlinkEngage.framework/coin@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			M0nJVDhIIes/n4xN6WvoOGdiDkE=
+			</data>
+			<key>hash2</key>
+			<data>
+			ET8ltdGiXyL7sKzUONXoF3bYbn9qhgX1ZEW8Lp/Rogc=
+			</data>
+		</dict>
+		<key>ios-arm64/BlinkEngage.framework/coins_blow_effect.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			UcSorZmY536nxgy6NovqdEDJBnY=
+			</data>
+			<key>hash2</key>
+			<data>
+			W5sbNaBAjLma6piX+9h1/muVF3QwVQXA0Ka2KglI9J4=
+			</data>
+		</dict>
+		<key>ios-arm64/BlinkEngage.framework/confetti_1.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			pnbcUqFMU0HDamMnIN5wukZmG40=
+			</data>
+			<key>hash2</key>
+			<data>
+			yXpEpwDiBumJVo0LFY+Z1c4HqKESn5TTDgzVDFJT65g=
+			</data>
+		</dict>
+		<key>ios-arm64/BlinkEngage.framework/confetti_2.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			nWCqRLYSMubxMYkKpe7eyZoB+Mw=
+			</data>
+			<key>hash2</key>
+			<data>
+			9tRZjWRgCk/kFtHBs2xjqArEXJPtxs++74WO+yd9wUU=
+			</data>
+		</dict>
+		<key>ios-arm64/BlinkEngage.framework/confetti_3.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			jQDX0Zg6VFb2L8Zd5XFFbYUwA4g=
+			</data>
+			<key>hash2</key>
+			<data>
+			41pesEtibFl3gPgIh7D2l1qIe2tcqN5wH3CY3ueNb+8=
+			</data>
+		</dict>
+		<key>ios-arm64/BlinkEngage.framework/confetti_4.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			zVrjQPh0wn7QU+ZNNjru5546qxk=
+			</data>
+			<key>hash2</key>
+			<data>
+			Yfj2HgG+NN9obPdOKTuCjEG63dkLFSwSmscMLxtDkfk=
+			</data>
+		</dict>
+		<key>ios-arm64/BlinkEngage.framework/confetti_5.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			GniuJK9NnbZ3g+I+dPkiU/bOdNg=
+			</data>
+			<key>hash2</key>
+			<data>
+			nm6B9CAOACRvsXT9265pysuuowjymK5HqANEcFtUO6I=
+			</data>
+		</dict>
 		<key>ios-arm64/BlinkEngage.framework/dollarIcon.png</key>
 		<dict>
 			<key>hash</key>
@@ -478,6 +665,17 @@
 			b3KrfDvD6v2G2aa0iez5Wizc1QTnT7vRCPR38eGlNOA=
 			</data>
 		</dict>
+		<key>ios-arm64/BlinkEngage.framework/fireworks.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			NoKsK/t6oXbzIJokhKgx1yJ/UaU=
+			</data>
+			<key>hash2</key>
+			<data>
+			D+K5YoQCxvL/bj4VcnJRuEYjb9fw6ZZ21HXSx4XEnnQ=
+			</data>
+		</dict>
 		<key>ios-arm64/BlinkEngage.framework/footer_gradient.png</key>
 		<dict>
 			<key>hash</key>
@@ -489,37 +687,15 @@
 			TH6nn3szitIhlAzZNxaFvORoTFRpJikXTbxZR2BlYVE=
 			</data>
 		</dict>
-		<key>ios-arm64/BlinkEngage.framework/labelsSeparator.png</key>
+		<key>ios-arm64/BlinkEngage.framework/gold_coin_spin.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			4haP2y6Le71ynzchyss9cC5VhkI=
+			EyOyMLDYB/+lauamlgAJ9wb4w28=
 			</data>
 			<key>hash2</key>
 			<data>
-			ncYJ9qegFgnDyPSQTkHuWnW1j0oU2oxZTNcw8J9fGKk=
-			</data>
-		</dict>
-		<key>ios-arm64/BlinkEngage.framework/labelsSeparator@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			tf/VWTfouKZktwyL3vRBHno75vg=
-			</data>
-			<key>hash2</key>
-			<data>
-			fqr6tfhtrtROGDdLLdkshiBehwKQW6DxbsVsiN/Abpk=
-			</data>
-		</dict>
-		<key>ios-arm64/BlinkEngage.framework/labelsSeparator@3x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			+oPM/qDKpDtVLZrmbKUVnI3aA+w=
-			</data>
-			<key>hash2</key>
-			<data>
-			jPs4pxL43H62+7q7RgDgt69xqCbfJM8yr23pD0JRI5I=
+			Qygs7WBYv37Aam36INZqLZDeC/VdHKJWMkYXgFNdcPE=
 			</data>
 		</dict>
 		<key>ios-arm64/BlinkEngage.framework/loading.gif</key>
@@ -654,15 +830,48 @@
 			Uh5oiFCCFw9Zj0EXj0zH9Tvt3NONJXaCoRbwkvI5jnM=
 			</data>
 		</dict>
+		<key>ios-arm64/BlinkEngage.framework/sparkle.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Eb2pM3x4lqOd0jd+tEt7dVDFf1w=
+			</data>
+			<key>hash2</key>
+			<data>
+			8GRNKWLfB8SKI4h0gqRwRdtc1vk3hjma0ck8UWkAQnE=
+			</data>
+		</dict>
+		<key>ios-arm64/BlinkEngage.framework/star_success.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			AASVVeU1TYtg7IPdBtqlLZzDR8o=
+			</data>
+			<key>hash2</key>
+			<data>
+			7Xafqy6XWm8YtozO6YyaULcNBOKeq27bdLpoA5ecbPE=
+			</data>
+		</dict>
+		<key>ios-arm64/BlinkEngage.framework/success_confetti.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			k8Bu3zzHVBDj03GV5T+9saIeXz0=
+			</data>
+			<key>hash2</key>
+			<data>
+			9hm3yKOwk3aEP+0kotZINMYn+YNSbNLqtwx/lFzXp/8=
+			</data>
+		</dict>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/BlinkEngage</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			37UhwUvkVqGLKkw/L6v48OfiVk0=
+			Kp0hMo4+Cyl2m0as/TA9lCx015k=
 			</data>
 			<key>hash2</key>
 			<data>
-			wTgKaCjkUBOAKsU0r49JZzXZFOzazuTnxX5ks3S7kpE=
+			8fuwwGpAtAuAYNxQIqUwkv1HeUjRRxzcQleX9V8wtu0=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Headers/BlinkEngage-Swift.h</key>
@@ -680,11 +889,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Td18Croe8IyaoWYKZSyXCm/CyxE=
+			K9txMn43tGWc1yGnL80hM1MgRnE=
 			</data>
 			<key>hash2</key>
 			<data>
-			ch7JJbwoM+Yo7De+kPYf3HprDw8T6EIphy4S9/mloSo=
+			G8H9UkeYr6wXw0x/Ppr2shL144S+jWrtQcgzygmnP7k=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -779,11 +988,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			WYv24ldYVOVhvbuPXMD8G4X8/r0=
+			gT3WHvCr2nr0o4xkp1HgyrdajjM=
 			</data>
 			<key>hash2</key>
 			<data>
-			BH45umgNYeC7ftBlmqSU9MJlpmQhw4xQMv95Ok7WBMo=
+			oHJMSHIaajKltlFZJSOf41102x5bqEzWWaeHPQUZEFU=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/boost.png</key>
@@ -863,6 +1072,105 @@
 			PO0K+nRX7KdKvNxUDjceIJgv0XnbvoHTDAWyoxy21GU=
 			</data>
 		</dict>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/coin.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ops+voWRQ3rgvnO6XEQYk3+oioo=
+			</data>
+			<key>hash2</key>
+			<data>
+			VRqaX3HbCxm1Xc7zAFWhjGXNwVJQkUnS9rB68dOgqQk=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/coin@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			P+Ryoc6uuhJB2eI+pptGhHAQJuA=
+			</data>
+			<key>hash2</key>
+			<data>
+			uLwsbqxG9EMdorxEBwnfQDgC1uScMuG96MOoXxCg7Y4=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/coin@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			M0nJVDhIIes/n4xN6WvoOGdiDkE=
+			</data>
+			<key>hash2</key>
+			<data>
+			ET8ltdGiXyL7sKzUONXoF3bYbn9qhgX1ZEW8Lp/Rogc=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/coins_blow_effect.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			UcSorZmY536nxgy6NovqdEDJBnY=
+			</data>
+			<key>hash2</key>
+			<data>
+			W5sbNaBAjLma6piX+9h1/muVF3QwVQXA0Ka2KglI9J4=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/confetti_1.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			pnbcUqFMU0HDamMnIN5wukZmG40=
+			</data>
+			<key>hash2</key>
+			<data>
+			yXpEpwDiBumJVo0LFY+Z1c4HqKESn5TTDgzVDFJT65g=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/confetti_2.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			nWCqRLYSMubxMYkKpe7eyZoB+Mw=
+			</data>
+			<key>hash2</key>
+			<data>
+			9tRZjWRgCk/kFtHBs2xjqArEXJPtxs++74WO+yd9wUU=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/confetti_3.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			jQDX0Zg6VFb2L8Zd5XFFbYUwA4g=
+			</data>
+			<key>hash2</key>
+			<data>
+			41pesEtibFl3gPgIh7D2l1qIe2tcqN5wH3CY3ueNb+8=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/confetti_4.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			zVrjQPh0wn7QU+ZNNjru5546qxk=
+			</data>
+			<key>hash2</key>
+			<data>
+			Yfj2HgG+NN9obPdOKTuCjEG63dkLFSwSmscMLxtDkfk=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/confetti_5.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			GniuJK9NnbZ3g+I+dPkiU/bOdNg=
+			</data>
+			<key>hash2</key>
+			<data>
+			nm6B9CAOACRvsXT9265pysuuowjymK5HqANEcFtUO6I=
+			</data>
+		</dict>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/dollarIcon.png</key>
 		<dict>
 			<key>hash</key>
@@ -896,6 +1204,17 @@
 			b3KrfDvD6v2G2aa0iez5Wizc1QTnT7vRCPR38eGlNOA=
 			</data>
 		</dict>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/fireworks.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			NoKsK/t6oXbzIJokhKgx1yJ/UaU=
+			</data>
+			<key>hash2</key>
+			<data>
+			D+K5YoQCxvL/bj4VcnJRuEYjb9fw6ZZ21HXSx4XEnnQ=
+			</data>
+		</dict>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/footer_gradient.png</key>
 		<dict>
 			<key>hash</key>
@@ -907,37 +1226,15 @@
 			TH6nn3szitIhlAzZNxaFvORoTFRpJikXTbxZR2BlYVE=
 			</data>
 		</dict>
-		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/labelsSeparator.png</key>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/gold_coin_spin.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			4haP2y6Le71ynzchyss9cC5VhkI=
+			EyOyMLDYB/+lauamlgAJ9wb4w28=
 			</data>
 			<key>hash2</key>
 			<data>
-			ncYJ9qegFgnDyPSQTkHuWnW1j0oU2oxZTNcw8J9fGKk=
-			</data>
-		</dict>
-		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/labelsSeparator@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			tf/VWTfouKZktwyL3vRBHno75vg=
-			</data>
-			<key>hash2</key>
-			<data>
-			fqr6tfhtrtROGDdLLdkshiBehwKQW6DxbsVsiN/Abpk=
-			</data>
-		</dict>
-		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/labelsSeparator@3x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			+oPM/qDKpDtVLZrmbKUVnI3aA+w=
-			</data>
-			<key>hash2</key>
-			<data>
-			jPs4pxL43H62+7q7RgDgt69xqCbfJM8yr23pD0JRI5I=
+			Qygs7WBYv37Aam36INZqLZDeC/VdHKJWMkYXgFNdcPE=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/loading.gif</key>
@@ -1070,6 +1367,39 @@
 			<key>hash2</key>
 			<data>
 			Uh5oiFCCFw9Zj0EXj0zH9Tvt3NONJXaCoRbwkvI5jnM=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/sparkle.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Eb2pM3x4lqOd0jd+tEt7dVDFf1w=
+			</data>
+			<key>hash2</key>
+			<data>
+			8GRNKWLfB8SKI4h0gqRwRdtc1vk3hjma0ck8UWkAQnE=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/star_success.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			AASVVeU1TYtg7IPdBtqlLZzDR8o=
+			</data>
+			<key>hash2</key>
+			<data>
+			7Xafqy6XWm8YtozO6YyaULcNBOKeq27bdLpoA5ecbPE=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/success_confetti.json</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			k8Bu3zzHVBDj03GV5T+9saIeXz0=
+			</data>
+			<key>hash2</key>
+			<data>
+			9hm3yKOwk3aEP+0kotZINMYn+YNSbNLqtwx/lFzXp/8=
 			</data>
 		</dict>
 	</dict>

@@ -10,7 +10,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Td18Croe8IyaoWYKZSyXCm/CyxE=
+		K9txMn43tGWc1yGnL80hM1MgRnE=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		0Au22bSCcMaz5H+iEw7Wm5W4blU=
+		DvacfN1QG27SRT9jqla+IFIH9Mc=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		DR2TX0grHpX5NDT8JmhcqeQNq44=
+		g1bq9WF5SIs+iwbg7HLJbjMGs88=
 		</data>
 		<key>boost.png</key>
 		<data>
@@ -80,6 +80,42 @@
 		<data>
 		xU9nx3rZMVIizAzxFF7MT6Ib0Nc=
 		</data>
+		<key>coin.png</key>
+		<data>
+		ops+voWRQ3rgvnO6XEQYk3+oioo=
+		</data>
+		<key>coin@2x.png</key>
+		<data>
+		P+Ryoc6uuhJB2eI+pptGhHAQJuA=
+		</data>
+		<key>coin@3x.png</key>
+		<data>
+		M0nJVDhIIes/n4xN6WvoOGdiDkE=
+		</data>
+		<key>coins_blow_effect.json</key>
+		<data>
+		UcSorZmY536nxgy6NovqdEDJBnY=
+		</data>
+		<key>confetti_1.json</key>
+		<data>
+		pnbcUqFMU0HDamMnIN5wukZmG40=
+		</data>
+		<key>confetti_2.json</key>
+		<data>
+		nWCqRLYSMubxMYkKpe7eyZoB+Mw=
+		</data>
+		<key>confetti_3.json</key>
+		<data>
+		jQDX0Zg6VFb2L8Zd5XFFbYUwA4g=
+		</data>
+		<key>confetti_4.json</key>
+		<data>
+		zVrjQPh0wn7QU+ZNNjru5546qxk=
+		</data>
+		<key>confetti_5.json</key>
+		<data>
+		GniuJK9NnbZ3g+I+dPkiU/bOdNg=
+		</data>
 		<key>dollarIcon.png</key>
 		<data>
 		Hyb1XxQ+T1OUKd3TJzMSEvrjG6c=
@@ -92,21 +128,17 @@
 		<data>
 		Far0XLhviu8vyvvtkol0dmHmv0g=
 		</data>
+		<key>fireworks.json</key>
+		<data>
+		NoKsK/t6oXbzIJokhKgx1yJ/UaU=
+		</data>
 		<key>footer_gradient.png</key>
 		<data>
 		Smm1q5p9iIxp2HckYg/qJk3hCII=
 		</data>
-		<key>labelsSeparator.png</key>
+		<key>gold_coin_spin.json</key>
 		<data>
-		4haP2y6Le71ynzchyss9cC5VhkI=
-		</data>
-		<key>labelsSeparator@2x.png</key>
-		<data>
-		tf/VWTfouKZktwyL3vRBHno75vg=
-		</data>
-		<key>labelsSeparator@3x.png</key>
-		<data>
-		+oPM/qDKpDtVLZrmbKUVnI3aA+w=
+		EyOyMLDYB/+lauamlgAJ9wb4w28=
 		</data>
 		<key>loading.gif</key>
 		<data>
@@ -156,6 +188,18 @@
 		<data>
 		rhKzU2Tvl7bvTv2fpUZdkkoS/qc=
 		</data>
+		<key>sparkle.json</key>
+		<data>
+		Eb2pM3x4lqOd0jd+tEt7dVDFf1w=
+		</data>
+		<key>star_success.json</key>
+		<data>
+		AASVVeU1TYtg7IPdBtqlLZzDR8o=
+		</data>
+		<key>success_confetti.json</key>
+		<data>
+		k8Bu3zzHVBDj03GV5T+9saIeXz0=
+		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
@@ -198,7 +242,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			0Z2m9lShhNbkdO9MEvlgs1TSduBIJgDjyMGxtJOF2js=
+			uHfls8c1OA+Njh5C9BWq9qzi+m/cjtFkgRW5flxKbrU=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -233,7 +277,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			WuYnGvlZHqNRxl3uiBzHlLb6Fey/2mSSAIuk3S6rur4=
+			S6GietVT8cBLGYg/Josr8QthpR9VM4N+CsC9pEA9CjM=
 			</data>
 		</dict>
 		<key>boost.png</key>
@@ -285,6 +329,69 @@
 			PO0K+nRX7KdKvNxUDjceIJgv0XnbvoHTDAWyoxy21GU=
 			</data>
 		</dict>
+		<key>coin.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			VRqaX3HbCxm1Xc7zAFWhjGXNwVJQkUnS9rB68dOgqQk=
+			</data>
+		</dict>
+		<key>coin@2x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			uLwsbqxG9EMdorxEBwnfQDgC1uScMuG96MOoXxCg7Y4=
+			</data>
+		</dict>
+		<key>coin@3x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ET8ltdGiXyL7sKzUONXoF3bYbn9qhgX1ZEW8Lp/Rogc=
+			</data>
+		</dict>
+		<key>coins_blow_effect.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			W5sbNaBAjLma6piX+9h1/muVF3QwVQXA0Ka2KglI9J4=
+			</data>
+		</dict>
+		<key>confetti_1.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			yXpEpwDiBumJVo0LFY+Z1c4HqKESn5TTDgzVDFJT65g=
+			</data>
+		</dict>
+		<key>confetti_2.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			9tRZjWRgCk/kFtHBs2xjqArEXJPtxs++74WO+yd9wUU=
+			</data>
+		</dict>
+		<key>confetti_3.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			41pesEtibFl3gPgIh7D2l1qIe2tcqN5wH3CY3ueNb+8=
+			</data>
+		</dict>
+		<key>confetti_4.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Yfj2HgG+NN9obPdOKTuCjEG63dkLFSwSmscMLxtDkfk=
+			</data>
+		</dict>
+		<key>confetti_5.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			nm6B9CAOACRvsXT9265pysuuowjymK5HqANEcFtUO6I=
+			</data>
+		</dict>
 		<key>dollarIcon.png</key>
 		<dict>
 			<key>hash2</key>
@@ -306,6 +413,13 @@
 			b3KrfDvD6v2G2aa0iez5Wizc1QTnT7vRCPR38eGlNOA=
 			</data>
 		</dict>
+		<key>fireworks.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			D+K5YoQCxvL/bj4VcnJRuEYjb9fw6ZZ21HXSx4XEnnQ=
+			</data>
+		</dict>
 		<key>footer_gradient.png</key>
 		<dict>
 			<key>hash2</key>
@@ -313,25 +427,11 @@
 			TH6nn3szitIhlAzZNxaFvORoTFRpJikXTbxZR2BlYVE=
 			</data>
 		</dict>
-		<key>labelsSeparator.png</key>
+		<key>gold_coin_spin.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ncYJ9qegFgnDyPSQTkHuWnW1j0oU2oxZTNcw8J9fGKk=
-			</data>
-		</dict>
-		<key>labelsSeparator@2x.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			fqr6tfhtrtROGDdLLdkshiBehwKQW6DxbsVsiN/Abpk=
-			</data>
-		</dict>
-		<key>labelsSeparator@3x.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			jPs4pxL43H62+7q7RgDgt69xqCbfJM8yr23pD0JRI5I=
+			Qygs7WBYv37Aam36INZqLZDeC/VdHKJWMkYXgFNdcPE=
 			</data>
 		</dict>
 		<key>loading.gif</key>
@@ -416,6 +516,27 @@
 			<key>hash2</key>
 			<data>
 			Uh5oiFCCFw9Zj0EXj0zH9Tvt3NONJXaCoRbwkvI5jnM=
+			</data>
+		</dict>
+		<key>sparkle.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			8GRNKWLfB8SKI4h0gqRwRdtc1vk3hjma0ck8UWkAQnE=
+			</data>
+		</dict>
+		<key>star_success.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			7Xafqy6XWm8YtozO6YyaULcNBOKeq27bdLpoA5ecbPE=
+			</data>
+		</dict>
+		<key>success_confetti.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			9hm3yKOwk3aEP+0kotZINMYn+YNSbNLqtwx/lFzXp/8=
 			</data>
 		</dict>
 	</dict>
