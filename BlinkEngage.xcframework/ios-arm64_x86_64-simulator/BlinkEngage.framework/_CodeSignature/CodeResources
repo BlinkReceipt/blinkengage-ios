@@ -10,7 +10,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		K9txMn43tGWc1yGnL80hM1MgRnE=
+		vo/1W679Du/r4HzfWcCKooBTBaE=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -18,7 +18,7 @@
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		PN8RxfaEMWHfW73RdgUDSa4ad3Y=
+		P99D/AOZLJtIjHfP34pjCU56pwo=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -26,11 +26,11 @@
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		PN8RxfaEMWHfW73RdgUDSa4ad3Y=
+		P99D/AOZLJtIjHfP34pjCU56pwo=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		DvacfN1QG27SRT9jqla+IFIH9Mc=
+		GV0yg0oBe+0G0bg9V4qMvRn+u2Y=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -38,7 +38,7 @@
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		AMT/tapxu+7E+2vOzb8gph6QbbA=
+		Dw+7BIwh8r6Nhjs+9NOK2ga3cbk=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -46,11 +46,11 @@
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		AMT/tapxu+7E+2vOzb8gph6QbbA=
+		Dw+7BIwh8r6Nhjs+9NOK2ga3cbk=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		g1bq9WF5SIs+iwbg7HLJbjMGs88=
+		bjjl74SS6H1OkKQGKlUzH132pIQ=
 		</data>
 		<key>boost.png</key>
 		<data>
@@ -72,6 +72,18 @@
 		<data>
 		iDBNGNHHrUQw4/4XO88cJE0CcZk=
 		</data>
+		<key>camera2.png</key>
+		<data>
+		nX64TAI3f9dwK3uXeE8Oq/+t1Cs=
+		</data>
+		<key>camera2@2x.png</key>
+		<data>
+		WMMv9k7bGeTBGYtA4BxoJ4gGEIg=
+		</data>
+		<key>camera2@3x.png</key>
+		<data>
+		dyaYVPkKUuEVEOJ+P2FnPUntDn4=
+		</data>
 		<key>camera@2x.png</key>
 		<data>
 		M+gLReQA1U8fUJpOwFPKwJUf/M8=
@@ -79,6 +91,10 @@
 		<key>camera@3x.png</key>
 		<data>
 		xU9nx3rZMVIizAzxFF7MT6Ib0Nc=
+		</data>
+		<key>check.json</key>
+		<data>
+		61tDkAwfFs/Wm9Ig8IZdUMqVrpw=
 		</data>
 		<key>coin.png</key>
 		<data>
@@ -127,6 +143,18 @@
 		<key>dollarIcon@3x.png</key>
 		<data>
 		Far0XLhviu8vyvvtkol0dmHmv0g=
+		</data>
+		<key>ellipse.png</key>
+		<data>
+		v9J2vEhrq1GstKR5hqTHcfLkqvs=
+		</data>
+		<key>ellipse@2x.png</key>
+		<data>
+		TW3dD1e8Hp2LnwXl8CWtIRrIo8A=
+		</data>
+		<key>ellipse@3x.png</key>
+		<data>
+		q+JBqEF/2+H3jRXG5C/7lHh2qBY=
 		</data>
 		<key>fireworks.json</key>
 		<data>
@@ -192,6 +220,10 @@
 		<data>
 		Eb2pM3x4lqOd0jd+tEt7dVDFf1w=
 		</data>
+		<key>spinner.json</key>
+		<data>
+		1rX1tyh6DDGcDJe7vy9lJKRrShQ=
+		</data>
 		<key>star_success.json</key>
 		<data>
 		AASVVeU1TYtg7IPdBtqlLZzDR8o=
@@ -221,7 +253,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			senIgpSmluqO1nUJmbwRECD5j5GVWpuoeMsQcWgG3iw=
+			rWqT3kWRlGmozRmrtdfrwR5gRR82h0ZmqgjXMsY1R+Q=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
@@ -235,14 +267,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			senIgpSmluqO1nUJmbwRECD5j5GVWpuoeMsQcWgG3iw=
+			rWqT3kWRlGmozRmrtdfrwR5gRR82h0ZmqgjXMsY1R+Q=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uHfls8c1OA+Njh5C9BWq9qzi+m/cjtFkgRW5flxKbrU=
+			0jydQa3nWriNQGGBPmENTjIKlQEVchnvxKtq5keVzJs=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -256,7 +288,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			TxplIqQaaj7hjL8PDrBavG9Xj+wv7JEQHpyOoNohao0=
+			XOyyWD0RXIMAQcoVY5tMltrweVT6HMSYGMugUMKQ5qI=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -270,14 +302,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			TxplIqQaaj7hjL8PDrBavG9Xj+wv7JEQHpyOoNohao0=
+			XOyyWD0RXIMAQcoVY5tMltrweVT6HMSYGMugUMKQ5qI=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			S6GietVT8cBLGYg/Josr8QthpR9VM4N+CsC9pEA9CjM=
+			tRyRN8ZfV4+uiA8a7H5gBM8jFN2PLEQDNZexy0qeKkE=
 			</data>
 		</dict>
 		<key>boost.png</key>
@@ -315,6 +347,27 @@
 			ydwLKKSysT2GTD7rIEwRv4KdXrvoN95zrJRY7g17WjA=
 			</data>
 		</dict>
+		<key>camera2.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			4aD0TkbeEzOxvUU5vv3c7+suiD+VcwEcoI8wHFK6kPE=
+			</data>
+		</dict>
+		<key>camera2@2x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Kq+OaP+3I/sAr32pF3i5TkhDQ7O5QX9200FgQAvqdgQ=
+			</data>
+		</dict>
+		<key>camera2@3x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			tOsnSlEG9G1Lj1MKIaNpTt6Hrj0AX3z3jrRHotCOu0E=
+			</data>
+		</dict>
 		<key>camera@2x.png</key>
 		<dict>
 			<key>hash2</key>
@@ -327,6 +380,13 @@
 			<key>hash2</key>
 			<data>
 			PO0K+nRX7KdKvNxUDjceIJgv0XnbvoHTDAWyoxy21GU=
+			</data>
+		</dict>
+		<key>check.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			9HzT0xLO1dRIqgezJGEzkHnHigVPPmFWJyoXgN3+8Ro=
 			</data>
 		</dict>
 		<key>coin.png</key>
@@ -411,6 +471,27 @@
 			<key>hash2</key>
 			<data>
 			b3KrfDvD6v2G2aa0iez5Wizc1QTnT7vRCPR38eGlNOA=
+			</data>
+		</dict>
+		<key>ellipse.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			TKeAi6Ya13OGiXUpVnIfTpVChk0H1NGjH5FbYD2IPQc=
+			</data>
+		</dict>
+		<key>ellipse@2x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			rR/wHhJkaFGUdBA7bgxGqqZe16ivcXrg3Nouh4EiMZQ=
+			</data>
+		</dict>
+		<key>ellipse@3x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ZyDYiGt/Eh9TG/fIJSTejupTJYjyvhL5oYsEkDZ+QlM=
 			</data>
 		</dict>
 		<key>fireworks.json</key>
@@ -523,6 +604,13 @@
 			<key>hash2</key>
 			<data>
 			8GRNKWLfB8SKI4h0gqRwRdtc1vk3hjma0ck8UWkAQnE=
+			</data>
+		</dict>
+		<key>spinner.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			mWzAsQfSth2EpcNQHGA+QkVam2wDe0w5HVTf8xl87NU=
 			</data>
 		</dict>
 		<key>star_success.json</key>

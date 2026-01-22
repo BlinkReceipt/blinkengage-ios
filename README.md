@@ -77,6 +77,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else if context == "Boost" {
                 // Handle boost rewards. No return value is required
                 print("User earned \(rewardAmount?.doubleValue ?? 0) points from boost")
+            } else if context == "BarcodeCollection" {
+                // Handle barcode collection rewards. No return value is required
+                print("User earned \(rewardAmount?.doubleValue ?? 0) points from barcode collection")
             }
             return nil
         }
