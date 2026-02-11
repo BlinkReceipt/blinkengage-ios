@@ -306,29 +306,416 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
-@class UIColor;
-SWIFT_CLASS("_TtC11BlinkEngage21BlinkEngageAppearance")
-@interface BlinkEngageAppearance : NSObject
-@property (nonatomic, strong) UIColor * _Nonnull offerWallHeaderBackgroundColor;
-@property (nonatomic, strong) UIColor * _Nonnull offerWallHeaderTextColor;
-@property (nonatomic, strong) UIColor * _Nonnull receiptSummaryHeaderBackgroundColor;
-@property (nonatomic, strong) UIColor * _Nonnull receiptSummaryHeaderTextColor;
+@protocol Theme;
+/// Configuration for the visual appearance of BlinkEngage SDK screens.
+/// Assign an instance to <code>BlinkEngageSDK.shared.appearance</code> before presenting SDK flows.
+/// Use the initializer that takes a <code>Theme</code> to apply custom colors, fonts, and images;
+/// use the default initializer to keep SDK defaults.
+SWIFT_CLASS("_TtC11BlinkEngage10Appearance")
+@interface Appearance : NSObject
+/// The theme used to customize SDK UI, or <code>nil</code> to use defaults.
+@property (nonatomic, readonly, strong) id <Theme> _Nullable theme;
+/// Creates an appearance with no custom theme; all SDK screens use their default styling.
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+/// Creates an appearance that uses the given theme for colors, fonts, and images.
+/// \param theme A theme conforming to <code>Theme</code>, or <code>nil</code> for default styling.
+///
+- (nonnull instancetype)initWithTheme:(id <Theme> _Nullable)theme OBJC_DESIGNATED_INITIALIZER;
 @end
+
+/// Keys for custom colors. Return a color for a key from your <code>Theme</code> to customize that part of the UI (backgrounds, labels, icon tints).
+typedef SWIFT_ENUM(NSInteger, AppearanceColorKey, open) {
+/// Header bar at the top of the offer wall.
+  AppearanceColorKeyOfferWallHeaderBackground = 0,
+/// Main title text in the offer wall header.
+  AppearanceColorKeyOfferWallHeaderTitleLabel = 1,
+/// Subtitle or secondary line in the offer wall header.
+  AppearanceColorKeyOfferWallHeaderSubtitleLabel = 2,
+/// Back / close arrow in the offer wall header.
+  AppearanceColorKeyOfferWallHeaderBackButtonIcon = 3,
+/// Background of the offer list area.
+  AppearanceColorKeyOfferWallBackground = 4,
+/// Section title (e.g. “Offers for you”) above a group of offers.
+  AppearanceColorKeyOfferWallSectionHeaderLabel = 5,
+/// Arrow or chevron in the “show more” section header button.
+  AppearanceColorKeyOfferWallSectionHeaderShowMoreIcon = 6,
+/// Background of the “show more” section header button.
+  AppearanceColorKeyOfferWallSectionHeaderShowMoreBackground = 7,
+/// Background of the floating button.
+  AppearanceColorKeyOfferWallFloatingButtonBackground = 8,
+/// Label text on the floating button.
+  AppearanceColorKeyOfferWallFloatingButtonLabel = 9,
+/// “More stores” or similar icon in the stores row.
+  AppearanceColorKeyOfferWallMoreMerchantsIcon = 10,
+/// Reward amount or points text on each offer card.
+  AppearanceColorKeyOfferRewardPointsLabel = 11,
+/// Promo badge label (e.g. “BUY 2”) on each offer card.
+  AppearanceColorKeyOfferTagLabel = 12,
+/// Background of the promo badge on each offer card.
+  AppearanceColorKeyOfferTagBackground = 13,
+/// Background of each offer card.
+  AppearanceColorKeyOfferBackground = 14,
+/// Brand or offer title on each offer card.
+  AppearanceColorKeyOfferBrandLabel = 15,
+/// Description or requirements text on each offer card.
+  AppearanceColorKeyOfferDescriptionLabel = 16,
+/// “Eligible at” or merchants list text on each offer card.
+  AppearanceColorKeyOfferEligibleMerchantsLabel = 17,
+/// Expiration / “X Days Left” on the offer details screen.
+  AppearanceColorKeyOfferDetailsExpirationLabel = 18,
+/// “Clip this offer” label on the offer details screen.
+  AppearanceColorKeyOfferDetailsClipLabel = 19,
+/// Icon for the clip button on an offer card.
+  AppearanceColorKeyOfferClipButtonIcon = 20,
+/// Background of the clip button on an offer card.
+  AppearanceColorKeyOfferClipButtonBackground = 21,
+/// Icon for the clipped-state button on an offer card.
+  AppearanceColorKeyOfferClippedButtonIcon = 22,
+/// Background of the clipped-state button on an offer card.
+  AppearanceColorKeyOfferClippedButtonBackground = 23,
+/// Label text in the “Offer clipped!” message toast at the top when an offer is clipped.
+  AppearanceColorKeyOfferClippedToastMessageLabel = 24,
+/// Background of the “Offer clipped!” message toast at the top when an offer is clipped.
+  AppearanceColorKeyOfferClippedToastMessageBackground = 25,
+/// “Clip Required” badge label on the offer details screen.
+  AppearanceColorKeyOfferDetailsClipRequiredLabel = 26,
+/// “Clip Required” badge background on the offer details screen.
+  AppearanceColorKeyOfferDetailsClipRequiredBackground = 27,
+/// Section header titles on the offer details screen (e.g. “Eligible UPCs”, “Qualifying Details”, “Description”, “Fine Print”).
+  AppearanceColorKeyOfferDetailsSectionHeaderTitleLabel = 28,
+/// Section header toggle (“See all” / “See less”) in groups that have expand/collapse on the offer details screen.
+  AppearanceColorKeyOfferDetailsSectionHeaderToggleLabel = 29,
+/// Section body text on the offer details screen (e.g. long description).
+  AppearanceColorKeyOfferDetailsSectionBodyLabel = 30,
+/// Short description under the offer title on the offer details screen (e.g. coupon description and payout).
+  AppearanceColorKeyOfferDetailsShortDescription = 31,
+/// Fine print / full terms body on the offer details screen.
+  AppearanceColorKeyOfferDetailsFinePrintLabel = 32,
+/// Label text in the buying options list on the offer details screen (e.g. “Buy any X eligible products” and payout amount).
+  AppearanceColorKeyOfferDetailsBuyOptionLabel = 33,
+/// Background of each row in the buying options list on the offer details screen.
+  AppearanceColorKeyOfferDetailsBuyOptionBackground = 34,
+/// Background of the stores screen header bar (e.g. “Stores” title bar).
+  AppearanceColorKeyStoresHeaderBackground = 35,
+/// Title label in the stores screen header (e.g. “Stores”).
+  AppearanceColorKeyStoresHeaderTitleLabel = 36,
+/// Section header label in the stores list (e.g. group titles).
+  AppearanceColorKeyStoresListSectionHeaderLabel = 37,
+/// Background of the stores list area.
+  AppearanceColorKeyStoresListBackground = 38,
+/// Background of each store item in the list.
+  AppearanceColorKeyStoresListItemBackground = 39,
+/// Default thumbnail icon for each store item in the list.
+  AppearanceColorKeyStoresListItemDefaultIcon = 40,
+/// Title label for each store item in the list.
+  AppearanceColorKeyStoresListItemTitleLabel = 41,
+/// Subtitle label for each store item in the list.
+  AppearanceColorKeyStoresListItemSubtitleLabel = 42,
+/// Label text and icon tint on the ad loading screen progress bar (e.g. “Scanning receipt”, arrow button).
+  AppearanceColorKeyAdLoadingLoadingBarLabel = 43,
+/// Background of the ad loading screen progress bar track.
+  AppearanceColorKeyAdLoadingLoadingBarBackground = 44,
+/// Progress fill color of the ad loading screen progress bar.
+  AppearanceColorKeyAdLoadingLoadingBarProgress = 45,
+/// Title label on the loading screen (e.g. “Hang tight!”).
+  AppearanceColorKeyAdLoadingDefaultTitleLabel = 46,
+/// Description label on the loading screen (e.g. “Exclusive rewards are coming your way!”).
+  AppearanceColorKeyAdLoadingDefaultDescriptionLabel = 47,
+/// Background of the warning icon (e.g. “!”) on the error modal.
+  AppearanceColorKeyErrorModalIconBackground = 48,
+/// Title label on the error modal (e.g. “Oops!”, “Invalid Receipt”).
+  AppearanceColorKeyErrorModalTitleLabel = 49,
+/// Description / message label on the error modal.
+  AppearanceColorKeyErrorModalDescriptionLabel = 50,
+/// “Back to offers” / dismiss button label on the error modal.
+  AppearanceColorKeyErrorModalBackButtonLabel = 51,
+/// Background of the error modal.
+  AppearanceColorKeyErrorModalBackground = 52,
+/// Background of the receipt summary screen header bar.
+  AppearanceColorKeyPostScanHeaderBackground = 53,
+/// Background of the total points pill (coin + amount) in the receipt summary header.
+  AppearanceColorKeyPostScanTotalPointsBackground = 54,
+/// Total points amount label in the receipt summary header.
+  AppearanceColorKeyPostScanTotalPointsLabel = 55,
+/// Icon tint for the receipt / missed earnings button in the receipt summary header.
+  AppearanceColorKeyPostScanReceiptButtonIcon = 56,
+/// Background of the receipt / missed earnings button in the receipt summary header.
+  AppearanceColorKeyPostScanReceiptButtonBackground = 57,
+/// Title (text color) of the continue button in the receipt summary footer.
+  AppearanceColorKeyPostScanFooterButtonTitle = 58,
+/// Background of the receipt summary footer.
+  AppearanceColorKeyPostScanFooterBackground = 59,
+/// Merchant name label in the trip summary.
+  AppearanceColorKeyPostScanMerchantNameLabel = 60,
+/// Trip info label (date and total) in the trip summary.
+  AppearanceColorKeyPostScanTripInfoLabel = 61,
+/// Label in the “no boosts” empty state (e.g. “No more boosts are available…”).
+  AppearanceColorKeyPostScanNoBoostsLabel = 62,
+/// Title label (e.g. “Nice Scan!”) in the first/success state of the boost area.
+  AppearanceColorKeyPostScanSuccessTitleLabel = 63,
+/// Description label in the first/success state of the boost area (e.g. points earned).
+  AppearanceColorKeyPostScanSuccessDescriptionLabel = 64,
+/// Title label on post-scan boost cards in the receipt summary (e.g. offer title).
+  AppearanceColorKeyPostScanBoostTitleLabel = 65,
+/// Description label on post-scan boost cards in the receipt summary (e.g. offer subtitle).
+  AppearanceColorKeyPostScanBoostDescriptionLabel = 66,
+/// Label (text color) on the “Skip” button below post-scan boost cards.
+  AppearanceColorKeyPostScanBoostSkipButtonLabel = 67,
+/// Label (text color) on the “Claim” button below post-scan boost cards.
+  AppearanceColorKeyPostScanBoostClaimButtonLabel = 68,
+/// Icon tint for the “Claim” button below post-scan boost cards.
+  AppearanceColorKeyPostScanBoostClaimButtonIcon = 69,
+/// Background color of the “Claim” button below post-scan boost cards.
+  AppearanceColorKeyPostScanBoostClaimButtonBackground = 70,
+/// Points label (e.g. “+100”) on purchase rows that show reward points.
+  AppearanceColorKeyPostScanPurchasePointsLabel = 71,
+/// Background of a standard product row in the receipt summary.
+  AppearanceColorKeyPostScanPurchaseBackground = 72,
+/// Background of product rows that show reward points.
+  AppearanceColorKeyPostScanQualifiedPurchaseBackground = 73,
+/// Info icon tint on product rows in the receipt summary.
+  AppearanceColorKeyPostScanPurchaseInfoIcon = 74,
+/// Background of the product row when it shows a claim task.
+  AppearanceColorKeyPostScanUGCPurchaseBackground = 75,
+/// Claim button label color on the product row when it shows a claim task.
+  AppearanceColorKeyPostScanUGCPurchaseClaimButtonLabel = 76,
+/// Claim button icon tint on the product row when it shows a claim task.
+  AppearanceColorKeyPostScanUGCPurchaseClaimButtonIcon = 77,
+/// Claim button background on the product row when it shows a claim task.
+  AppearanceColorKeyPostScanUGCPurchaseClaimButtonBackground = 78,
+/// Border color on the product row when it shows a claim task.
+  AppearanceColorKeyPostScanUGCPurchaseBorder = 79,
+/// Product name label color on product rows (receipt summary and Missed Earnings).
+  AppearanceColorKeyPurchaseRowLabelColor = 80,
+/// Metadata line label color on product rows (receipt summary and Missed Earnings).
+  AppearanceColorKeyPurchaseRowMetadataLabelColor = 81,
+/// Title label in the Missed Earnings navigation header (e.g. “Missing rewards?”).
+  AppearanceColorKeyMissedEarningsNavigationTitleLabel = 82,
+/// Description label in the Missed Earnings navigation header (e.g. “Edit this receipt if any details are off”).
+  AppearanceColorKeyMissedEarningsNavigationDescriptionLabel = 83,
+/// Icon tint for the Edit button in the Missed Earnings header.
+  AppearanceColorKeyMissedEarningsNavigationEditButtonIcon = 84,
+/// Background of the Edit button in the Missed Earnings navigation header.
+  AppearanceColorKeyMissedEarningsNavigationEditButtonBackground = 85,
+/// Icon tint of the Save button in the Missed Earnings header.
+  AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon = 86,
+/// Background of the Save button in the Missed Earnings header.
+  AppearanceColorKeyMissedEarningsNavigationSaveButtonBackground = 87,
+/// Icon tint for the edit button on each field row in Missed Earnings.
+  AppearanceColorKeyMissedEarningsFieldEditIcon = 88,
+/// Label and icon (text/tint color) for the “add new field” control in the Missed Earnings screen.
+  AppearanceColorKeyMissedEarningsAddNewFieldLabel = 89,
+/// Background of field rows that have been modified in the Missed Earnings screen.
+  AppearanceColorKeyMissedEarningsModifiedFieldBackground = 90,
+/// Section header title label in the Missed Earnings list (e.g. “Merchant”, “Date”, “Products”).
+  AppearanceColorKeyMissedEarningsListSectionTitleLabel = 91,
+/// Label text in Missed Earnings merchant and date rows only.
+  AppearanceColorKeyMissedEarningsTripItemLabel = 92,
+/// Title label at the top of the Missed Earnings edit field modal (e.g. “Merchant Name”, “Receipt Date”).
+  AppearanceColorKeyMissedEarningsEditModalTitleLabel = 93,
+/// Subtitle label at the top of the Missed Earnings edit modal.
+  AppearanceColorKeyMissedEarningsEditModalSubtitleLabel = 94,
+/// Label for text field titles in the Missed Earnings edit field modal (e.g. “Captured Merchant Name”).
+  AppearanceColorKeyMissedEarningsEditModalInputLabel = 95,
+/// Placeholder text color in the Missed Earnings edit field modal text fields.
+  AppearanceColorKeyMissedEarningsEditModalInputPlaceholderLabel = 96,
+/// Text field value / caption labels in the Missed Earnings edit field modal.
+  AppearanceColorKeyMissedEarningsEditModalInputValueLabel = 97,
+/// Cancel button label (text color) in the Missed Earnings edit field modal.
+  AppearanceColorKeyMissedEarningsEditModalCancelButtonLabel = 98,
+/// Save button label (text color) in the Missed Earnings edit field modal.
+  AppearanceColorKeyMissedEarningsEditModalSaveButtonLabel = 99,
+/// Save button background in the Missed Earnings edit field modal.
+  AppearanceColorKeyMissedEarningsEditModalSaveButtonBackground = 100,
+/// Background of the Missed Earnings edit field modal.
+  AppearanceColorKeyMissedEarningsEditModalBackground = 101,
+/// Tint color of the date picker in the Missed Earnings edit field modal (e.g. selected date highlight).
+  AppearanceColorKeyMissedEarningsEditModalDatePicker = 102,
+/// Title label in the Missed Earnings alert modal (e.g. “No updates made”, “Submit Receipt”).
+  AppearanceColorKeyMissedEarningsAlertTitleLabel = 103,
+/// Message/body label in the Missed Earnings alert modal.
+  AppearanceColorKeyMissedEarningsAlertMessageLabel = 104,
+/// Border color when a barcode is detected in the product capture camera.
+  AppearanceColorKeyUgcBarcodeDetectedBorder = 105,
+/// Icon tint when a barcode is detected in the product capture screen.
+  AppearanceColorKeyUgcBarcodeDetectedIcon = 106,
+/// Icon tint for navigation buttons (e.g. close, torch) in the product capture header.
+  AppearanceColorKeyUgcNavigationButtonIcon = 107,
+/// Background of navigation buttons (close, torch) in the product capture header.
+  AppearanceColorKeyUgcNavigationButtonBackground = 108,
+/// Background of the product info badges (product name and barcode/UPC) in the product capture screen.
+  AppearanceColorKeyUgcProductInfoBackground = 109,
+/// Label text color in the product info badges (product name and barcode/UPC).
+  AppearanceColorKeyUgcProductInfoLabel = 110,
+/// Warning icon tint in the product capture toast message.
+  AppearanceColorKeyUgcToastMessageWarningIcon = 111,
+/// “Retake” button label (text color) in the product capture footer.
+  AppearanceColorKeyUgcRetakeButtonLabel = 112,
+/// “Retake” button background in the product capture footer.
+  AppearanceColorKeyUgcRetakeButtonBackground = 113,
+/// “Submit” button label (text color) in the product capture footer.
+  AppearanceColorKeyUgcSubmitButtonLabel = 114,
+/// “Submit” button background in the product capture footer.
+  AppearanceColorKeyUgcSubmitButtonBackground = 115,
+};
+
+/// Keys for custom fonts. Return a font name (e.g. <code>"Outfit-Bold"</code>) for a key from your <code>Theme</code> to use that font for the corresponding label; return <code>nil</code> to use the default or your <code>globalFontMatrix</code> by weight.
+typedef SWIFT_ENUM(NSInteger, AppearanceFontNameKey, open) {
+/// Main title in the offer wall header.
+  AppearanceFontNameKeyOfferWallHeaderTitleLabel = 0,
+/// Subtitle in the offer wall header.
+  AppearanceFontNameKeyOfferWallHeaderSubtitleLabel = 1,
+/// Section title above a group of offers.
+  AppearanceFontNameKeyOfferWallSectionHeaderLabel = 2,
+/// Label on the floating button.
+  AppearanceFontNameKeyOfferWallFloatingButtonLabel = 3,
+/// Reward amount text on offer cards.
+  AppearanceFontNameKeyOfferRewardPointsLabel = 4,
+/// Promo badge label on offer cards.
+  AppearanceFontNameKeyOfferTagLabel = 5,
+/// Brand / title on offer cards.
+  AppearanceFontNameKeyOfferBrandLabel = 6,
+/// Description text on offer cards.
+  AppearanceFontNameKeyOfferDescriptionLabel = 7,
+/// Eligible merchants text on offer cards.
+  AppearanceFontNameKeyOfferEligibleMerchantsLabel = 8,
+/// Expiration / “X Days Left” on the offer details screen.
+  AppearanceFontNameKeyOfferDetailsExpirationLabel = 9,
+/// “Clip this offer” label on the offer details screen.
+  AppearanceFontNameKeyOfferDetailsClipLabel = 10,
+/// Label text in the “Offer clipped!” message toast at the top when an offer is clipped.
+  AppearanceFontNameKeyOfferClippedToastMessageLabel = 11,
+/// “Clip Required” badge label on the offer details screen.
+  AppearanceFontNameKeyOfferDetailsClipRequiredLabel = 12,
+/// Section header titles on the offer details screen (e.g. “Eligible UPCs”, “Qualifying Details”, “Description”, “Fine Print”).
+  AppearanceFontNameKeyOfferDetailsSectionHeaderTitleLabel = 13,
+/// Section header toggle (“See all” / “See less”) in groups that have expand/collapse on the offer details screen.
+  AppearanceFontNameKeyOfferDetailsSectionHeaderToggleLabel = 14,
+/// Section body text on the offer details screen (e.g. long description).
+  AppearanceFontNameKeyOfferDetailsSectionBodyLabel = 15,
+/// Short description under the offer title on the offer details screen (e.g. coupon description and payout).
+  AppearanceFontNameKeyOfferDetailsShortDescription = 16,
+/// Fine print / full terms body on the offer details screen.
+  AppearanceFontNameKeyOfferDetailsFinePrintLabel = 17,
+/// Label text in the buying options list on the offer details screen (e.g. “Buy any X eligible products” and payout amount).
+  AppearanceFontNameKeyOfferDetailsBuyOptionLabel = 18,
+/// Title label in the stores screen header (e.g. “Stores”).
+  AppearanceFontNameKeyStoresHeaderTitleLabel = 19,
+/// Section header label in the stores list (e.g. group titles).
+  AppearanceFontNameKeyStoresListSectionHeaderLabel = 20,
+/// Title label for each store item in the list.
+  AppearanceFontNameKeyStoresListItemTitleLabel = 21,
+/// Subtitle label for each store item in the list.
+  AppearanceFontNameKeyStoresListItemSubtitleLabel = 22,
+/// Label text on the ad loading screen progress bar (e.g. “Scanning receipt”).
+  AppearanceFontNameKeyAdLoadingLoadingBarLabel = 23,
+/// Title label on the ad loading screen (e.g. “Hang tight!”).
+  AppearanceFontNameKeyAdLoadingDefaultTitleLabel = 24,
+/// Description label on the ad loading screen (e.g. “Exclusive rewards are coming your way!”).
+  AppearanceFontNameKeyAdLoadingDefaultDescriptionLabel = 25,
+/// Title label on the error modal (e.g. “Oops!”, “Invalid Receipt”).
+  AppearanceFontNameKeyErrorModalTitleLabel = 26,
+/// Description / message label on the error modal.
+  AppearanceFontNameKeyErrorModalDescriptionLabel = 27,
+/// “Back to offers” / dismiss button label on the error modal.
+  AppearanceFontNameKeyErrorModalBackButtonLabel = 28,
+/// Total points amount label in the receipt summary header.
+  AppearanceFontNameKeyPostScanTotalPointsLabel = 29,
+/// Title of the continue button in the receipt summary footer.
+  AppearanceFontNameKeyPostScanFooterButtonTitle = 30,
+/// Merchant name label in the trip summary.
+  AppearanceFontNameKeyPostScanMerchantNameLabel = 31,
+/// Trip info label (date and total) in the trip summary.
+  AppearanceFontNameKeyPostScanTripInfoLabel = 32,
+/// Label in the “no boosts” empty state (e.g. “No more boosts are available…”).
+  AppearanceFontNameKeyPostScanNoBoostsLabel = 33,
+/// Title label in the first/success state of the boost area (e.g. “Nice Scan!”).
+  AppearanceFontNameKeyPostScanSuccessTitleLabel = 34,
+/// Description label in the first/success state of the boost area.
+  AppearanceFontNameKeyPostScanSuccessDescriptionLabel = 35,
+/// Title label on post-scan boost cards in the receipt summary.
+  AppearanceFontNameKeyPostScanBoostTitleLabel = 36,
+/// Description label on post-scan boost cards in the receipt summary.
+  AppearanceFontNameKeyPostScanBoostDescriptionLabel = 37,
+/// Label on the “Skip” button below post-scan boost cards.
+  AppearanceFontNameKeyPostScanBoostSkipButtonLabel = 38,
+/// Label on the “Claim” button below post-scan boost cards.
+  AppearanceFontNameKeyPostScanBoostClaimButtonLabel = 39,
+/// Points label (e.g. “+100”) on purchase rows that show reward points.
+  AppearanceFontNameKeyPostScanPurchasePointsLabel = 40,
+/// Claim button label font on the product row when it shows a claim task.
+  AppearanceFontNameKeyPostScanUGCPurchaseClaimButtonLabel = 41,
+/// Product name label font on product rows (receipt summary and Missed Earnings).
+  AppearanceFontNameKeyPurchaseRowLabelFont = 42,
+/// Metadata line label font on product rows (receipt summary and Missed Earnings).
+  AppearanceFontNameKeyPurchaseRowMetadataLabelFont = 43,
+/// Title label in the Missed Earnings navigation header (e.g. “Missing rewards?”).
+  AppearanceFontNameKeyMissedEarningsNavigationTitleLabel = 44,
+/// Description label in the Missed Earnings navigation header (e.g. “Edit this receipt if any details are off”).
+  AppearanceFontNameKeyMissedEarningsNavigationDescriptionLabel = 45,
+/// Section header title in the Missed Earnings list (e.g. “Merchant”, “Date”, “Products”).
+  AppearanceFontNameKeyMissedEarningsListSectionTitleLabel = 46,
+/// Label text in Missed Earnings merchant and date rows only.
+  AppearanceFontNameKeyMissedEarningsTripItemLabel = 47,
+/// Title label at the top of the Missed Earnings edit field modal.
+  AppearanceFontNameKeyMissedEarningsEditModalTitleLabel = 48,
+/// Subtitle label at the top of the Missed Earnings edit field modal.
+  AppearanceFontNameKeyMissedEarningsEditModalSubtitleLabel = 49,
+/// Label for text field titles in the Missed Earnings edit field modal.
+  AppearanceFontNameKeyMissedEarningsEditModalInputLabel = 50,
+/// Placeholder text font in the Missed Earnings edit modal.
+  AppearanceFontNameKeyMissedEarningsEditModalInputPlaceholderLabel = 51,
+/// Text field value / caption labels in the Missed Earnings edit field modal.
+  AppearanceFontNameKeyMissedEarningsEditModalInputValueLabel = 52,
+/// Cancel button label in the Missed Earnings edit field modal.
+  AppearanceFontNameKeyMissedEarningsEditModalCancelButtonLabel = 53,
+/// Save button label in the Missed Earnings edit field modal.
+  AppearanceFontNameKeyMissedEarningsEditModalSaveButtonLabel = 54,
+/// Title label in the Missed Earnings alert modal.
+  AppearanceFontNameKeyMissedEarningsAlertTitleLabel = 55,
+/// Message/body label in the Missed Earnings alert modal.
+  AppearanceFontNameKeyMissedEarningsAlertMessageLabel = 56,
+/// Label text in the product info badges (product name and barcode/UPC) on the product capture screen.
+  AppearanceFontNameKeyUgcProductInfoLabel = 57,
+/// “Retake” button label in the product capture footer.
+  AppearanceFontNameKeyUgcRetakeButtonLabel = 58,
+/// “Submit” button label in the product capture footer.
+  AppearanceFontNameKeyUgcSubmitButtonLabel = 59,
+};
+
+/// Keys for custom images. Return an image for a key from your <code>Theme</code> to replace that icon; return <code>nil</code> to use the default (if any). When you return <code>nil</code>, the matching color key may still be used to tint the default icon.
+typedef SWIFT_ENUM(NSInteger, AppearanceIconKey, open) {
+/// Reward or currency icon shown with reward amounts (e.g. on offer cards, receipt summary).
+  AppearanceIconKeyOfferRewardIcon = 0,
+/// Floating action button icon (e.g. scan receipt). Return <code>nil</code> to use the default; tint uses the floating button label color key.
+  AppearanceIconKeyOfferWallFloatingButtonIcon = 1,
+/// Edit button icon in the Missed Earnings header. Return <code>nil</code> to use the default; tint uses the edit button icon color key.
+  AppearanceIconKeyMissedEarningsNavigationEditButtonIcon = 2,
+/// Edit (pen) button icon on each field row in Missed Earnings. Return <code>nil</code> to use the default; tint uses the field edit icon color key.
+  AppearanceIconKeyMissedEarningsFieldEditIcon = 3,
+/// Receipt / missed earnings button icon in the receipt summary header. Return <code>nil</code> to use the default; tint uses the receipt button icon color key when set.
+  AppearanceIconKeyPostScanReceiptButtonIcon = 4,
+/// Placeholder image for boost cards when no custom image is available.
+  AppearanceIconKeyPostScanBoostDefaultIcon = 5,
+/// Icon in the success state of the boost area (e.g. “Nice Scan!”).
+  AppearanceIconKeyPostScanSuccessIcon = 6,
+/// Icon when a barcode is detected in the product capture screen. Return <code>nil</code> to use the default; tint uses the barcode-detected icon color key.
+  AppearanceIconKeyUgcBarcodeDetectedIcon = 7,
+/// Warning icon in the product capture toast. Return <code>nil</code> to use the default; tint uses the toast warning icon color key.
+  AppearanceIconKeyUgcToastMessageWarningIcon = 8,
+};
 
 @class BlinkEngageUser;
 @class NSString;
-@class UIImage;
 @class NSNumber;
 SWIFT_CLASS("_TtC11BlinkEngage14BlinkEngageSDK")
 @interface BlinkEngageSDK : NSObject
 @property (nonatomic, readonly, strong) BlinkEngageUser * _Nonnull user;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BlinkEngageSDK * _Nonnull shared;)
 + (BlinkEngageSDK * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
-@property (nonatomic, strong) BlinkEngageAppearance * _Nonnull appearance;
+@property (nonatomic, strong) Appearance * _Nonnull appearance;
 @property (nonatomic, copy) NSString * _Nonnull rewardCurrencyName;
 @property (nonatomic) double rewardCurrencyPerDollar;
-@property (nonatomic, strong) UIImage * _Nullable rewardCurrencyIcon;
 @property (nonatomic) double userPayoutPercentage;
 /// Enable in development to show test adUnits
 @property (nonatomic) BOOL debugModeEnabled;
@@ -373,9 +760,37 @@ SWIFT_PROTOCOL("_TtP11BlinkEngage32OffersWallViewControllerDelegate_")
 @optional
 - (void)offerWallDidSelectFloatingAction:(OffersWallViewController * _Nonnull)viewController;
 - (BOOL)offerWallShouldDisplayFloatingAction:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
-- (NSString * _Nullable)offerWallHeaderTitle:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
-@required
-- (BOOL)offerWallShouldDisplayHeaderView:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
+@end
+
+@class UIColor;
+@class UIImage;
+/// Protocol for customizing the appearance of BlinkEngage SDK screens.
+/// Conform to this protocol and assign your theme to
+/// <code>BlinkEngageSDK.shared.appearance.theme</code> to override colors, fonts, and images.
+/// For any key, return <code>nil</code> from the corresponding method to use the SDK default.
+SWIFT_PROTOCOL("_TtP11BlinkEngage5Theme_")
+@protocol Theme
+/// When you return <code>nil</code> from <code>image(forKey: .offerRewardIcon)</code>, this controls
+/// whether the default reward icon is shown (<code>true</code>) or hidden (<code>false</code>).
+/// Ignored when you return a custom reward icon image.
+@property (nonatomic, readonly) BOOL isRewardIconEnabled;
+/// When <code>true</code>, the Stores screen loads merchant logos from their URLs when available.
+/// When <code>false</code>, the default storefront icon is always shown.
+@property (nonatomic, readonly) BOOL isMerchantIconEnabled;
+/// Optional mapping of font weight to font name, used when you return <code>nil</code> from
+/// <code>fontName(forKey:)</code> for a given key. Keys: <code>NSNumber</code> wrapping
+/// <code>UIFont.Weight.rawValue</code>; values: font name strings. Return <code>nil</code> to use
+/// system fonts when no key-specific font is set.
+@property (nonatomic, readonly, strong) NSDictionary * _Nullable globalFontMatrix;
+/// Returns a custom color for the given key, or <code>nil</code> to use the SDK default.
+- (UIColor * _Nullable)colorForKey:(enum AppearanceColorKey)key SWIFT_WARN_UNUSED_RESULT;
+/// Returns a custom font name for the given key (e.g. <code>"Outfit-Bold"</code>), or <code>nil</code> to use
+/// the SDK default. The SDK applies the appropriate size for each key.
+- (NSString * _Nullable)fontNameForKey:(enum AppearanceFontNameKey)key SWIFT_WARN_UNUSED_RESULT;
+/// Returns a custom image for the given key, or <code>nil</code> to use the SDK default.
+/// For the reward icon, when you return <code>nil</code>, visibility is controlled by
+/// <code>isRewardIconEnabled</code>.
+- (UIImage * _Nullable)imageForKey:(enum AppearanceIconKey)key SWIFT_WARN_UNUSED_RESULT;
 @end
 
 #endif
@@ -403,6 +818,3574 @@ SWIFT_PROTOCOL("_TtP11BlinkEngage32OffersWallViewControllerDelegate_")
 #endif
 #endif
 
+#ifndef SWIFT_SWIFT_H
+#define SWIFT_SWIFT_H
+#ifdef SWIFT_SYMBOL
+#undef SWIFT_SYMBOL
+#endif
+#define SWIFT_SYMBOL(usrValue) SWIFT_SYMBOL_MODULE_USR("swift", usrValue)
+#ifndef SWIFT_CXX_INTEROP_HIDE_STL_OVERLAY
+#include <string>
+#endif
+#include <new>
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+#ifndef SWIFT_PRINTED_CORE
+#define SWIFT_PRINTED_CORE
+namespace swift SWIFT_PRIVATE_ATTR {
+
+namespace _impl {
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// Swift type metadata response type.
+struct MetadataResponseTy {
+  void * _Null_unspecified _0;
+  uint64_t _1;
+};
+// Swift type metadata request type.
+typedef uint64_t MetadataRequestTy;
+
+#if __cplusplus > 201402L
+#  define SWIFT_NOEXCEPT_FUNCTION_PTR noexcept
+#else
+#  define SWIFT_NOEXCEPT_FUNCTION_PTR
+#endif
+
+using ValueWitnessInitializeBufferWithCopyOfBufferTy = void * _Nonnull(* __ptrauth_swift_value_witness_function_pointer(55882))(void * _Nonnull, void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using ValueWitnessDestroyTy = void(* __ptrauth_swift_value_witness_function_pointer(1272))(void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using ValueWitnessInitializeWithCopyTy = void * _Nonnull(* __ptrauth_swift_value_witness_function_pointer(58298))(void * _Nonnull, void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using ValueWitnessAssignWithCopyTy = void * _Nonnull(* __ptrauth_swift_value_witness_function_pointer(34641))(void * _Nonnull, void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using ValueWitnessInitializeWithTakeTy = void * _Nonnull(* __ptrauth_swift_value_witness_function_pointer(18648))(void * _Nonnull, void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using ValueWitnessAssignWithTakeTy = void * _Nonnull(* __ptrauth_swift_value_witness_function_pointer(61402))(void * _Nonnull, void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using ValueWitnessGetEnumTagSinglePayloadTy = unsigned(* __ptrauth_swift_value_witness_function_pointer(24816))(const void * _Nonnull, unsigned, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using ValueWitnessStoreEnumTagSinglePayloadTy = void(* __ptrauth_swift_value_witness_function_pointer(41169))(void * _Nonnull, unsigned, unsigned, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+
+struct ValueWitnessTable {
+  ValueWitnessInitializeBufferWithCopyOfBufferTy _Nonnull initializeBufferWithCopyOfBuffer;
+  ValueWitnessDestroyTy _Nonnull destroy;
+  ValueWitnessInitializeWithCopyTy _Nonnull initializeWithCopy;
+  ValueWitnessAssignWithCopyTy _Nonnull assignWithCopy;
+  ValueWitnessInitializeWithTakeTy _Nonnull initializeWithTake;
+  ValueWitnessAssignWithTakeTy _Nonnull assignWithTake;
+  ValueWitnessGetEnumTagSinglePayloadTy _Nonnull getEnumTagSinglePayload;
+  ValueWitnessStoreEnumTagSinglePayloadTy _Nonnull storeEnumTagSinglePayload;
+  size_t size;
+  size_t stride;
+  unsigned flags;
+  unsigned extraInhabitantCount;
+
+  constexpr size_t getAlignment() const { return (flags & 255) + 1; }
+};
+
+using EnumValueWitnessGetEnumTagTy = unsigned(* __ptrauth_swift_value_witness_function_pointer(41909))(const void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using EnumValueWitnessDestructiveProjectEnumDataTy = void(* __ptrauth_swift_value_witness_function_pointer(1053))(void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using EnumValueWitnessDestructiveInjectEnumTagTy = void(* __ptrauth_swift_value_witness_function_pointer(45796))(void * _Nonnull, unsigned, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+
+struct EnumValueWitnessTable {
+  ValueWitnessTable vwTable;
+  EnumValueWitnessGetEnumTagTy _Nonnull getEnumTag;
+  EnumValueWitnessDestructiveProjectEnumDataTy _Nonnull destructiveProjectEnumData;
+  EnumValueWitnessDestructiveInjectEnumTagTy _Nonnull destructiveInjectEnumTag;
+};
+
+#undef SWIFT_NOEXCEPT_FUNCTION_PTR
+
+
+// type metadata address for Bool.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $sSbN;
+// type metadata address for Int8.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss4Int8VN;
+// type metadata address for UInt8.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss5UInt8VN;
+// type metadata address for Int16.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss5Int16VN;
+// type metadata address for UInt16.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss6UInt16VN;
+// type metadata address for Int32.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss5Int32VN;
+// type metadata address for UInt32.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss6UInt32VN;
+// type metadata address for Int64.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss5Int64VN;
+// type metadata address for UInt64.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss6UInt64VN;
+// type metadata address for Float.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $sSfN;
+// type metadata address for Double.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $sSdN;
+// type metadata address for OpaquePointer.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss13OpaquePointerVN;
+// type metadata address for Int.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $sSiN;
+// type metadata address for UInt.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $sSuN;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+} // namespace _impl
+
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<bool> = true;
+
+template<>
+struct TypeMetadataTrait<bool> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$sSbN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<int8_t> = true;
+
+template<>
+struct TypeMetadataTrait<int8_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss4Int8VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<uint8_t> = true;
+
+template<>
+struct TypeMetadataTrait<uint8_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss5UInt8VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<int16_t> = true;
+
+template<>
+struct TypeMetadataTrait<int16_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss5Int16VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<uint16_t> = true;
+
+template<>
+struct TypeMetadataTrait<uint16_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss6UInt16VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<int32_t> = true;
+
+template<>
+struct TypeMetadataTrait<int32_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss5Int32VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<uint32_t> = true;
+
+template<>
+struct TypeMetadataTrait<uint32_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss6UInt32VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<int64_t> = true;
+
+template<>
+struct TypeMetadataTrait<int64_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss5Int64VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<uint64_t> = true;
+
+template<>
+struct TypeMetadataTrait<uint64_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss6UInt64VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<float> = true;
+
+template<>
+struct TypeMetadataTrait<float> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$sSfN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<double> = true;
+
+template<>
+struct TypeMetadataTrait<double> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$sSdN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<void *> = true;
+
+template<>
+struct TypeMetadataTrait<void *> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss13OpaquePointerVN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<swift::Int> = true;
+
+template<>
+struct TypeMetadataTrait<swift::Int> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$sSiN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<swift::UInt> = true;
+
+template<>
+struct TypeMetadataTrait<swift::UInt> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$sSuN;
+  }
+};
+
+#pragma clang diagnostic pop
+
+} // namespace swift
+
+#endif
+#ifdef __cplusplus
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+namespace _impl {
+extern "C" {
+#endif
+
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_returnStub_swift_void_ptr_0_8 {
+  void * _Nullable _1;
+};
+
+static SWIFT_C_INLINE_THUNK void swift_interop_returnDirect_swift_void_ptr_0_8(char * _Nonnull result, struct swift_interop_returnStub_swift_void_ptr_0_8 value) {
+  memcpy(result + 0, &value._1, 8);
+}
+
+SWIFT_EXTERN struct swift_interop_returnStub_swift_void_ptr_0_8 $sS2ayxGycfC(void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // init()
+SWIFT_EXTERN struct swift_interop_returnStub_swift_void_ptr_0_8 $sSa9repeating5countSayxGx_SitcfC(const void * _Nonnull repeatedValue, ptrdiff_t count, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // init(repeating:count:)
+SWIFT_EXTERN void $sSa15reserveCapacityyySiF(ptrdiff_t minimumCapacity, void * _Nonnull , SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // reserveCapacity(_:)
+SWIFT_EXTERN void $sSa6appendyyxnF(const void * _Nonnull newElement, void * _Nonnull , SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // append(_:)
+SWIFT_EXTERN void $sSa17_customRemoveLastxSgyF(SWIFT_INDIRECT_RESULT void * _Nonnull, void * _Nonnull , SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // _customRemoveLast()
+SWIFT_EXTERN void $sSa6remove2atxSi_tF(SWIFT_INDIRECT_RESULT void * _Nonnull, ptrdiff_t index, void * _Nonnull , SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // remove(at:)
+SWIFT_EXTERN void $sSa6insert_2atyxn_SitF(const void * _Nonnull newElement, ptrdiff_t i, void * _Nonnull , SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // insert(_:at:)
+SWIFT_EXTERN void $sSa9removeAll15keepingCapacityySb_tF(bool keepCapacity, void * _Nonnull , SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // removeAll(keepingCapacity:)
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_passStub_swift_void_ptr_0_8 {
+  void * _Nullable _1;
+};
+
+static SWIFT_C_INLINE_THUNK struct swift_interop_passStub_swift_void_ptr_0_8 swift_interop_passDirect_swift_void_ptr_0_8(const char * _Nonnull value) {
+  struct swift_interop_passStub_swift_void_ptr_0_8 result;
+  memcpy(&result._1, value + 0, 8);
+  return result;
+}
+
+SWIFT_EXTERN ptrdiff_t $sSa10startIndexSivg(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN ptrdiff_t $sSa8endIndexSivg(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN ptrdiff_t $sSa8distance4from2toS2i_SitF(ptrdiff_t start, ptrdiff_t end, struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // distance(from:to:)
+SWIFT_EXTERN void $sSayxSicig(SWIFT_INDIRECT_RESULT void * _Nonnull, ptrdiff_t index, struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN ptrdiff_t $sSa5countSivg(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN bool $sSa29_hoistableIsNativeTypeCheckedSbyF(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _hoistableIsNativeTypeChecked()
+SWIFT_EXTERN ptrdiff_t $sSa8capacitySivg(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+#if defined(__OBJC__)
+SWIFT_EXTERN id _Nullable $sSa6_owneryXlSgvg(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+#endif
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 {
+  uint64_t _1;
+  void * _Nullable _2;
+};
+
+static SWIFT_C_INLINE_THUNK void swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(char * _Nonnull result, struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 value) {
+  memcpy(result + 0, &value._1, 8);
+  memcpy(result + 8, &value._2, 8);
+}
+
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSa11descriptionSSvg(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSa16debugDescriptionSSvg(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+#if defined(__OBJC__)
+SWIFT_EXTERN id _Nonnull $sSa23_bridgeToObjectiveCImplyXlyF(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _bridgeToObjectiveCImpl()
+#endif
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_returnStub_swift_uint64_t_0_8 {
+  uint64_t _1;
+};
+
+static SWIFT_C_INLINE_THUNK void swift_interop_returnDirect_swift_uint64_t_0_8(char * _Nonnull result, struct swift_interop_returnStub_swift_uint64_t_0_8 value) {
+  memcpy(result + 0, &value._1, 8);
+}
+
+#if defined(__OBJC__)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSa44_bridgeFromObjectiveCAdoptingNativeStorageOfySayxGSgyXlFZ(id _Nonnull source, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _bridgeFromObjectiveCAdoptingNativeStorageOf(_:)
+#endif
+#if defined(__OBJC__)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_void_ptr_0_8 $sSa20_immutableCocoaArraySayxGyXl_tcfC(id _Nonnull _immutableCocoaArray, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // init(_immutableCocoaArray:)
+#endif
+SWIFT_EXTERN struct swift_interop_returnStub_swift_void_ptr_0_8 $sSa12arrayLiteralSayxGxd_tcfC(struct swift_interop_passStub_swift_void_ptr_0_8 elements, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // init(arrayLiteral:)
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_passStub_swift_uint64_t_0_8 {
+  uint64_t _1;
+};
+
+static SWIFT_C_INLINE_THUNK struct swift_interop_passStub_swift_uint64_t_0_8 swift_interop_passDirect_swift_uint64_t_0_8(const char * _Nonnull value) {
+  struct swift_interop_passStub_swift_uint64_t_0_8 result;
+  memcpy(&result._1, value + 0, 8);
+  return result;
+}
+
+SWIFT_EXTERN ptrdiff_t $sSS5IndexV13encodedOffsetSivg(struct swift_interop_passStub_swift_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS5IndexV13encodedOffsetABSi_tcfC(ptrdiff_t offset) SWIFT_NOEXCEPT SWIFT_CALL; // init(encodedOffset:)
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_returnStub_swift_uint64_t_0_8_uint8_t_8_9 {
+  uint64_t _1;
+  uint8_t _2;
+};
+
+static SWIFT_C_INLINE_THUNK void swift_interop_returnDirect_swift_uint64_t_0_8_uint8_t_8_9(char * _Nonnull result, struct swift_interop_returnStub_swift_uint64_t_0_8_uint8_t_8_9 value) {
+  memcpy(result + 0, &value._1, 8);
+  memcpy(result + 8, &value._2, 1);
+}
+
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 {
+  uint64_t _1;
+  void * _Nullable _2;
+};
+
+static SWIFT_C_INLINE_THUNK struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(const char * _Nonnull value) {
+  struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 result;
+  memcpy(&result._1, value + 0, 8);
+  memcpy(&result._2, value + 8, 8);
+  return result;
+}
+
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_uint8_t_8_9 $sSS5IndexV_6withinABSgAB_SStcfC(struct swift_interop_passStub_swift_uint64_t_0_8 sourcePosition, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 target) SWIFT_NOEXCEPT SWIFT_CALL; // init(_:within:)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_uint8_t_8_9 $sSS5IndexV12samePosition2inABSgSS8UTF8ViewV_tF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 utf8, struct swift_interop_passStub_swift_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // samePosition(in:)
+SWIFT_EXTERN ptrdiff_t $sSS5IndexV9hashValueSivg(struct swift_interop_passStub_swift_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_uint8_t_8_9 $sSS5IndexV12samePosition2inABSgSS_tF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 characters, struct swift_interop_passStub_swift_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // samePosition(in:)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_uint8_t_8_9 $sSS5IndexV_6withinABSgAB_SS8UTF8ViewVtcfC(struct swift_interop_passStub_swift_uint64_t_0_8 idx, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 target) SWIFT_NOEXCEPT SWIFT_CALL; // init(_:within:)
+struct Swift_String_Index {
+  _Alignas(8) char _storage[8];
+};
+
+#if defined(__OBJC__)
+SWIFT_EXTERN id _Nonnull $sSq19_bridgeToObjectiveCyXlyF(void * _Nonnull , SWIFT_CONTEXT const void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // _bridgeToObjectiveC()
+#endif
+#if defined(__OBJC__)
+SWIFT_EXTERN void $sSq26_forceBridgeFromObjectiveC_6resultyyXl_xSgSgztFZ(id _Nonnull source, void * _Nonnull result, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _forceBridgeFromObjectiveC(_:result:)
+#endif
+#if defined(__OBJC__)
+SWIFT_EXTERN bool $sSq34_conditionallyBridgeFromObjectiveC_6resultSbyXl_xSgSgztFZ(id _Nonnull source, void * _Nonnull result, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _conditionallyBridgeFromObjectiveC(_:result:)
+#endif
+#if defined(__OBJC__)
+SWIFT_EXTERN void $sSq36_unconditionallyBridgeFromObjectiveCyxSgyXlSgFZ(SWIFT_INDIRECT_RESULT void * _Nonnull, id _Nullable source, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _unconditionallyBridgeFromObjectiveC(_:)
+#endif
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSq16debugDescriptionSSvg(void * _Nonnull , SWIFT_CONTEXT const void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $sSq17unsafelyUnwrappedxvg(SWIFT_INDIRECT_RESULT void * _Nonnull, void * _Nonnull , SWIFT_CONTEXT const void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $sSqyxSgxcfC(SWIFT_INDIRECT_RESULT void * _Nonnull, const void * _Nonnull some, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // init(_:)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sS2SycfC(void) SWIFT_NOEXCEPT SWIFT_CALL; // init()
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS10startIndexSS0B0Vvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS8endIndexSS0B0Vvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN ptrdiff_t $sSS5countSivg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN ptrdiff_t $sSS8distance4from2toSiSS5IndexV_AEtF(struct swift_interop_passStub_swift_uint64_t_0_8 start, struct swift_interop_passStub_swift_uint64_t_0_8 end, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // distance(from:to:)
+SWIFT_EXTERN void $sSS15reserveCapacityyySiF(ptrdiff_t n, SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // reserveCapacity(_:)
+SWIFT_EXTERN void $sSS6appendyySSF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 other, SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // append(_:)
+SWIFT_EXTERN void $sSS6append10contentsOfySS_tF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 newElements, SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // append(contentsOf:)
+SWIFT_EXTERN void $sSS9removeAll15keepingCapacityySb_tF(bool keepCapacity, SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // removeAll(keepingCapacity:)
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_returnStub_swift_uint64_t_0_8_uint64_t_8_16 {
+  uint64_t _1;
+  uint64_t _2;
+};
+
+static SWIFT_C_INLINE_THUNK void swift_interop_returnDirect_swift_uint64_t_0_8_uint64_t_8_16(char * _Nonnull result, struct swift_interop_returnStub_swift_uint64_t_0_8_uint64_t_8_16 value) {
+  memcpy(result + 0, &value._1, 8);
+  memcpy(result + 8, &value._2, 8);
+}
+
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS4utf8SS8UTF8ViewVvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $sSS4utf8SS8UTF8ViewVvs(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 newValue, SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS10charactersSSvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $sSS10charactersSSvs(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 newValue, SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN ptrdiff_t $sSS9hashValueSivg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN bool $sSS7isEmptySbvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS10lowercasedSSyF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // lowercased()
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS10uppercasedSSyF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // uppercased()
+SWIFT_EXTERN struct swift_interop_returnStub_swift_void_ptr_0_8 $sSS13_nfcCodeUnitsSays5UInt8VGvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $sSS5writeyySSF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 other, SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // write(_:)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS11descriptionSSvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS16debugDescriptionSSvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN bool $sSS9hasPrefixySbSSF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 prefix, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // hasPrefix(_:)
+SWIFT_EXTERN bool $sSS9hasSuffixySbSSF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 suffix, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // hasSuffix(_:)
+SWIFT_EXTERN void $sSS5_dumpyyF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _dump()
+#if defined(__OBJC__)
+SWIFT_EXTERN id _Nonnull $sSS23_bridgeToObjectiveCImplyXlyF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _bridgeToObjectiveCImpl()
+#endif
+struct swift_interop_stub_Swift_String {
+#if UINTPTR_MAX == 0xFFFFFFFFFFFFFFFFu
+uint64_t _1;
+void * _Nullable _2;
+#elif UINTPTR_MAX == 0xFFFFFFFF
+uint32_t _1;
+uint32_t _2;
+uint32_t _3;
+#endif
+};
+static SWIFT_INLINE_THUNK struct swift_interop_stub_Swift_String swift_interop_passDirect_Swift_String(const char * _Nonnull value) {
+struct swift_interop_stub_Swift_String result;
+#if UINTPTR_MAX == 0xFFFFFFFFFFFFFFFFu
+memcpy(&result._1, value, 8);
+memcpy(&result._2, value + 8, 8);
+#elif UINTPTR_MAX == 0xFFFFFFFF
+memcpy(&result._1, value, 4);
+memcpy(&result._2, value + 4, 4);
+memcpy(&result._3, value + 8, 4);
+#endif
+return result;
+}
+SWIFT_EXTERN void *_Nonnull $sSS10FoundationE19_bridgeToObjectiveCSo8NSStringCyF(swift_interop_stub_Swift_String) SWIFT_NOEXCEPT SWIFT_CALL;
+SWIFT_EXTERN swift_interop_stub_Swift_String $sSS10FoundationE36_unconditionallyBridgeFromObjectiveCySSSo8NSStringCSgFZ(void * _Nullable) SWIFT_NOEXCEPT SWIFT_CALL;
+SWIFT_EXTERN swift_interop_stub_Swift_String $sSS7cStringSSSPys4Int8VG_tcfC(const char * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL;
+struct Swift_String {
+  _Alignas(8) char _storage[16];
+};
+
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS8UTF8ViewV10startIndexSS0D0Vvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS8UTF8ViewV8endIndexSS0D0Vvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS8UTF8ViewV5index5afterSS5IndexVAF_tF(struct swift_interop_passStub_swift_uint64_t_0_8 i, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // index(after:)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS8UTF8ViewV5index6beforeSS5IndexVAF_tF(struct swift_interop_passStub_swift_uint64_t_0_8 i, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // index(before:)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS8UTF8ViewV5index_8offsetBySS5IndexVAF_SitF(struct swift_interop_passStub_swift_uint64_t_0_8 i, ptrdiff_t n, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // index(_:offsetBy:)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_uint8_t_8_9 $sSS8UTF8ViewV5index_8offsetBy07limitedE0SS5IndexVSgAG_SiAGtF(struct swift_interop_passStub_swift_uint64_t_0_8 i, ptrdiff_t n, struct swift_interop_passStub_swift_uint64_t_0_8 limit, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // index(_:offsetBy:limitedBy:)
+SWIFT_EXTERN ptrdiff_t $sSS8UTF8ViewV8distance4from2toSiSS5IndexV_AGtF(struct swift_interop_passStub_swift_uint64_t_0_8 i, struct swift_interop_passStub_swift_uint64_t_0_8 j, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // distance(from:to:)
+SWIFT_EXTERN uint8_t $sSS8UTF8ViewVys5UInt8VSS5IndexVcig(struct swift_interop_passStub_swift_uint64_t_0_8 i, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS8UTF8ViewV16debugDescriptionSSvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS8UTF8ViewV11descriptionSSvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN ptrdiff_t $sSS8UTF8ViewV5countSivg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct Swift_UTF8View {
+  _Alignas(8) char _storage[16];
+};
+
+}
+}
+}
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SWIFT_SYMBOL("s:Sq") Optional;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+inline const constexpr bool isUsableInGenericContext<swift::Optional<T_0_0>> = isUsableInGenericContext<T_0_0>;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+class SWIFT_SYMBOL("s:SS") String;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<swift::String> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SWIFT_SYMBOL("s:Sa") Array;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+inline const constexpr bool isUsableInGenericContext<swift::Array<T_0_0>> = isUsableInGenericContext<T_0_0>;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+namespace _impl {
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class _impl_Array;
+
+static_assert(1 <= 3, "unsupported generic requirement list for metadata func");
+// Type metadata accessor for Array
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $sSaMa(swift::_impl::MetadataRequestTy, void * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SWIFT_SYMBOL("s:Sa") Array final {
+public:
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  SWIFT_INLINE_THUNK ~Array() noexcept {
+    auto metadata = _impl::$sSaMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK Array(const Array &other) noexcept {
+    auto metadata = _impl::$sSaMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    _storage = swift::_impl::OpaqueStorage(vwTable->size, vwTable->getAlignment());
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK Array &operator =(const Array &other) noexcept {
+    auto metadata = _impl::$sSaMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK Array &operator =(Array &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER Array(Array &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+/// Creates a new, empty array.
+/// This is equivalent to initializing with an empty array literal.
+/// For example:
+/// \code
+/// var emptyArray = Array<Int>()
+/// print(emptyArray.isEmpty)
+/// // Prints "true"
+///
+/// emptyArray = []
+/// print(emptyArray.isEmpty)
+/// // Prints "true"
+///
+/// \endcode
+  static SWIFT_INLINE_THUNK Array<T_0_0> init() SWIFT_SYMBOL("s:S2ayxGycfc");
+/// Creates a new array containing the specified number of a single, repeated
+/// value.
+/// Here’s an example of creating an array initialized with five strings
+/// containing the letter <em>Z</em>.
+/// \code
+/// let fiveZs = Array(repeating: "Z", count: 5)
+/// print(fiveZs)
+/// // Prints "["Z", "Z", "Z", "Z", "Z"]"
+///
+/// \endcode\param repeatedValue The element to repeat.
+///
+/// \param count The number of times to repeat the value passed in the
+/// <code>repeating</code> parameter. <code>count</code> must be zero or greater.
+///
+  static SWIFT_INLINE_THUNK Array<T_0_0> init(const T_0_0& repeatedValue, swift::Int count) SWIFT_SYMBOL("s:Sa9repeating5countSayxGx_Sitcfc");
+/// Reserves enough space to store the specified number of elements.
+/// If you are adding a known number of elements to an array, use this method
+/// to avoid multiple reallocations. This method ensures that the array has
+/// unique, mutable, contiguous storage, with space allocated for at least
+/// the requested number of elements.
+/// Calling the <code>reserveCapacity(_:)</code> method on an array with bridged storage
+/// triggers a copy to contiguous storage even if the existing storage
+/// has room to store <code>minimumCapacity</code> elements.
+/// For performance reasons, the size of the newly allocated storage might be
+/// greater than the requested capacity. Use the array’s <code>capacity</code> property
+/// to determine the size of the new storage.
+/// <h1>Preserving an Array’s Geometric Growth Strategy</h1>
+/// If you implement a custom data structure backed by an array that grows
+/// dynamically, naively calling the <code>reserveCapacity(_:)</code> method can lead
+/// to worse than expected performance. Arrays need to follow a geometric
+/// allocation pattern for appending elements to achieve amortized
+/// constant-time performance. The <code>Array</code> type’s <code>append(_:)</code> and
+/// <code>append(contentsOf:)</code> methods take care of this detail for you, but
+/// <code>reserveCapacity(_:)</code> allocates only as much space as you tell it to
+/// (padded to a round value), and no more. This avoids over-allocation, but
+/// can result in insertion not having amortized constant-time performance.
+/// The following code declares <code>values</code>, an array of integers, and the
+/// <code>addTenQuadratic()</code> function, which adds ten more values to the <code>values</code>
+/// array on each call.
+/// \code
+///   var values: [Int] = [0, 1, 2, 3]
+///
+///   // Don't use 'reserveCapacity(_:)' like this
+///   func addTenQuadratic() {
+///       let newCount = values.count + 10
+///       values.reserveCapacity(newCount)
+///       for n in values.count..<newCount {
+///           values.append(n)
+///       }
+///   }
+///
+/// \endcodeThe call to <code>reserveCapacity(_:)</code> increases the <code>values</code> array’s capacity
+/// by exactly 10 elements on each pass through <code>addTenQuadratic()</code>, which
+/// is linear growth. Instead of having constant time when averaged over
+/// many calls, the function may decay to performance that is linear in
+/// <code>values.count</code>. This is almost certainly not what you want.
+/// In cases like this, the simplest fix is often to simply remove the call
+/// to <code>reserveCapacity(_:)</code>, and let the <code>append(_:)</code> method grow the array
+/// for you.
+/// \code
+///   func addTen() {
+///       let newCount = values.count + 10
+///       for n in values.count..<newCount {
+///           values.append(n)
+///       }
+///   }
+///
+/// \endcodeIf you need more control over the capacity of your array, implement your
+/// own geometric growth strategy, passing the size you compute to
+/// <code>reserveCapacity(_:)</code>.
+/// complexity:
+/// O(<em>n</em>), where <em>n</em> is the number of elements in the array.
+/// \param minimumCapacity The requested number of elements to store.
+///
+  SWIFT_INLINE_THUNK void reserveCapacity(swift::Int minimumCapacity) SWIFT_SYMBOL("s:Sa15reserveCapacityyySiF");
+/// Adds a new element at the end of the array.
+/// Use this method to append a single element to the end of a mutable array.
+/// \code
+/// var numbers = [1, 2, 3, 4, 5]
+/// numbers.append(100)
+/// print(numbers)
+/// // Prints "[1, 2, 3, 4, 5, 100]"
+///
+/// \endcodeBecause arrays increase their allocated capacity using an exponential
+/// strategy, appending a single element to an array is an O(1) operation
+/// when averaged over many calls to the <code>append(_:)</code> method. When an array
+/// has additional capacity and is not sharing its storage with another
+/// instance, appending an element is O(1). When an array needs to
+/// reallocate storage before appending or its storage is shared with
+/// another copy, appending is O(<em>n</em>), where <em>n</em> is the length of the array.
+/// complexity:
+/// O(1) on average, over many calls to <code>append(_:)</code> on the
+/// same array.
+/// \param newElement The element to append to the array.
+///
+  SWIFT_INLINE_THUNK void append(const T_0_0& newElement) SWIFT_SYMBOL("s:Sa6appendyyxnF");
+  SWIFT_INLINE_THUNK swift::Optional<T_0_0> _customRemoveLast() SWIFT_SYMBOL("s:Sa17_customRemoveLastxSgyF");
+/// Removes and returns the element at the specified position.
+/// All the elements following the specified position are moved up to
+/// close the gap.
+/// \code
+/// var measurements: [Double] = [1.1, 1.5, 2.9, 1.2, 1.5, 1.3, 1.2]
+/// let removed = measurements.remove(at: 2)
+/// print(measurements)
+/// // Prints "[1.1, 1.5, 1.2, 1.5, 1.3, 1.2]"
+///
+/// \endcodecomplexity:
+/// O(<em>n</em>), where <em>n</em> is the length of the array.
+/// \param index The position of the element to remove. <code>index</code> must
+/// be a valid index of the array.
+///
+///
+/// returns:
+/// The element at the specified index.
+  SWIFT_INLINE_THUNK T_0_0 removeAt(swift::Int index) SWIFT_SYMBOL("s:Sa6remove2atxSi_tF");
+/// Inserts a new element at the specified position.
+/// The new element is inserted before the element currently at the specified
+/// index. If you pass the array’s <code>endIndex</code> property as the <code>index</code>
+/// parameter, the new element is appended to the array.
+/// \code
+/// var numbers = [1, 2, 3, 4, 5]
+/// numbers.insert(100, at: 3)
+/// numbers.insert(200, at: numbers.endIndex)
+///
+/// print(numbers)
+/// // Prints "[1, 2, 3, 100, 4, 5, 200]"
+///
+/// \endcodecomplexity:
+/// O(<em>n</em>), where <em>n</em> is the length of the array. If
+/// <code>i == endIndex</code>, this method is equivalent to <code>append(_:)</code>.
+/// \param newElement The new element to insert into the array.
+///
+/// \param i The position at which to insert the new element.
+/// <code>index</code> must be a valid index of the array or equal to its <code>endIndex</code>
+/// property.
+///
+  SWIFT_INLINE_THUNK void insertAt(const T_0_0& newElement, swift::Int i) SWIFT_SYMBOL("s:Sa6insert_2atyxn_SitF");
+/// Removes all elements from the array.
+/// complexity:
+/// O(<em>n</em>), where <em>n</em> is the length of the array.
+/// \param keepCapacity Pass <code>true</code> to keep the existing capacity of
+/// the array after removing its elements. The default value is
+/// <code>false</code>.
+///
+  SWIFT_INLINE_THUNK void removeAllKeepingCapacity(bool keepCapacity) SWIFT_SYMBOL("s:Sa9removeAll15keepingCapacityySb_tF");
+  SWIFT_INLINE_THUNK swift::Int getStartIndex() const SWIFT_SYMBOL("s:Sa10startIndexSivp");
+  SWIFT_INLINE_THUNK swift::Int getEndIndex() const SWIFT_SYMBOL("s:Sa8endIndexSivp");
+/// Returns the distance between two indices.
+/// \param start A valid index of the collection.
+///
+/// \param end Another valid index of the collection. If <code>end</code> is equal to
+/// <code>start</code>, the result is zero.
+///
+///
+/// returns:
+/// The distance between <code>start</code> and <code>end</code>.
+  SWIFT_INLINE_THUNK swift::Int distanceFromTo(swift::Int start, swift::Int end) const SWIFT_SYMBOL("s:Sa8distance4from2toS2i_SitF");
+SWIFT_INLINE_THUNK T_0_0 operator [](swift::Int index) const SWIFT_SYMBOL("s:SayxSicig");
+  SWIFT_INLINE_THUNK swift::Int getCount() const SWIFT_SYMBOL("s:Sa5countSivp");
+/// Returns <code>true</code> if the array is native and does not need a deferred
+/// type check.  May be hoisted by the optimizer, which means its
+/// results may be stale by the time they are used if there is an
+/// inout violation in user code.
+  SWIFT_INLINE_THUNK bool _hoistableIsNativeTypeChecked() const SWIFT_SYMBOL("s:Sa29_hoistableIsNativeTypeCheckedSbyF");
+  SWIFT_INLINE_THUNK swift::Int getCapacity() const SWIFT_SYMBOL("s:Sa8capacitySivp");
+  #if defined(__OBJC__)
+SWIFT_INLINE_THUNK id _Nullable get_owner() const SWIFT_SYMBOL("s:Sa6_owneryXlSgvp");
+#endif
+  SWIFT_INLINE_THUNK String getDescription() const SWIFT_SYMBOL("s:Sa11descriptionSSvp");
+  SWIFT_INLINE_THUNK String getDebugDescription() const SWIFT_SYMBOL("s:Sa16debugDescriptionSSvp");
+  #if defined(__OBJC__)
+SWIFT_INLINE_THUNK id _Nonnull _bridgeToObjectiveCImpl() const SWIFT_SYMBOL("s:Sa23_bridgeToObjectiveCImplyXlyF");
+#endif
+/// Tries to downcast the source <code>NSArray</code> as our native buffer type.
+/// If it succeeds, creates a new <code>Array</code> around it and returns that.
+/// Returns <code>nil</code> otherwise.
+  #if defined(__OBJC__)
+static SWIFT_INLINE_THUNK swift::Optional<Array<T_0_0>> _bridgeFromObjectiveCAdoptingNativeStorageOf(id _Nonnull source) SWIFT_SYMBOL("s:Sa44_bridgeFromObjectiveCAdoptingNativeStorageOfySayxGSgyXlFZ");
+#endif
+/// Private initializer used for bridging.
+/// Only use this initializer when both conditions are true:
+/// <ul>
+///   <li>
+///     it is statically known that the given <code>NSArray</code> is immutable;
+///   </li>
+///   <li>
+///     <code>Element</code> is bridged verbatim to Objective-C (i.e.,
+///     is a reference type).
+///   </li>
+/// </ul>
+  #if defined(__OBJC__)
+static SWIFT_INLINE_THUNK Array<T_0_0> init(id _Nonnull _immutableCocoaArray) SWIFT_SYMBOL("s:Sa20_immutableCocoaArraySayxGyXl_tcfc");
+#endif
+/// Creates an array from the given array literal.
+/// Do not call this initializer directly. It is used by the compiler
+/// when you use an array literal. Instead, create a new array by using an
+/// array literal as its value. To do this, enclose a comma-separated list of
+/// values in square brackets.
+/// Here, an array of strings is created from an array literal holding
+/// only strings.
+/// \code
+/// let ingredients = ["cocoa beans", "sugar", "cocoa butter", "salt"]
+///
+/// \endcode\param elements A variadic list of elements of the new array.
+///
+  static SWIFT_INLINE_THUNK Array<T_0_0> init(const Array<T_0_0>& elements) SWIFT_SYMBOL("s:Sa12arrayLiteralSayxGxd_tcfc");
+private:
+  SWIFT_INLINE_THUNK Array(swift::_impl::ValueWitnessTable * _Nonnull vwTable) noexcept : _storage(vwTable->size, vwTable->getAlignment()) {}
+  static SWIFT_INLINE_THUNK Array _make() noexcept {
+    auto metadata = _impl::$sSaMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    return Array(vwTable);
+  }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage.getOpaquePointer(); }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage.getOpaquePointer(); }
+
+  swift::_impl::OpaqueStorage _storage;
+  friend class _impl::_impl_Array<T_0_0>;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $sSayxGD;
+  static inline constexpr $sSayxGD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class _impl_Array {
+public:
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(Array<T_0_0> &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const Array<T_0_0> &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER Array<T_0_0> returnNewValue(T callable) {
+    auto result = Array<T_0_0>::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$sSaMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+struct TypeMetadataTrait<swift::Array<T_0_0>> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return swift::_impl::$sSaMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata())._0;
+  }
+};
+namespace _impl{
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+inline const constexpr bool isValueType<swift::Array<T_0_0>> = true;
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+inline const constexpr bool isOpaqueLayout<swift::Array<T_0_0>> = true;
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+struct implClassFor<swift::Array<T_0_0>> { using type = swift::_impl::_impl_Array<T_0_0>; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+
+class SWIFT_SYMBOL("s:SS8UTF8ViewV") UTF8View;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<swift::UTF8View> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+class SWIFT_SYMBOL("s:SS5IndexV") String_Index;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<swift::String_Index> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+namespace _impl {
+
+class _impl_String_Index;
+
+// Type metadata accessor for Index
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $sSS5IndexVMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("s:SS5IndexV") String_Index final {
+public:
+  SWIFT_INLINE_THUNK ~String_Index() noexcept {
+    auto metadata = _impl::$sSS5IndexVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK String_Index(const String_Index &other) noexcept {
+    auto metadata = _impl::$sSS5IndexVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK String_Index &operator =(const String_Index &other) noexcept {
+    auto metadata = _impl::$sSS5IndexVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK String_Index &operator =(String_Index &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER String_Index(String_Index &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+  SWIFT_INLINE_THUNK swift::Int getEncodedOffset() const SWIFT_SYMBOL("s:SS5IndexV13encodedOffsetSivp");
+/// Creates a new index at the specified code unit offset.
+/// \param offset An offset in code units.
+///
+  static SWIFT_INLINE_THUNK String_Index init(swift::Int offset) SWIFT_SYMBOL("s:SS5IndexV13encodedOffsetABSi_tcfc");
+/// Creates an index in the given string that corresponds exactly to the
+/// specified position.
+/// If the index passed as <code>sourcePosition</code> represents the start of an
+/// extended grapheme cluster—the element type of a string—then the
+/// initializer succeeds.
+/// The following example converts the position of the Unicode scalar <code>"e"</code>
+/// into its corresponding position in the string. The character at that
+/// position is the composed <code>"é"</code> character.
+/// \code
+/// let cafe = "Cafe\u{0301}"
+/// print(cafe)
+/// // Prints "Café"
+///
+/// let scalarsIndex = cafe.unicodeScalars.firstIndex(of: "e")!
+/// let stringIndex = String.Index(scalarsIndex, within: cafe)!
+///
+/// print(cafe[...stringIndex])
+/// // Prints "Café"
+///
+/// \endcodeIf the index passed as <code>sourcePosition</code> doesn’t have an exact
+/// corresponding position in <code>target</code>, the result of the initializer is
+/// <code>nil</code>. For example, an attempt to convert the position of the combining
+/// acute accent (<code>"\u{0301}"</code>) fails. Combining Unicode scalars do not have
+/// their own position in a string.
+/// \code
+/// let nextScalarsIndex = cafe.unicodeScalars.index(after: scalarsIndex)
+/// let nextStringIndex = String.Index(nextScalarsIndex, within: cafe)
+///
+/// print(nextStringIndex)
+/// // Prints "nil"
+///
+/// \endcode\param sourcePosition A position in a view of the <code>target</code> parameter.
+/// <code>sourcePosition</code> must be a valid index of at least one of the views
+/// of <code>target</code>.
+///
+/// \param target The string referenced by the resulting index.
+///
+  static SWIFT_INLINE_THUNK swift::Optional<String_Index> init(const String_Index& sourcePosition, const String& target) SWIFT_SYMBOL("s:SS5IndexV_6withinABSgAB_SStcfc");
+/// Returns the position in the given UTF-8 view that corresponds exactly to
+/// this index.
+/// This example first finds the position of the character <code>"é"</code>, and then
+/// uses this method find the same position in the string’s <code>utf8</code> view.
+/// \code
+/// let cafe = "Café"
+/// if let i = cafe.firstIndex(of: "é") {
+///     let j = i.samePosition(in: cafe.utf8)!
+///     print(Array(cafe.utf8[j...]))
+/// }
+/// // Prints "[195, 169]"
+///
+/// \endcode\param utf8 The view to use for the index conversion. This index
+/// must be a valid index of at least one view of the string shared by
+/// <code>utf8</code>.
+///
+///
+/// returns:
+/// The position in <code>utf8</code> that corresponds exactly to this index.
+/// If this index does not have an exact corresponding position in <code>utf8</code>,
+/// this method returns <code>nil</code>. For example, an attempt to convert the
+/// position of a UTF-16 trailing surrogate returns <code>nil</code>.
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> samePositionIn(const UTF8View& utf8) const SWIFT_SYMBOL("s:SS5IndexV12samePosition2inABSgSS8UTF8ViewV_tF");
+  SWIFT_INLINE_THUNK swift::Int getHashValue() const SWIFT_SYMBOL("s:SS5IndexV9hashValueSivp");
+/// Returns the position in the given string that corresponds exactly to this
+/// index.
+/// This example first finds the position of a space (UTF-8 code point <code>32</code>)
+/// in a string’s <code>utf8</code> view and then uses this method find the same position
+/// in the string.
+/// \code
+/// let cafe = "Café 🍵"
+/// let i = cafe.unicodeScalars.firstIndex(of: "🍵")!
+/// let j = i.samePosition(in: cafe)!
+/// print(cafe[j...])
+/// // Prints "🍵"
+///
+/// \endcode\param characters The string to use for the index conversion.
+/// This index must be a valid index of at least one view of <code>characters</code>.
+///
+///
+/// returns:
+/// The position in <code>characters</code> that corresponds exactly to
+/// this index. If this index does not have an exact corresponding
+/// position in <code>characters</code>, this method returns <code>nil</code>. For example,
+/// an attempt to convert the position of a UTF-8 continuation byte
+/// returns <code>nil</code>.
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> samePositionIn(const String& characters) const SWIFT_SYMBOL("s:SS5IndexV12samePosition2inABSgSS_tF");
+/// Creates an index in the given UTF-8 view that corresponds exactly to the
+/// specified <code>UTF16View</code> position.
+/// The following example finds the position of a space in a string’s <code>utf16</code>
+/// view and then converts that position to an index in the string’s
+/// <code>utf8</code> view.
+/// \code
+/// let cafe = "Café 🍵"
+///
+/// let utf16Index = cafe.utf16.firstIndex(of: 32)!
+/// let utf8Index = String.UTF8View.Index(utf16Index, within: cafe.utf8)!
+///
+/// print(Array(cafe.utf8[..<utf8Index]))
+/// // Prints "[67, 97, 102, 195, 169]"
+///
+/// \endcodeIf the position passed in <code>utf16Index</code> doesn’t have an exact
+/// corresponding position in <code>utf8</code>, the result of the initializer is
+/// <code>nil</code>. For example, because UTF-8 and UTF-16 represent high Unicode code
+/// points differently, an attempt to convert the position of the trailing
+/// surrogate of a UTF-16 surrogate pair fails.
+/// The next example attempts to convert the indices of the two UTF-16 code
+/// points that represent the teacup emoji (<code>"🍵"</code>). The index of the lead
+/// surrogate is successfully converted to a position in <code>utf8</code>, but the
+/// index of the trailing surrogate is not.
+/// \code
+/// let emojiHigh = cafe.utf16.index(after: utf16Index)
+/// print(String.UTF8View.Index(emojiHigh, within: cafe.utf8))
+/// // Prints "Optional(String.Index(...))"
+///
+/// let emojiLow = cafe.utf16.index(after: emojiHigh)
+/// print(String.UTF8View.Index(emojiLow, within: cafe.utf8))
+/// // Prints "nil"
+///
+/// \endcode\param idx A position in a <code>String</code> or one of its views.
+///
+/// \param target The <code>UTF8View</code> in which to find the new position.
+///
+  static SWIFT_INLINE_THUNK swift::Optional<String_Index> init(const String_Index& idx, const UTF8View& target) SWIFT_SYMBOL("s:SS5IndexV_6withinABSgAB_SS8UTF8ViewVtcfc");
+private:
+  SWIFT_INLINE_THUNK String_Index() noexcept {}
+  static SWIFT_INLINE_THUNK String_Index _make() noexcept { return String_Index(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_String_Index;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $sSS5IndexVD;
+  static inline constexpr $sSS5IndexVD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_String_Index {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(String_Index &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const String_Index &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER String_Index returnNewValue(T callable) {
+    auto result = String_Index::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$sSS5IndexVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<swift::String_Index> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return swift::_impl::$sSS5IndexVMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<swift::String_Index> = true;
+template<>
+struct implClassFor<swift::String_Index> { using type = swift::_impl::_impl_String_Index; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+
+/// A type that represents either a wrapped value or the absence of a value.
+/// You use the <code>Optional</code> type whenever you use optional values, even if you
+/// never type the word <code>Optional</code>. Swift’s type system usually shows the
+/// wrapped type’s name with a trailing question mark (<code>?</code>) instead of showing
+/// the full type name. For example, if a variable has the type <code>Int?</code>, that’s
+/// just another way of writing <code>Optional<Int></code>. The shortened form is
+/// preferred for ease of reading and writing code.
+/// The types of <code>shortForm</code> and <code>longForm</code> in the following code sample are
+/// the same:
+/// \code
+/// let shortForm: Int? = Int("42")
+/// let longForm: Optional<Int> = Int("42")
+///
+/// \endcodeThe <code>Optional</code> type is an enumeration with two cases. <code>Optional.none</code> is
+/// equivalent to the <code>nil</code> literal. <code>Optional.some(Wrapped)</code> stores a wrapped
+/// value. For example:
+/// \code
+/// let number: Int? = Optional.some(42)
+/// let noNumber: Int? = Optional.none
+/// print(noNumber == nil)
+/// // Prints "true"
+///
+/// \endcodeYou must unwrap the value of an <code>Optional</code> instance before you can use it
+/// in many contexts. Because Swift provides several ways to safely unwrap
+/// optional values, you can choose the one that helps you write clear,
+/// concise code.
+/// The following examples use this dictionary of image names and file paths:
+/// \code
+/// let imagePaths = ["star": "/glyphs/star.png",
+///                   "portrait": "/images/content/portrait.jpg",
+///                   "spacer": "/images/shared/spacer.gif"]
+///
+/// \endcodeGetting a dictionary’s value using a key returns an optional value, so
+/// <code>imagePaths["star"]</code> has type <code>Optional<String></code> or, written in the
+/// preferred manner, <code>String?</code>.
+/// <h2>Optional Binding</h2>
+/// To conditionally bind the wrapped value of an <code>Optional</code> instance to a new
+/// variable, use one of the optional binding control structures, including
+/// <code>if let</code>, <code>guard let</code>, and <code>switch</code>.
+/// \code
+/// if let starPath = imagePaths["star"] {
+///     print("The star image is at '\(starPath)'")
+/// } else {
+///     print("Couldn't find the star image")
+/// }
+/// // Prints "The star image is at '/glyphs/star.png'"
+///
+/// \endcode<h2>Optional Chaining</h2>
+/// To safely access the properties and methods of a wrapped instance, use the
+/// postfix optional chaining operator (postfix <code>?</code>). The following example uses
+/// optional chaining to access the <code>hasSuffix(_:)</code> method on a <code>String?</code>
+/// instance.
+/// \code
+/// if imagePaths["star"]?.hasSuffix(".png") == true {
+///     print("The star image is in PNG format")
+/// }
+/// // Prints "The star image is in PNG format"
+///
+/// \endcode<h2>Using the Nil-Coalescing Operator</h2>
+/// Use the nil-coalescing operator (<code>??</code>) to supply a default value in case
+/// the <code>Optional</code> instance is <code>nil</code>. Here a default path is supplied for an
+/// image that is missing from <code>imagePaths</code>.
+/// \code
+/// let defaultImagePath = "/images/default.png"
+/// let heartPath = imagePaths["heart"] ?? defaultImagePath
+/// print(heartPath)
+/// // Prints "/images/default.png"
+///
+/// \endcodeThe <code>??</code> operator also works with another <code>Optional</code> instance on the
+/// right-hand side. As a result, you can chain multiple <code>??</code> operators
+/// together.
+/// \code
+/// let shapePath = imagePaths["cir"] ?? imagePaths["squ"] ?? defaultImagePath
+/// print(shapePath)
+/// // Prints "/images/default.png"
+///
+/// \endcode<h2>Unconditional Unwrapping</h2>
+/// When you’re certain that an instance of <code>Optional</code> contains a value, you
+/// can unconditionally unwrap the value by using the forced
+/// unwrap operator (postfix <code>!</code>). For example, the result of the failable <code>Int</code>
+/// initializer is unconditionally unwrapped in the example below.
+/// \code
+/// let number = Int("42")!
+/// print(number)
+/// // Prints "42"
+///
+/// \endcodeYou can also perform unconditional optional chaining by using the postfix
+/// <code>!</code> operator.
+/// \code
+/// let isPNG = imagePaths["star"]!.hasSuffix(".png")
+/// print(isPNG)
+/// // Prints "true"
+///
+/// \endcodeUnconditionally unwrapping a <code>nil</code> instance with <code>!</code> triggers a runtime
+/// error.
+namespace _impl {
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class _impl_Optional;
+
+static_assert(1 <= 3, "unsupported generic requirement list for metadata func");
+// Type metadata accessor for Optional
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $sSqMa(swift::_impl::MetadataRequestTy, void * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL;
+
+// Tags for resilient enum Optional
+extern "C" {
+extern unsigned $sSq4noneyxSgABmlFWC;
+extern unsigned $sSq4someyxSgxcABmlFWC;
+}
+
+} // namespace _impl
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SWIFT_SYMBOL("s:Sq") Optional final {
+public:
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  SWIFT_INLINE_THUNK ~Optional() noexcept {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK Optional(const Optional &other) noexcept {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    _storage = swift::_impl::OpaqueStorage(vwTable->size, vwTable->getAlignment());
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK Optional &operator =(const Optional &other) noexcept {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK Optional &operator =(Optional &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER Optional(Optional &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    some SWIFT_SYMBOL("s:Sq4someyxSgxcABmlF"),
+    none SWIFT_SYMBOL("s:Sq4noneyxSgABmlF")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_some {  // impl struct for case some
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::some;
+    }
+    SWIFT_INLINE_THUNK Optional<T_0_0> operator()(const T_0_0& val) const;
+  } some SWIFT_SYMBOL("s:Sq4someyxSgxcABmlF");
+  SWIFT_INLINE_THUNK bool isSome() const;
+  SWIFT_INLINE_THUNK T_0_0 getSome() const;
+
+  inline const static struct _impl_none {  // impl struct for case none
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::none;
+    }
+    SWIFT_INLINE_THUNK Optional<T_0_0> operator()() const;
+  } none SWIFT_SYMBOL("s:Sq4noneyxSgABmlF");
+  SWIFT_INLINE_THUNK bool isNone() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::some;
+      case 1: return cases::none;
+      default: abort();
+    }
+  }
+
+  #if defined(__OBJC__)
+SWIFT_INLINE_THUNK id _Nonnull _bridgeToObjectiveC() const SWIFT_SYMBOL("s:Sq19_bridgeToObjectiveCyXlyF");
+#endif
+  #if defined(__OBJC__)
+static SWIFT_INLINE_THUNK void _forceBridgeFromObjectiveCResult(id _Nonnull source, swift::Optional<Optional<T_0_0>>& result) SWIFT_SYMBOL("s:Sq26_forceBridgeFromObjectiveC_6resultyyXl_xSgSgztFZ");
+#endif
+  #if defined(__OBJC__)
+static SWIFT_INLINE_THUNK bool _conditionallyBridgeFromObjectiveCResult(id _Nonnull source, swift::Optional<Optional<T_0_0>>& result) SWIFT_SYMBOL("s:Sq34_conditionallyBridgeFromObjectiveC_6resultSbyXl_xSgSgztFZ");
+#endif
+  #if defined(__OBJC__)
+static SWIFT_INLINE_THUNK swift::Optional<T_0_0> _unconditionallyBridgeFromObjectiveC(id _Nullable source) SWIFT_SYMBOL("s:Sq36_unconditionallyBridgeFromObjectiveCyxSgyXlSgFZ");
+#endif
+  SWIFT_INLINE_THUNK String getDebugDescription() const SWIFT_SYMBOL("s:Sq16debugDescriptionSSvp");
+  SWIFT_INLINE_THUNK T_0_0 getUnsafelyUnwrapped() const SWIFT_SYMBOL("s:Sq17unsafelyUnwrappedxvp");
+/// Creates an instance that stores the given value.
+  static SWIFT_INLINE_THUNK swift::Optional<T_0_0> init(const T_0_0& some_) SWIFT_SYMBOL("s:SqsRi_zrlEyxSgxcfc");
+#define SWIFT_CXX_INTEROP_OPTIONAL_MIXIN
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnon-modular-include-in-framework-module"
+// Allow user to find the header using additional include paths
+#if __has_include(<swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+#include <swiftToCxx/_SwiftStdlibCxxOverlay.h>
+// Look for the C++ interop support header relative to clang's resource dir:
+//  '<toolchain>/usr/lib/clang/<version>/include/../../../swift/swiftToCxx'.
+#elif __has_include(<../../../swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+#include <../../../swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>
+#elif __has_include(<../../../../../lib/swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+//  '<toolchain>/usr/local/lib/clang/<version>/include/../../../../../lib/swift/swiftToCxx'.
+#include <../../../../../lib/swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>
+#endif
+#pragma clang diagnostic pop
+private:
+  SWIFT_INLINE_THUNK Optional(swift::_impl::ValueWitnessTable * _Nonnull vwTable) noexcept : _storage(vwTable->size, vwTable->getAlignment()) {}
+  static SWIFT_INLINE_THUNK Optional _make() noexcept {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    return Optional(vwTable);
+  }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage.getOpaquePointer(); }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage.getOpaquePointer(); }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  swift::_impl::OpaqueStorage _storage;
+  friend class _impl::_impl_Optional<T_0_0>;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $sxSgD;
+  static inline constexpr $sxSgD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class _impl_Optional {
+public:
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(Optional<T_0_0> &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const Optional<T_0_0> &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER Optional<T_0_0> returnNewValue(T callable) {
+    auto result = Optional<T_0_0>::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+struct TypeMetadataTrait<swift::Optional<T_0_0>> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return swift::_impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata())._0;
+  }
+};
+namespace _impl{
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+inline const constexpr bool isValueType<swift::Optional<T_0_0>> = true;
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+inline const constexpr bool isOpaqueLayout<swift::Optional<T_0_0>> = true;
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+struct implClassFor<swift::Optional<T_0_0>> { using type = swift::_impl::_impl_Optional<T_0_0>; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+
+namespace _impl {
+
+class _impl_String;
+
+// Type metadata accessor for String
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $sSSMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("s:SS") String final {
+public:
+  SWIFT_INLINE_THUNK ~String() noexcept {
+    auto metadata = _impl::$sSSMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK String(const String &other) noexcept {
+    auto metadata = _impl::$sSSMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK String &operator =(const String &other) noexcept {
+    auto metadata = _impl::$sSSMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK String &operator =(String &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER String(String &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+/// Creates an empty string.
+/// Using this initializer is equivalent to initializing a string with an
+/// empty string literal.
+/// \code
+/// let empty = ""
+/// let alsoEmpty = String()
+///
+/// \endcode
+  static SWIFT_INLINE_THUNK String init() SWIFT_SYMBOL("s:S2Sycfc");
+  SWIFT_INLINE_THUNK String_Index getStartIndex() const SWIFT_SYMBOL("s:SS10startIndexSS0B0Vvp");
+  SWIFT_INLINE_THUNK String_Index getEndIndex() const SWIFT_SYMBOL("s:SS8endIndexSS0B0Vvp");
+  SWIFT_INLINE_THUNK swift::Int getCount() const SWIFT_SYMBOL("s:SS5countSivp");
+/// Returns the distance between two indices.
+/// complexity:
+/// O(<em>n</em>), where <em>n</em> is the resulting distance.
+/// \param start A valid index of the collection.
+///
+/// \param end Another valid index of the collection. If <code>end</code> is equal to
+/// <code>start</code>, the result is zero.
+///
+///
+/// returns:
+/// The distance between <code>start</code> and <code>end</code>.
+  SWIFT_INLINE_THUNK swift::Int distanceFromTo(const String_Index& start, const String_Index& end) const SWIFT_SYMBOL("s:SS8distance4from2toSiSS5IndexV_AEtF");
+/// Reserves enough space in the string’s underlying storage to store the
+/// specified number of ASCII characters.
+/// Because each character in a string can require more than a single ASCII
+/// character’s worth of storage, additional allocation may be necessary
+/// when adding characters to a string after a call to
+/// <code>reserveCapacity(_:)</code>.
+/// complexity:
+/// O(<em>n</em>)
+/// \param n The minimum number of ASCII character’s worth of storage
+/// to allocate.
+///
+  SWIFT_INLINE_THUNK void reserveCapacity(swift::Int n) SWIFT_SYMBOL("s:SS15reserveCapacityyySiF");
+/// Appends the given string to this string.
+/// The following example builds a customized greeting by using the
+/// <code>append(_:)</code> method:
+/// \code
+/// var greeting = "Hello, "
+/// if let name = getUserName() {
+///     greeting.append(name)
+/// } else {
+///     greeting.append("friend")
+/// }
+/// print(greeting)
+/// // Prints "Hello, friend"
+///
+/// \endcode\param other Another string.
+///
+  SWIFT_INLINE_THUNK void append(const String& other) SWIFT_SYMBOL("s:SS6appendyySSF");
+  SWIFT_INLINE_THUNK void appendContentsOf(const String& newElements) SWIFT_SYMBOL("s:SS6append10contentsOfySS_tF");
+/// Replaces this string with the empty string.
+/// Calling this method invalidates any existing indices for use with this
+/// string.
+/// \param keepCapacity Pass <code>true</code> to prevent the release of the
+/// string’s allocated storage. Retaining the storage can be a useful
+/// optimization when you’re planning to grow the string again. The
+/// default value is <code>false</code>.
+///
+  SWIFT_INLINE_THUNK void removeAllKeepingCapacity(bool keepCapacity) SWIFT_SYMBOL("s:SS9removeAll15keepingCapacityySb_tF");
+  SWIFT_INLINE_THUNK UTF8View getUtf8() const SWIFT_SYMBOL("s:SS4utf8SS8UTF8ViewVvp");
+  SWIFT_INLINE_THUNK void setUtf8(const UTF8View& newValue) SWIFT_SYMBOL("s:SS4utf8SS8UTF8ViewVvp");
+  SWIFT_INLINE_THUNK String getCharacters() const SWIFT_SYMBOL("s:SS10charactersSSvp");
+  SWIFT_INLINE_THUNK void setCharacters(const String& newValue) SWIFT_SYMBOL("s:SS10charactersSSvp");
+  SWIFT_INLINE_THUNK swift::Int getHashValue() const SWIFT_SYMBOL("s:SS9hashValueSivp");
+  SWIFT_INLINE_THUNK bool isEmpty() const SWIFT_SYMBOL("s:SS7isEmptySbvp");
+/// Returns a lowercase version of the string.
+/// Here’s an example of transforming a string to all lowercase letters.
+/// \code
+/// let cafe = "BBQ Café 🍵"
+/// print(cafe.lowercased())
+/// // Prints "bbq café 🍵"
+///
+/// \endcodecomplexity:
+/// O(<em>n</em>)
+///
+/// returns:
+/// A lowercase copy of the string.
+  SWIFT_INLINE_THUNK String lowercased() const SWIFT_SYMBOL("s:SS10lowercasedSSyF");
+/// Returns an uppercase version of the string.
+/// The following example transforms a string to uppercase letters:
+/// \code
+/// let cafe = "Café 🍵"
+/// print(cafe.uppercased())
+/// // Prints "CAFÉ 🍵"
+///
+/// \endcodecomplexity:
+/// O(<em>n</em>)
+///
+/// returns:
+/// An uppercase copy of the string.
+  SWIFT_INLINE_THUNK String uppercased() const SWIFT_SYMBOL("s:SS10uppercasedSSyF");
+  SWIFT_INLINE_THUNK Array<uint8_t> get_nfcCodeUnits() const SWIFT_SYMBOL("s:SS13_nfcCodeUnitsSays5UInt8VGvp");
+/// Appends the given string to this string.
+/// \param other A string to append.
+///
+  SWIFT_INLINE_THUNK void write(const String& other) SWIFT_SYMBOL("s:SS5writeyySSF");
+  SWIFT_INLINE_THUNK String getDescription() const SWIFT_SYMBOL("s:SS11descriptionSSvp");
+  SWIFT_INLINE_THUNK String getDebugDescription() const SWIFT_SYMBOL("s:SS16debugDescriptionSSvp");
+  SWIFT_INLINE_THUNK bool hasPrefix(const String& prefix) const SWIFT_SYMBOL("s:SS9hasPrefixySbSSF");
+  SWIFT_INLINE_THUNK bool hasSuffix(const String& suffix) const SWIFT_SYMBOL("s:SS9hasSuffixySbSSF");
+  SWIFT_INLINE_THUNK void _dump() const SWIFT_SYMBOL("s:SS5_dumpyyF");
+  #if defined(__OBJC__)
+SWIFT_INLINE_THUNK id _Nonnull _bridgeToObjectiveCImpl() const SWIFT_SYMBOL("s:SS23_bridgeToObjectiveCImplyXlyF");
+#endif
+#if defined(__OBJC__)
+  SWIFT_INLINE_THUNK operator NSString * _Nonnull () const noexcept {
+    return (__bridge_transfer NSString *)(_impl::$sSS10FoundationE19_bridgeToObjectiveCSo8NSStringCyF(_impl::swift_interop_passDirect_Swift_String(_getOpaquePointer())));
+  }
+static SWIFT_INLINE_THUNK String init(NSString * _Nonnull nsString) noexcept {
+    auto result = _make();
+    auto res = _impl::$sSS10FoundationE36_unconditionallyBridgeFromObjectiveCySSSo8NSStringCSgFZ((__bridge void *)nsString);
+    memcpy(result._getOpaquePointer(), &res, sizeof(res));
+    return result;
+  }
+
+#endif // defined(__OBJC__)
+#define SWIFT_CXX_INTEROP_STRING_MIXIN
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnon-modular-include-in-framework-module"
+// Allow user to find the header using additional include paths
+#if __has_include(<swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+#include <swiftToCxx/_SwiftStdlibCxxOverlay.h>
+// Look for the C++ interop support header relative to clang's resource dir:
+//  '<toolchain>/usr/lib/clang/<version>/include/../../../swift/swiftToCxx'.
+#elif __has_include(<../../../swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+#include <../../../swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>
+#elif __has_include(<../../../../../lib/swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+//  '<toolchain>/usr/local/lib/clang/<version>/include/../../../../../lib/swift/swiftToCxx'.
+#include <../../../../../lib/swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>
+#endif
+#pragma clang diagnostic pop
+private:
+  SWIFT_INLINE_THUNK String() noexcept {}
+  static SWIFT_INLINE_THUNK String _make() noexcept { return String(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  alignas(8) char _storage[16];
+  friend class _impl::_impl_String;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $sSSD;
+  static inline constexpr $sSSD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_String {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(String &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const String &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER String returnNewValue(T callable) {
+    auto result = String::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$sSSMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<swift::String> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return swift::_impl::$sSSMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<swift::String> = true;
+template<>
+struct implClassFor<swift::String> { using type = swift::_impl::_impl_String; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+
+namespace _impl {
+
+class _impl_UTF8View;
+
+// Type metadata accessor for UTF8View
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $sSS8UTF8ViewVMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("s:SS8UTF8ViewV") UTF8View final {
+public:
+  SWIFT_INLINE_THUNK ~UTF8View() noexcept {
+    auto metadata = _impl::$sSS8UTF8ViewVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK UTF8View(const UTF8View &other) noexcept {
+    auto metadata = _impl::$sSS8UTF8ViewVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK UTF8View &operator =(const UTF8View &other) noexcept {
+    auto metadata = _impl::$sSS8UTF8ViewVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK UTF8View &operator =(UTF8View &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER UTF8View(UTF8View &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+  SWIFT_INLINE_THUNK String_Index getStartIndex() const SWIFT_SYMBOL("s:SS8UTF8ViewV10startIndexSS0D0Vvp");
+  SWIFT_INLINE_THUNK String_Index getEndIndex() const SWIFT_SYMBOL("s:SS8UTF8ViewV8endIndexSS0D0Vvp");
+/// Returns the next consecutive position after <code>i</code>.
+/// precondition:
+/// The next position is representable.
+  SWIFT_INLINE_THUNK String_Index indexAfter(const String_Index& i) const SWIFT_SYMBOL("s:SS8UTF8ViewV5index5afterSS5IndexVAF_tF");
+  SWIFT_INLINE_THUNK String_Index indexBefore(const String_Index& i) const SWIFT_SYMBOL("s:SS8UTF8ViewV5index6beforeSS5IndexVAF_tF");
+  SWIFT_INLINE_THUNK String_Index indexOffsetBy(const String_Index& i, swift::Int n) const SWIFT_SYMBOL("s:SS8UTF8ViewV5index_8offsetBySS5IndexVAF_SitF");
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> indexOffsetByLimitedBy(const String_Index& i, swift::Int n, const String_Index& limit) const SWIFT_SYMBOL("s:SS8UTF8ViewV5index_8offsetBy07limitedE0SS5IndexVSgAG_SiAGtF");
+  SWIFT_INLINE_THUNK swift::Int distanceFromTo(const String_Index& i, const String_Index& j) const SWIFT_SYMBOL("s:SS8UTF8ViewV8distance4from2toSiSS5IndexV_AGtF");
+SWIFT_INLINE_THUNK uint8_t operator [](const String_Index& i) const SWIFT_SYMBOL("s:SS8UTF8ViewVys5UInt8VSS5IndexVcig");
+  SWIFT_INLINE_THUNK String getDebugDescription() const SWIFT_SYMBOL("s:SS8UTF8ViewV16debugDescriptionSSvp");
+  SWIFT_INLINE_THUNK String getDescription() const SWIFT_SYMBOL("s:SS8UTF8ViewV11descriptionSSvp");
+  SWIFT_INLINE_THUNK swift::Int getCount() const SWIFT_SYMBOL("s:SS8UTF8ViewV5countSivp");
+private:
+  SWIFT_INLINE_THUNK UTF8View() noexcept {}
+  static SWIFT_INLINE_THUNK UTF8View _make() noexcept { return UTF8View(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  alignas(8) char _storage[16];
+  friend class _impl::_impl_UTF8View;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $sSS8UTF8ViewVD;
+  static inline constexpr $sSS8UTF8ViewVD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_UTF8View {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(UTF8View &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const UTF8View &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER UTF8View returnNewValue(T callable) {
+    auto result = UTF8View::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$sSS8UTF8ViewVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<swift::UTF8View> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return swift::_impl::$sSS8UTF8ViewVMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<swift::UTF8View> = true;
+template<>
+struct implClassFor<swift::UTF8View> { using type = swift::_impl::_impl_UTF8View; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK Array<T_0_0> Array<T_0_0>::init() {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::_impl_Array<T_0_0>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_void_ptr_0_8(result, swift::_impl::$sS2ayxGycfC(swift::TypeMetadataTrait<T_0_0>::getTypeMetadata()));
+  });
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK Array<T_0_0> Array<T_0_0>::init(const T_0_0& repeatedValue, swift::Int count) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  alignas(alignof(T_0_0)) char copyBuffer_consumedParamCopy_repeatedValue[sizeof(T_0_0)];
+  auto &consumedParamCopy_repeatedValue = *(new(copyBuffer_consumedParamCopy_repeatedValue) T_0_0(repeatedValue));
+  swift::_impl::ConsumedValueStorageDestroyer<T_0_0> storageGuard_consumedParamCopy_repeatedValue(consumedParamCopy_repeatedValue);
+  return swift::_impl::_impl_Array<T_0_0>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_void_ptr_0_8(result, swift::_impl::$sSa9repeating5countSayxGx_SitcfC(swift::_impl::getOpaquePointer(consumedParamCopy_repeatedValue), count, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata()));
+  });
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK void Array<T_0_0>::reserveCapacity(swift::Int minimumCapacity) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  swift::_impl::$sSa15reserveCapacityyySiF(minimumCapacity, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK void Array<T_0_0>::append(const T_0_0& newElement) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  alignas(alignof(T_0_0)) char copyBuffer_consumedParamCopy_newElement[sizeof(T_0_0)];
+  auto &consumedParamCopy_newElement = *(new(copyBuffer_consumedParamCopy_newElement) T_0_0(newElement));
+  swift::_impl::ConsumedValueStorageDestroyer<T_0_0> storageGuard_consumedParamCopy_newElement(consumedParamCopy_newElement);
+  swift::_impl::$sSa6appendyyxnF(swift::_impl::getOpaquePointer(consumedParamCopy_newElement), swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Optional<T_0_0> Array<T_0_0>::_customRemoveLast() {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::_impl_Optional<T_0_0>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::$sSa17_customRemoveLastxSgyF(result, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  });
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK T_0_0 Array<T_0_0>::removeAt(swift::Int index) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+  if constexpr (std::is_base_of<::swift::_impl::RefCountedClass, T_0_0>::value) {
+  void *returnValue;
+  swift::_impl::$sSa6remove2atxSi_tF(reinterpret_cast<void *>(&returnValue), index, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  return ::swift::_impl::implClassFor<T_0_0>::type::makeRetained(returnValue);
+  } else if constexpr (::swift::_impl::isValueType<T_0_0>) {
+  return ::swift::_impl::implClassFor<T_0_0>::type::returnNewValue([&](void * _Nonnull returnValue) SWIFT_INLINE_THUNK_ATTRIBUTES {
+swift::_impl::$sSa6remove2atxSi_tF(returnValue, index, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  });
+  } else if constexpr (::swift::_impl::isSwiftBridgedCxxRecord<T_0_0>) {
+alignas(alignof(T_0_0)) char storage[sizeof(T_0_0)];
+auto * _Nonnull storageObjectPtr = reinterpret_cast<T_0_0 *>(storage);
+swift::_impl::$sSa6remove2atxSi_tF(storage, index, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+T_0_0 result(static_cast<T_0_0 &&>(*storageObjectPtr));
+storageObjectPtr->~T_0_0();
+return result;
+  } else {
+  T_0_0 returnValue;
+swift::_impl::$sSa6remove2atxSi_tF(reinterpret_cast<void *>(&returnValue), index, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  return returnValue;
+  }
+#pragma clang diagnostic pop
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK void Array<T_0_0>::insertAt(const T_0_0& newElement, swift::Int i) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  alignas(alignof(T_0_0)) char copyBuffer_consumedParamCopy_newElement[sizeof(T_0_0)];
+  auto &consumedParamCopy_newElement = *(new(copyBuffer_consumedParamCopy_newElement) T_0_0(newElement));
+  swift::_impl::ConsumedValueStorageDestroyer<T_0_0> storageGuard_consumedParamCopy_newElement(consumedParamCopy_newElement);
+  swift::_impl::$sSa6insert_2atyxn_SitF(swift::_impl::getOpaquePointer(consumedParamCopy_newElement), i, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK void Array<T_0_0>::removeAllKeepingCapacity(bool keepCapacity) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  swift::_impl::$sSa9removeAll15keepingCapacityySb_tF(keepCapacity, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Int Array<T_0_0>::getStartIndex() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::$sSa10startIndexSivg(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Int Array<T_0_0>::getEndIndex() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::$sSa8endIndexSivg(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Int Array<T_0_0>::distanceFromTo(swift::Int start, swift::Int end) const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::$sSa8distance4from2toS2i_SitF(start, end, swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK T_0_0 Array<T_0_0>::operator [](swift::Int index) const SWIFT_SYMBOL("s:SayxSicig") {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+  if constexpr (std::is_base_of<::swift::_impl::RefCountedClass, T_0_0>::value) {
+  void *returnValue;
+  swift::_impl::$sSayxSicig(reinterpret_cast<void *>(&returnValue), index, swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  return ::swift::_impl::implClassFor<T_0_0>::type::makeRetained(returnValue);
+  } else if constexpr (::swift::_impl::isValueType<T_0_0>) {
+  return ::swift::_impl::implClassFor<T_0_0>::type::returnNewValue([&](void * _Nonnull returnValue) SWIFT_INLINE_THUNK_ATTRIBUTES {
+swift::_impl::$sSayxSicig(returnValue, index, swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  });
+  } else if constexpr (::swift::_impl::isSwiftBridgedCxxRecord<T_0_0>) {
+alignas(alignof(T_0_0)) char storage[sizeof(T_0_0)];
+auto * _Nonnull storageObjectPtr = reinterpret_cast<T_0_0 *>(storage);
+swift::_impl::$sSayxSicig(storage, index, swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+T_0_0 result(static_cast<T_0_0 &&>(*storageObjectPtr));
+storageObjectPtr->~T_0_0();
+return result;
+  } else {
+  T_0_0 returnValue;
+swift::_impl::$sSayxSicig(reinterpret_cast<void *>(&returnValue), index, swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  return returnValue;
+  }
+#pragma clang diagnostic pop
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Int Array<T_0_0>::getCount() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::$sSa5countSivg(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK bool Array<T_0_0>::_hoistableIsNativeTypeChecked() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::$sSa29_hoistableIsNativeTypeCheckedSbyF(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Int Array<T_0_0>::getCapacity() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::$sSa8capacitySivg(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK id _Nullable Array<T_0_0>::get_owner() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+return (__bridge_transfer id)(__bridge void *)swift::_impl::$sSa6_owneryXlSgvg(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+#endif
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK String Array<T_0_0>::getDescription() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSa11descriptionSSvg(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata()));
+  });
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK String Array<T_0_0>::getDebugDescription() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSa16debugDescriptionSSvg(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata()));
+  });
+  }
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK id _Nonnull Array<T_0_0>::_bridgeToObjectiveCImpl() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+return (__bridge_transfer id)(__bridge void *)swift::_impl::$sSa23_bridgeToObjectiveCImplyXlyF(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+#endif
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Optional<Array<T_0_0>> Array<T_0_0>::_bridgeFromObjectiveCAdoptingNativeStorageOf(id _Nonnull source) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::_impl_Optional<Array<T_0_0>>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSa44_bridgeFromObjectiveCAdoptingNativeStorageOfySayxGSgyXlFZ(source, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata()));
+  });
+  }
+#endif
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK Array<T_0_0> Array<T_0_0>::init(id _Nonnull _immutableCocoaArray) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  alignas(alignof(id _Nonnull)) char copyBuffer_consumedParamCopy__immutableCocoaArray[sizeof(id _Nonnull)];
+  auto &consumedParamCopy__immutableCocoaArray = *(new(copyBuffer_consumedParamCopy__immutableCocoaArray) id _Nonnull(_immutableCocoaArray));
+  swift::_impl::ConsumedValueStorageDestroyer<id _Nonnull> storageGuard_consumedParamCopy__immutableCocoaArray(consumedParamCopy__immutableCocoaArray);
+  return swift::_impl::_impl_Array<T_0_0>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_void_ptr_0_8(result, swift::_impl::$sSa20_immutableCocoaArraySayxGyXl_tcfC(consumedParamCopy__immutableCocoaArray, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata()));
+  });
+  }
+#endif
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK Array<T_0_0> Array<T_0_0>::init(const Array<T_0_0>& elements) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  alignas(alignof(Array<T_0_0>)) char copyBuffer_consumedParamCopy_elements[sizeof(Array<T_0_0>)];
+  auto &consumedParamCopy_elements = *(new(copyBuffer_consumedParamCopy_elements) Array<T_0_0>(elements));
+  swift::_impl::ConsumedValueStorageDestroyer<Array<T_0_0>> storageGuard_consumedParamCopy_elements(consumedParamCopy_elements);
+  return swift::_impl::_impl_Array<T_0_0>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_void_ptr_0_8(result, swift::_impl::$sSa12arrayLiteralSayxGxd_tcfC(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(swift::_impl::_impl_Array<T_0_0>::getOpaquePointer(consumedParamCopy_elements)), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata()));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int String_Index::getEncodedOffset() const {
+  return swift::_impl::$sSS5IndexV13encodedOffsetSivg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK String_Index String_Index::init(swift::Int offset) {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS5IndexV13encodedOffsetABSi_tcfC(offset));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> String_Index::init(const String_Index& sourcePosition, const String& target) {
+  alignas(alignof(String)) char copyBuffer_consumedParamCopy_target[sizeof(String)];
+  auto &consumedParamCopy_target = *(new(copyBuffer_consumedParamCopy_target) String(target));
+  swift::_impl::ConsumedValueStorageDestroyer<String> storageGuard_consumedParamCopy_target(consumedParamCopy_target);
+  return swift::_impl::_impl_Optional<String_Index>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_uint8_t_8_9(result, swift::_impl::$sSS5IndexV_6withinABSgAB_SStcfC(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(sourcePosition)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(consumedParamCopy_target))));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> String_Index::samePositionIn(const UTF8View& utf8) const {
+  return swift::_impl::_impl_Optional<String_Index>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_uint8_t_8_9(result, swift::_impl::$sSS5IndexV12samePosition2inABSgSS8UTF8ViewV_tF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_UTF8View::getOpaquePointer(utf8)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int String_Index::getHashValue() const {
+  return swift::_impl::$sSS5IndexV9hashValueSivg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> String_Index::samePositionIn(const String& characters) const {
+  return swift::_impl::_impl_Optional<String_Index>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_uint8_t_8_9(result, swift::_impl::$sSS5IndexV12samePosition2inABSgSS_tF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(characters)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> String_Index::init(const String_Index& idx, const UTF8View& target) {
+  alignas(alignof(UTF8View)) char copyBuffer_consumedParamCopy_target[sizeof(UTF8View)];
+  auto &consumedParamCopy_target = *(new(copyBuffer_consumedParamCopy_target) UTF8View(target));
+  swift::_impl::ConsumedValueStorageDestroyer<UTF8View> storageGuard_consumedParamCopy_target(consumedParamCopy_target);
+  return swift::_impl::_impl_Optional<String_Index>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_uint8_t_8_9(result, swift::_impl::$sSS5IndexV_6withinABSgAB_SS8UTF8ViewVtcfC(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(idx)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_UTF8View::getOpaquePointer(consumedParamCopy_target))));
+  });
+  }
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+  SWIFT_INLINE_THUNK Optional<T_0_0> Optional<T_0_0>::_impl_some::operator()(const T_0_0& val) const {
+    auto result = Optional<T_0_0>::_make();
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+if constexpr (std::is_base_of<::swift::_impl::RefCountedClass, T_0_0>::value) {
+    void *ptr = ::swift::_impl::_impl_RefCountedClass::copyOpaquePointer(val);
+    memcpy(result._getOpaquePointer(), &ptr, sizeof(ptr));
+} else if constexpr (::swift::_impl::isValueType<T_0_0>) {
+    alignas(T_0_0) unsigned char buffer[sizeof(T_0_0)];
+    auto *valCopy = new(buffer) T_0_0(val);
+    swift::_impl::implClassFor<T_0_0>::type::initializeWithTake(result._getOpaquePointer(), swift::_impl::implClassFor<T_0_0>::type::getOpaquePointer(*valCopy));
+} else {
+    memcpy(result._getOpaquePointer(), &val, sizeof(val));
+}
+#pragma clang diagnostic pop
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+  SWIFT_INLINE_THUNK  bool Optional<T_0_0>::isSome() const {
+    return *this == Optional<T_0_0>::some;
+  }
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+  SWIFT_INLINE_THUNK T_0_0 Optional<T_0_0>::getSome() const {
+    if (!isSome()) abort();
+    alignas(Optional) unsigned char buffer[sizeof(Optional)];
+    auto *thisCopy = new(buffer) Optional(*this);
+    char * _Nonnull payloadFromDestruction = thisCopy->_destructiveProjectEnumData();
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+  if constexpr (std::is_base_of<::swift::_impl::RefCountedClass, T_0_0>::value) {
+  void *returnValue;
+  returnValue = *reinterpret_cast<void **>(payloadFromDestruction);
+  return ::swift::_impl::implClassFor<T_0_0>::type::makeRetained(returnValue);
+  } else if constexpr (::swift::_impl::isValueType<T_0_0>) {
+  return ::swift::_impl::implClassFor<T_0_0>::type::returnNewValue([&](void * _Nonnull returnValue) SWIFT_INLINE_THUNK_ATTRIBUTES {
+  return ::swift::_impl::implClassFor<T_0_0>::type::initializeWithTake(reinterpret_cast<char * _Nonnull>(returnValue), payloadFromDestruction);
+  });
+  } else if constexpr (::swift::_impl::isSwiftBridgedCxxRecord<T_0_0>) {
+abort();
+  } else {
+  T_0_0 returnValue;
+memcpy(&returnValue, payloadFromDestruction, sizeof(returnValue));
+  return returnValue;
+  }
+#pragma clang diagnostic pop
+}
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+  SWIFT_INLINE_THUNK Optional<T_0_0> Optional<T_0_0>::_impl_none::operator()() const {
+    auto result = Optional<T_0_0>::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+  SWIFT_INLINE_THUNK  bool Optional<T_0_0>::isNone() const {
+    return *this == Optional<T_0_0>::none;
+  }
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK id _Nonnull Optional<T_0_0>::_bridgeToObjectiveC() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+return (__bridge_transfer id)(__bridge void *)swift::_impl::$sSq19_bridgeToObjectiveCyXlyF(swift::TypeMetadataTrait<Optional<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  }
+#endif
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK void Optional<T_0_0>::_forceBridgeFromObjectiveCResult(id _Nonnull source, swift::Optional<Optional<T_0_0>>& result) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  swift::_impl::$sSq26_forceBridgeFromObjectiveC_6resultyyXl_xSgSgztFZ(source, swift::_impl::_impl_Optional<Optional<T_0_0>>::getOpaquePointer(result), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+#endif
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK bool Optional<T_0_0>::_conditionallyBridgeFromObjectiveCResult(id _Nonnull source, swift::Optional<Optional<T_0_0>>& result) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::$sSq34_conditionallyBridgeFromObjectiveC_6resultSbyXl_xSgSgztFZ(source, swift::_impl::_impl_Optional<Optional<T_0_0>>::getOpaquePointer(result), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+#endif
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Optional<T_0_0> Optional<T_0_0>::_unconditionallyBridgeFromObjectiveC(id _Nullable source) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::_impl_Optional<T_0_0>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::$sSq36_unconditionallyBridgeFromObjectiveCyxSgyXlSgFZ(result, source, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  });
+  }
+#endif
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK String Optional<T_0_0>::getDebugDescription() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSq16debugDescriptionSSvg(swift::TypeMetadataTrait<Optional<T_0_0>>::getTypeMetadata(), _getOpaquePointer()));
+  });
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK T_0_0 Optional<T_0_0>::getUnsafelyUnwrapped() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+  if constexpr (std::is_base_of<::swift::_impl::RefCountedClass, T_0_0>::value) {
+  void *returnValue;
+  swift::_impl::$sSq17unsafelyUnwrappedxvg(reinterpret_cast<void *>(&returnValue), swift::TypeMetadataTrait<Optional<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  return ::swift::_impl::implClassFor<T_0_0>::type::makeRetained(returnValue);
+  } else if constexpr (::swift::_impl::isValueType<T_0_0>) {
+  return ::swift::_impl::implClassFor<T_0_0>::type::returnNewValue([&](void * _Nonnull returnValue) SWIFT_INLINE_THUNK_ATTRIBUTES {
+swift::_impl::$sSq17unsafelyUnwrappedxvg(returnValue, swift::TypeMetadataTrait<Optional<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  });
+  } else if constexpr (::swift::_impl::isSwiftBridgedCxxRecord<T_0_0>) {
+alignas(alignof(T_0_0)) char storage[sizeof(T_0_0)];
+auto * _Nonnull storageObjectPtr = reinterpret_cast<T_0_0 *>(storage);
+swift::_impl::$sSq17unsafelyUnwrappedxvg(storage, swift::TypeMetadataTrait<Optional<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+T_0_0 result(static_cast<T_0_0 &&>(*storageObjectPtr));
+storageObjectPtr->~T_0_0();
+return result;
+  } else {
+  T_0_0 returnValue;
+swift::_impl::$sSq17unsafelyUnwrappedxvg(reinterpret_cast<void *>(&returnValue), swift::TypeMetadataTrait<Optional<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  return returnValue;
+  }
+#pragma clang diagnostic pop
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Optional<T_0_0> Optional<T_0_0>::init(const T_0_0& some_) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  alignas(alignof(T_0_0)) char copyBuffer_consumedParamCopy_some[sizeof(T_0_0)];
+  auto &consumedParamCopy_some = *(new(copyBuffer_consumedParamCopy_some) T_0_0(some_));
+  swift::_impl::ConsumedValueStorageDestroyer<T_0_0> storageGuard_consumedParamCopy_some(consumedParamCopy_some);
+  return swift::_impl::_impl_Optional<T_0_0>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::$sSqyxSgxcfC(result, swift::_impl::getOpaquePointer(consumedParamCopy_some), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  });
+  }
+  SWIFT_INLINE_THUNK String String::init() {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sS2SycfC());
+  });
+  }
+  SWIFT_INLINE_THUNK String_Index String::getStartIndex() const {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS10startIndexSS0B0Vvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String_Index String::getEndIndex() const {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS8endIndexSS0B0Vvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int String::getCount() const {
+  return swift::_impl::$sSS5countSivg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK swift::Int String::distanceFromTo(const String_Index& start, const String_Index& end) const {
+  return swift::_impl::$sSS8distance4from2toSiSS5IndexV_AEtF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(start)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(end)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK void String::reserveCapacity(swift::Int n) {
+  swift::_impl::$sSS15reserveCapacityyySiF(n, _getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK void String::append(const String& other) {
+  swift::_impl::$sSS6appendyySSF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(other)), _getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK void String::appendContentsOf(const String& newElements) {
+  swift::_impl::$sSS6append10contentsOfySS_tF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(newElements)), _getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK void String::removeAllKeepingCapacity(bool keepCapacity) {
+  swift::_impl::$sSS9removeAll15keepingCapacityySb_tF(keepCapacity, _getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK UTF8View String::getUtf8() const {
+  return swift::_impl::_impl_UTF8View::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS4utf8SS8UTF8ViewVvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK void String::setUtf8(const UTF8View& newValue) {
+  alignas(alignof(UTF8View)) char copyBuffer_consumedParamCopy_newValue[sizeof(UTF8View)];
+  auto &consumedParamCopy_newValue = *(new(copyBuffer_consumedParamCopy_newValue) UTF8View(newValue));
+  swift::_impl::ConsumedValueStorageDestroyer<UTF8View> storageGuard_consumedParamCopy_newValue(consumedParamCopy_newValue);
+  swift::_impl::$sSS4utf8SS8UTF8ViewVvs(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_UTF8View::getOpaquePointer(consumedParamCopy_newValue)), _getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK String String::getCharacters() const {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS10charactersSSvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK void String::setCharacters(const String& newValue) {
+  alignas(alignof(String)) char copyBuffer_consumedParamCopy_newValue[sizeof(String)];
+  auto &consumedParamCopy_newValue = *(new(copyBuffer_consumedParamCopy_newValue) String(newValue));
+  swift::_impl::ConsumedValueStorageDestroyer<String> storageGuard_consumedParamCopy_newValue(consumedParamCopy_newValue);
+  swift::_impl::$sSS10charactersSSvs(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(consumedParamCopy_newValue)), _getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK swift::Int String::getHashValue() const {
+  return swift::_impl::$sSS9hashValueSivg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK bool String::isEmpty() const {
+  return swift::_impl::$sSS7isEmptySbvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK String String::lowercased() const {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS10lowercasedSSyF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String String::uppercased() const {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS10uppercasedSSyF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK Array<uint8_t> String::get_nfcCodeUnits() const {
+  return swift::_impl::_impl_Array<uint8_t>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_void_ptr_0_8(result, swift::_impl::$sSS13_nfcCodeUnitsSays5UInt8VGvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK void String::write(const String& other) {
+  swift::_impl::$sSS5writeyySSF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(other)), _getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK String String::getDescription() const {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS11descriptionSSvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String String::getDebugDescription() const {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS16debugDescriptionSSvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK bool String::hasPrefix(const String& prefix) const {
+  return swift::_impl::$sSS9hasPrefixySbSSF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(prefix)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK bool String::hasSuffix(const String& suffix) const {
+  return swift::_impl::$sSS9hasSuffixySbSSF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(suffix)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK void String::_dump() const {
+  swift::_impl::$sSS5_dumpyyF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  #if defined(__OBJC__)
+SWIFT_INLINE_THUNK id _Nonnull String::_bridgeToObjectiveCImpl() const {
+return (__bridge_transfer id)(__bridge void *)swift::_impl::$sSS23_bridgeToObjectiveCImplyXlyF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+#endif
+  SWIFT_INLINE_THUNK String_Index UTF8View::getStartIndex() const {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS8UTF8ViewV10startIndexSS0D0Vvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String_Index UTF8View::getEndIndex() const {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS8UTF8ViewV8endIndexSS0D0Vvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String_Index UTF8View::indexAfter(const String_Index& i) const {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS8UTF8ViewV5index5afterSS5IndexVAF_tF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(i)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String_Index UTF8View::indexBefore(const String_Index& i) const {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS8UTF8ViewV5index6beforeSS5IndexVAF_tF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(i)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String_Index UTF8View::indexOffsetBy(const String_Index& i, swift::Int n) const {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS8UTF8ViewV5index_8offsetBySS5IndexVAF_SitF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(i)), n, swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> UTF8View::indexOffsetByLimitedBy(const String_Index& i, swift::Int n, const String_Index& limit) const {
+  return swift::_impl::_impl_Optional<String_Index>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_uint8_t_8_9(result, swift::_impl::$sSS8UTF8ViewV5index_8offsetBy07limitedE0SS5IndexVSgAG_SiAGtF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(i)), n, swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(limit)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int UTF8View::distanceFromTo(const String_Index& i, const String_Index& j) const {
+  return swift::_impl::$sSS8UTF8ViewV8distance4from2toSiSS5IndexV_AGtF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(i)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(j)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+SWIFT_INLINE_THUNK uint8_t UTF8View::operator [](const String_Index& i) const SWIFT_SYMBOL("s:SS8UTF8ViewVys5UInt8VSS5IndexVcig") {
+  return swift::_impl::$sSS8UTF8ViewVys5UInt8VSS5IndexVcig(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(i)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK String UTF8View::getDebugDescription() const {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS8UTF8ViewV16debugDescriptionSSvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String UTF8View::getDescription() const {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS8UTF8ViewV11descriptionSSvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int UTF8View::getCount() const {
+  return swift::_impl::$sSS8UTF8ViewV5countSivg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '%(_:_:)'.
+
+// Unavailable in C++: Swift operator function '%=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '===(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '??(_:_:)'.
+
+// Unavailable in C++: Swift operator function '??(_:_:)'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class AdditiveArithmetic { } SWIFT_UNAVAILABLE_MSG("protocol 'AdditiveArithmetic' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'AnyClass'.
+
+class AnyKeyPath { } SWIFT_UNAVAILABLE_MSG("class 'AnyKeyPath' is not yet exposed to C++");
+
+// Unavailable in C++: Swift type alias 'AnyObject'.
+
+// Unavailable in C++: Swift type alias 'ArrayLiteralConvertible'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class BidirectionalCollection { } SWIFT_UNAVAILABLE_MSG("protocol 'BidirectionalCollection' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'BidirectionalIndexable'.
+
+// Unavailable in C++: Swift type alias 'BidirectionalSlice'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class BinaryFloatingPoint { } SWIFT_UNAVAILABLE_MSG("protocol 'BinaryFloatingPoint' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class BinaryInteger { } SWIFT_UNAVAILABLE_MSG("protocol 'BinaryInteger' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class BitwiseCopyable { } SWIFT_UNAVAILABLE_MSG("protocol 'BitwiseCopyable' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'BooleanLiteralConvertible'.
+
+// Unavailable in C++: Swift type alias 'BooleanLiteralType'.
+
+// Unavailable in C++: Swift type alias 'CBool'.
+
+// Unavailable in C++: Swift type alias 'CChar'.
+
+// Unavailable in C++: Swift type alias 'CChar16'.
+
+// Unavailable in C++: Swift type alias 'CChar32'.
+
+// Unavailable in C++: Swift type alias 'CChar8'.
+
+// Unavailable in C++: Swift type alias 'CDouble'.
+
+// Unavailable in C++: Swift type alias 'CFloat'.
+
+// Unavailable in C++: Swift type alias 'CFloat16'.
+
+// Unavailable in C++: Swift type alias 'CInt'.
+
+// Unavailable in C++: Swift type alias 'CLong'.
+
+// Unavailable in C++: Swift type alias 'CLongDouble'.
+
+// Unavailable in C++: Swift type alias 'CLongLong'.
+
+// Unavailable in C++: Swift type alias 'CShort'.
+
+// Unavailable in C++: Swift type alias 'CSignedChar'.
+
+// Unavailable in C++: Swift type alias 'CUnsignedChar'.
+
+// Unavailable in C++: Swift type alias 'CUnsignedInt'.
+
+// Unavailable in C++: Swift type alias 'CUnsignedLong'.
+
+// Unavailable in C++: Swift type alias 'CUnsignedLongLong'.
+
+// Unavailable in C++: Swift type alias 'CUnsignedShort'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CVarArg { } SWIFT_UNAVAILABLE_MSG("protocol 'CVarArg' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'CWideChar'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CaseIterable { } SWIFT_UNAVAILABLE_MSG("protocol 'CaseIterable' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'ClosedRangeIndex'.
+
+// Unavailable in C++: Swift type alias 'Codable'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CodingKey { } SWIFT_UNAVAILABLE_MSG("protocol 'CodingKey' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CodingKeyRepresentable { } SWIFT_UNAVAILABLE_MSG("protocol 'CodingKeyRepresentable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Collection { } SWIFT_UNAVAILABLE_MSG("protocol 'Collection' can not yet be represented in C++");
+
+class CommandLine { } SWIFT_UNAVAILABLE_MSG("'CommandLine' is a zero sized value type, it cannot be exposed to C++ yet");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Comparable { } SWIFT_UNAVAILABLE_MSG("protocol 'Comparable' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'ConcurrentValue'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Copyable { } SWIFT_UNAVAILABLE_MSG("protocol 'Copyable' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'CountableClosedRange'.
+
+// Unavailable in C++: Swift type alias 'CountablePartialRangeFrom'.
+
+// Unavailable in C++: Swift type alias 'CountableRange'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CustomDebugStringConvertible { } SWIFT_UNAVAILABLE_MSG("protocol 'CustomDebugStringConvertible' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CustomLeafReflectable { } SWIFT_UNAVAILABLE_MSG("protocol 'CustomLeafReflectable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CustomPlaygroundDisplayConvertible { } SWIFT_UNAVAILABLE_MSG("protocol 'CustomPlaygroundDisplayConvertible' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'CustomPlaygroundQuickLookable'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CustomReflectable { } SWIFT_UNAVAILABLE_MSG("protocol 'CustomReflectable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CustomStringConvertible { } SWIFT_UNAVAILABLE_MSG("protocol 'CustomStringConvertible' can not yet be represented in C++");
+
+// Unavailable in C++: Swift macro 'DebugDescription()'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Decodable { } SWIFT_UNAVAILABLE_MSG("protocol 'Decodable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Decoder { } SWIFT_UNAVAILABLE_MSG("protocol 'Decoder' can not yet be represented in C++");
+
+class DecodingError { } SWIFT_UNAVAILABLE_MSG("enum 'DecodingError' is not yet exposed to C++");
+
+// Unavailable in C++: Swift type alias 'DefaultBidirectionalIndices'.
+
+// Unavailable in C++: Swift type alias 'DefaultRandomAccessIndices'.
+
+// Unavailable in C++: Swift type alias 'DictionaryIndex'.
+
+// Unavailable in C++: Swift type alias 'DictionaryIterator'.
+
+// Unavailable in C++: Swift type alias 'DictionaryLiteral'.
+
+// Unavailable in C++: Swift type alias 'DictionaryLiteralConvertible'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class DurationProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'DurationProtocol' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'EmptyIterator'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Encodable { } SWIFT_UNAVAILABLE_MSG("protocol 'Encodable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Encoder { } SWIFT_UNAVAILABLE_MSG("protocol 'Encoder' can not yet be represented in C++");
+
+class EncodingError { } SWIFT_UNAVAILABLE_MSG("enum 'EncodingError' is not yet exposed to C++");
+
+// Unavailable in C++: Swift type alias 'EnumeratedIterator'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Equatable { } SWIFT_UNAVAILABLE_MSG("protocol 'Equatable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Escapable { } SWIFT_UNAVAILABLE_MSG("protocol 'Escapable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByArrayLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByArrayLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByBooleanLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByBooleanLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByDictionaryLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByDictionaryLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByExtendedGraphemeClusterLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByExtendedGraphemeClusterLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByFloatLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByFloatLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByIntegerLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByIntegerLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByNilLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByNilLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByStringInterpolation { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByStringInterpolation' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByStringLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByStringLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByUnicodeScalarLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByUnicodeScalarLiteral' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'ExtendedGraphemeClusterLiteralConvertible'.
+
+// Unavailable in C++: Swift type alias 'ExtendedGraphemeClusterType'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class FixedWidthInteger { } SWIFT_UNAVAILABLE_MSG("protocol 'FixedWidthInteger' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'FlattenBidirectionalCollection'.
+
+// Unavailable in C++: Swift type alias 'FlattenBidirectionalCollectionIndex'.
+
+// Unavailable in C++: Swift type alias 'FlattenCollection'.
+
+// Unavailable in C++: Swift type alias 'FlattenCollectionIndex'.
+
+// Unavailable in C++: Swift type alias 'Float32'.
+
+// Unavailable in C++: Swift type alias 'Float64'.
+
+// Unavailable in C++: Swift type alias 'FloatLiteralConvertible'.
+
+// Unavailable in C++: Swift type alias 'FloatLiteralType'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class FloatingPoint { } SWIFT_UNAVAILABLE_MSG("protocol 'FloatingPoint' can not yet be represented in C++");
+
+class FloatingPointClassification { } SWIFT_UNAVAILABLE_MSG("enum 'FloatingPointClassification' is not yet exposed to C++");
+
+class FloatingPointRoundingRule { } SWIFT_UNAVAILABLE_MSG("enum 'FloatingPointRoundingRule' is not yet exposed to C++");
+
+class FloatingPointSign { } SWIFT_UNAVAILABLE_MSG("enum 'FloatingPointSign' is not yet exposed to C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Hashable { } SWIFT_UNAVAILABLE_MSG("protocol 'Hashable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Identifiable { } SWIFT_UNAVAILABLE_MSG("protocol 'Identifiable' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'ImplicitlyUnwrappedOptional'.
+
+// Unavailable in C++: Swift type alias 'Indexable'.
+
+// Unavailable in C++: Swift type alias 'IndexableBase'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class InstantProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'InstantProtocol' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'IntegerLiteralConvertible'.
+
+// Unavailable in C++: Swift type alias 'IntegerLiteralType'.
+
+// Unavailable in C++: Swift type alias 'IteratorOverOne'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class IteratorProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'IteratorProtocol' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'JoinedIterator'.
+
+template<class T_0_0, class T_0_1>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0> && swift::isUsableInGenericContext<T_0_1>
+#endif // __cpp_concepts
+class KeyPath { } SWIFT_UNAVAILABLE_MSG("generic generic class 'KeyPath' can not yet be exposed to C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class KeyedDecodingContainerProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'KeyedDecodingContainerProtocol' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class KeyedEncodingContainerProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'KeyedEncodingContainerProtocol' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'LazyBidirectionalCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyCollection'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class LazyCollectionProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'LazyCollectionProtocol' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'LazyDropWhileBidirectionalCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyDropWhileCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyDropWhileIndex'.
+
+// Unavailable in C++: Swift type alias 'LazyDropWhileIterator'.
+
+// Unavailable in C++: Swift type alias 'LazyFilterBidirectionalCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyFilterCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyFilterIndex'.
+
+// Unavailable in C++: Swift type alias 'LazyFilterIterator'.
+
+// Unavailable in C++: Swift type alias 'LazyMapBidirectionalCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyMapCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyMapIterator'.
+
+// Unavailable in C++: Swift type alias 'LazyMapRandomAccessCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyPrefixWhileBidirectionalCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyPrefixWhileCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyPrefixWhileIndex'.
+
+// Unavailable in C++: Swift type alias 'LazyPrefixWhileIterator'.
+
+// Unavailable in C++: Swift type alias 'LazyRandomAccessCollection'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class LazySequenceProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'LazySequenceProtocol' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class LosslessStringConvertible { } SWIFT_UNAVAILABLE_MSG("protocol 'LosslessStringConvertible' can not yet be represented in C++");
+
+template<class T_0_0, class T_0_1>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0> && swift::isUsableInGenericContext<T_0_1>
+#endif // __cpp_concepts
+class ManagedBuffer { } SWIFT_UNAVAILABLE_MSG("generic generic class 'ManagedBuffer' can not yet be exposed to C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class MemoryLayout { } SWIFT_UNAVAILABLE_MSG("'MemoryLayout' is a zero sized value type, it cannot be exposed to C++ yet");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class MirrorPath { } SWIFT_UNAVAILABLE_MSG("protocol 'MirrorPath' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'MutableBidirectionalSlice'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class MutableCollection { } SWIFT_UNAVAILABLE_MSG("protocol 'MutableCollection' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'MutableIndexable'.
+
+// Unavailable in C++: Swift type alias 'MutableRandomAccessSlice'.
+
+// Unavailable in C++: Swift type alias 'MutableRangeReplaceableBidirectionalSlice'.
+
+// Unavailable in C++: Swift type alias 'MutableRangeReplaceableRandomAccessSlice'.
+
+// Unavailable in C++: Swift type alias 'MutableRangeReplaceableSlice'.
+
+// Unavailable in C++: Swift type alias 'MutableSlice'.
+
+class Never { } SWIFT_UNAVAILABLE_MSG("'Never' is a zero sized value type, it cannot be exposed to C++ yet");
+
+// Unavailable in C++: Swift type alias 'NilLiteralConvertible'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Numeric { } SWIFT_UNAVAILABLE_MSG("protocol 'Numeric' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class OptionSet { } SWIFT_UNAVAILABLE_MSG("protocol 'OptionSet' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class PartialKeyPath { } SWIFT_UNAVAILABLE_MSG("generic generic class 'PartialKeyPath' can not yet be exposed to C++");
+
+// Unavailable in C++: Swift type alias 'PlaygroundQuickLook'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class RandomAccessCollection { } SWIFT_UNAVAILABLE_MSG("protocol 'RandomAccessCollection' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'RandomAccessIndexable'.
+
+// Unavailable in C++: Swift type alias 'RandomAccessSlice'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class RandomNumberGenerator { } SWIFT_UNAVAILABLE_MSG("protocol 'RandomNumberGenerator' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class RangeExpression { } SWIFT_UNAVAILABLE_MSG("protocol 'RangeExpression' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'RangeReplaceableBidirectionalSlice'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class RangeReplaceableCollection { } SWIFT_UNAVAILABLE_MSG("protocol 'RangeReplaceableCollection' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'RangeReplaceableIndexable'.
+
+// Unavailable in C++: Swift type alias 'RangeReplaceableRandomAccessSlice'.
+
+// Unavailable in C++: Swift type alias 'RangeReplaceableSlice'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class RawRepresentable { } SWIFT_UNAVAILABLE_MSG("protocol 'RawRepresentable' can not yet be represented in C++");
+
+template<class T_0_0, class T_0_1>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0> && swift::isUsableInGenericContext<T_0_1>
+#endif // __cpp_concepts
+class ReferenceWritableKeyPath { } SWIFT_UNAVAILABLE_MSG("generic generic class 'ReferenceWritableKeyPath' can not yet be exposed to C++");
+
+template<class T_0_0, class T_0_1>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0> && swift::isUsableInGenericContext<T_0_1>
+#endif // __cpp_concepts
+class Result { } SWIFT_UNAVAILABLE_MSG("generic requirements for generic enum 'Result' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'ReversedIndex'.
+
+// Unavailable in C++: Swift type alias 'ReversedRandomAccessCollection'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SIMD { } SWIFT_UNAVAILABLE_MSG("protocol 'SIMD' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SIMDScalar { } SWIFT_UNAVAILABLE_MSG("protocol 'SIMDScalar' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SIMDStorage { } SWIFT_UNAVAILABLE_MSG("protocol 'SIMDStorage' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Sendable { } SWIFT_UNAVAILABLE_MSG("protocol 'Sendable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Sequence { } SWIFT_UNAVAILABLE_MSG("protocol 'Sequence' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SetAlgebra { } SWIFT_UNAVAILABLE_MSG("protocol 'SetAlgebra' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'SetIndex'.
+
+// Unavailable in C++: Swift type alias 'SetIterator'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SignedInteger { } SWIFT_UNAVAILABLE_MSG("protocol 'SignedInteger' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SignedNumeric { } SWIFT_UNAVAILABLE_MSG("protocol 'SignedNumeric' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SingleValueDecodingContainer { } SWIFT_UNAVAILABLE_MSG("protocol 'SingleValueDecodingContainer' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SingleValueEncodingContainer { } SWIFT_UNAVAILABLE_MSG("protocol 'SingleValueEncodingContainer' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Strideable { } SWIFT_UNAVAILABLE_MSG("protocol 'Strideable' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'StringInterpolationConvertible'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class StringInterpolationProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'StringInterpolationProtocol' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'StringLiteralConvertible'.
+
+// Unavailable in C++: Swift type alias 'StringLiteralType'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class StringProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'StringProtocol' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class TextOutputStream { } SWIFT_UNAVAILABLE_MSG("protocol 'TextOutputStream' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class TextOutputStreamable { } SWIFT_UNAVAILABLE_MSG("protocol 'TextOutputStreamable' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'UTF16'.
+
+// Unavailable in C++: Swift type alias 'UTF32'.
+
+// Unavailable in C++: Swift type alias 'UTF8'.
+
+// Unavailable in C++: Swift type alias 'UnboundedRange'.
+
+class UnboundedRange_ { } SWIFT_UNAVAILABLE_MSG("'UnboundedRange_' is a zero sized value type, it cannot be exposed to C++ yet");
+
+// Unavailable in C++: Swift type alias 'UnfoldFirstSequence'.
+
+class Unicode { } SWIFT_UNAVAILABLE_MSG("'Unicode' is a zero sized value type, it cannot be exposed to C++ yet");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class UnicodeCodec { } SWIFT_UNAVAILABLE_MSG("protocol 'UnicodeCodec' can not yet be represented in C++");
+
+class UnicodeDecodingResult { } SWIFT_UNAVAILABLE_MSG("enum 'UnicodeDecodingResult' is not yet exposed to C++");
+
+// Unavailable in C++: Swift type alias 'UnicodeScalar'.
+
+// Unavailable in C++: Swift type alias 'UnicodeScalarLiteralConvertible'.
+
+// Unavailable in C++: Swift type alias 'UnicodeScalarType'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class UnkeyedDecodingContainer { } SWIFT_UNAVAILABLE_MSG("protocol 'UnkeyedDecodingContainer' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class UnkeyedEncodingContainer { } SWIFT_UNAVAILABLE_MSG("protocol 'UnkeyedEncodingContainer' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'UnsafeBufferPointerIterator'.
+
+// Unavailable in C++: Swift type alias 'UnsafeConcurrentValue'.
+
+// Unavailable in C++: Swift type alias 'UnsafeMutableRawBufferPointerIterator'.
+
+// Unavailable in C++: Swift type alias 'UnsafeRawBufferPointerIterator'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class UnsafeSendable { } SWIFT_UNAVAILABLE_MSG("protocol 'UnsafeSendable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class UnsignedInteger { } SWIFT_UNAVAILABLE_MSG("protocol 'UnsignedInteger' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'Void'.
+
+template<class T_0_0, class T_0_1>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0> && swift::isUsableInGenericContext<T_0_1>
+#endif // __cpp_concepts
+class WritableKeyPath { } SWIFT_UNAVAILABLE_MSG("generic generic class 'WritableKeyPath' can not yet be exposed to C++");
+
+// Unavailable in C++: Swift type alias 'Zip2Iterator'.
+
+// Unavailable in C++: Swift global function 'abs(_:)'.
+
+// Unavailable in C++: Swift global function 'all(_:)'.
+
+// Unavailable in C++: Swift global function 'any(_:)'.
+
+// Unavailable in C++: Swift global function 'assert(_:_:file:line:)'.
+
+// Unavailable in C++: Swift global function 'assertionFailure(_:file:line:)'.
+
+// Unavailable in C++: Swift macro 'column()'.
+
+// Unavailable in C++: Swift global function 'debugPrint(_:separator:terminator:)'.
+
+// Unavailable in C++: Swift global function 'debugPrint(_:separator:terminator:to:)'.
+
+// Unavailable in C++: Swift macro 'dsohandle()'.
+
+// Unavailable in C++: Swift global function 'dump(_:name:indent:maxDepth:maxItems:)'.
+
+// Unavailable in C++: Swift global function 'dump(_:to:name:indent:maxDepth:maxItems:)'.
+
+// Unavailable in C++: Swift macro 'error(_:)'.
+
+// Unavailable in C++: Swift global function 'exchange(_:with:)'.
+
+// Unavailable in C++: Swift macro 'externalMacro(module:type:)'.
+
+// Unavailable in C++: Swift global function 'fatalError(_:file:line:)'.
+
+// Unavailable in C++: Swift macro 'file()'.
+
+// Unavailable in C++: Swift macro 'fileID()'.
+
+// Unavailable in C++: Swift macro 'filePath()'.
+
+// Unavailable in C++: Swift macro 'function()'.
+
+// Unavailable in C++: Swift global function 'getVaList(_:)'.
+
+// Unavailable in C++: Swift global function 'isKnownUniquelyReferenced(_:)'.
+
+// Unavailable in C++: Swift global function 'isKnownUniquelyReferenced(_:)'.
+
+// Unavailable in C++: Swift macro 'line()'.
+
+// Unavailable in C++: Swift global function 'max(_:_:)'.
+
+// Unavailable in C++: Swift global function 'max(_:_:_:_:)'.
+
+// Unavailable in C++: Swift global function 'min(_:_:)'.
+
+// Unavailable in C++: Swift global function 'min(_:_:_:_:)'.
+
+// Unavailable in C++: Swift global function 'numericCast(_:)'.
+
+// Unavailable in C++: Swift global function 'pointwiseMax(_:_:)'.
+
+// Unavailable in C++: Swift global function 'pointwiseMax(_:_:)'.
+
+// Unavailable in C++: Swift global function 'pointwiseMin(_:_:)'.
+
+// Unavailable in C++: Swift global function 'pointwiseMin(_:_:)'.
+
+// Unavailable in C++: Swift global function 'precondition(_:_:file:line:)'.
+
+// Unavailable in C++: Swift global function 'preconditionFailure(_:file:line:)'.
+
+// Unavailable in C++: Swift global function 'print(_:separator:terminator:)'.
+
+// Unavailable in C++: Swift global function 'print(_:separator:terminator:to:)'.
+
+// Unavailable in C++: Swift global function 'readLine(strippingNewline:)'.
+
+// Unavailable in C++: Swift global function 'repeatElement(_:count:)'.
+
+// Unavailable in C++: Swift global function 'sequence(first:next:)'.
+
+// Unavailable in C++: Swift global function 'sequence(state:next:)'.
+
+// Unavailable in C++: Swift global function 'stride(from:through:by:)'.
+
+// Unavailable in C++: Swift global function 'stride(from:to:by:)'.
+
+// Unavailable in C++: Swift global function 'swap(_:_:)'.
+
+// Unavailable in C++: Swift global function 'transcode(_:_:_:_:stopOnError:)'.
+
+// Unavailable in C++: Swift global function 'transcode(_:from:to:stoppingOnError:into:)'.
+
+// Unavailable in C++: Swift global function 'type(of:)'.
+
+// Unavailable in C++: Swift global function 'unsafeBitCast(_:to:)'.
+
+// Unavailable in C++: Swift global function 'unsafeDowncast(_:to:)'.
+
+// Unavailable in C++: Swift macro 'warning(_:)'.
+
+// Unavailable in C++: Swift global function 'withExtendedLifetime(_:_:)'.
+
+// Unavailable in C++: Swift global function 'withExtendedLifetime(_:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafeBytes(of:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafeBytes(of:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafeMutableBytes(of:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafeMutablePointer(to:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafePointer(to:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafePointer(to:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafeTemporaryAllocation(byteCount:alignment:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafeTemporaryAllocation(of:capacity:_:)'.
+
+// Unavailable in C++: Swift global function 'withVaList(_:_:)'.
+
+// Unavailable in C++: Swift global function 'withoutActuallyEscaping(_:do:)'.
+
+// Unavailable in C++: Swift global function 'zip(_:_:)'.
+
+// Unavailable in C++: Swift operator function '~=(_:_:)'.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnon-modular-include-in-framework-module"
+// Allow user to find the header using additional include paths
+#if __has_include(<swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+#include <swiftToCxx/_SwiftStdlibCxxOverlay.h>
+// Look for the C++ interop support header relative to clang's resource dir:
+//  '<toolchain>/usr/lib/clang/<version>/include/../../../swift/swiftToCxx'.
+#elif __has_include(<../../../swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+#include <../../../swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>
+#elif __has_include(<../../../../../lib/swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+//  '<toolchain>/usr/local/lib/clang/<version>/include/../../../../../lib/swift/swiftToCxx'.
+#include <../../../../../lib/swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>
+#endif
+#pragma clang diagnostic pop
+
+} // namespace swift
+
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+#undef SWIFT_SYMBOL
+#endif // SWIFT_SWIFT_H
 #ifdef SWIFT_SYMBOL
 #undef SWIFT_SYMBOL
 #endif
@@ -655,10 +4638,3947 @@ struct TypeMetadataTrait<swift::UInt> {
 } // namespace swift
 
 #endif
+#endif
+#ifdef __cplusplus
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+namespace _impl {
+extern "C" {
+#endif
+
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 {
+  uint64_t _1;
+  uint8_t _2;
+};
+
+static SWIFT_C_INLINE_THUNK void swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(char * _Nonnull result, struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 value) {
+  memcpy(result + 0, &value._1, 8);
+  memcpy(result + 8, &value._2, 1);
+}
+
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage18AppearanceColorKeyO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 {
+  uint64_t _1;
+};
+
+static SWIFT_C_INLINE_THUNK struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 swift_interop_passDirect_BlinkEngage_uint64_t_0_8(const char * _Nonnull value) {
+  struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 result;
+  memcpy(&result._1, value + 0, 8);
+  return result;
+}
+
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage18AppearanceColorKeyO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_AppearanceColorKey {
+  _Alignas(8) char _storage[8];
+};
+
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage21AppearanceFontNameKeyO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage21AppearanceFontNameKeyO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_AppearanceFontNameKey {
+  _Alignas(8) char _storage[8];
+};
+
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage17AppearanceIconKeyO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage17AppearanceIconKeyO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_AppearanceIconKey {
+  _Alignas(8) char _storage[8];
+};
+
+
+#ifdef __cplusplus
+}
+}
+}
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wreserved-identifier"
 namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
 
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey") AppearanceColorKey;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::AppearanceColorKey> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// Keys for custom colors. Return a color for a key from your <code>Theme</code> to customize that part of the UI (backgrounds, labels, icon tints).
+namespace _impl {
+
+class _impl_AppearanceColorKey;
+
+// Type metadata accessor for AppearanceColorKey
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage18AppearanceColorKeyOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey") AppearanceColorKey final {
+public:
+  SWIFT_INLINE_THUNK ~AppearanceColorKey() noexcept {
+    auto metadata = _impl::$s11BlinkEngage18AppearanceColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey(const AppearanceColorKey &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage18AppearanceColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey &operator =(const AppearanceColorKey &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage18AppearanceColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey &operator =(AppearanceColorKey &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER AppearanceColorKey(AppearanceColorKey &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    offerWallHeaderBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderBackground"),
+    offerWallHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderTitleLabel"),
+    offerWallHeaderSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderSubtitleLabel"),
+    offerWallHeaderBackButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderBackButtonIcon"),
+    offerWallBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallBackground"),
+    offerWallSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallSectionHeaderLabel"),
+    offerWallSectionHeaderShowMoreIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallSectionHeaderShowMoreIcon"),
+    offerWallSectionHeaderShowMoreBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallSectionHeaderShowMoreBackground"),
+    offerWallFloatingButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallFloatingButtonBackground"),
+    offerWallFloatingButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallFloatingButtonLabel"),
+    offerWallMoreMerchantsIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallMoreMerchantsIcon"),
+    offerRewardPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferRewardPointsLabel"),
+    offerTagLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferTagLabel"),
+    offerTagBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferTagBackground"),
+    offerBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferBackground"),
+    offerBrandLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferBrandLabel"),
+    offerDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDescriptionLabel"),
+    offerEligibleMerchantsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferEligibleMerchantsLabel"),
+    offerDetailsExpirationLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsExpirationLabel"),
+    offerDetailsClipLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsClipLabel"),
+    offerClipButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClipButtonIcon"),
+    offerClipButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClipButtonBackground"),
+    offerClippedButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedButtonIcon"),
+    offerClippedButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedButtonBackground"),
+    offerClippedToastMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedToastMessageLabel"),
+    offerClippedToastMessageBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedToastMessageBackground"),
+    offerDetailsClipRequiredLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsClipRequiredLabel"),
+    offerDetailsClipRequiredBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsClipRequiredBackground"),
+    offerDetailsSectionHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsSectionHeaderTitleLabel"),
+    offerDetailsSectionHeaderToggleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsSectionHeaderToggleLabel"),
+    offerDetailsSectionBodyLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsSectionBodyLabel"),
+    offerDetailsShortDescription SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsShortDescription"),
+    offerDetailsFinePrintLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsFinePrintLabel"),
+    offerDetailsBuyOptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsBuyOptionLabel"),
+    offerDetailsBuyOptionBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsBuyOptionBackground"),
+    storesHeaderBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresHeaderBackground"),
+    storesHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresHeaderTitleLabel"),
+    storesListSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListSectionHeaderLabel"),
+    storesListBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListBackground"),
+    storesListItemBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemBackground"),
+    storesListItemDefaultIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemDefaultIcon"),
+    storesListItemTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemTitleLabel"),
+    storesListItemSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemSubtitleLabel"),
+    adLoadingLoadingBarLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingLoadingBarLabel"),
+    adLoadingLoadingBarBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingLoadingBarBackground"),
+    adLoadingLoadingBarProgress SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingLoadingBarProgress"),
+    adLoadingDefaultTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingDefaultTitleLabel"),
+    adLoadingDefaultDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingDefaultDescriptionLabel"),
+    errorModalIconBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalIconBackground"),
+    errorModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalTitleLabel"),
+    errorModalDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalDescriptionLabel"),
+    errorModalBackButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalBackButtonLabel"),
+    errorModalBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalBackground"),
+    postScanHeaderBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanHeaderBackground"),
+    postScanTotalPointsBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanTotalPointsBackground"),
+    postScanTotalPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanTotalPointsLabel"),
+    postScanReceiptButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanReceiptButtonIcon"),
+    postScanReceiptButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanReceiptButtonBackground"),
+    postScanFooterButtonTitle SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanFooterButtonTitle"),
+    postScanFooterBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanFooterBackground"),
+    postScanMerchantNameLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanMerchantNameLabel"),
+    postScanTripInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanTripInfoLabel"),
+    postScanNoBoostsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanNoBoostsLabel"),
+    postScanSuccessTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanSuccessTitleLabel"),
+    postScanSuccessDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanSuccessDescriptionLabel"),
+    postScanBoostTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostTitleLabel"),
+    postScanBoostDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostDescriptionLabel"),
+    postScanBoostSkipButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostSkipButtonLabel"),
+    postScanBoostClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostClaimButtonLabel"),
+    postScanBoostClaimButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostClaimButtonIcon"),
+    postScanBoostClaimButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostClaimButtonBackground"),
+    postScanPurchasePointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanPurchasePointsLabel"),
+    postScanPurchaseBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanPurchaseBackground"),
+    postScanQualifiedPurchaseBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanQualifiedPurchaseBackground"),
+    postScanPurchaseInfoIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanPurchaseInfoIcon"),
+    postScanUGCPurchaseBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseBackground"),
+    postScanUGCPurchaseClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonLabel"),
+    postScanUGCPurchaseClaimButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonIcon"),
+    postScanUGCPurchaseClaimButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonBackground"),
+    postScanUGCPurchaseBorder SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseBorder"),
+    purchaseRowLabelColor SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPurchaseRowLabelColor"),
+    purchaseRowMetadataLabelColor SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPurchaseRowMetadataLabelColor"),
+    missedEarningsNavigationTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationTitleLabel"),
+    missedEarningsNavigationDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationDescriptionLabel"),
+    missedEarningsNavigationEditButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationEditButtonIcon"),
+    missedEarningsNavigationEditButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationEditButtonBackground"),
+    missedEarningsNavigationSaveButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon"),
+    missedEarningsNavigationSaveButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationSaveButtonBackground"),
+    missedEarningsFieldEditIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsFieldEditIcon"),
+    missedEarningsAddNewFieldLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsAddNewFieldLabel"),
+    missedEarningsModifiedFieldBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsModifiedFieldBackground"),
+    missedEarningsListSectionTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsListSectionTitleLabel"),
+    missedEarningsTripItemLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsTripItemLabel"),
+    missedEarningsEditModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalTitleLabel"),
+    missedEarningsEditModalSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalSubtitleLabel"),
+    missedEarningsEditModalInputLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalInputLabel"),
+    missedEarningsEditModalInputPlaceholderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalInputPlaceholderLabel"),
+    missedEarningsEditModalInputValueLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalInputValueLabel"),
+    missedEarningsEditModalCancelButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalCancelButtonLabel"),
+    missedEarningsEditModalSaveButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalSaveButtonLabel"),
+    missedEarningsEditModalSaveButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalSaveButtonBackground"),
+    missedEarningsEditModalBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalBackground"),
+    missedEarningsEditModalDatePicker SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalDatePicker"),
+    missedEarningsAlertTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsAlertTitleLabel"),
+    missedEarningsAlertMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsAlertMessageLabel"),
+    ugcBarcodeDetectedBorder SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcBarcodeDetectedBorder"),
+    ugcBarcodeDetectedIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcBarcodeDetectedIcon"),
+    ugcNavigationButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcNavigationButtonIcon"),
+    ugcNavigationButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcNavigationButtonBackground"),
+    ugcProductInfoBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcProductInfoBackground"),
+    ugcProductInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcProductInfoLabel"),
+    ugcToastMessageWarningIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcToastMessageWarningIcon"),
+    ugcRetakeButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcRetakeButtonLabel"),
+    ugcRetakeButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcRetakeButtonBackground"),
+    ugcSubmitButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcSubmitButtonLabel"),
+    ugcSubmitButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcSubmitButtonBackground")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_offerWallHeaderBackground {  // impl struct for case offerWallHeaderBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallHeaderBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallHeaderBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderBackground");
+  SWIFT_INLINE_THUNK bool isOfferWallHeaderBackground() const;
+
+  inline const static struct _impl_offerWallHeaderTitleLabel {  // impl struct for case offerWallHeaderTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallHeaderTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderTitleLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallHeaderTitleLabel() const;
+
+  inline const static struct _impl_offerWallHeaderSubtitleLabel {  // impl struct for case offerWallHeaderSubtitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallHeaderSubtitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallHeaderSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderSubtitleLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallHeaderSubtitleLabel() const;
+
+  inline const static struct _impl_offerWallHeaderBackButtonIcon {  // impl struct for case offerWallHeaderBackButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallHeaderBackButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallHeaderBackButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderBackButtonIcon");
+  SWIFT_INLINE_THUNK bool isOfferWallHeaderBackButtonIcon() const;
+
+  inline const static struct _impl_offerWallBackground {  // impl struct for case offerWallBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallBackground");
+  SWIFT_INLINE_THUNK bool isOfferWallBackground() const;
+
+  inline const static struct _impl_offerWallSectionHeaderLabel {  // impl struct for case offerWallSectionHeaderLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallSectionHeaderLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallSectionHeaderLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallSectionHeaderLabel() const;
+
+  inline const static struct _impl_offerWallSectionHeaderShowMoreIcon {  // impl struct for case offerWallSectionHeaderShowMoreIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallSectionHeaderShowMoreIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallSectionHeaderShowMoreIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallSectionHeaderShowMoreIcon");
+  SWIFT_INLINE_THUNK bool isOfferWallSectionHeaderShowMoreIcon() const;
+
+  inline const static struct _impl_offerWallSectionHeaderShowMoreBackground {  // impl struct for case offerWallSectionHeaderShowMoreBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallSectionHeaderShowMoreBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallSectionHeaderShowMoreBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallSectionHeaderShowMoreBackground");
+  SWIFT_INLINE_THUNK bool isOfferWallSectionHeaderShowMoreBackground() const;
+
+  inline const static struct _impl_offerWallFloatingButtonBackground {  // impl struct for case offerWallFloatingButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallFloatingButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallFloatingButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallFloatingButtonBackground");
+  SWIFT_INLINE_THUNK bool isOfferWallFloatingButtonBackground() const;
+
+  inline const static struct _impl_offerWallFloatingButtonLabel {  // impl struct for case offerWallFloatingButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallFloatingButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallFloatingButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallFloatingButtonLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallFloatingButtonLabel() const;
+
+  inline const static struct _impl_offerWallMoreMerchantsIcon {  // impl struct for case offerWallMoreMerchantsIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallMoreMerchantsIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallMoreMerchantsIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallMoreMerchantsIcon");
+  SWIFT_INLINE_THUNK bool isOfferWallMoreMerchantsIcon() const;
+
+  inline const static struct _impl_offerRewardPointsLabel {  // impl struct for case offerRewardPointsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerRewardPointsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerRewardPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferRewardPointsLabel");
+  SWIFT_INLINE_THUNK bool isOfferRewardPointsLabel() const;
+
+  inline const static struct _impl_offerTagLabel {  // impl struct for case offerTagLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerTagLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerTagLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferTagLabel");
+  SWIFT_INLINE_THUNK bool isOfferTagLabel() const;
+
+  inline const static struct _impl_offerTagBackground {  // impl struct for case offerTagBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerTagBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerTagBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferTagBackground");
+  SWIFT_INLINE_THUNK bool isOfferTagBackground() const;
+
+  inline const static struct _impl_offerBackground {  // impl struct for case offerBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferBackground");
+  SWIFT_INLINE_THUNK bool isOfferBackground() const;
+
+  inline const static struct _impl_offerBrandLabel {  // impl struct for case offerBrandLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerBrandLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerBrandLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferBrandLabel");
+  SWIFT_INLINE_THUNK bool isOfferBrandLabel() const;
+
+  inline const static struct _impl_offerDescriptionLabel {  // impl struct for case offerDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isOfferDescriptionLabel() const;
+
+  inline const static struct _impl_offerEligibleMerchantsLabel {  // impl struct for case offerEligibleMerchantsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerEligibleMerchantsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerEligibleMerchantsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferEligibleMerchantsLabel");
+  SWIFT_INLINE_THUNK bool isOfferEligibleMerchantsLabel() const;
+
+  inline const static struct _impl_offerDetailsExpirationLabel {  // impl struct for case offerDetailsExpirationLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsExpirationLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsExpirationLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsExpirationLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsExpirationLabel() const;
+
+  inline const static struct _impl_offerDetailsClipLabel {  // impl struct for case offerDetailsClipLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsClipLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsClipLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsClipLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsClipLabel() const;
+
+  inline const static struct _impl_offerClipButtonIcon {  // impl struct for case offerClipButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerClipButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerClipButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClipButtonIcon");
+  SWIFT_INLINE_THUNK bool isOfferClipButtonIcon() const;
+
+  inline const static struct _impl_offerClipButtonBackground {  // impl struct for case offerClipButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerClipButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerClipButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClipButtonBackground");
+  SWIFT_INLINE_THUNK bool isOfferClipButtonBackground() const;
+
+  inline const static struct _impl_offerClippedButtonIcon {  // impl struct for case offerClippedButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerClippedButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerClippedButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedButtonIcon");
+  SWIFT_INLINE_THUNK bool isOfferClippedButtonIcon() const;
+
+  inline const static struct _impl_offerClippedButtonBackground {  // impl struct for case offerClippedButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerClippedButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerClippedButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedButtonBackground");
+  SWIFT_INLINE_THUNK bool isOfferClippedButtonBackground() const;
+
+  inline const static struct _impl_offerClippedToastMessageLabel {  // impl struct for case offerClippedToastMessageLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerClippedToastMessageLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerClippedToastMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedToastMessageLabel");
+  SWIFT_INLINE_THUNK bool isOfferClippedToastMessageLabel() const;
+
+  inline const static struct _impl_offerClippedToastMessageBackground {  // impl struct for case offerClippedToastMessageBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerClippedToastMessageBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerClippedToastMessageBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedToastMessageBackground");
+  SWIFT_INLINE_THUNK bool isOfferClippedToastMessageBackground() const;
+
+  inline const static struct _impl_offerDetailsClipRequiredLabel {  // impl struct for case offerDetailsClipRequiredLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsClipRequiredLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsClipRequiredLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsClipRequiredLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsClipRequiredLabel() const;
+
+  inline const static struct _impl_offerDetailsClipRequiredBackground {  // impl struct for case offerDetailsClipRequiredBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsClipRequiredBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsClipRequiredBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsClipRequiredBackground");
+  SWIFT_INLINE_THUNK bool isOfferDetailsClipRequiredBackground() const;
+
+  inline const static struct _impl_offerDetailsSectionHeaderTitleLabel {  // impl struct for case offerDetailsSectionHeaderTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsSectionHeaderTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsSectionHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsSectionHeaderTitleLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsSectionHeaderTitleLabel() const;
+
+  inline const static struct _impl_offerDetailsSectionHeaderToggleLabel {  // impl struct for case offerDetailsSectionHeaderToggleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsSectionHeaderToggleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsSectionHeaderToggleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsSectionHeaderToggleLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsSectionHeaderToggleLabel() const;
+
+  inline const static struct _impl_offerDetailsSectionBodyLabel {  // impl struct for case offerDetailsSectionBodyLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsSectionBodyLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsSectionBodyLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsSectionBodyLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsSectionBodyLabel() const;
+
+  inline const static struct _impl_offerDetailsShortDescription {  // impl struct for case offerDetailsShortDescription
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsShortDescription;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsShortDescription SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsShortDescription");
+  SWIFT_INLINE_THUNK bool isOfferDetailsShortDescription() const;
+
+  inline const static struct _impl_offerDetailsFinePrintLabel {  // impl struct for case offerDetailsFinePrintLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsFinePrintLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsFinePrintLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsFinePrintLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsFinePrintLabel() const;
+
+  inline const static struct _impl_offerDetailsBuyOptionLabel {  // impl struct for case offerDetailsBuyOptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsBuyOptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsBuyOptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsBuyOptionLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsBuyOptionLabel() const;
+
+  inline const static struct _impl_offerDetailsBuyOptionBackground {  // impl struct for case offerDetailsBuyOptionBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsBuyOptionBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsBuyOptionBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsBuyOptionBackground");
+  SWIFT_INLINE_THUNK bool isOfferDetailsBuyOptionBackground() const;
+
+  inline const static struct _impl_storesHeaderBackground {  // impl struct for case storesHeaderBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesHeaderBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesHeaderBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresHeaderBackground");
+  SWIFT_INLINE_THUNK bool isStoresHeaderBackground() const;
+
+  inline const static struct _impl_storesHeaderTitleLabel {  // impl struct for case storesHeaderTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesHeaderTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresHeaderTitleLabel");
+  SWIFT_INLINE_THUNK bool isStoresHeaderTitleLabel() const;
+
+  inline const static struct _impl_storesListSectionHeaderLabel {  // impl struct for case storesListSectionHeaderLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListSectionHeaderLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesListSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListSectionHeaderLabel");
+  SWIFT_INLINE_THUNK bool isStoresListSectionHeaderLabel() const;
+
+  inline const static struct _impl_storesListBackground {  // impl struct for case storesListBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesListBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListBackground");
+  SWIFT_INLINE_THUNK bool isStoresListBackground() const;
+
+  inline const static struct _impl_storesListItemBackground {  // impl struct for case storesListItemBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListItemBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesListItemBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemBackground");
+  SWIFT_INLINE_THUNK bool isStoresListItemBackground() const;
+
+  inline const static struct _impl_storesListItemDefaultIcon {  // impl struct for case storesListItemDefaultIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListItemDefaultIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesListItemDefaultIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemDefaultIcon");
+  SWIFT_INLINE_THUNK bool isStoresListItemDefaultIcon() const;
+
+  inline const static struct _impl_storesListItemTitleLabel {  // impl struct for case storesListItemTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListItemTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesListItemTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemTitleLabel");
+  SWIFT_INLINE_THUNK bool isStoresListItemTitleLabel() const;
+
+  inline const static struct _impl_storesListItemSubtitleLabel {  // impl struct for case storesListItemSubtitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListItemSubtitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesListItemSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemSubtitleLabel");
+  SWIFT_INLINE_THUNK bool isStoresListItemSubtitleLabel() const;
+
+  inline const static struct _impl_adLoadingLoadingBarLabel {  // impl struct for case adLoadingLoadingBarLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingLoadingBarLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } adLoadingLoadingBarLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingLoadingBarLabel");
+  SWIFT_INLINE_THUNK bool isAdLoadingLoadingBarLabel() const;
+
+  inline const static struct _impl_adLoadingLoadingBarBackground {  // impl struct for case adLoadingLoadingBarBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingLoadingBarBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } adLoadingLoadingBarBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingLoadingBarBackground");
+  SWIFT_INLINE_THUNK bool isAdLoadingLoadingBarBackground() const;
+
+  inline const static struct _impl_adLoadingLoadingBarProgress {  // impl struct for case adLoadingLoadingBarProgress
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingLoadingBarProgress;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } adLoadingLoadingBarProgress SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingLoadingBarProgress");
+  SWIFT_INLINE_THUNK bool isAdLoadingLoadingBarProgress() const;
+
+  inline const static struct _impl_adLoadingDefaultTitleLabel {  // impl struct for case adLoadingDefaultTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingDefaultTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } adLoadingDefaultTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingDefaultTitleLabel");
+  SWIFT_INLINE_THUNK bool isAdLoadingDefaultTitleLabel() const;
+
+  inline const static struct _impl_adLoadingDefaultDescriptionLabel {  // impl struct for case adLoadingDefaultDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingDefaultDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } adLoadingDefaultDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingDefaultDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isAdLoadingDefaultDescriptionLabel() const;
+
+  inline const static struct _impl_errorModalIconBackground {  // impl struct for case errorModalIconBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalIconBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } errorModalIconBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalIconBackground");
+  SWIFT_INLINE_THUNK bool isErrorModalIconBackground() const;
+
+  inline const static struct _impl_errorModalTitleLabel {  // impl struct for case errorModalTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } errorModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalTitleLabel");
+  SWIFT_INLINE_THUNK bool isErrorModalTitleLabel() const;
+
+  inline const static struct _impl_errorModalDescriptionLabel {  // impl struct for case errorModalDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } errorModalDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isErrorModalDescriptionLabel() const;
+
+  inline const static struct _impl_errorModalBackButtonLabel {  // impl struct for case errorModalBackButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalBackButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } errorModalBackButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalBackButtonLabel");
+  SWIFT_INLINE_THUNK bool isErrorModalBackButtonLabel() const;
+
+  inline const static struct _impl_errorModalBackground {  // impl struct for case errorModalBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } errorModalBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalBackground");
+  SWIFT_INLINE_THUNK bool isErrorModalBackground() const;
+
+  inline const static struct _impl_postScanHeaderBackground {  // impl struct for case postScanHeaderBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanHeaderBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanHeaderBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanHeaderBackground");
+  SWIFT_INLINE_THUNK bool isPostScanHeaderBackground() const;
+
+  inline const static struct _impl_postScanTotalPointsBackground {  // impl struct for case postScanTotalPointsBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanTotalPointsBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanTotalPointsBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanTotalPointsBackground");
+  SWIFT_INLINE_THUNK bool isPostScanTotalPointsBackground() const;
+
+  inline const static struct _impl_postScanTotalPointsLabel {  // impl struct for case postScanTotalPointsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanTotalPointsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanTotalPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanTotalPointsLabel");
+  SWIFT_INLINE_THUNK bool isPostScanTotalPointsLabel() const;
+
+  inline const static struct _impl_postScanReceiptButtonIcon {  // impl struct for case postScanReceiptButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanReceiptButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanReceiptButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanReceiptButtonIcon");
+  SWIFT_INLINE_THUNK bool isPostScanReceiptButtonIcon() const;
+
+  inline const static struct _impl_postScanReceiptButtonBackground {  // impl struct for case postScanReceiptButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanReceiptButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanReceiptButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanReceiptButtonBackground");
+  SWIFT_INLINE_THUNK bool isPostScanReceiptButtonBackground() const;
+
+  inline const static struct _impl_postScanFooterButtonTitle {  // impl struct for case postScanFooterButtonTitle
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanFooterButtonTitle;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanFooterButtonTitle SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanFooterButtonTitle");
+  SWIFT_INLINE_THUNK bool isPostScanFooterButtonTitle() const;
+
+  inline const static struct _impl_postScanFooterBackground {  // impl struct for case postScanFooterBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanFooterBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanFooterBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanFooterBackground");
+  SWIFT_INLINE_THUNK bool isPostScanFooterBackground() const;
+
+  inline const static struct _impl_postScanMerchantNameLabel {  // impl struct for case postScanMerchantNameLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanMerchantNameLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanMerchantNameLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanMerchantNameLabel");
+  SWIFT_INLINE_THUNK bool isPostScanMerchantNameLabel() const;
+
+  inline const static struct _impl_postScanTripInfoLabel {  // impl struct for case postScanTripInfoLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanTripInfoLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanTripInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanTripInfoLabel");
+  SWIFT_INLINE_THUNK bool isPostScanTripInfoLabel() const;
+
+  inline const static struct _impl_postScanNoBoostsLabel {  // impl struct for case postScanNoBoostsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanNoBoostsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanNoBoostsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanNoBoostsLabel");
+  SWIFT_INLINE_THUNK bool isPostScanNoBoostsLabel() const;
+
+  inline const static struct _impl_postScanSuccessTitleLabel {  // impl struct for case postScanSuccessTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanSuccessTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanSuccessTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanSuccessTitleLabel");
+  SWIFT_INLINE_THUNK bool isPostScanSuccessTitleLabel() const;
+
+  inline const static struct _impl_postScanSuccessDescriptionLabel {  // impl struct for case postScanSuccessDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanSuccessDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanSuccessDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanSuccessDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isPostScanSuccessDescriptionLabel() const;
+
+  inline const static struct _impl_postScanBoostTitleLabel {  // impl struct for case postScanBoostTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanBoostTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostTitleLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostTitleLabel() const;
+
+  inline const static struct _impl_postScanBoostDescriptionLabel {  // impl struct for case postScanBoostDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanBoostDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostDescriptionLabel() const;
+
+  inline const static struct _impl_postScanBoostSkipButtonLabel {  // impl struct for case postScanBoostSkipButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostSkipButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanBoostSkipButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostSkipButtonLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostSkipButtonLabel() const;
+
+  inline const static struct _impl_postScanBoostClaimButtonLabel {  // impl struct for case postScanBoostClaimButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostClaimButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanBoostClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostClaimButtonLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostClaimButtonLabel() const;
+
+  inline const static struct _impl_postScanBoostClaimButtonIcon {  // impl struct for case postScanBoostClaimButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostClaimButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanBoostClaimButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostClaimButtonIcon");
+  SWIFT_INLINE_THUNK bool isPostScanBoostClaimButtonIcon() const;
+
+  inline const static struct _impl_postScanBoostClaimButtonBackground {  // impl struct for case postScanBoostClaimButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostClaimButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanBoostClaimButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostClaimButtonBackground");
+  SWIFT_INLINE_THUNK bool isPostScanBoostClaimButtonBackground() const;
+
+  inline const static struct _impl_postScanPurchasePointsLabel {  // impl struct for case postScanPurchasePointsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanPurchasePointsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanPurchasePointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanPurchasePointsLabel");
+  SWIFT_INLINE_THUNK bool isPostScanPurchasePointsLabel() const;
+
+  inline const static struct _impl_postScanPurchaseBackground {  // impl struct for case postScanPurchaseBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanPurchaseBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanPurchaseBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanPurchaseBackground");
+  SWIFT_INLINE_THUNK bool isPostScanPurchaseBackground() const;
+
+  inline const static struct _impl_postScanQualifiedPurchaseBackground {  // impl struct for case postScanQualifiedPurchaseBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanQualifiedPurchaseBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanQualifiedPurchaseBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanQualifiedPurchaseBackground");
+  SWIFT_INLINE_THUNK bool isPostScanQualifiedPurchaseBackground() const;
+
+  inline const static struct _impl_postScanPurchaseInfoIcon {  // impl struct for case postScanPurchaseInfoIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanPurchaseInfoIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanPurchaseInfoIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanPurchaseInfoIcon");
+  SWIFT_INLINE_THUNK bool isPostScanPurchaseInfoIcon() const;
+
+  inline const static struct _impl_postScanUGCPurchaseBackground {  // impl struct for case postScanUGCPurchaseBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanUGCPurchaseBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanUGCPurchaseBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseBackground");
+  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseBackground() const;
+
+  inline const static struct _impl_postScanUGCPurchaseClaimButtonLabel {  // impl struct for case postScanUGCPurchaseClaimButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanUGCPurchaseClaimButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanUGCPurchaseClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonLabel");
+  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseClaimButtonLabel() const;
+
+  inline const static struct _impl_postScanUGCPurchaseClaimButtonIcon {  // impl struct for case postScanUGCPurchaseClaimButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanUGCPurchaseClaimButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanUGCPurchaseClaimButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonIcon");
+  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseClaimButtonIcon() const;
+
+  inline const static struct _impl_postScanUGCPurchaseClaimButtonBackground {  // impl struct for case postScanUGCPurchaseClaimButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanUGCPurchaseClaimButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanUGCPurchaseClaimButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonBackground");
+  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseClaimButtonBackground() const;
+
+  inline const static struct _impl_postScanUGCPurchaseBorder {  // impl struct for case postScanUGCPurchaseBorder
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanUGCPurchaseBorder;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanUGCPurchaseBorder SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseBorder");
+  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseBorder() const;
+
+  inline const static struct _impl_purchaseRowLabelColor {  // impl struct for case purchaseRowLabelColor
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::purchaseRowLabelColor;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } purchaseRowLabelColor SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPurchaseRowLabelColor");
+  SWIFT_INLINE_THUNK bool isPurchaseRowLabelColor() const;
+
+  inline const static struct _impl_purchaseRowMetadataLabelColor {  // impl struct for case purchaseRowMetadataLabelColor
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::purchaseRowMetadataLabelColor;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } purchaseRowMetadataLabelColor SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPurchaseRowMetadataLabelColor");
+  SWIFT_INLINE_THUNK bool isPurchaseRowMetadataLabelColor() const;
+
+  inline const static struct _impl_missedEarningsNavigationTitleLabel {  // impl struct for case missedEarningsNavigationTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsNavigationTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsNavigationDescriptionLabel {  // impl struct for case missedEarningsNavigationDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsNavigationDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationDescriptionLabel() const;
+
+  inline const static struct _impl_missedEarningsNavigationEditButtonIcon {  // impl struct for case missedEarningsNavigationEditButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationEditButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsNavigationEditButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationEditButtonIcon");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationEditButtonIcon() const;
+
+  inline const static struct _impl_missedEarningsNavigationEditButtonBackground {  // impl struct for case missedEarningsNavigationEditButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationEditButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsNavigationEditButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationEditButtonBackground");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationEditButtonBackground() const;
+
+  inline const static struct _impl_missedEarningsNavigationSaveButtonIcon {  // impl struct for case missedEarningsNavigationSaveButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationSaveButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsNavigationSaveButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationSaveButtonIcon() const;
+
+  inline const static struct _impl_missedEarningsNavigationSaveButtonBackground {  // impl struct for case missedEarningsNavigationSaveButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationSaveButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsNavigationSaveButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationSaveButtonBackground");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationSaveButtonBackground() const;
+
+  inline const static struct _impl_missedEarningsFieldEditIcon {  // impl struct for case missedEarningsFieldEditIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsFieldEditIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsFieldEditIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsFieldEditIcon");
+  SWIFT_INLINE_THUNK bool isMissedEarningsFieldEditIcon() const;
+
+  inline const static struct _impl_missedEarningsAddNewFieldLabel {  // impl struct for case missedEarningsAddNewFieldLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsAddNewFieldLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsAddNewFieldLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsAddNewFieldLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsAddNewFieldLabel() const;
+
+  inline const static struct _impl_missedEarningsModifiedFieldBackground {  // impl struct for case missedEarningsModifiedFieldBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsModifiedFieldBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsModifiedFieldBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsModifiedFieldBackground");
+  SWIFT_INLINE_THUNK bool isMissedEarningsModifiedFieldBackground() const;
+
+  inline const static struct _impl_missedEarningsListSectionTitleLabel {  // impl struct for case missedEarningsListSectionTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsListSectionTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsListSectionTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsListSectionTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsListSectionTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsTripItemLabel {  // impl struct for case missedEarningsTripItemLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsTripItemLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsTripItemLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsTripItemLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsTripItemLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalTitleLabel {  // impl struct for case missedEarningsEditModalTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalSubtitleLabel {  // impl struct for case missedEarningsEditModalSubtitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalSubtitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalSubtitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalSubtitleLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalInputLabel {  // impl struct for case missedEarningsEditModalInputLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalInputLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalInputLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalInputLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalInputLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalInputPlaceholderLabel {  // impl struct for case missedEarningsEditModalInputPlaceholderLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalInputPlaceholderLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalInputPlaceholderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalInputPlaceholderLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalInputPlaceholderLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalInputValueLabel {  // impl struct for case missedEarningsEditModalInputValueLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalInputValueLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalInputValueLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalInputValueLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalInputValueLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalCancelButtonLabel {  // impl struct for case missedEarningsEditModalCancelButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalCancelButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalCancelButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalCancelButtonLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalCancelButtonLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalSaveButtonLabel {  // impl struct for case missedEarningsEditModalSaveButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalSaveButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalSaveButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalSaveButtonLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalSaveButtonLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalSaveButtonBackground {  // impl struct for case missedEarningsEditModalSaveButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalSaveButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalSaveButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalSaveButtonBackground");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalSaveButtonBackground() const;
+
+  inline const static struct _impl_missedEarningsEditModalBackground {  // impl struct for case missedEarningsEditModalBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalBackground");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalBackground() const;
+
+  inline const static struct _impl_missedEarningsEditModalDatePicker {  // impl struct for case missedEarningsEditModalDatePicker
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalDatePicker;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalDatePicker SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalDatePicker");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalDatePicker() const;
+
+  inline const static struct _impl_missedEarningsAlertTitleLabel {  // impl struct for case missedEarningsAlertTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsAlertTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsAlertTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsAlertTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsAlertTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsAlertMessageLabel {  // impl struct for case missedEarningsAlertMessageLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsAlertMessageLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsAlertMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsAlertMessageLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsAlertMessageLabel() const;
+
+  inline const static struct _impl_ugcBarcodeDetectedBorder {  // impl struct for case ugcBarcodeDetectedBorder
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcBarcodeDetectedBorder;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcBarcodeDetectedBorder SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcBarcodeDetectedBorder");
+  SWIFT_INLINE_THUNK bool isUgcBarcodeDetectedBorder() const;
+
+  inline const static struct _impl_ugcBarcodeDetectedIcon {  // impl struct for case ugcBarcodeDetectedIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcBarcodeDetectedIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcBarcodeDetectedIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcBarcodeDetectedIcon");
+  SWIFT_INLINE_THUNK bool isUgcBarcodeDetectedIcon() const;
+
+  inline const static struct _impl_ugcNavigationButtonIcon {  // impl struct for case ugcNavigationButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcNavigationButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcNavigationButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcNavigationButtonIcon");
+  SWIFT_INLINE_THUNK bool isUgcNavigationButtonIcon() const;
+
+  inline const static struct _impl_ugcNavigationButtonBackground {  // impl struct for case ugcNavigationButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcNavigationButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcNavigationButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcNavigationButtonBackground");
+  SWIFT_INLINE_THUNK bool isUgcNavigationButtonBackground() const;
+
+  inline const static struct _impl_ugcProductInfoBackground {  // impl struct for case ugcProductInfoBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcProductInfoBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcProductInfoBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcProductInfoBackground");
+  SWIFT_INLINE_THUNK bool isUgcProductInfoBackground() const;
+
+  inline const static struct _impl_ugcProductInfoLabel {  // impl struct for case ugcProductInfoLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcProductInfoLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcProductInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcProductInfoLabel");
+  SWIFT_INLINE_THUNK bool isUgcProductInfoLabel() const;
+
+  inline const static struct _impl_ugcToastMessageWarningIcon {  // impl struct for case ugcToastMessageWarningIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcToastMessageWarningIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcToastMessageWarningIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcToastMessageWarningIcon");
+  SWIFT_INLINE_THUNK bool isUgcToastMessageWarningIcon() const;
+
+  inline const static struct _impl_ugcRetakeButtonLabel {  // impl struct for case ugcRetakeButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcRetakeButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcRetakeButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcRetakeButtonLabel");
+  SWIFT_INLINE_THUNK bool isUgcRetakeButtonLabel() const;
+
+  inline const static struct _impl_ugcRetakeButtonBackground {  // impl struct for case ugcRetakeButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcRetakeButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcRetakeButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcRetakeButtonBackground");
+  SWIFT_INLINE_THUNK bool isUgcRetakeButtonBackground() const;
+
+  inline const static struct _impl_ugcSubmitButtonLabel {  // impl struct for case ugcSubmitButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcSubmitButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcSubmitButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcSubmitButtonLabel");
+  SWIFT_INLINE_THUNK bool isUgcSubmitButtonLabel() const;
+
+  inline const static struct _impl_ugcSubmitButtonBackground {  // impl struct for case ugcSubmitButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcSubmitButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcSubmitButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcSubmitButtonBackground");
+  SWIFT_INLINE_THUNK bool isUgcSubmitButtonBackground() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::offerWallHeaderBackground;
+      case 1: return cases::offerWallHeaderTitleLabel;
+      case 2: return cases::offerWallHeaderSubtitleLabel;
+      case 3: return cases::offerWallHeaderBackButtonIcon;
+      case 4: return cases::offerWallBackground;
+      case 5: return cases::offerWallSectionHeaderLabel;
+      case 6: return cases::offerWallSectionHeaderShowMoreIcon;
+      case 7: return cases::offerWallSectionHeaderShowMoreBackground;
+      case 8: return cases::offerWallFloatingButtonBackground;
+      case 9: return cases::offerWallFloatingButtonLabel;
+      case 10: return cases::offerWallMoreMerchantsIcon;
+      case 11: return cases::offerRewardPointsLabel;
+      case 12: return cases::offerTagLabel;
+      case 13: return cases::offerTagBackground;
+      case 14: return cases::offerBackground;
+      case 15: return cases::offerBrandLabel;
+      case 16: return cases::offerDescriptionLabel;
+      case 17: return cases::offerEligibleMerchantsLabel;
+      case 18: return cases::offerDetailsExpirationLabel;
+      case 19: return cases::offerDetailsClipLabel;
+      case 20: return cases::offerClipButtonIcon;
+      case 21: return cases::offerClipButtonBackground;
+      case 22: return cases::offerClippedButtonIcon;
+      case 23: return cases::offerClippedButtonBackground;
+      case 24: return cases::offerClippedToastMessageLabel;
+      case 25: return cases::offerClippedToastMessageBackground;
+      case 26: return cases::offerDetailsClipRequiredLabel;
+      case 27: return cases::offerDetailsClipRequiredBackground;
+      case 28: return cases::offerDetailsSectionHeaderTitleLabel;
+      case 29: return cases::offerDetailsSectionHeaderToggleLabel;
+      case 30: return cases::offerDetailsSectionBodyLabel;
+      case 31: return cases::offerDetailsShortDescription;
+      case 32: return cases::offerDetailsFinePrintLabel;
+      case 33: return cases::offerDetailsBuyOptionLabel;
+      case 34: return cases::offerDetailsBuyOptionBackground;
+      case 35: return cases::storesHeaderBackground;
+      case 36: return cases::storesHeaderTitleLabel;
+      case 37: return cases::storesListSectionHeaderLabel;
+      case 38: return cases::storesListBackground;
+      case 39: return cases::storesListItemBackground;
+      case 40: return cases::storesListItemDefaultIcon;
+      case 41: return cases::storesListItemTitleLabel;
+      case 42: return cases::storesListItemSubtitleLabel;
+      case 43: return cases::adLoadingLoadingBarLabel;
+      case 44: return cases::adLoadingLoadingBarBackground;
+      case 45: return cases::adLoadingLoadingBarProgress;
+      case 46: return cases::adLoadingDefaultTitleLabel;
+      case 47: return cases::adLoadingDefaultDescriptionLabel;
+      case 48: return cases::errorModalIconBackground;
+      case 49: return cases::errorModalTitleLabel;
+      case 50: return cases::errorModalDescriptionLabel;
+      case 51: return cases::errorModalBackButtonLabel;
+      case 52: return cases::errorModalBackground;
+      case 53: return cases::postScanHeaderBackground;
+      case 54: return cases::postScanTotalPointsBackground;
+      case 55: return cases::postScanTotalPointsLabel;
+      case 56: return cases::postScanReceiptButtonIcon;
+      case 57: return cases::postScanReceiptButtonBackground;
+      case 58: return cases::postScanFooterButtonTitle;
+      case 59: return cases::postScanFooterBackground;
+      case 60: return cases::postScanMerchantNameLabel;
+      case 61: return cases::postScanTripInfoLabel;
+      case 62: return cases::postScanNoBoostsLabel;
+      case 63: return cases::postScanSuccessTitleLabel;
+      case 64: return cases::postScanSuccessDescriptionLabel;
+      case 65: return cases::postScanBoostTitleLabel;
+      case 66: return cases::postScanBoostDescriptionLabel;
+      case 67: return cases::postScanBoostSkipButtonLabel;
+      case 68: return cases::postScanBoostClaimButtonLabel;
+      case 69: return cases::postScanBoostClaimButtonIcon;
+      case 70: return cases::postScanBoostClaimButtonBackground;
+      case 71: return cases::postScanPurchasePointsLabel;
+      case 72: return cases::postScanPurchaseBackground;
+      case 73: return cases::postScanQualifiedPurchaseBackground;
+      case 74: return cases::postScanPurchaseInfoIcon;
+      case 75: return cases::postScanUGCPurchaseBackground;
+      case 76: return cases::postScanUGCPurchaseClaimButtonLabel;
+      case 77: return cases::postScanUGCPurchaseClaimButtonIcon;
+      case 78: return cases::postScanUGCPurchaseClaimButtonBackground;
+      case 79: return cases::postScanUGCPurchaseBorder;
+      case 80: return cases::purchaseRowLabelColor;
+      case 81: return cases::purchaseRowMetadataLabelColor;
+      case 82: return cases::missedEarningsNavigationTitleLabel;
+      case 83: return cases::missedEarningsNavigationDescriptionLabel;
+      case 84: return cases::missedEarningsNavigationEditButtonIcon;
+      case 85: return cases::missedEarningsNavigationEditButtonBackground;
+      case 86: return cases::missedEarningsNavigationSaveButtonIcon;
+      case 87: return cases::missedEarningsNavigationSaveButtonBackground;
+      case 88: return cases::missedEarningsFieldEditIcon;
+      case 89: return cases::missedEarningsAddNewFieldLabel;
+      case 90: return cases::missedEarningsModifiedFieldBackground;
+      case 91: return cases::missedEarningsListSectionTitleLabel;
+      case 92: return cases::missedEarningsTripItemLabel;
+      case 93: return cases::missedEarningsEditModalTitleLabel;
+      case 94: return cases::missedEarningsEditModalSubtitleLabel;
+      case 95: return cases::missedEarningsEditModalInputLabel;
+      case 96: return cases::missedEarningsEditModalInputPlaceholderLabel;
+      case 97: return cases::missedEarningsEditModalInputValueLabel;
+      case 98: return cases::missedEarningsEditModalCancelButtonLabel;
+      case 99: return cases::missedEarningsEditModalSaveButtonLabel;
+      case 100: return cases::missedEarningsEditModalSaveButtonBackground;
+      case 101: return cases::missedEarningsEditModalBackground;
+      case 102: return cases::missedEarningsEditModalDatePicker;
+      case 103: return cases::missedEarningsAlertTitleLabel;
+      case 104: return cases::missedEarningsAlertMessageLabel;
+      case 105: return cases::ugcBarcodeDetectedBorder;
+      case 106: return cases::ugcBarcodeDetectedIcon;
+      case 107: return cases::ugcNavigationButtonIcon;
+      case 108: return cases::ugcNavigationButtonBackground;
+      case 109: return cases::ugcProductInfoBackground;
+      case 110: return cases::ugcProductInfoLabel;
+      case 111: return cases::ugcToastMessageWarningIcon;
+      case 112: return cases::ugcRetakeButtonLabel;
+      case 113: return cases::ugcRetakeButtonBackground;
+      case 114: return cases::ugcSubmitButtonLabel;
+      case 115: return cases::ugcSubmitButtonBackground;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<AppearanceColorKey> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage18AppearanceColorKeyO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage18AppearanceColorKeyO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK AppearanceColorKey() noexcept {}
+  static SWIFT_INLINE_THUNK AppearanceColorKey _make() noexcept { return AppearanceColorKey(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage18AppearanceColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage18AppearanceColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage18AppearanceColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_AppearanceColorKey;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage18AppearanceColorKeyOD;
+  static inline constexpr $s11BlinkEngage18AppearanceColorKeyOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_AppearanceColorKey {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(AppearanceColorKey &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const AppearanceColorKey &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER AppearanceColorKey returnNewValue(T callable) {
+    auto result = AppearanceColorKey::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage18AppearanceColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::AppearanceColorKey> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage18AppearanceColorKeyOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::AppearanceColorKey> = true;
+template<>
+struct implClassFor<BlinkEngage::AppearanceColorKey> { using type = BlinkEngage::_impl::_impl_AppearanceColorKey; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey") AppearanceFontNameKey;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::AppearanceFontNameKey> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// Keys for custom fonts. Return a font name (e.g. <code>"Outfit-Bold"</code>) for a key from your <code>Theme</code> to use that font for the corresponding label; return <code>nil</code> to use the default or your <code>globalFontMatrix</code> by weight.
+namespace _impl {
+
+class _impl_AppearanceFontNameKey;
+
+// Type metadata accessor for AppearanceFontNameKey
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage21AppearanceFontNameKeyOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey") AppearanceFontNameKey final {
+public:
+  SWIFT_INLINE_THUNK ~AppearanceFontNameKey() noexcept {
+    auto metadata = _impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey(const AppearanceFontNameKey &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey &operator =(const AppearanceFontNameKey &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey &operator =(AppearanceFontNameKey &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER AppearanceFontNameKey(AppearanceFontNameKey &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    offerWallHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallHeaderTitleLabel"),
+    offerWallHeaderSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallHeaderSubtitleLabel"),
+    offerWallSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallSectionHeaderLabel"),
+    offerWallFloatingButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallFloatingButtonLabel"),
+    offerRewardPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferRewardPointsLabel"),
+    offerTagLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferTagLabel"),
+    offerBrandLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferBrandLabel"),
+    offerDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDescriptionLabel"),
+    offerEligibleMerchantsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferEligibleMerchantsLabel"),
+    offerDetailsExpirationLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsExpirationLabel"),
+    offerDetailsClipLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsClipLabel"),
+    offerClippedToastMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferClippedToastMessageLabel"),
+    offerDetailsClipRequiredLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsClipRequiredLabel"),
+    offerDetailsSectionHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsSectionHeaderTitleLabel"),
+    offerDetailsSectionHeaderToggleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsSectionHeaderToggleLabel"),
+    offerDetailsSectionBodyLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsSectionBodyLabel"),
+    offerDetailsShortDescription SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsShortDescription"),
+    offerDetailsFinePrintLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsFinePrintLabel"),
+    offerDetailsBuyOptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsBuyOptionLabel"),
+    storesHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresHeaderTitleLabel"),
+    storesListSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresListSectionHeaderLabel"),
+    storesListItemTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresListItemTitleLabel"),
+    storesListItemSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresListItemSubtitleLabel"),
+    adLoadingLoadingBarLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyAdLoadingLoadingBarLabel"),
+    adLoadingDefaultTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyAdLoadingDefaultTitleLabel"),
+    adLoadingDefaultDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyAdLoadingDefaultDescriptionLabel"),
+    errorModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyErrorModalTitleLabel"),
+    errorModalDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyErrorModalDescriptionLabel"),
+    errorModalBackButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyErrorModalBackButtonLabel"),
+    postScanTotalPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanTotalPointsLabel"),
+    postScanFooterButtonTitle SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanFooterButtonTitle"),
+    postScanMerchantNameLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanMerchantNameLabel"),
+    postScanTripInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanTripInfoLabel"),
+    postScanNoBoostsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanNoBoostsLabel"),
+    postScanSuccessTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanSuccessTitleLabel"),
+    postScanSuccessDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanSuccessDescriptionLabel"),
+    postScanBoostTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostTitleLabel"),
+    postScanBoostDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostDescriptionLabel"),
+    postScanBoostSkipButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostSkipButtonLabel"),
+    postScanBoostClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostClaimButtonLabel"),
+    postScanPurchasePointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanPurchasePointsLabel"),
+    postScanUGCPurchaseClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanUGCPurchaseClaimButtonLabel"),
+    purchaseRowLabelFont SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPurchaseRowLabelFont"),
+    purchaseRowMetadataLabelFont SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPurchaseRowMetadataLabelFont"),
+    missedEarningsNavigationTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsNavigationTitleLabel"),
+    missedEarningsNavigationDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsNavigationDescriptionLabel"),
+    missedEarningsListSectionTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsListSectionTitleLabel"),
+    missedEarningsTripItemLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsTripItemLabel"),
+    missedEarningsEditModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalTitleLabel"),
+    missedEarningsEditModalSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalSubtitleLabel"),
+    missedEarningsEditModalInputLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalInputLabel"),
+    missedEarningsEditModalInputPlaceholderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalInputPlaceholderLabel"),
+    missedEarningsEditModalInputValueLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalInputValueLabel"),
+    missedEarningsEditModalCancelButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalCancelButtonLabel"),
+    missedEarningsEditModalSaveButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalSaveButtonLabel"),
+    missedEarningsAlertTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsAlertTitleLabel"),
+    missedEarningsAlertMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsAlertMessageLabel"),
+    ugcProductInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyUgcProductInfoLabel"),
+    ugcRetakeButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyUgcRetakeButtonLabel"),
+    ugcSubmitButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyUgcSubmitButtonLabel")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_offerWallHeaderTitleLabel {  // impl struct for case offerWallHeaderTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallHeaderTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerWallHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallHeaderTitleLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallHeaderTitleLabel() const;
+
+  inline const static struct _impl_offerWallHeaderSubtitleLabel {  // impl struct for case offerWallHeaderSubtitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallHeaderSubtitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerWallHeaderSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallHeaderSubtitleLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallHeaderSubtitleLabel() const;
+
+  inline const static struct _impl_offerWallSectionHeaderLabel {  // impl struct for case offerWallSectionHeaderLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallSectionHeaderLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerWallSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallSectionHeaderLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallSectionHeaderLabel() const;
+
+  inline const static struct _impl_offerWallFloatingButtonLabel {  // impl struct for case offerWallFloatingButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallFloatingButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerWallFloatingButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallFloatingButtonLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallFloatingButtonLabel() const;
+
+  inline const static struct _impl_offerRewardPointsLabel {  // impl struct for case offerRewardPointsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerRewardPointsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerRewardPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferRewardPointsLabel");
+  SWIFT_INLINE_THUNK bool isOfferRewardPointsLabel() const;
+
+  inline const static struct _impl_offerTagLabel {  // impl struct for case offerTagLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerTagLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerTagLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferTagLabel");
+  SWIFT_INLINE_THUNK bool isOfferTagLabel() const;
+
+  inline const static struct _impl_offerBrandLabel {  // impl struct for case offerBrandLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerBrandLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerBrandLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferBrandLabel");
+  SWIFT_INLINE_THUNK bool isOfferBrandLabel() const;
+
+  inline const static struct _impl_offerDescriptionLabel {  // impl struct for case offerDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isOfferDescriptionLabel() const;
+
+  inline const static struct _impl_offerEligibleMerchantsLabel {  // impl struct for case offerEligibleMerchantsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerEligibleMerchantsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerEligibleMerchantsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferEligibleMerchantsLabel");
+  SWIFT_INLINE_THUNK bool isOfferEligibleMerchantsLabel() const;
+
+  inline const static struct _impl_offerDetailsExpirationLabel {  // impl struct for case offerDetailsExpirationLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsExpirationLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsExpirationLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsExpirationLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsExpirationLabel() const;
+
+  inline const static struct _impl_offerDetailsClipLabel {  // impl struct for case offerDetailsClipLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsClipLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsClipLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsClipLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsClipLabel() const;
+
+  inline const static struct _impl_offerClippedToastMessageLabel {  // impl struct for case offerClippedToastMessageLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerClippedToastMessageLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerClippedToastMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferClippedToastMessageLabel");
+  SWIFT_INLINE_THUNK bool isOfferClippedToastMessageLabel() const;
+
+  inline const static struct _impl_offerDetailsClipRequiredLabel {  // impl struct for case offerDetailsClipRequiredLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsClipRequiredLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsClipRequiredLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsClipRequiredLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsClipRequiredLabel() const;
+
+  inline const static struct _impl_offerDetailsSectionHeaderTitleLabel {  // impl struct for case offerDetailsSectionHeaderTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsSectionHeaderTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsSectionHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsSectionHeaderTitleLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsSectionHeaderTitleLabel() const;
+
+  inline const static struct _impl_offerDetailsSectionHeaderToggleLabel {  // impl struct for case offerDetailsSectionHeaderToggleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsSectionHeaderToggleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsSectionHeaderToggleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsSectionHeaderToggleLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsSectionHeaderToggleLabel() const;
+
+  inline const static struct _impl_offerDetailsSectionBodyLabel {  // impl struct for case offerDetailsSectionBodyLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsSectionBodyLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsSectionBodyLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsSectionBodyLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsSectionBodyLabel() const;
+
+  inline const static struct _impl_offerDetailsShortDescription {  // impl struct for case offerDetailsShortDescription
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsShortDescription;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsShortDescription SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsShortDescription");
+  SWIFT_INLINE_THUNK bool isOfferDetailsShortDescription() const;
+
+  inline const static struct _impl_offerDetailsFinePrintLabel {  // impl struct for case offerDetailsFinePrintLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsFinePrintLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsFinePrintLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsFinePrintLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsFinePrintLabel() const;
+
+  inline const static struct _impl_offerDetailsBuyOptionLabel {  // impl struct for case offerDetailsBuyOptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsBuyOptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsBuyOptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsBuyOptionLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsBuyOptionLabel() const;
+
+  inline const static struct _impl_storesHeaderTitleLabel {  // impl struct for case storesHeaderTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesHeaderTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } storesHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresHeaderTitleLabel");
+  SWIFT_INLINE_THUNK bool isStoresHeaderTitleLabel() const;
+
+  inline const static struct _impl_storesListSectionHeaderLabel {  // impl struct for case storesListSectionHeaderLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListSectionHeaderLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } storesListSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresListSectionHeaderLabel");
+  SWIFT_INLINE_THUNK bool isStoresListSectionHeaderLabel() const;
+
+  inline const static struct _impl_storesListItemTitleLabel {  // impl struct for case storesListItemTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListItemTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } storesListItemTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresListItemTitleLabel");
+  SWIFT_INLINE_THUNK bool isStoresListItemTitleLabel() const;
+
+  inline const static struct _impl_storesListItemSubtitleLabel {  // impl struct for case storesListItemSubtitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListItemSubtitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } storesListItemSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresListItemSubtitleLabel");
+  SWIFT_INLINE_THUNK bool isStoresListItemSubtitleLabel() const;
+
+  inline const static struct _impl_adLoadingLoadingBarLabel {  // impl struct for case adLoadingLoadingBarLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingLoadingBarLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } adLoadingLoadingBarLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyAdLoadingLoadingBarLabel");
+  SWIFT_INLINE_THUNK bool isAdLoadingLoadingBarLabel() const;
+
+  inline const static struct _impl_adLoadingDefaultTitleLabel {  // impl struct for case adLoadingDefaultTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingDefaultTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } adLoadingDefaultTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyAdLoadingDefaultTitleLabel");
+  SWIFT_INLINE_THUNK bool isAdLoadingDefaultTitleLabel() const;
+
+  inline const static struct _impl_adLoadingDefaultDescriptionLabel {  // impl struct for case adLoadingDefaultDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingDefaultDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } adLoadingDefaultDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyAdLoadingDefaultDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isAdLoadingDefaultDescriptionLabel() const;
+
+  inline const static struct _impl_errorModalTitleLabel {  // impl struct for case errorModalTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } errorModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyErrorModalTitleLabel");
+  SWIFT_INLINE_THUNK bool isErrorModalTitleLabel() const;
+
+  inline const static struct _impl_errorModalDescriptionLabel {  // impl struct for case errorModalDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } errorModalDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyErrorModalDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isErrorModalDescriptionLabel() const;
+
+  inline const static struct _impl_errorModalBackButtonLabel {  // impl struct for case errorModalBackButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalBackButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } errorModalBackButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyErrorModalBackButtonLabel");
+  SWIFT_INLINE_THUNK bool isErrorModalBackButtonLabel() const;
+
+  inline const static struct _impl_postScanTotalPointsLabel {  // impl struct for case postScanTotalPointsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanTotalPointsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanTotalPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanTotalPointsLabel");
+  SWIFT_INLINE_THUNK bool isPostScanTotalPointsLabel() const;
+
+  inline const static struct _impl_postScanFooterButtonTitle {  // impl struct for case postScanFooterButtonTitle
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanFooterButtonTitle;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanFooterButtonTitle SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanFooterButtonTitle");
+  SWIFT_INLINE_THUNK bool isPostScanFooterButtonTitle() const;
+
+  inline const static struct _impl_postScanMerchantNameLabel {  // impl struct for case postScanMerchantNameLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanMerchantNameLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanMerchantNameLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanMerchantNameLabel");
+  SWIFT_INLINE_THUNK bool isPostScanMerchantNameLabel() const;
+
+  inline const static struct _impl_postScanTripInfoLabel {  // impl struct for case postScanTripInfoLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanTripInfoLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanTripInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanTripInfoLabel");
+  SWIFT_INLINE_THUNK bool isPostScanTripInfoLabel() const;
+
+  inline const static struct _impl_postScanNoBoostsLabel {  // impl struct for case postScanNoBoostsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanNoBoostsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanNoBoostsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanNoBoostsLabel");
+  SWIFT_INLINE_THUNK bool isPostScanNoBoostsLabel() const;
+
+  inline const static struct _impl_postScanSuccessTitleLabel {  // impl struct for case postScanSuccessTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanSuccessTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanSuccessTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanSuccessTitleLabel");
+  SWIFT_INLINE_THUNK bool isPostScanSuccessTitleLabel() const;
+
+  inline const static struct _impl_postScanSuccessDescriptionLabel {  // impl struct for case postScanSuccessDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanSuccessDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanSuccessDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanSuccessDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isPostScanSuccessDescriptionLabel() const;
+
+  inline const static struct _impl_postScanBoostTitleLabel {  // impl struct for case postScanBoostTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanBoostTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostTitleLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostTitleLabel() const;
+
+  inline const static struct _impl_postScanBoostDescriptionLabel {  // impl struct for case postScanBoostDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanBoostDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostDescriptionLabel() const;
+
+  inline const static struct _impl_postScanBoostSkipButtonLabel {  // impl struct for case postScanBoostSkipButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostSkipButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanBoostSkipButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostSkipButtonLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostSkipButtonLabel() const;
+
+  inline const static struct _impl_postScanBoostClaimButtonLabel {  // impl struct for case postScanBoostClaimButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostClaimButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanBoostClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostClaimButtonLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostClaimButtonLabel() const;
+
+  inline const static struct _impl_postScanPurchasePointsLabel {  // impl struct for case postScanPurchasePointsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanPurchasePointsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanPurchasePointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanPurchasePointsLabel");
+  SWIFT_INLINE_THUNK bool isPostScanPurchasePointsLabel() const;
+
+  inline const static struct _impl_postScanUGCPurchaseClaimButtonLabel {  // impl struct for case postScanUGCPurchaseClaimButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanUGCPurchaseClaimButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanUGCPurchaseClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanUGCPurchaseClaimButtonLabel");
+  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseClaimButtonLabel() const;
+
+  inline const static struct _impl_purchaseRowLabelFont {  // impl struct for case purchaseRowLabelFont
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::purchaseRowLabelFont;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } purchaseRowLabelFont SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPurchaseRowLabelFont");
+  SWIFT_INLINE_THUNK bool isPurchaseRowLabelFont() const;
+
+  inline const static struct _impl_purchaseRowMetadataLabelFont {  // impl struct for case purchaseRowMetadataLabelFont
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::purchaseRowMetadataLabelFont;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } purchaseRowMetadataLabelFont SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPurchaseRowMetadataLabelFont");
+  SWIFT_INLINE_THUNK bool isPurchaseRowMetadataLabelFont() const;
+
+  inline const static struct _impl_missedEarningsNavigationTitleLabel {  // impl struct for case missedEarningsNavigationTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsNavigationTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsNavigationTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsNavigationDescriptionLabel {  // impl struct for case missedEarningsNavigationDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsNavigationDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsNavigationDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationDescriptionLabel() const;
+
+  inline const static struct _impl_missedEarningsListSectionTitleLabel {  // impl struct for case missedEarningsListSectionTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsListSectionTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsListSectionTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsListSectionTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsListSectionTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsTripItemLabel {  // impl struct for case missedEarningsTripItemLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsTripItemLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsTripItemLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsTripItemLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsTripItemLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalTitleLabel {  // impl struct for case missedEarningsEditModalTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsEditModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalSubtitleLabel {  // impl struct for case missedEarningsEditModalSubtitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalSubtitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsEditModalSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalSubtitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalSubtitleLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalInputLabel {  // impl struct for case missedEarningsEditModalInputLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalInputLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsEditModalInputLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalInputLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalInputLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalInputPlaceholderLabel {  // impl struct for case missedEarningsEditModalInputPlaceholderLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalInputPlaceholderLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsEditModalInputPlaceholderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalInputPlaceholderLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalInputPlaceholderLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalInputValueLabel {  // impl struct for case missedEarningsEditModalInputValueLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalInputValueLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsEditModalInputValueLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalInputValueLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalInputValueLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalCancelButtonLabel {  // impl struct for case missedEarningsEditModalCancelButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalCancelButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsEditModalCancelButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalCancelButtonLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalCancelButtonLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalSaveButtonLabel {  // impl struct for case missedEarningsEditModalSaveButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalSaveButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsEditModalSaveButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalSaveButtonLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalSaveButtonLabel() const;
+
+  inline const static struct _impl_missedEarningsAlertTitleLabel {  // impl struct for case missedEarningsAlertTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsAlertTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsAlertTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsAlertTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsAlertTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsAlertMessageLabel {  // impl struct for case missedEarningsAlertMessageLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsAlertMessageLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsAlertMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsAlertMessageLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsAlertMessageLabel() const;
+
+  inline const static struct _impl_ugcProductInfoLabel {  // impl struct for case ugcProductInfoLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcProductInfoLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } ugcProductInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyUgcProductInfoLabel");
+  SWIFT_INLINE_THUNK bool isUgcProductInfoLabel() const;
+
+  inline const static struct _impl_ugcRetakeButtonLabel {  // impl struct for case ugcRetakeButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcRetakeButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } ugcRetakeButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyUgcRetakeButtonLabel");
+  SWIFT_INLINE_THUNK bool isUgcRetakeButtonLabel() const;
+
+  inline const static struct _impl_ugcSubmitButtonLabel {  // impl struct for case ugcSubmitButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcSubmitButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } ugcSubmitButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyUgcSubmitButtonLabel");
+  SWIFT_INLINE_THUNK bool isUgcSubmitButtonLabel() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::offerWallHeaderTitleLabel;
+      case 1: return cases::offerWallHeaderSubtitleLabel;
+      case 2: return cases::offerWallSectionHeaderLabel;
+      case 3: return cases::offerWallFloatingButtonLabel;
+      case 4: return cases::offerRewardPointsLabel;
+      case 5: return cases::offerTagLabel;
+      case 6: return cases::offerBrandLabel;
+      case 7: return cases::offerDescriptionLabel;
+      case 8: return cases::offerEligibleMerchantsLabel;
+      case 9: return cases::offerDetailsExpirationLabel;
+      case 10: return cases::offerDetailsClipLabel;
+      case 11: return cases::offerClippedToastMessageLabel;
+      case 12: return cases::offerDetailsClipRequiredLabel;
+      case 13: return cases::offerDetailsSectionHeaderTitleLabel;
+      case 14: return cases::offerDetailsSectionHeaderToggleLabel;
+      case 15: return cases::offerDetailsSectionBodyLabel;
+      case 16: return cases::offerDetailsShortDescription;
+      case 17: return cases::offerDetailsFinePrintLabel;
+      case 18: return cases::offerDetailsBuyOptionLabel;
+      case 19: return cases::storesHeaderTitleLabel;
+      case 20: return cases::storesListSectionHeaderLabel;
+      case 21: return cases::storesListItemTitleLabel;
+      case 22: return cases::storesListItemSubtitleLabel;
+      case 23: return cases::adLoadingLoadingBarLabel;
+      case 24: return cases::adLoadingDefaultTitleLabel;
+      case 25: return cases::adLoadingDefaultDescriptionLabel;
+      case 26: return cases::errorModalTitleLabel;
+      case 27: return cases::errorModalDescriptionLabel;
+      case 28: return cases::errorModalBackButtonLabel;
+      case 29: return cases::postScanTotalPointsLabel;
+      case 30: return cases::postScanFooterButtonTitle;
+      case 31: return cases::postScanMerchantNameLabel;
+      case 32: return cases::postScanTripInfoLabel;
+      case 33: return cases::postScanNoBoostsLabel;
+      case 34: return cases::postScanSuccessTitleLabel;
+      case 35: return cases::postScanSuccessDescriptionLabel;
+      case 36: return cases::postScanBoostTitleLabel;
+      case 37: return cases::postScanBoostDescriptionLabel;
+      case 38: return cases::postScanBoostSkipButtonLabel;
+      case 39: return cases::postScanBoostClaimButtonLabel;
+      case 40: return cases::postScanPurchasePointsLabel;
+      case 41: return cases::postScanUGCPurchaseClaimButtonLabel;
+      case 42: return cases::purchaseRowLabelFont;
+      case 43: return cases::purchaseRowMetadataLabelFont;
+      case 44: return cases::missedEarningsNavigationTitleLabel;
+      case 45: return cases::missedEarningsNavigationDescriptionLabel;
+      case 46: return cases::missedEarningsListSectionTitleLabel;
+      case 47: return cases::missedEarningsTripItemLabel;
+      case 48: return cases::missedEarningsEditModalTitleLabel;
+      case 49: return cases::missedEarningsEditModalSubtitleLabel;
+      case 50: return cases::missedEarningsEditModalInputLabel;
+      case 51: return cases::missedEarningsEditModalInputPlaceholderLabel;
+      case 52: return cases::missedEarningsEditModalInputValueLabel;
+      case 53: return cases::missedEarningsEditModalCancelButtonLabel;
+      case 54: return cases::missedEarningsEditModalSaveButtonLabel;
+      case 55: return cases::missedEarningsAlertTitleLabel;
+      case 56: return cases::missedEarningsAlertMessageLabel;
+      case 57: return cases::ugcProductInfoLabel;
+      case 58: return cases::ugcRetakeButtonLabel;
+      case 59: return cases::ugcSubmitButtonLabel;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<AppearanceFontNameKey> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage21AppearanceFontNameKeyO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage21AppearanceFontNameKeyO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK AppearanceFontNameKey() noexcept {}
+  static SWIFT_INLINE_THUNK AppearanceFontNameKey _make() noexcept { return AppearanceFontNameKey(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_AppearanceFontNameKey;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage21AppearanceFontNameKeyOD;
+  static inline constexpr $s11BlinkEngage21AppearanceFontNameKeyOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_AppearanceFontNameKey {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(AppearanceFontNameKey &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const AppearanceFontNameKey &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER AppearanceFontNameKey returnNewValue(T callable) {
+    auto result = AppearanceFontNameKey::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::AppearanceFontNameKey> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::AppearanceFontNameKey> = true;
+template<>
+struct implClassFor<BlinkEngage::AppearanceFontNameKey> { using type = BlinkEngage::_impl::_impl_AppearanceFontNameKey; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey") AppearanceIconKey;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::AppearanceIconKey> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// Keys for custom images. Return an image for a key from your <code>Theme</code> to replace that icon; return <code>nil</code> to use the default (if any). When you return <code>nil</code>, the matching color key may still be used to tint the default icon.
+namespace _impl {
+
+class _impl_AppearanceIconKey;
+
+// Type metadata accessor for AppearanceIconKey
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage17AppearanceIconKeyOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey") AppearanceIconKey final {
+public:
+  SWIFT_INLINE_THUNK ~AppearanceIconKey() noexcept {
+    auto metadata = _impl::$s11BlinkEngage17AppearanceIconKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey(const AppearanceIconKey &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage17AppearanceIconKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey &operator =(const AppearanceIconKey &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage17AppearanceIconKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey &operator =(AppearanceIconKey &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER AppearanceIconKey(AppearanceIconKey &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    offerRewardIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyOfferRewardIcon"),
+    offerWallFloatingButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyOfferWallFloatingButtonIcon"),
+    missedEarningsNavigationEditButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyMissedEarningsNavigationEditButtonIcon"),
+    missedEarningsFieldEditIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyMissedEarningsFieldEditIcon"),
+    postScanReceiptButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyPostScanReceiptButtonIcon"),
+    postScanBoostDefaultIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyPostScanBoostDefaultIcon"),
+    postScanSuccessIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyPostScanSuccessIcon"),
+    ugcBarcodeDetectedIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyUgcBarcodeDetectedIcon"),
+    ugcToastMessageWarningIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyUgcToastMessageWarningIcon")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_offerRewardIcon {  // impl struct for case offerRewardIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerRewardIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } offerRewardIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyOfferRewardIcon");
+  SWIFT_INLINE_THUNK bool isOfferRewardIcon() const;
+
+  inline const static struct _impl_offerWallFloatingButtonIcon {  // impl struct for case offerWallFloatingButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallFloatingButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } offerWallFloatingButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyOfferWallFloatingButtonIcon");
+  SWIFT_INLINE_THUNK bool isOfferWallFloatingButtonIcon() const;
+
+  inline const static struct _impl_missedEarningsNavigationEditButtonIcon {  // impl struct for case missedEarningsNavigationEditButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationEditButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } missedEarningsNavigationEditButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyMissedEarningsNavigationEditButtonIcon");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationEditButtonIcon() const;
+
+  inline const static struct _impl_missedEarningsFieldEditIcon {  // impl struct for case missedEarningsFieldEditIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsFieldEditIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } missedEarningsFieldEditIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyMissedEarningsFieldEditIcon");
+  SWIFT_INLINE_THUNK bool isMissedEarningsFieldEditIcon() const;
+
+  inline const static struct _impl_postScanReceiptButtonIcon {  // impl struct for case postScanReceiptButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanReceiptButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } postScanReceiptButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyPostScanReceiptButtonIcon");
+  SWIFT_INLINE_THUNK bool isPostScanReceiptButtonIcon() const;
+
+  inline const static struct _impl_postScanBoostDefaultIcon {  // impl struct for case postScanBoostDefaultIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostDefaultIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } postScanBoostDefaultIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyPostScanBoostDefaultIcon");
+  SWIFT_INLINE_THUNK bool isPostScanBoostDefaultIcon() const;
+
+  inline const static struct _impl_postScanSuccessIcon {  // impl struct for case postScanSuccessIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanSuccessIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } postScanSuccessIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyPostScanSuccessIcon");
+  SWIFT_INLINE_THUNK bool isPostScanSuccessIcon() const;
+
+  inline const static struct _impl_ugcBarcodeDetectedIcon {  // impl struct for case ugcBarcodeDetectedIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcBarcodeDetectedIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } ugcBarcodeDetectedIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyUgcBarcodeDetectedIcon");
+  SWIFT_INLINE_THUNK bool isUgcBarcodeDetectedIcon() const;
+
+  inline const static struct _impl_ugcToastMessageWarningIcon {  // impl struct for case ugcToastMessageWarningIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcToastMessageWarningIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } ugcToastMessageWarningIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyUgcToastMessageWarningIcon");
+  SWIFT_INLINE_THUNK bool isUgcToastMessageWarningIcon() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::offerRewardIcon;
+      case 1: return cases::offerWallFloatingButtonIcon;
+      case 2: return cases::missedEarningsNavigationEditButtonIcon;
+      case 3: return cases::missedEarningsFieldEditIcon;
+      case 4: return cases::postScanReceiptButtonIcon;
+      case 5: return cases::postScanBoostDefaultIcon;
+      case 6: return cases::postScanSuccessIcon;
+      case 7: return cases::ugcBarcodeDetectedIcon;
+      case 8: return cases::ugcToastMessageWarningIcon;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<AppearanceIconKey> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage17AppearanceIconKeyO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage17AppearanceIconKeyO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK AppearanceIconKey() noexcept {}
+  static SWIFT_INLINE_THUNK AppearanceIconKey _make() noexcept { return AppearanceIconKey(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage17AppearanceIconKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage17AppearanceIconKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage17AppearanceIconKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_AppearanceIconKey;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage17AppearanceIconKeyOD;
+  static inline constexpr $s11BlinkEngage17AppearanceIconKeyOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_AppearanceIconKey {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(AppearanceIconKey &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const AppearanceIconKey &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER AppearanceIconKey returnNewValue(T callable) {
+    auto result = AppearanceIconKey::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage17AppearanceIconKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::AppearanceIconKey> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage17AppearanceIconKeyOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::AppearanceIconKey> = true;
+template<>
+struct implClassFor<BlinkEngage::AppearanceIconKey> { using type = BlinkEngage::_impl::_impl_AppearanceIconKey; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallHeaderBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallHeaderBackground() const {
+    return *this == AppearanceColorKey::offerWallHeaderBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallHeaderTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallHeaderTitleLabel() const {
+    return *this == AppearanceColorKey::offerWallHeaderTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallHeaderSubtitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(2);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallHeaderSubtitleLabel() const {
+    return *this == AppearanceColorKey::offerWallHeaderSubtitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallHeaderBackButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(3);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallHeaderBackButtonIcon() const {
+    return *this == AppearanceColorKey::offerWallHeaderBackButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(4);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallBackground() const {
+    return *this == AppearanceColorKey::offerWallBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallSectionHeaderLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(5);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallSectionHeaderLabel() const {
+    return *this == AppearanceColorKey::offerWallSectionHeaderLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallSectionHeaderShowMoreIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(6);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallSectionHeaderShowMoreIcon() const {
+    return *this == AppearanceColorKey::offerWallSectionHeaderShowMoreIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallSectionHeaderShowMoreBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(7);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallSectionHeaderShowMoreBackground() const {
+    return *this == AppearanceColorKey::offerWallSectionHeaderShowMoreBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallFloatingButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(8);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallFloatingButtonBackground() const {
+    return *this == AppearanceColorKey::offerWallFloatingButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallFloatingButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(9);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallFloatingButtonLabel() const {
+    return *this == AppearanceColorKey::offerWallFloatingButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallMoreMerchantsIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(10);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallMoreMerchantsIcon() const {
+    return *this == AppearanceColorKey::offerWallMoreMerchantsIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerRewardPointsLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(11);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferRewardPointsLabel() const {
+    return *this == AppearanceColorKey::offerRewardPointsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerTagLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(12);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferTagLabel() const {
+    return *this == AppearanceColorKey::offerTagLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerTagBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(13);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferTagBackground() const {
+    return *this == AppearanceColorKey::offerTagBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(14);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferBackground() const {
+    return *this == AppearanceColorKey::offerBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerBrandLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(15);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferBrandLabel() const {
+    return *this == AppearanceColorKey::offerBrandLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDescriptionLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(16);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDescriptionLabel() const {
+    return *this == AppearanceColorKey::offerDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerEligibleMerchantsLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(17);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferEligibleMerchantsLabel() const {
+    return *this == AppearanceColorKey::offerEligibleMerchantsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsExpirationLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(18);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsExpirationLabel() const {
+    return *this == AppearanceColorKey::offerDetailsExpirationLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsClipLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(19);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsClipLabel() const {
+    return *this == AppearanceColorKey::offerDetailsClipLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerClipButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(20);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferClipButtonIcon() const {
+    return *this == AppearanceColorKey::offerClipButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerClipButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(21);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferClipButtonBackground() const {
+    return *this == AppearanceColorKey::offerClipButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerClippedButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(22);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferClippedButtonIcon() const {
+    return *this == AppearanceColorKey::offerClippedButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerClippedButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(23);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferClippedButtonBackground() const {
+    return *this == AppearanceColorKey::offerClippedButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerClippedToastMessageLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(24);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferClippedToastMessageLabel() const {
+    return *this == AppearanceColorKey::offerClippedToastMessageLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerClippedToastMessageBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(25);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferClippedToastMessageBackground() const {
+    return *this == AppearanceColorKey::offerClippedToastMessageBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsClipRequiredLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(26);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsClipRequiredLabel() const {
+    return *this == AppearanceColorKey::offerDetailsClipRequiredLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsClipRequiredBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(27);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsClipRequiredBackground() const {
+    return *this == AppearanceColorKey::offerDetailsClipRequiredBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsSectionHeaderTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(28);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsSectionHeaderTitleLabel() const {
+    return *this == AppearanceColorKey::offerDetailsSectionHeaderTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsSectionHeaderToggleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(29);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsSectionHeaderToggleLabel() const {
+    return *this == AppearanceColorKey::offerDetailsSectionHeaderToggleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsSectionBodyLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(30);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsSectionBodyLabel() const {
+    return *this == AppearanceColorKey::offerDetailsSectionBodyLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsShortDescription::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(31);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsShortDescription() const {
+    return *this == AppearanceColorKey::offerDetailsShortDescription;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsFinePrintLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(32);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsFinePrintLabel() const {
+    return *this == AppearanceColorKey::offerDetailsFinePrintLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsBuyOptionLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(33);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsBuyOptionLabel() const {
+    return *this == AppearanceColorKey::offerDetailsBuyOptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsBuyOptionBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(34);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsBuyOptionBackground() const {
+    return *this == AppearanceColorKey::offerDetailsBuyOptionBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesHeaderBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(35);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresHeaderBackground() const {
+    return *this == AppearanceColorKey::storesHeaderBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesHeaderTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(36);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresHeaderTitleLabel() const {
+    return *this == AppearanceColorKey::storesHeaderTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListSectionHeaderLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(37);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListSectionHeaderLabel() const {
+    return *this == AppearanceColorKey::storesListSectionHeaderLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(38);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListBackground() const {
+    return *this == AppearanceColorKey::storesListBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListItemBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(39);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListItemBackground() const {
+    return *this == AppearanceColorKey::storesListItemBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListItemDefaultIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(40);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListItemDefaultIcon() const {
+    return *this == AppearanceColorKey::storesListItemDefaultIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListItemTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(41);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListItemTitleLabel() const {
+    return *this == AppearanceColorKey::storesListItemTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListItemSubtitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(42);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListItemSubtitleLabel() const {
+    return *this == AppearanceColorKey::storesListItemSubtitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_adLoadingLoadingBarLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(43);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isAdLoadingLoadingBarLabel() const {
+    return *this == AppearanceColorKey::adLoadingLoadingBarLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_adLoadingLoadingBarBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(44);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isAdLoadingLoadingBarBackground() const {
+    return *this == AppearanceColorKey::adLoadingLoadingBarBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_adLoadingLoadingBarProgress::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(45);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isAdLoadingLoadingBarProgress() const {
+    return *this == AppearanceColorKey::adLoadingLoadingBarProgress;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_adLoadingDefaultTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(46);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isAdLoadingDefaultTitleLabel() const {
+    return *this == AppearanceColorKey::adLoadingDefaultTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_adLoadingDefaultDescriptionLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(47);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isAdLoadingDefaultDescriptionLabel() const {
+    return *this == AppearanceColorKey::adLoadingDefaultDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_errorModalIconBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(48);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isErrorModalIconBackground() const {
+    return *this == AppearanceColorKey::errorModalIconBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_errorModalTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(49);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isErrorModalTitleLabel() const {
+    return *this == AppearanceColorKey::errorModalTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_errorModalDescriptionLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(50);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isErrorModalDescriptionLabel() const {
+    return *this == AppearanceColorKey::errorModalDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_errorModalBackButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(51);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isErrorModalBackButtonLabel() const {
+    return *this == AppearanceColorKey::errorModalBackButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_errorModalBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(52);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isErrorModalBackground() const {
+    return *this == AppearanceColorKey::errorModalBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanHeaderBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(53);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanHeaderBackground() const {
+    return *this == AppearanceColorKey::postScanHeaderBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanTotalPointsBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(54);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanTotalPointsBackground() const {
+    return *this == AppearanceColorKey::postScanTotalPointsBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanTotalPointsLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(55);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanTotalPointsLabel() const {
+    return *this == AppearanceColorKey::postScanTotalPointsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanReceiptButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(56);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanReceiptButtonIcon() const {
+    return *this == AppearanceColorKey::postScanReceiptButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanReceiptButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(57);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanReceiptButtonBackground() const {
+    return *this == AppearanceColorKey::postScanReceiptButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanFooterButtonTitle::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(58);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanFooterButtonTitle() const {
+    return *this == AppearanceColorKey::postScanFooterButtonTitle;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanFooterBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(59);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanFooterBackground() const {
+    return *this == AppearanceColorKey::postScanFooterBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanMerchantNameLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(60);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanMerchantNameLabel() const {
+    return *this == AppearanceColorKey::postScanMerchantNameLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanTripInfoLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(61);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanTripInfoLabel() const {
+    return *this == AppearanceColorKey::postScanTripInfoLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanNoBoostsLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(62);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanNoBoostsLabel() const {
+    return *this == AppearanceColorKey::postScanNoBoostsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanSuccessTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(63);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanSuccessTitleLabel() const {
+    return *this == AppearanceColorKey::postScanSuccessTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanSuccessDescriptionLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(64);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanSuccessDescriptionLabel() const {
+    return *this == AppearanceColorKey::postScanSuccessDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(65);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostTitleLabel() const {
+    return *this == AppearanceColorKey::postScanBoostTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostDescriptionLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(66);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostDescriptionLabel() const {
+    return *this == AppearanceColorKey::postScanBoostDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostSkipButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(67);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostSkipButtonLabel() const {
+    return *this == AppearanceColorKey::postScanBoostSkipButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostClaimButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(68);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostClaimButtonLabel() const {
+    return *this == AppearanceColorKey::postScanBoostClaimButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostClaimButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(69);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostClaimButtonIcon() const {
+    return *this == AppearanceColorKey::postScanBoostClaimButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostClaimButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(70);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostClaimButtonBackground() const {
+    return *this == AppearanceColorKey::postScanBoostClaimButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanPurchasePointsLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(71);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanPurchasePointsLabel() const {
+    return *this == AppearanceColorKey::postScanPurchasePointsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanPurchaseBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(72);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanPurchaseBackground() const {
+    return *this == AppearanceColorKey::postScanPurchaseBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanQualifiedPurchaseBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(73);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanQualifiedPurchaseBackground() const {
+    return *this == AppearanceColorKey::postScanQualifiedPurchaseBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanPurchaseInfoIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(74);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanPurchaseInfoIcon() const {
+    return *this == AppearanceColorKey::postScanPurchaseInfoIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanUGCPurchaseBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(75);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanUGCPurchaseBackground() const {
+    return *this == AppearanceColorKey::postScanUGCPurchaseBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanUGCPurchaseClaimButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(76);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanUGCPurchaseClaimButtonLabel() const {
+    return *this == AppearanceColorKey::postScanUGCPurchaseClaimButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanUGCPurchaseClaimButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(77);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanUGCPurchaseClaimButtonIcon() const {
+    return *this == AppearanceColorKey::postScanUGCPurchaseClaimButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanUGCPurchaseClaimButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(78);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanUGCPurchaseClaimButtonBackground() const {
+    return *this == AppearanceColorKey::postScanUGCPurchaseClaimButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanUGCPurchaseBorder::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(79);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanUGCPurchaseBorder() const {
+    return *this == AppearanceColorKey::postScanUGCPurchaseBorder;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_purchaseRowLabelColor::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(80);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPurchaseRowLabelColor() const {
+    return *this == AppearanceColorKey::purchaseRowLabelColor;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_purchaseRowMetadataLabelColor::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(81);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPurchaseRowMetadataLabelColor() const {
+    return *this == AppearanceColorKey::purchaseRowMetadataLabelColor;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(82);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationTitleLabel() const {
+    return *this == AppearanceColorKey::missedEarningsNavigationTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationDescriptionLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(83);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationDescriptionLabel() const {
+    return *this == AppearanceColorKey::missedEarningsNavigationDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationEditButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(84);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationEditButtonIcon() const {
+    return *this == AppearanceColorKey::missedEarningsNavigationEditButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationEditButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(85);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationEditButtonBackground() const {
+    return *this == AppearanceColorKey::missedEarningsNavigationEditButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationSaveButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(86);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationSaveButtonIcon() const {
+    return *this == AppearanceColorKey::missedEarningsNavigationSaveButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationSaveButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(87);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationSaveButtonBackground() const {
+    return *this == AppearanceColorKey::missedEarningsNavigationSaveButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsFieldEditIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(88);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsFieldEditIcon() const {
+    return *this == AppearanceColorKey::missedEarningsFieldEditIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsAddNewFieldLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(89);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsAddNewFieldLabel() const {
+    return *this == AppearanceColorKey::missedEarningsAddNewFieldLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsModifiedFieldBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(90);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsModifiedFieldBackground() const {
+    return *this == AppearanceColorKey::missedEarningsModifiedFieldBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsListSectionTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(91);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsListSectionTitleLabel() const {
+    return *this == AppearanceColorKey::missedEarningsListSectionTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsTripItemLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(92);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsTripItemLabel() const {
+    return *this == AppearanceColorKey::missedEarningsTripItemLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(93);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalTitleLabel() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalSubtitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(94);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalSubtitleLabel() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalSubtitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalInputLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(95);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalInputLabel() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalInputLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalInputPlaceholderLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(96);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalInputPlaceholderLabel() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalInputPlaceholderLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalInputValueLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(97);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalInputValueLabel() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalInputValueLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalCancelButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(98);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalCancelButtonLabel() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalCancelButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalSaveButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(99);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalSaveButtonLabel() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalSaveButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalSaveButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(100);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalSaveButtonBackground() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalSaveButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(101);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalBackground() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalDatePicker::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(102);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalDatePicker() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalDatePicker;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsAlertTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(103);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsAlertTitleLabel() const {
+    return *this == AppearanceColorKey::missedEarningsAlertTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsAlertMessageLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(104);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsAlertMessageLabel() const {
+    return *this == AppearanceColorKey::missedEarningsAlertMessageLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcBarcodeDetectedBorder::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(105);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcBarcodeDetectedBorder() const {
+    return *this == AppearanceColorKey::ugcBarcodeDetectedBorder;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcBarcodeDetectedIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(106);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcBarcodeDetectedIcon() const {
+    return *this == AppearanceColorKey::ugcBarcodeDetectedIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcNavigationButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(107);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcNavigationButtonIcon() const {
+    return *this == AppearanceColorKey::ugcNavigationButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcNavigationButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(108);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcNavigationButtonBackground() const {
+    return *this == AppearanceColorKey::ugcNavigationButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcProductInfoBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(109);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcProductInfoBackground() const {
+    return *this == AppearanceColorKey::ugcProductInfoBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcProductInfoLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(110);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcProductInfoLabel() const {
+    return *this == AppearanceColorKey::ugcProductInfoLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcToastMessageWarningIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(111);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcToastMessageWarningIcon() const {
+    return *this == AppearanceColorKey::ugcToastMessageWarningIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcRetakeButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(112);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcRetakeButtonLabel() const {
+    return *this == AppearanceColorKey::ugcRetakeButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcRetakeButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(113);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcRetakeButtonBackground() const {
+    return *this == AppearanceColorKey::ugcRetakeButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcSubmitButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(114);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcSubmitButtonLabel() const {
+    return *this == AppearanceColorKey::ugcSubmitButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcSubmitButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(115);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcSubmitButtonBackground() const {
+    return *this == AppearanceColorKey::ugcSubmitButtonBackground;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<AppearanceColorKey> AppearanceColorKey::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<AppearanceColorKey>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage18AppearanceColorKeyO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int AppearanceColorKey::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage18AppearanceColorKeyO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerWallHeaderTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferWallHeaderTitleLabel() const {
+    return *this == AppearanceFontNameKey::offerWallHeaderTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerWallHeaderSubtitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferWallHeaderSubtitleLabel() const {
+    return *this == AppearanceFontNameKey::offerWallHeaderSubtitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerWallSectionHeaderLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(2);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferWallSectionHeaderLabel() const {
+    return *this == AppearanceFontNameKey::offerWallSectionHeaderLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerWallFloatingButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(3);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferWallFloatingButtonLabel() const {
+    return *this == AppearanceFontNameKey::offerWallFloatingButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerRewardPointsLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(4);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferRewardPointsLabel() const {
+    return *this == AppearanceFontNameKey::offerRewardPointsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerTagLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(5);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferTagLabel() const {
+    return *this == AppearanceFontNameKey::offerTagLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerBrandLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(6);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferBrandLabel() const {
+    return *this == AppearanceFontNameKey::offerBrandLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDescriptionLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(7);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDescriptionLabel() const {
+    return *this == AppearanceFontNameKey::offerDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerEligibleMerchantsLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(8);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferEligibleMerchantsLabel() const {
+    return *this == AppearanceFontNameKey::offerEligibleMerchantsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsExpirationLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(9);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsExpirationLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsExpirationLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsClipLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(10);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsClipLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsClipLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerClippedToastMessageLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(11);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferClippedToastMessageLabel() const {
+    return *this == AppearanceFontNameKey::offerClippedToastMessageLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsClipRequiredLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(12);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsClipRequiredLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsClipRequiredLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsSectionHeaderTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(13);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsSectionHeaderTitleLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsSectionHeaderTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsSectionHeaderToggleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(14);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsSectionHeaderToggleLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsSectionHeaderToggleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsSectionBodyLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(15);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsSectionBodyLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsSectionBodyLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsShortDescription::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(16);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsShortDescription() const {
+    return *this == AppearanceFontNameKey::offerDetailsShortDescription;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsFinePrintLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(17);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsFinePrintLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsFinePrintLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsBuyOptionLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(18);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsBuyOptionLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsBuyOptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_storesHeaderTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(19);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isStoresHeaderTitleLabel() const {
+    return *this == AppearanceFontNameKey::storesHeaderTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_storesListSectionHeaderLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(20);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isStoresListSectionHeaderLabel() const {
+    return *this == AppearanceFontNameKey::storesListSectionHeaderLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_storesListItemTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(21);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isStoresListItemTitleLabel() const {
+    return *this == AppearanceFontNameKey::storesListItemTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_storesListItemSubtitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(22);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isStoresListItemSubtitleLabel() const {
+    return *this == AppearanceFontNameKey::storesListItemSubtitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_adLoadingLoadingBarLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(23);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isAdLoadingLoadingBarLabel() const {
+    return *this == AppearanceFontNameKey::adLoadingLoadingBarLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_adLoadingDefaultTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(24);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isAdLoadingDefaultTitleLabel() const {
+    return *this == AppearanceFontNameKey::adLoadingDefaultTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_adLoadingDefaultDescriptionLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(25);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isAdLoadingDefaultDescriptionLabel() const {
+    return *this == AppearanceFontNameKey::adLoadingDefaultDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_errorModalTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(26);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isErrorModalTitleLabel() const {
+    return *this == AppearanceFontNameKey::errorModalTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_errorModalDescriptionLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(27);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isErrorModalDescriptionLabel() const {
+    return *this == AppearanceFontNameKey::errorModalDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_errorModalBackButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(28);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isErrorModalBackButtonLabel() const {
+    return *this == AppearanceFontNameKey::errorModalBackButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanTotalPointsLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(29);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanTotalPointsLabel() const {
+    return *this == AppearanceFontNameKey::postScanTotalPointsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanFooterButtonTitle::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(30);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanFooterButtonTitle() const {
+    return *this == AppearanceFontNameKey::postScanFooterButtonTitle;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanMerchantNameLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(31);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanMerchantNameLabel() const {
+    return *this == AppearanceFontNameKey::postScanMerchantNameLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanTripInfoLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(32);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanTripInfoLabel() const {
+    return *this == AppearanceFontNameKey::postScanTripInfoLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanNoBoostsLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(33);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanNoBoostsLabel() const {
+    return *this == AppearanceFontNameKey::postScanNoBoostsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanSuccessTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(34);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanSuccessTitleLabel() const {
+    return *this == AppearanceFontNameKey::postScanSuccessTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanSuccessDescriptionLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(35);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanSuccessDescriptionLabel() const {
+    return *this == AppearanceFontNameKey::postScanSuccessDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanBoostTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(36);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanBoostTitleLabel() const {
+    return *this == AppearanceFontNameKey::postScanBoostTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanBoostDescriptionLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(37);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanBoostDescriptionLabel() const {
+    return *this == AppearanceFontNameKey::postScanBoostDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanBoostSkipButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(38);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanBoostSkipButtonLabel() const {
+    return *this == AppearanceFontNameKey::postScanBoostSkipButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanBoostClaimButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(39);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanBoostClaimButtonLabel() const {
+    return *this == AppearanceFontNameKey::postScanBoostClaimButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanPurchasePointsLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(40);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanPurchasePointsLabel() const {
+    return *this == AppearanceFontNameKey::postScanPurchasePointsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanUGCPurchaseClaimButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(41);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanUGCPurchaseClaimButtonLabel() const {
+    return *this == AppearanceFontNameKey::postScanUGCPurchaseClaimButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_purchaseRowLabelFont::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(42);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPurchaseRowLabelFont() const {
+    return *this == AppearanceFontNameKey::purchaseRowLabelFont;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_purchaseRowMetadataLabelFont::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(43);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPurchaseRowMetadataLabelFont() const {
+    return *this == AppearanceFontNameKey::purchaseRowMetadataLabelFont;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsNavigationTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(44);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsNavigationTitleLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsNavigationTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsNavigationDescriptionLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(45);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsNavigationDescriptionLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsNavigationDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsListSectionTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(46);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsListSectionTitleLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsListSectionTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsTripItemLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(47);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsTripItemLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsTripItemLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(48);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalTitleLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsEditModalTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalSubtitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(49);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalSubtitleLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsEditModalSubtitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalInputLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(50);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalInputLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsEditModalInputLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalInputPlaceholderLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(51);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalInputPlaceholderLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsEditModalInputPlaceholderLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalInputValueLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(52);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalInputValueLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsEditModalInputValueLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalCancelButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(53);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalCancelButtonLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsEditModalCancelButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalSaveButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(54);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalSaveButtonLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsEditModalSaveButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsAlertTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(55);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsAlertTitleLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsAlertTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsAlertMessageLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(56);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsAlertMessageLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsAlertMessageLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_ugcProductInfoLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(57);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isUgcProductInfoLabel() const {
+    return *this == AppearanceFontNameKey::ugcProductInfoLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_ugcRetakeButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(58);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isUgcRetakeButtonLabel() const {
+    return *this == AppearanceFontNameKey::ugcRetakeButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_ugcSubmitButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(59);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isUgcSubmitButtonLabel() const {
+    return *this == AppearanceFontNameKey::ugcSubmitButtonLabel;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<AppearanceFontNameKey> AppearanceFontNameKey::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<AppearanceFontNameKey>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage21AppearanceFontNameKeyO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int AppearanceFontNameKey::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage21AppearanceFontNameKeyO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_offerRewardIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isOfferRewardIcon() const {
+    return *this == AppearanceIconKey::offerRewardIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_offerWallFloatingButtonIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isOfferWallFloatingButtonIcon() const {
+    return *this == AppearanceIconKey::offerWallFloatingButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_missedEarningsNavigationEditButtonIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(2);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isMissedEarningsNavigationEditButtonIcon() const {
+    return *this == AppearanceIconKey::missedEarningsNavigationEditButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_missedEarningsFieldEditIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(3);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isMissedEarningsFieldEditIcon() const {
+    return *this == AppearanceIconKey::missedEarningsFieldEditIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_postScanReceiptButtonIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(4);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isPostScanReceiptButtonIcon() const {
+    return *this == AppearanceIconKey::postScanReceiptButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_postScanBoostDefaultIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(5);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isPostScanBoostDefaultIcon() const {
+    return *this == AppearanceIconKey::postScanBoostDefaultIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_postScanSuccessIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(6);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isPostScanSuccessIcon() const {
+    return *this == AppearanceIconKey::postScanSuccessIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_ugcBarcodeDetectedIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(7);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isUgcBarcodeDetectedIcon() const {
+    return *this == AppearanceIconKey::ugcBarcodeDetectedIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_ugcToastMessageWarningIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(8);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isUgcToastMessageWarningIcon() const {
+    return *this == AppearanceIconKey::ugcToastMessageWarningIcon;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<AppearanceIconKey> AppearanceIconKey::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<AppearanceIconKey>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage17AppearanceIconKeyO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int AppearanceIconKey::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage17AppearanceIconKeyO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
 
 } // namespace BlinkEngage
 
@@ -975,29 +8895,416 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
-@class UIColor;
-SWIFT_CLASS("_TtC11BlinkEngage21BlinkEngageAppearance")
-@interface BlinkEngageAppearance : NSObject
-@property (nonatomic, strong) UIColor * _Nonnull offerWallHeaderBackgroundColor;
-@property (nonatomic, strong) UIColor * _Nonnull offerWallHeaderTextColor;
-@property (nonatomic, strong) UIColor * _Nonnull receiptSummaryHeaderBackgroundColor;
-@property (nonatomic, strong) UIColor * _Nonnull receiptSummaryHeaderTextColor;
+@protocol Theme;
+/// Configuration for the visual appearance of BlinkEngage SDK screens.
+/// Assign an instance to <code>BlinkEngageSDK.shared.appearance</code> before presenting SDK flows.
+/// Use the initializer that takes a <code>Theme</code> to apply custom colors, fonts, and images;
+/// use the default initializer to keep SDK defaults.
+SWIFT_CLASS("_TtC11BlinkEngage10Appearance")
+@interface Appearance : NSObject
+/// The theme used to customize SDK UI, or <code>nil</code> to use defaults.
+@property (nonatomic, readonly, strong) id <Theme> _Nullable theme;
+/// Creates an appearance with no custom theme; all SDK screens use their default styling.
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+/// Creates an appearance that uses the given theme for colors, fonts, and images.
+/// \param theme A theme conforming to <code>Theme</code>, or <code>nil</code> for default styling.
+///
+- (nonnull instancetype)initWithTheme:(id <Theme> _Nullable)theme OBJC_DESIGNATED_INITIALIZER;
 @end
+
+/// Keys for custom colors. Return a color for a key from your <code>Theme</code> to customize that part of the UI (backgrounds, labels, icon tints).
+typedef SWIFT_ENUM(NSInteger, AppearanceColorKey, open) {
+/// Header bar at the top of the offer wall.
+  AppearanceColorKeyOfferWallHeaderBackground = 0,
+/// Main title text in the offer wall header.
+  AppearanceColorKeyOfferWallHeaderTitleLabel = 1,
+/// Subtitle or secondary line in the offer wall header.
+  AppearanceColorKeyOfferWallHeaderSubtitleLabel = 2,
+/// Back / close arrow in the offer wall header.
+  AppearanceColorKeyOfferWallHeaderBackButtonIcon = 3,
+/// Background of the offer list area.
+  AppearanceColorKeyOfferWallBackground = 4,
+/// Section title (e.g. “Offers for you”) above a group of offers.
+  AppearanceColorKeyOfferWallSectionHeaderLabel = 5,
+/// Arrow or chevron in the “show more” section header button.
+  AppearanceColorKeyOfferWallSectionHeaderShowMoreIcon = 6,
+/// Background of the “show more” section header button.
+  AppearanceColorKeyOfferWallSectionHeaderShowMoreBackground = 7,
+/// Background of the floating button.
+  AppearanceColorKeyOfferWallFloatingButtonBackground = 8,
+/// Label text on the floating button.
+  AppearanceColorKeyOfferWallFloatingButtonLabel = 9,
+/// “More stores” or similar icon in the stores row.
+  AppearanceColorKeyOfferWallMoreMerchantsIcon = 10,
+/// Reward amount or points text on each offer card.
+  AppearanceColorKeyOfferRewardPointsLabel = 11,
+/// Promo badge label (e.g. “BUY 2”) on each offer card.
+  AppearanceColorKeyOfferTagLabel = 12,
+/// Background of the promo badge on each offer card.
+  AppearanceColorKeyOfferTagBackground = 13,
+/// Background of each offer card.
+  AppearanceColorKeyOfferBackground = 14,
+/// Brand or offer title on each offer card.
+  AppearanceColorKeyOfferBrandLabel = 15,
+/// Description or requirements text on each offer card.
+  AppearanceColorKeyOfferDescriptionLabel = 16,
+/// “Eligible at” or merchants list text on each offer card.
+  AppearanceColorKeyOfferEligibleMerchantsLabel = 17,
+/// Expiration / “X Days Left” on the offer details screen.
+  AppearanceColorKeyOfferDetailsExpirationLabel = 18,
+/// “Clip this offer” label on the offer details screen.
+  AppearanceColorKeyOfferDetailsClipLabel = 19,
+/// Icon for the clip button on an offer card.
+  AppearanceColorKeyOfferClipButtonIcon = 20,
+/// Background of the clip button on an offer card.
+  AppearanceColorKeyOfferClipButtonBackground = 21,
+/// Icon for the clipped-state button on an offer card.
+  AppearanceColorKeyOfferClippedButtonIcon = 22,
+/// Background of the clipped-state button on an offer card.
+  AppearanceColorKeyOfferClippedButtonBackground = 23,
+/// Label text in the “Offer clipped!” message toast at the top when an offer is clipped.
+  AppearanceColorKeyOfferClippedToastMessageLabel = 24,
+/// Background of the “Offer clipped!” message toast at the top when an offer is clipped.
+  AppearanceColorKeyOfferClippedToastMessageBackground = 25,
+/// “Clip Required” badge label on the offer details screen.
+  AppearanceColorKeyOfferDetailsClipRequiredLabel = 26,
+/// “Clip Required” badge background on the offer details screen.
+  AppearanceColorKeyOfferDetailsClipRequiredBackground = 27,
+/// Section header titles on the offer details screen (e.g. “Eligible UPCs”, “Qualifying Details”, “Description”, “Fine Print”).
+  AppearanceColorKeyOfferDetailsSectionHeaderTitleLabel = 28,
+/// Section header toggle (“See all” / “See less”) in groups that have expand/collapse on the offer details screen.
+  AppearanceColorKeyOfferDetailsSectionHeaderToggleLabel = 29,
+/// Section body text on the offer details screen (e.g. long description).
+  AppearanceColorKeyOfferDetailsSectionBodyLabel = 30,
+/// Short description under the offer title on the offer details screen (e.g. coupon description and payout).
+  AppearanceColorKeyOfferDetailsShortDescription = 31,
+/// Fine print / full terms body on the offer details screen.
+  AppearanceColorKeyOfferDetailsFinePrintLabel = 32,
+/// Label text in the buying options list on the offer details screen (e.g. “Buy any X eligible products” and payout amount).
+  AppearanceColorKeyOfferDetailsBuyOptionLabel = 33,
+/// Background of each row in the buying options list on the offer details screen.
+  AppearanceColorKeyOfferDetailsBuyOptionBackground = 34,
+/// Background of the stores screen header bar (e.g. “Stores” title bar).
+  AppearanceColorKeyStoresHeaderBackground = 35,
+/// Title label in the stores screen header (e.g. “Stores”).
+  AppearanceColorKeyStoresHeaderTitleLabel = 36,
+/// Section header label in the stores list (e.g. group titles).
+  AppearanceColorKeyStoresListSectionHeaderLabel = 37,
+/// Background of the stores list area.
+  AppearanceColorKeyStoresListBackground = 38,
+/// Background of each store item in the list.
+  AppearanceColorKeyStoresListItemBackground = 39,
+/// Default thumbnail icon for each store item in the list.
+  AppearanceColorKeyStoresListItemDefaultIcon = 40,
+/// Title label for each store item in the list.
+  AppearanceColorKeyStoresListItemTitleLabel = 41,
+/// Subtitle label for each store item in the list.
+  AppearanceColorKeyStoresListItemSubtitleLabel = 42,
+/// Label text and icon tint on the ad loading screen progress bar (e.g. “Scanning receipt”, arrow button).
+  AppearanceColorKeyAdLoadingLoadingBarLabel = 43,
+/// Background of the ad loading screen progress bar track.
+  AppearanceColorKeyAdLoadingLoadingBarBackground = 44,
+/// Progress fill color of the ad loading screen progress bar.
+  AppearanceColorKeyAdLoadingLoadingBarProgress = 45,
+/// Title label on the loading screen (e.g. “Hang tight!”).
+  AppearanceColorKeyAdLoadingDefaultTitleLabel = 46,
+/// Description label on the loading screen (e.g. “Exclusive rewards are coming your way!”).
+  AppearanceColorKeyAdLoadingDefaultDescriptionLabel = 47,
+/// Background of the warning icon (e.g. “!”) on the error modal.
+  AppearanceColorKeyErrorModalIconBackground = 48,
+/// Title label on the error modal (e.g. “Oops!”, “Invalid Receipt”).
+  AppearanceColorKeyErrorModalTitleLabel = 49,
+/// Description / message label on the error modal.
+  AppearanceColorKeyErrorModalDescriptionLabel = 50,
+/// “Back to offers” / dismiss button label on the error modal.
+  AppearanceColorKeyErrorModalBackButtonLabel = 51,
+/// Background of the error modal.
+  AppearanceColorKeyErrorModalBackground = 52,
+/// Background of the receipt summary screen header bar.
+  AppearanceColorKeyPostScanHeaderBackground = 53,
+/// Background of the total points pill (coin + amount) in the receipt summary header.
+  AppearanceColorKeyPostScanTotalPointsBackground = 54,
+/// Total points amount label in the receipt summary header.
+  AppearanceColorKeyPostScanTotalPointsLabel = 55,
+/// Icon tint for the receipt / missed earnings button in the receipt summary header.
+  AppearanceColorKeyPostScanReceiptButtonIcon = 56,
+/// Background of the receipt / missed earnings button in the receipt summary header.
+  AppearanceColorKeyPostScanReceiptButtonBackground = 57,
+/// Title (text color) of the continue button in the receipt summary footer.
+  AppearanceColorKeyPostScanFooterButtonTitle = 58,
+/// Background of the receipt summary footer.
+  AppearanceColorKeyPostScanFooterBackground = 59,
+/// Merchant name label in the trip summary.
+  AppearanceColorKeyPostScanMerchantNameLabel = 60,
+/// Trip info label (date and total) in the trip summary.
+  AppearanceColorKeyPostScanTripInfoLabel = 61,
+/// Label in the “no boosts” empty state (e.g. “No more boosts are available…”).
+  AppearanceColorKeyPostScanNoBoostsLabel = 62,
+/// Title label (e.g. “Nice Scan!”) in the first/success state of the boost area.
+  AppearanceColorKeyPostScanSuccessTitleLabel = 63,
+/// Description label in the first/success state of the boost area (e.g. points earned).
+  AppearanceColorKeyPostScanSuccessDescriptionLabel = 64,
+/// Title label on post-scan boost cards in the receipt summary (e.g. offer title).
+  AppearanceColorKeyPostScanBoostTitleLabel = 65,
+/// Description label on post-scan boost cards in the receipt summary (e.g. offer subtitle).
+  AppearanceColorKeyPostScanBoostDescriptionLabel = 66,
+/// Label (text color) on the “Skip” button below post-scan boost cards.
+  AppearanceColorKeyPostScanBoostSkipButtonLabel = 67,
+/// Label (text color) on the “Claim” button below post-scan boost cards.
+  AppearanceColorKeyPostScanBoostClaimButtonLabel = 68,
+/// Icon tint for the “Claim” button below post-scan boost cards.
+  AppearanceColorKeyPostScanBoostClaimButtonIcon = 69,
+/// Background color of the “Claim” button below post-scan boost cards.
+  AppearanceColorKeyPostScanBoostClaimButtonBackground = 70,
+/// Points label (e.g. “+100”) on purchase rows that show reward points.
+  AppearanceColorKeyPostScanPurchasePointsLabel = 71,
+/// Background of a standard product row in the receipt summary.
+  AppearanceColorKeyPostScanPurchaseBackground = 72,
+/// Background of product rows that show reward points.
+  AppearanceColorKeyPostScanQualifiedPurchaseBackground = 73,
+/// Info icon tint on product rows in the receipt summary.
+  AppearanceColorKeyPostScanPurchaseInfoIcon = 74,
+/// Background of the product row when it shows a claim task.
+  AppearanceColorKeyPostScanUGCPurchaseBackground = 75,
+/// Claim button label color on the product row when it shows a claim task.
+  AppearanceColorKeyPostScanUGCPurchaseClaimButtonLabel = 76,
+/// Claim button icon tint on the product row when it shows a claim task.
+  AppearanceColorKeyPostScanUGCPurchaseClaimButtonIcon = 77,
+/// Claim button background on the product row when it shows a claim task.
+  AppearanceColorKeyPostScanUGCPurchaseClaimButtonBackground = 78,
+/// Border color on the product row when it shows a claim task.
+  AppearanceColorKeyPostScanUGCPurchaseBorder = 79,
+/// Product name label color on product rows (receipt summary and Missed Earnings).
+  AppearanceColorKeyPurchaseRowLabelColor = 80,
+/// Metadata line label color on product rows (receipt summary and Missed Earnings).
+  AppearanceColorKeyPurchaseRowMetadataLabelColor = 81,
+/// Title label in the Missed Earnings navigation header (e.g. “Missing rewards?”).
+  AppearanceColorKeyMissedEarningsNavigationTitleLabel = 82,
+/// Description label in the Missed Earnings navigation header (e.g. “Edit this receipt if any details are off”).
+  AppearanceColorKeyMissedEarningsNavigationDescriptionLabel = 83,
+/// Icon tint for the Edit button in the Missed Earnings header.
+  AppearanceColorKeyMissedEarningsNavigationEditButtonIcon = 84,
+/// Background of the Edit button in the Missed Earnings navigation header.
+  AppearanceColorKeyMissedEarningsNavigationEditButtonBackground = 85,
+/// Icon tint of the Save button in the Missed Earnings header.
+  AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon = 86,
+/// Background of the Save button in the Missed Earnings header.
+  AppearanceColorKeyMissedEarningsNavigationSaveButtonBackground = 87,
+/// Icon tint for the edit button on each field row in Missed Earnings.
+  AppearanceColorKeyMissedEarningsFieldEditIcon = 88,
+/// Label and icon (text/tint color) for the “add new field” control in the Missed Earnings screen.
+  AppearanceColorKeyMissedEarningsAddNewFieldLabel = 89,
+/// Background of field rows that have been modified in the Missed Earnings screen.
+  AppearanceColorKeyMissedEarningsModifiedFieldBackground = 90,
+/// Section header title label in the Missed Earnings list (e.g. “Merchant”, “Date”, “Products”).
+  AppearanceColorKeyMissedEarningsListSectionTitleLabel = 91,
+/// Label text in Missed Earnings merchant and date rows only.
+  AppearanceColorKeyMissedEarningsTripItemLabel = 92,
+/// Title label at the top of the Missed Earnings edit field modal (e.g. “Merchant Name”, “Receipt Date”).
+  AppearanceColorKeyMissedEarningsEditModalTitleLabel = 93,
+/// Subtitle label at the top of the Missed Earnings edit modal.
+  AppearanceColorKeyMissedEarningsEditModalSubtitleLabel = 94,
+/// Label for text field titles in the Missed Earnings edit field modal (e.g. “Captured Merchant Name”).
+  AppearanceColorKeyMissedEarningsEditModalInputLabel = 95,
+/// Placeholder text color in the Missed Earnings edit field modal text fields.
+  AppearanceColorKeyMissedEarningsEditModalInputPlaceholderLabel = 96,
+/// Text field value / caption labels in the Missed Earnings edit field modal.
+  AppearanceColorKeyMissedEarningsEditModalInputValueLabel = 97,
+/// Cancel button label (text color) in the Missed Earnings edit field modal.
+  AppearanceColorKeyMissedEarningsEditModalCancelButtonLabel = 98,
+/// Save button label (text color) in the Missed Earnings edit field modal.
+  AppearanceColorKeyMissedEarningsEditModalSaveButtonLabel = 99,
+/// Save button background in the Missed Earnings edit field modal.
+  AppearanceColorKeyMissedEarningsEditModalSaveButtonBackground = 100,
+/// Background of the Missed Earnings edit field modal.
+  AppearanceColorKeyMissedEarningsEditModalBackground = 101,
+/// Tint color of the date picker in the Missed Earnings edit field modal (e.g. selected date highlight).
+  AppearanceColorKeyMissedEarningsEditModalDatePicker = 102,
+/// Title label in the Missed Earnings alert modal (e.g. “No updates made”, “Submit Receipt”).
+  AppearanceColorKeyMissedEarningsAlertTitleLabel = 103,
+/// Message/body label in the Missed Earnings alert modal.
+  AppearanceColorKeyMissedEarningsAlertMessageLabel = 104,
+/// Border color when a barcode is detected in the product capture camera.
+  AppearanceColorKeyUgcBarcodeDetectedBorder = 105,
+/// Icon tint when a barcode is detected in the product capture screen.
+  AppearanceColorKeyUgcBarcodeDetectedIcon = 106,
+/// Icon tint for navigation buttons (e.g. close, torch) in the product capture header.
+  AppearanceColorKeyUgcNavigationButtonIcon = 107,
+/// Background of navigation buttons (close, torch) in the product capture header.
+  AppearanceColorKeyUgcNavigationButtonBackground = 108,
+/// Background of the product info badges (product name and barcode/UPC) in the product capture screen.
+  AppearanceColorKeyUgcProductInfoBackground = 109,
+/// Label text color in the product info badges (product name and barcode/UPC).
+  AppearanceColorKeyUgcProductInfoLabel = 110,
+/// Warning icon tint in the product capture toast message.
+  AppearanceColorKeyUgcToastMessageWarningIcon = 111,
+/// “Retake” button label (text color) in the product capture footer.
+  AppearanceColorKeyUgcRetakeButtonLabel = 112,
+/// “Retake” button background in the product capture footer.
+  AppearanceColorKeyUgcRetakeButtonBackground = 113,
+/// “Submit” button label (text color) in the product capture footer.
+  AppearanceColorKeyUgcSubmitButtonLabel = 114,
+/// “Submit” button background in the product capture footer.
+  AppearanceColorKeyUgcSubmitButtonBackground = 115,
+};
+
+/// Keys for custom fonts. Return a font name (e.g. <code>"Outfit-Bold"</code>) for a key from your <code>Theme</code> to use that font for the corresponding label; return <code>nil</code> to use the default or your <code>globalFontMatrix</code> by weight.
+typedef SWIFT_ENUM(NSInteger, AppearanceFontNameKey, open) {
+/// Main title in the offer wall header.
+  AppearanceFontNameKeyOfferWallHeaderTitleLabel = 0,
+/// Subtitle in the offer wall header.
+  AppearanceFontNameKeyOfferWallHeaderSubtitleLabel = 1,
+/// Section title above a group of offers.
+  AppearanceFontNameKeyOfferWallSectionHeaderLabel = 2,
+/// Label on the floating button.
+  AppearanceFontNameKeyOfferWallFloatingButtonLabel = 3,
+/// Reward amount text on offer cards.
+  AppearanceFontNameKeyOfferRewardPointsLabel = 4,
+/// Promo badge label on offer cards.
+  AppearanceFontNameKeyOfferTagLabel = 5,
+/// Brand / title on offer cards.
+  AppearanceFontNameKeyOfferBrandLabel = 6,
+/// Description text on offer cards.
+  AppearanceFontNameKeyOfferDescriptionLabel = 7,
+/// Eligible merchants text on offer cards.
+  AppearanceFontNameKeyOfferEligibleMerchantsLabel = 8,
+/// Expiration / “X Days Left” on the offer details screen.
+  AppearanceFontNameKeyOfferDetailsExpirationLabel = 9,
+/// “Clip this offer” label on the offer details screen.
+  AppearanceFontNameKeyOfferDetailsClipLabel = 10,
+/// Label text in the “Offer clipped!” message toast at the top when an offer is clipped.
+  AppearanceFontNameKeyOfferClippedToastMessageLabel = 11,
+/// “Clip Required” badge label on the offer details screen.
+  AppearanceFontNameKeyOfferDetailsClipRequiredLabel = 12,
+/// Section header titles on the offer details screen (e.g. “Eligible UPCs”, “Qualifying Details”, “Description”, “Fine Print”).
+  AppearanceFontNameKeyOfferDetailsSectionHeaderTitleLabel = 13,
+/// Section header toggle (“See all” / “See less”) in groups that have expand/collapse on the offer details screen.
+  AppearanceFontNameKeyOfferDetailsSectionHeaderToggleLabel = 14,
+/// Section body text on the offer details screen (e.g. long description).
+  AppearanceFontNameKeyOfferDetailsSectionBodyLabel = 15,
+/// Short description under the offer title on the offer details screen (e.g. coupon description and payout).
+  AppearanceFontNameKeyOfferDetailsShortDescription = 16,
+/// Fine print / full terms body on the offer details screen.
+  AppearanceFontNameKeyOfferDetailsFinePrintLabel = 17,
+/// Label text in the buying options list on the offer details screen (e.g. “Buy any X eligible products” and payout amount).
+  AppearanceFontNameKeyOfferDetailsBuyOptionLabel = 18,
+/// Title label in the stores screen header (e.g. “Stores”).
+  AppearanceFontNameKeyStoresHeaderTitleLabel = 19,
+/// Section header label in the stores list (e.g. group titles).
+  AppearanceFontNameKeyStoresListSectionHeaderLabel = 20,
+/// Title label for each store item in the list.
+  AppearanceFontNameKeyStoresListItemTitleLabel = 21,
+/// Subtitle label for each store item in the list.
+  AppearanceFontNameKeyStoresListItemSubtitleLabel = 22,
+/// Label text on the ad loading screen progress bar (e.g. “Scanning receipt”).
+  AppearanceFontNameKeyAdLoadingLoadingBarLabel = 23,
+/// Title label on the ad loading screen (e.g. “Hang tight!”).
+  AppearanceFontNameKeyAdLoadingDefaultTitleLabel = 24,
+/// Description label on the ad loading screen (e.g. “Exclusive rewards are coming your way!”).
+  AppearanceFontNameKeyAdLoadingDefaultDescriptionLabel = 25,
+/// Title label on the error modal (e.g. “Oops!”, “Invalid Receipt”).
+  AppearanceFontNameKeyErrorModalTitleLabel = 26,
+/// Description / message label on the error modal.
+  AppearanceFontNameKeyErrorModalDescriptionLabel = 27,
+/// “Back to offers” / dismiss button label on the error modal.
+  AppearanceFontNameKeyErrorModalBackButtonLabel = 28,
+/// Total points amount label in the receipt summary header.
+  AppearanceFontNameKeyPostScanTotalPointsLabel = 29,
+/// Title of the continue button in the receipt summary footer.
+  AppearanceFontNameKeyPostScanFooterButtonTitle = 30,
+/// Merchant name label in the trip summary.
+  AppearanceFontNameKeyPostScanMerchantNameLabel = 31,
+/// Trip info label (date and total) in the trip summary.
+  AppearanceFontNameKeyPostScanTripInfoLabel = 32,
+/// Label in the “no boosts” empty state (e.g. “No more boosts are available…”).
+  AppearanceFontNameKeyPostScanNoBoostsLabel = 33,
+/// Title label in the first/success state of the boost area (e.g. “Nice Scan!”).
+  AppearanceFontNameKeyPostScanSuccessTitleLabel = 34,
+/// Description label in the first/success state of the boost area.
+  AppearanceFontNameKeyPostScanSuccessDescriptionLabel = 35,
+/// Title label on post-scan boost cards in the receipt summary.
+  AppearanceFontNameKeyPostScanBoostTitleLabel = 36,
+/// Description label on post-scan boost cards in the receipt summary.
+  AppearanceFontNameKeyPostScanBoostDescriptionLabel = 37,
+/// Label on the “Skip” button below post-scan boost cards.
+  AppearanceFontNameKeyPostScanBoostSkipButtonLabel = 38,
+/// Label on the “Claim” button below post-scan boost cards.
+  AppearanceFontNameKeyPostScanBoostClaimButtonLabel = 39,
+/// Points label (e.g. “+100”) on purchase rows that show reward points.
+  AppearanceFontNameKeyPostScanPurchasePointsLabel = 40,
+/// Claim button label font on the product row when it shows a claim task.
+  AppearanceFontNameKeyPostScanUGCPurchaseClaimButtonLabel = 41,
+/// Product name label font on product rows (receipt summary and Missed Earnings).
+  AppearanceFontNameKeyPurchaseRowLabelFont = 42,
+/// Metadata line label font on product rows (receipt summary and Missed Earnings).
+  AppearanceFontNameKeyPurchaseRowMetadataLabelFont = 43,
+/// Title label in the Missed Earnings navigation header (e.g. “Missing rewards?”).
+  AppearanceFontNameKeyMissedEarningsNavigationTitleLabel = 44,
+/// Description label in the Missed Earnings navigation header (e.g. “Edit this receipt if any details are off”).
+  AppearanceFontNameKeyMissedEarningsNavigationDescriptionLabel = 45,
+/// Section header title in the Missed Earnings list (e.g. “Merchant”, “Date”, “Products”).
+  AppearanceFontNameKeyMissedEarningsListSectionTitleLabel = 46,
+/// Label text in Missed Earnings merchant and date rows only.
+  AppearanceFontNameKeyMissedEarningsTripItemLabel = 47,
+/// Title label at the top of the Missed Earnings edit field modal.
+  AppearanceFontNameKeyMissedEarningsEditModalTitleLabel = 48,
+/// Subtitle label at the top of the Missed Earnings edit field modal.
+  AppearanceFontNameKeyMissedEarningsEditModalSubtitleLabel = 49,
+/// Label for text field titles in the Missed Earnings edit field modal.
+  AppearanceFontNameKeyMissedEarningsEditModalInputLabel = 50,
+/// Placeholder text font in the Missed Earnings edit modal.
+  AppearanceFontNameKeyMissedEarningsEditModalInputPlaceholderLabel = 51,
+/// Text field value / caption labels in the Missed Earnings edit field modal.
+  AppearanceFontNameKeyMissedEarningsEditModalInputValueLabel = 52,
+/// Cancel button label in the Missed Earnings edit field modal.
+  AppearanceFontNameKeyMissedEarningsEditModalCancelButtonLabel = 53,
+/// Save button label in the Missed Earnings edit field modal.
+  AppearanceFontNameKeyMissedEarningsEditModalSaveButtonLabel = 54,
+/// Title label in the Missed Earnings alert modal.
+  AppearanceFontNameKeyMissedEarningsAlertTitleLabel = 55,
+/// Message/body label in the Missed Earnings alert modal.
+  AppearanceFontNameKeyMissedEarningsAlertMessageLabel = 56,
+/// Label text in the product info badges (product name and barcode/UPC) on the product capture screen.
+  AppearanceFontNameKeyUgcProductInfoLabel = 57,
+/// “Retake” button label in the product capture footer.
+  AppearanceFontNameKeyUgcRetakeButtonLabel = 58,
+/// “Submit” button label in the product capture footer.
+  AppearanceFontNameKeyUgcSubmitButtonLabel = 59,
+};
+
+/// Keys for custom images. Return an image for a key from your <code>Theme</code> to replace that icon; return <code>nil</code> to use the default (if any). When you return <code>nil</code>, the matching color key may still be used to tint the default icon.
+typedef SWIFT_ENUM(NSInteger, AppearanceIconKey, open) {
+/// Reward or currency icon shown with reward amounts (e.g. on offer cards, receipt summary).
+  AppearanceIconKeyOfferRewardIcon = 0,
+/// Floating action button icon (e.g. scan receipt). Return <code>nil</code> to use the default; tint uses the floating button label color key.
+  AppearanceIconKeyOfferWallFloatingButtonIcon = 1,
+/// Edit button icon in the Missed Earnings header. Return <code>nil</code> to use the default; tint uses the edit button icon color key.
+  AppearanceIconKeyMissedEarningsNavigationEditButtonIcon = 2,
+/// Edit (pen) button icon on each field row in Missed Earnings. Return <code>nil</code> to use the default; tint uses the field edit icon color key.
+  AppearanceIconKeyMissedEarningsFieldEditIcon = 3,
+/// Receipt / missed earnings button icon in the receipt summary header. Return <code>nil</code> to use the default; tint uses the receipt button icon color key when set.
+  AppearanceIconKeyPostScanReceiptButtonIcon = 4,
+/// Placeholder image for boost cards when no custom image is available.
+  AppearanceIconKeyPostScanBoostDefaultIcon = 5,
+/// Icon in the success state of the boost area (e.g. “Nice Scan!”).
+  AppearanceIconKeyPostScanSuccessIcon = 6,
+/// Icon when a barcode is detected in the product capture screen. Return <code>nil</code> to use the default; tint uses the barcode-detected icon color key.
+  AppearanceIconKeyUgcBarcodeDetectedIcon = 7,
+/// Warning icon in the product capture toast. Return <code>nil</code> to use the default; tint uses the toast warning icon color key.
+  AppearanceIconKeyUgcToastMessageWarningIcon = 8,
+};
 
 @class BlinkEngageUser;
 @class NSString;
-@class UIImage;
 @class NSNumber;
 SWIFT_CLASS("_TtC11BlinkEngage14BlinkEngageSDK")
 @interface BlinkEngageSDK : NSObject
 @property (nonatomic, readonly, strong) BlinkEngageUser * _Nonnull user;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BlinkEngageSDK * _Nonnull shared;)
 + (BlinkEngageSDK * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
-@property (nonatomic, strong) BlinkEngageAppearance * _Nonnull appearance;
+@property (nonatomic, strong) Appearance * _Nonnull appearance;
 @property (nonatomic, copy) NSString * _Nonnull rewardCurrencyName;
 @property (nonatomic) double rewardCurrencyPerDollar;
-@property (nonatomic, strong) UIImage * _Nullable rewardCurrencyIcon;
 @property (nonatomic) double userPayoutPercentage;
 /// Enable in development to show test adUnits
 @property (nonatomic) BOOL debugModeEnabled;
@@ -1042,9 +9349,37 @@ SWIFT_PROTOCOL("_TtP11BlinkEngage32OffersWallViewControllerDelegate_")
 @optional
 - (void)offerWallDidSelectFloatingAction:(OffersWallViewController * _Nonnull)viewController;
 - (BOOL)offerWallShouldDisplayFloatingAction:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
-- (NSString * _Nullable)offerWallHeaderTitle:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
-@required
-- (BOOL)offerWallShouldDisplayHeaderView:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
+@end
+
+@class UIColor;
+@class UIImage;
+/// Protocol for customizing the appearance of BlinkEngage SDK screens.
+/// Conform to this protocol and assign your theme to
+/// <code>BlinkEngageSDK.shared.appearance.theme</code> to override colors, fonts, and images.
+/// For any key, return <code>nil</code> from the corresponding method to use the SDK default.
+SWIFT_PROTOCOL("_TtP11BlinkEngage5Theme_")
+@protocol Theme
+/// When you return <code>nil</code> from <code>image(forKey: .offerRewardIcon)</code>, this controls
+/// whether the default reward icon is shown (<code>true</code>) or hidden (<code>false</code>).
+/// Ignored when you return a custom reward icon image.
+@property (nonatomic, readonly) BOOL isRewardIconEnabled;
+/// When <code>true</code>, the Stores screen loads merchant logos from their URLs when available.
+/// When <code>false</code>, the default storefront icon is always shown.
+@property (nonatomic, readonly) BOOL isMerchantIconEnabled;
+/// Optional mapping of font weight to font name, used when you return <code>nil</code> from
+/// <code>fontName(forKey:)</code> for a given key. Keys: <code>NSNumber</code> wrapping
+/// <code>UIFont.Weight.rawValue</code>; values: font name strings. Return <code>nil</code> to use
+/// system fonts when no key-specific font is set.
+@property (nonatomic, readonly, strong) NSDictionary * _Nullable globalFontMatrix;
+/// Returns a custom color for the given key, or <code>nil</code> to use the SDK default.
+- (UIColor * _Nullable)colorForKey:(enum AppearanceColorKey)key SWIFT_WARN_UNUSED_RESULT;
+/// Returns a custom font name for the given key (e.g. <code>"Outfit-Bold"</code>), or <code>nil</code> to use
+/// the SDK default. The SDK applies the appropriate size for each key.
+- (NSString * _Nullable)fontNameForKey:(enum AppearanceFontNameKey)key SWIFT_WARN_UNUSED_RESULT;
+/// Returns a custom image for the given key, or <code>nil</code> to use the SDK default.
+/// For the reward icon, when you return <code>nil</code>, visibility is controlled by
+/// <code>isRewardIconEnabled</code>.
+- (UIImage * _Nullable)imageForKey:(enum AppearanceIconKey)key SWIFT_WARN_UNUSED_RESULT;
 @end
 
 #endif
@@ -1072,6 +9407,3574 @@ SWIFT_PROTOCOL("_TtP11BlinkEngage32OffersWallViewControllerDelegate_")
 #endif
 #endif
 
+#ifndef SWIFT_SWIFT_H
+#define SWIFT_SWIFT_H
+#ifdef SWIFT_SYMBOL
+#undef SWIFT_SYMBOL
+#endif
+#define SWIFT_SYMBOL(usrValue) SWIFT_SYMBOL_MODULE_USR("swift", usrValue)
+#ifndef SWIFT_CXX_INTEROP_HIDE_STL_OVERLAY
+#include <string>
+#endif
+#include <new>
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+#ifndef SWIFT_PRINTED_CORE
+#define SWIFT_PRINTED_CORE
+namespace swift SWIFT_PRIVATE_ATTR {
+
+namespace _impl {
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// Swift type metadata response type.
+struct MetadataResponseTy {
+  void * _Null_unspecified _0;
+  uint64_t _1;
+};
+// Swift type metadata request type.
+typedef uint64_t MetadataRequestTy;
+
+#if __cplusplus > 201402L
+#  define SWIFT_NOEXCEPT_FUNCTION_PTR noexcept
+#else
+#  define SWIFT_NOEXCEPT_FUNCTION_PTR
+#endif
+
+using ValueWitnessInitializeBufferWithCopyOfBufferTy = void * _Nonnull(* __ptrauth_swift_value_witness_function_pointer(55882))(void * _Nonnull, void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using ValueWitnessDestroyTy = void(* __ptrauth_swift_value_witness_function_pointer(1272))(void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using ValueWitnessInitializeWithCopyTy = void * _Nonnull(* __ptrauth_swift_value_witness_function_pointer(58298))(void * _Nonnull, void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using ValueWitnessAssignWithCopyTy = void * _Nonnull(* __ptrauth_swift_value_witness_function_pointer(34641))(void * _Nonnull, void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using ValueWitnessInitializeWithTakeTy = void * _Nonnull(* __ptrauth_swift_value_witness_function_pointer(18648))(void * _Nonnull, void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using ValueWitnessAssignWithTakeTy = void * _Nonnull(* __ptrauth_swift_value_witness_function_pointer(61402))(void * _Nonnull, void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using ValueWitnessGetEnumTagSinglePayloadTy = unsigned(* __ptrauth_swift_value_witness_function_pointer(24816))(const void * _Nonnull, unsigned, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using ValueWitnessStoreEnumTagSinglePayloadTy = void(* __ptrauth_swift_value_witness_function_pointer(41169))(void * _Nonnull, unsigned, unsigned, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+
+struct ValueWitnessTable {
+  ValueWitnessInitializeBufferWithCopyOfBufferTy _Nonnull initializeBufferWithCopyOfBuffer;
+  ValueWitnessDestroyTy _Nonnull destroy;
+  ValueWitnessInitializeWithCopyTy _Nonnull initializeWithCopy;
+  ValueWitnessAssignWithCopyTy _Nonnull assignWithCopy;
+  ValueWitnessInitializeWithTakeTy _Nonnull initializeWithTake;
+  ValueWitnessAssignWithTakeTy _Nonnull assignWithTake;
+  ValueWitnessGetEnumTagSinglePayloadTy _Nonnull getEnumTagSinglePayload;
+  ValueWitnessStoreEnumTagSinglePayloadTy _Nonnull storeEnumTagSinglePayload;
+  size_t size;
+  size_t stride;
+  unsigned flags;
+  unsigned extraInhabitantCount;
+
+  constexpr size_t getAlignment() const { return (flags & 255) + 1; }
+};
+
+using EnumValueWitnessGetEnumTagTy = unsigned(* __ptrauth_swift_value_witness_function_pointer(41909))(const void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using EnumValueWitnessDestructiveProjectEnumDataTy = void(* __ptrauth_swift_value_witness_function_pointer(1053))(void * _Nonnull, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+using EnumValueWitnessDestructiveInjectEnumTagTy = void(* __ptrauth_swift_value_witness_function_pointer(45796))(void * _Nonnull, unsigned, void * _Nonnull) SWIFT_NOEXCEPT_FUNCTION_PTR;
+
+struct EnumValueWitnessTable {
+  ValueWitnessTable vwTable;
+  EnumValueWitnessGetEnumTagTy _Nonnull getEnumTag;
+  EnumValueWitnessDestructiveProjectEnumDataTy _Nonnull destructiveProjectEnumData;
+  EnumValueWitnessDestructiveInjectEnumTagTy _Nonnull destructiveInjectEnumTag;
+};
+
+#undef SWIFT_NOEXCEPT_FUNCTION_PTR
+
+
+// type metadata address for Bool.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $sSbN;
+// type metadata address for Int8.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss4Int8VN;
+// type metadata address for UInt8.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss5UInt8VN;
+// type metadata address for Int16.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss5Int16VN;
+// type metadata address for UInt16.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss6UInt16VN;
+// type metadata address for Int32.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss5Int32VN;
+// type metadata address for UInt32.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss6UInt32VN;
+// type metadata address for Int64.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss5Int64VN;
+// type metadata address for UInt64.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss6UInt64VN;
+// type metadata address for Float.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $sSfN;
+// type metadata address for Double.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $sSdN;
+// type metadata address for OpaquePointer.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $ss13OpaquePointerVN;
+// type metadata address for Int.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $sSiN;
+// type metadata address for UInt.
+SWIFT_IMPORT_STDLIB_SYMBOL extern size_t $sSuN;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+} // namespace _impl
+
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<bool> = true;
+
+template<>
+struct TypeMetadataTrait<bool> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$sSbN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<int8_t> = true;
+
+template<>
+struct TypeMetadataTrait<int8_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss4Int8VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<uint8_t> = true;
+
+template<>
+struct TypeMetadataTrait<uint8_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss5UInt8VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<int16_t> = true;
+
+template<>
+struct TypeMetadataTrait<int16_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss5Int16VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<uint16_t> = true;
+
+template<>
+struct TypeMetadataTrait<uint16_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss6UInt16VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<int32_t> = true;
+
+template<>
+struct TypeMetadataTrait<int32_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss5Int32VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<uint32_t> = true;
+
+template<>
+struct TypeMetadataTrait<uint32_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss6UInt32VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<int64_t> = true;
+
+template<>
+struct TypeMetadataTrait<int64_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss5Int64VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<uint64_t> = true;
+
+template<>
+struct TypeMetadataTrait<uint64_t> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss6UInt64VN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<float> = true;
+
+template<>
+struct TypeMetadataTrait<float> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$sSfN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<double> = true;
+
+template<>
+struct TypeMetadataTrait<double> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$sSdN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<void *> = true;
+
+template<>
+struct TypeMetadataTrait<void *> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$ss13OpaquePointerVN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<swift::Int> = true;
+
+template<>
+struct TypeMetadataTrait<swift::Int> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$sSiN;
+  }
+};
+
+template<>
+inline const constexpr bool isUsableInGenericContext<swift::UInt> = true;
+
+template<>
+struct TypeMetadataTrait<swift::UInt> {
+  static SWIFT_INLINE_THUNK void * _Nonnull getTypeMetadata() {
+    return &_impl::$sSuN;
+  }
+};
+
+#pragma clang diagnostic pop
+
+} // namespace swift
+
+#endif
+#ifdef __cplusplus
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+namespace _impl {
+extern "C" {
+#endif
+
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_returnStub_swift_void_ptr_0_8 {
+  void * _Nullable _1;
+};
+
+static SWIFT_C_INLINE_THUNK void swift_interop_returnDirect_swift_void_ptr_0_8(char * _Nonnull result, struct swift_interop_returnStub_swift_void_ptr_0_8 value) {
+  memcpy(result + 0, &value._1, 8);
+}
+
+SWIFT_EXTERN struct swift_interop_returnStub_swift_void_ptr_0_8 $sS2ayxGycfC(void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // init()
+SWIFT_EXTERN struct swift_interop_returnStub_swift_void_ptr_0_8 $sSa9repeating5countSayxGx_SitcfC(const void * _Nonnull repeatedValue, ptrdiff_t count, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // init(repeating:count:)
+SWIFT_EXTERN void $sSa15reserveCapacityyySiF(ptrdiff_t minimumCapacity, void * _Nonnull , SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // reserveCapacity(_:)
+SWIFT_EXTERN void $sSa6appendyyxnF(const void * _Nonnull newElement, void * _Nonnull , SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // append(_:)
+SWIFT_EXTERN void $sSa17_customRemoveLastxSgyF(SWIFT_INDIRECT_RESULT void * _Nonnull, void * _Nonnull , SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // _customRemoveLast()
+SWIFT_EXTERN void $sSa6remove2atxSi_tF(SWIFT_INDIRECT_RESULT void * _Nonnull, ptrdiff_t index, void * _Nonnull , SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // remove(at:)
+SWIFT_EXTERN void $sSa6insert_2atyxn_SitF(const void * _Nonnull newElement, ptrdiff_t i, void * _Nonnull , SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // insert(_:at:)
+SWIFT_EXTERN void $sSa9removeAll15keepingCapacityySb_tF(bool keepCapacity, void * _Nonnull , SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // removeAll(keepingCapacity:)
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_passStub_swift_void_ptr_0_8 {
+  void * _Nullable _1;
+};
+
+static SWIFT_C_INLINE_THUNK struct swift_interop_passStub_swift_void_ptr_0_8 swift_interop_passDirect_swift_void_ptr_0_8(const char * _Nonnull value) {
+  struct swift_interop_passStub_swift_void_ptr_0_8 result;
+  memcpy(&result._1, value + 0, 8);
+  return result;
+}
+
+SWIFT_EXTERN ptrdiff_t $sSa10startIndexSivg(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN ptrdiff_t $sSa8endIndexSivg(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN ptrdiff_t $sSa8distance4from2toS2i_SitF(ptrdiff_t start, ptrdiff_t end, struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // distance(from:to:)
+SWIFT_EXTERN void $sSayxSicig(SWIFT_INDIRECT_RESULT void * _Nonnull, ptrdiff_t index, struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN ptrdiff_t $sSa5countSivg(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN bool $sSa29_hoistableIsNativeTypeCheckedSbyF(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _hoistableIsNativeTypeChecked()
+SWIFT_EXTERN ptrdiff_t $sSa8capacitySivg(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+#if defined(__OBJC__)
+SWIFT_EXTERN id _Nullable $sSa6_owneryXlSgvg(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+#endif
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 {
+  uint64_t _1;
+  void * _Nullable _2;
+};
+
+static SWIFT_C_INLINE_THUNK void swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(char * _Nonnull result, struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 value) {
+  memcpy(result + 0, &value._1, 8);
+  memcpy(result + 8, &value._2, 8);
+}
+
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSa11descriptionSSvg(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSa16debugDescriptionSSvg(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _
+#if defined(__OBJC__)
+SWIFT_EXTERN id _Nonnull $sSa23_bridgeToObjectiveCImplyXlyF(struct swift_interop_passStub_swift_void_ptr_0_8 _self, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _bridgeToObjectiveCImpl()
+#endif
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_returnStub_swift_uint64_t_0_8 {
+  uint64_t _1;
+};
+
+static SWIFT_C_INLINE_THUNK void swift_interop_returnDirect_swift_uint64_t_0_8(char * _Nonnull result, struct swift_interop_returnStub_swift_uint64_t_0_8 value) {
+  memcpy(result + 0, &value._1, 8);
+}
+
+#if defined(__OBJC__)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSa44_bridgeFromObjectiveCAdoptingNativeStorageOfySayxGSgyXlFZ(id _Nonnull source, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _bridgeFromObjectiveCAdoptingNativeStorageOf(_:)
+#endif
+#if defined(__OBJC__)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_void_ptr_0_8 $sSa20_immutableCocoaArraySayxGyXl_tcfC(id _Nonnull _immutableCocoaArray, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // init(_immutableCocoaArray:)
+#endif
+SWIFT_EXTERN struct swift_interop_returnStub_swift_void_ptr_0_8 $sSa12arrayLiteralSayxGxd_tcfC(struct swift_interop_passStub_swift_void_ptr_0_8 elements, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // init(arrayLiteral:)
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_passStub_swift_uint64_t_0_8 {
+  uint64_t _1;
+};
+
+static SWIFT_C_INLINE_THUNK struct swift_interop_passStub_swift_uint64_t_0_8 swift_interop_passDirect_swift_uint64_t_0_8(const char * _Nonnull value) {
+  struct swift_interop_passStub_swift_uint64_t_0_8 result;
+  memcpy(&result._1, value + 0, 8);
+  return result;
+}
+
+SWIFT_EXTERN ptrdiff_t $sSS5IndexV13encodedOffsetSivg(struct swift_interop_passStub_swift_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS5IndexV13encodedOffsetABSi_tcfC(ptrdiff_t offset) SWIFT_NOEXCEPT SWIFT_CALL; // init(encodedOffset:)
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_returnStub_swift_uint64_t_0_8_uint8_t_8_9 {
+  uint64_t _1;
+  uint8_t _2;
+};
+
+static SWIFT_C_INLINE_THUNK void swift_interop_returnDirect_swift_uint64_t_0_8_uint8_t_8_9(char * _Nonnull result, struct swift_interop_returnStub_swift_uint64_t_0_8_uint8_t_8_9 value) {
+  memcpy(result + 0, &value._1, 8);
+  memcpy(result + 8, &value._2, 1);
+}
+
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 {
+  uint64_t _1;
+  void * _Nullable _2;
+};
+
+static SWIFT_C_INLINE_THUNK struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(const char * _Nonnull value) {
+  struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 result;
+  memcpy(&result._1, value + 0, 8);
+  memcpy(&result._2, value + 8, 8);
+  return result;
+}
+
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_uint8_t_8_9 $sSS5IndexV_6withinABSgAB_SStcfC(struct swift_interop_passStub_swift_uint64_t_0_8 sourcePosition, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 target) SWIFT_NOEXCEPT SWIFT_CALL; // init(_:within:)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_uint8_t_8_9 $sSS5IndexV12samePosition2inABSgSS8UTF8ViewV_tF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 utf8, struct swift_interop_passStub_swift_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // samePosition(in:)
+SWIFT_EXTERN ptrdiff_t $sSS5IndexV9hashValueSivg(struct swift_interop_passStub_swift_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_uint8_t_8_9 $sSS5IndexV12samePosition2inABSgSS_tF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 characters, struct swift_interop_passStub_swift_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // samePosition(in:)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_uint8_t_8_9 $sSS5IndexV_6withinABSgAB_SS8UTF8ViewVtcfC(struct swift_interop_passStub_swift_uint64_t_0_8 idx, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 target) SWIFT_NOEXCEPT SWIFT_CALL; // init(_:within:)
+struct Swift_String_Index {
+  _Alignas(8) char _storage[8];
+};
+
+#if defined(__OBJC__)
+SWIFT_EXTERN id _Nonnull $sSq19_bridgeToObjectiveCyXlyF(void * _Nonnull , SWIFT_CONTEXT const void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // _bridgeToObjectiveC()
+#endif
+#if defined(__OBJC__)
+SWIFT_EXTERN void $sSq26_forceBridgeFromObjectiveC_6resultyyXl_xSgSgztFZ(id _Nonnull source, void * _Nonnull result, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _forceBridgeFromObjectiveC(_:result:)
+#endif
+#if defined(__OBJC__)
+SWIFT_EXTERN bool $sSq34_conditionallyBridgeFromObjectiveC_6resultSbyXl_xSgSgztFZ(id _Nonnull source, void * _Nonnull result, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _conditionallyBridgeFromObjectiveC(_:result:)
+#endif
+#if defined(__OBJC__)
+SWIFT_EXTERN void $sSq36_unconditionallyBridgeFromObjectiveCyxSgyXlSgFZ(SWIFT_INDIRECT_RESULT void * _Nonnull, id _Nullable source, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // _unconditionallyBridgeFromObjectiveC(_:)
+#endif
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSq16debugDescriptionSSvg(void * _Nonnull , SWIFT_CONTEXT const void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $sSq17unsafelyUnwrappedxvg(SWIFT_INDIRECT_RESULT void * _Nonnull, void * _Nonnull , SWIFT_CONTEXT const void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $sSqyxSgxcfC(SWIFT_INDIRECT_RESULT void * _Nonnull, const void * _Nonnull some, void * _Nonnull ) SWIFT_NOEXCEPT SWIFT_CALL; // init(_:)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sS2SycfC(void) SWIFT_NOEXCEPT SWIFT_CALL; // init()
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS10startIndexSS0B0Vvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS8endIndexSS0B0Vvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN ptrdiff_t $sSS5countSivg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN ptrdiff_t $sSS8distance4from2toSiSS5IndexV_AEtF(struct swift_interop_passStub_swift_uint64_t_0_8 start, struct swift_interop_passStub_swift_uint64_t_0_8 end, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // distance(from:to:)
+SWIFT_EXTERN void $sSS15reserveCapacityyySiF(ptrdiff_t n, SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // reserveCapacity(_:)
+SWIFT_EXTERN void $sSS6appendyySSF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 other, SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // append(_:)
+SWIFT_EXTERN void $sSS6append10contentsOfySS_tF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 newElements, SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // append(contentsOf:)
+SWIFT_EXTERN void $sSS9removeAll15keepingCapacityySb_tF(bool keepCapacity, SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // removeAll(keepingCapacity:)
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_returnStub_swift_uint64_t_0_8_uint64_t_8_16 {
+  uint64_t _1;
+  uint64_t _2;
+};
+
+static SWIFT_C_INLINE_THUNK void swift_interop_returnDirect_swift_uint64_t_0_8_uint64_t_8_16(char * _Nonnull result, struct swift_interop_returnStub_swift_uint64_t_0_8_uint64_t_8_16 value) {
+  memcpy(result + 0, &value._1, 8);
+  memcpy(result + 8, &value._2, 8);
+}
+
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS4utf8SS8UTF8ViewVvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $sSS4utf8SS8UTF8ViewVvs(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 newValue, SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS10charactersSSvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $sSS10charactersSSvs(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 newValue, SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN ptrdiff_t $sSS9hashValueSivg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN bool $sSS7isEmptySbvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_void_ptr_0_8 $sSS13_nfcCodeUnitsSays5UInt8VGvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS10lowercasedSSyF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // lowercased()
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS10uppercasedSSyF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // uppercased()
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS11descriptionSSvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS16debugDescriptionSSvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $sSS5writeyySSF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 other, SWIFT_CONTEXT void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // write(_:)
+SWIFT_EXTERN void $sSS5_dumpyyF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _dump()
+SWIFT_EXTERN bool $sSS9hasPrefixySbSSF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 prefix, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // hasPrefix(_:)
+SWIFT_EXTERN bool $sSS9hasSuffixySbSSF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 suffix, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // hasSuffix(_:)
+#if defined(__OBJC__)
+SWIFT_EXTERN id _Nonnull $sSS23_bridgeToObjectiveCImplyXlyF(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _bridgeToObjectiveCImpl()
+#endif
+struct swift_interop_stub_Swift_String {
+#if UINTPTR_MAX == 0xFFFFFFFFFFFFFFFFu
+uint64_t _1;
+void * _Nullable _2;
+#elif UINTPTR_MAX == 0xFFFFFFFF
+uint32_t _1;
+uint32_t _2;
+uint32_t _3;
+#endif
+};
+static SWIFT_INLINE_THUNK struct swift_interop_stub_Swift_String swift_interop_passDirect_Swift_String(const char * _Nonnull value) {
+struct swift_interop_stub_Swift_String result;
+#if UINTPTR_MAX == 0xFFFFFFFFFFFFFFFFu
+memcpy(&result._1, value, 8);
+memcpy(&result._2, value + 8, 8);
+#elif UINTPTR_MAX == 0xFFFFFFFF
+memcpy(&result._1, value, 4);
+memcpy(&result._2, value + 4, 4);
+memcpy(&result._3, value + 8, 4);
+#endif
+return result;
+}
+SWIFT_EXTERN void *_Nonnull $sSS10FoundationE19_bridgeToObjectiveCSo8NSStringCyF(swift_interop_stub_Swift_String) SWIFT_NOEXCEPT SWIFT_CALL;
+SWIFT_EXTERN swift_interop_stub_Swift_String $sSS10FoundationE36_unconditionallyBridgeFromObjectiveCySSSo8NSStringCSgFZ(void * _Nullable) SWIFT_NOEXCEPT SWIFT_CALL;
+SWIFT_EXTERN swift_interop_stub_Swift_String $sSS7cStringSSSPys4Int8VG_tcfC(const char * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL;
+struct Swift_String {
+  _Alignas(8) char _storage[16];
+};
+
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS8UTF8ViewV10startIndexSS0D0Vvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS8UTF8ViewV8endIndexSS0D0Vvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS8UTF8ViewV5index5afterSS5IndexVAF_tF(struct swift_interop_passStub_swift_uint64_t_0_8 i, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // index(after:)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS8UTF8ViewV5index6beforeSS5IndexVAF_tF(struct swift_interop_passStub_swift_uint64_t_0_8 i, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // index(before:)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8 $sSS8UTF8ViewV5index_8offsetBySS5IndexVAF_SitF(struct swift_interop_passStub_swift_uint64_t_0_8 i, ptrdiff_t n, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // index(_:offsetBy:)
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_uint8_t_8_9 $sSS8UTF8ViewV5index_8offsetBy07limitedE0SS5IndexVSgAG_SiAGtF(struct swift_interop_passStub_swift_uint64_t_0_8 i, ptrdiff_t n, struct swift_interop_passStub_swift_uint64_t_0_8 limit, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // index(_:offsetBy:limitedBy:)
+SWIFT_EXTERN ptrdiff_t $sSS8UTF8ViewV8distance4from2toSiSS5IndexV_AGtF(struct swift_interop_passStub_swift_uint64_t_0_8 i, struct swift_interop_passStub_swift_uint64_t_0_8 j, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // distance(from:to:)
+SWIFT_EXTERN uint8_t $sSS8UTF8ViewVys5UInt8VSS5IndexVcig(struct swift_interop_passStub_swift_uint64_t_0_8 i, struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS8UTF8ViewV16debugDescriptionSSvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_swift_uint64_t_0_8_void_ptr_8_16 $sSS8UTF8ViewV11descriptionSSvg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN ptrdiff_t $sSS8UTF8ViewV5countSivg(struct swift_interop_passStub_swift_uint64_t_0_8_void_ptr_8_16 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct Swift_UTF8View {
+  _Alignas(8) char _storage[16];
+};
+
+}
+}
+}
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SWIFT_SYMBOL("s:Sq") Optional;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+inline const constexpr bool isUsableInGenericContext<swift::Optional<T_0_0>> = isUsableInGenericContext<T_0_0>;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+class SWIFT_SYMBOL("s:SS") String;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<swift::String> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SWIFT_SYMBOL("s:Sa") Array;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+inline const constexpr bool isUsableInGenericContext<swift::Array<T_0_0>> = isUsableInGenericContext<T_0_0>;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+namespace _impl {
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class _impl_Array;
+
+static_assert(1 <= 3, "unsupported generic requirement list for metadata func");
+// Type metadata accessor for Array
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $sSaMa(swift::_impl::MetadataRequestTy, void * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SWIFT_SYMBOL("s:Sa") Array final {
+public:
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  SWIFT_INLINE_THUNK ~Array() noexcept {
+    auto metadata = _impl::$sSaMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK Array(const Array &other) noexcept {
+    auto metadata = _impl::$sSaMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    _storage = swift::_impl::OpaqueStorage(vwTable->size, vwTable->getAlignment());
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK Array &operator =(const Array &other) noexcept {
+    auto metadata = _impl::$sSaMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK Array &operator =(Array &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER Array(Array &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+/// Creates a new, empty array.
+/// This is equivalent to initializing with an empty array literal.
+/// For example:
+/// \code
+/// var emptyArray = Array<Int>()
+/// print(emptyArray.isEmpty)
+/// // Prints "true"
+///
+/// emptyArray = []
+/// print(emptyArray.isEmpty)
+/// // Prints "true"
+///
+/// \endcode
+  static SWIFT_INLINE_THUNK Array<T_0_0> init() SWIFT_SYMBOL("s:S2ayxGycfc");
+/// Creates a new array containing the specified number of a single, repeated
+/// value.
+/// Here’s an example of creating an array initialized with five strings
+/// containing the letter <em>Z</em>.
+/// \code
+/// let fiveZs = Array(repeating: "Z", count: 5)
+/// print(fiveZs)
+/// // Prints "["Z", "Z", "Z", "Z", "Z"]"
+///
+/// \endcode\param repeatedValue The element to repeat.
+///
+/// \param count The number of times to repeat the value passed in the
+/// <code>repeating</code> parameter. <code>count</code> must be zero or greater.
+///
+  static SWIFT_INLINE_THUNK Array<T_0_0> init(const T_0_0& repeatedValue, swift::Int count) SWIFT_SYMBOL("s:Sa9repeating5countSayxGx_Sitcfc");
+/// Reserves enough space to store the specified number of elements.
+/// If you are adding a known number of elements to an array, use this method
+/// to avoid multiple reallocations. This method ensures that the array has
+/// unique, mutable, contiguous storage, with space allocated for at least
+/// the requested number of elements.
+/// Calling the <code>reserveCapacity(_:)</code> method on an array with bridged storage
+/// triggers a copy to contiguous storage even if the existing storage
+/// has room to store <code>minimumCapacity</code> elements.
+/// For performance reasons, the size of the newly allocated storage might be
+/// greater than the requested capacity. Use the array’s <code>capacity</code> property
+/// to determine the size of the new storage.
+/// <h1>Preserving an Array’s Geometric Growth Strategy</h1>
+/// If you implement a custom data structure backed by an array that grows
+/// dynamically, naively calling the <code>reserveCapacity(_:)</code> method can lead
+/// to worse than expected performance. Arrays need to follow a geometric
+/// allocation pattern for appending elements to achieve amortized
+/// constant-time performance. The <code>Array</code> type’s <code>append(_:)</code> and
+/// <code>append(contentsOf:)</code> methods take care of this detail for you, but
+/// <code>reserveCapacity(_:)</code> allocates only as much space as you tell it to
+/// (padded to a round value), and no more. This avoids over-allocation, but
+/// can result in insertion not having amortized constant-time performance.
+/// The following code declares <code>values</code>, an array of integers, and the
+/// <code>addTenQuadratic()</code> function, which adds ten more values to the <code>values</code>
+/// array on each call.
+/// \code
+///   var values: [Int] = [0, 1, 2, 3]
+///
+///   // Don't use 'reserveCapacity(_:)' like this
+///   func addTenQuadratic() {
+///       let newCount = values.count + 10
+///       values.reserveCapacity(newCount)
+///       for n in values.count..<newCount {
+///           values.append(n)
+///       }
+///   }
+///
+/// \endcodeThe call to <code>reserveCapacity(_:)</code> increases the <code>values</code> array’s capacity
+/// by exactly 10 elements on each pass through <code>addTenQuadratic()</code>, which
+/// is linear growth. Instead of having constant time when averaged over
+/// many calls, the function may decay to performance that is linear in
+/// <code>values.count</code>. This is almost certainly not what you want.
+/// In cases like this, the simplest fix is often to simply remove the call
+/// to <code>reserveCapacity(_:)</code>, and let the <code>append(_:)</code> method grow the array
+/// for you.
+/// \code
+///   func addTen() {
+///       let newCount = values.count + 10
+///       for n in values.count..<newCount {
+///           values.append(n)
+///       }
+///   }
+///
+/// \endcodeIf you need more control over the capacity of your array, implement your
+/// own geometric growth strategy, passing the size you compute to
+/// <code>reserveCapacity(_:)</code>.
+/// complexity:
+/// O(<em>n</em>), where <em>n</em> is the number of elements in the array.
+/// \param minimumCapacity The requested number of elements to store.
+///
+  SWIFT_INLINE_THUNK void reserveCapacity(swift::Int minimumCapacity) SWIFT_SYMBOL("s:Sa15reserveCapacityyySiF");
+/// Adds a new element at the end of the array.
+/// Use this method to append a single element to the end of a mutable array.
+/// \code
+/// var numbers = [1, 2, 3, 4, 5]
+/// numbers.append(100)
+/// print(numbers)
+/// // Prints "[1, 2, 3, 4, 5, 100]"
+///
+/// \endcodeBecause arrays increase their allocated capacity using an exponential
+/// strategy, appending a single element to an array is an O(1) operation
+/// when averaged over many calls to the <code>append(_:)</code> method. When an array
+/// has additional capacity and is not sharing its storage with another
+/// instance, appending an element is O(1). When an array needs to
+/// reallocate storage before appending or its storage is shared with
+/// another copy, appending is O(<em>n</em>), where <em>n</em> is the length of the array.
+/// complexity:
+/// O(1) on average, over many calls to <code>append(_:)</code> on the
+/// same array.
+/// \param newElement The element to append to the array.
+///
+  SWIFT_INLINE_THUNK void append(const T_0_0& newElement) SWIFT_SYMBOL("s:Sa6appendyyxnF");
+  SWIFT_INLINE_THUNK swift::Optional<T_0_0> _customRemoveLast() SWIFT_SYMBOL("s:Sa17_customRemoveLastxSgyF");
+/// Removes and returns the element at the specified position.
+/// All the elements following the specified position are moved up to
+/// close the gap.
+/// \code
+/// var measurements: [Double] = [1.1, 1.5, 2.9, 1.2, 1.5, 1.3, 1.2]
+/// let removed = measurements.remove(at: 2)
+/// print(measurements)
+/// // Prints "[1.1, 1.5, 1.2, 1.5, 1.3, 1.2]"
+///
+/// \endcodecomplexity:
+/// O(<em>n</em>), where <em>n</em> is the length of the array.
+/// \param index The position of the element to remove. <code>index</code> must
+/// be a valid index of the array.
+///
+///
+/// returns:
+/// The element at the specified index.
+  SWIFT_INLINE_THUNK T_0_0 removeAt(swift::Int index) SWIFT_SYMBOL("s:Sa6remove2atxSi_tF");
+/// Inserts a new element at the specified position.
+/// The new element is inserted before the element currently at the specified
+/// index. If you pass the array’s <code>endIndex</code> property as the <code>index</code>
+/// parameter, the new element is appended to the array.
+/// \code
+/// var numbers = [1, 2, 3, 4, 5]
+/// numbers.insert(100, at: 3)
+/// numbers.insert(200, at: numbers.endIndex)
+///
+/// print(numbers)
+/// // Prints "[1, 2, 3, 100, 4, 5, 200]"
+///
+/// \endcodecomplexity:
+/// O(<em>n</em>), where <em>n</em> is the length of the array. If
+/// <code>i == endIndex</code>, this method is equivalent to <code>append(_:)</code>.
+/// \param newElement The new element to insert into the array.
+///
+/// \param i The position at which to insert the new element.
+/// <code>index</code> must be a valid index of the array or equal to its <code>endIndex</code>
+/// property.
+///
+  SWIFT_INLINE_THUNK void insertAt(const T_0_0& newElement, swift::Int i) SWIFT_SYMBOL("s:Sa6insert_2atyxn_SitF");
+/// Removes all elements from the array.
+/// complexity:
+/// O(<em>n</em>), where <em>n</em> is the length of the array.
+/// \param keepCapacity Pass <code>true</code> to keep the existing capacity of
+/// the array after removing its elements. The default value is
+/// <code>false</code>.
+///
+  SWIFT_INLINE_THUNK void removeAllKeepingCapacity(bool keepCapacity) SWIFT_SYMBOL("s:Sa9removeAll15keepingCapacityySb_tF");
+  SWIFT_INLINE_THUNK swift::Int getStartIndex() const SWIFT_SYMBOL("s:Sa10startIndexSivp");
+  SWIFT_INLINE_THUNK swift::Int getEndIndex() const SWIFT_SYMBOL("s:Sa8endIndexSivp");
+/// Returns the distance between two indices.
+/// \param start A valid index of the collection.
+///
+/// \param end Another valid index of the collection. If <code>end</code> is equal to
+/// <code>start</code>, the result is zero.
+///
+///
+/// returns:
+/// The distance between <code>start</code> and <code>end</code>.
+  SWIFT_INLINE_THUNK swift::Int distanceFromTo(swift::Int start, swift::Int end) const SWIFT_SYMBOL("s:Sa8distance4from2toS2i_SitF");
+SWIFT_INLINE_THUNK T_0_0 operator [](swift::Int index) const SWIFT_SYMBOL("s:SayxSicig");
+  SWIFT_INLINE_THUNK swift::Int getCount() const SWIFT_SYMBOL("s:Sa5countSivp");
+/// Returns <code>true</code> if the array is native and does not need a deferred
+/// type check.  May be hoisted by the optimizer, which means its
+/// results may be stale by the time they are used if there is an
+/// inout violation in user code.
+  SWIFT_INLINE_THUNK bool _hoistableIsNativeTypeChecked() const SWIFT_SYMBOL("s:Sa29_hoistableIsNativeTypeCheckedSbyF");
+  SWIFT_INLINE_THUNK swift::Int getCapacity() const SWIFT_SYMBOL("s:Sa8capacitySivp");
+  #if defined(__OBJC__)
+SWIFT_INLINE_THUNK id _Nullable get_owner() const SWIFT_SYMBOL("s:Sa6_owneryXlSgvp");
+#endif
+  SWIFT_INLINE_THUNK String getDescription() const SWIFT_SYMBOL("s:Sa11descriptionSSvp");
+  SWIFT_INLINE_THUNK String getDebugDescription() const SWIFT_SYMBOL("s:Sa16debugDescriptionSSvp");
+  #if defined(__OBJC__)
+SWIFT_INLINE_THUNK id _Nonnull _bridgeToObjectiveCImpl() const SWIFT_SYMBOL("s:Sa23_bridgeToObjectiveCImplyXlyF");
+#endif
+/// Tries to downcast the source <code>NSArray</code> as our native buffer type.
+/// If it succeeds, creates a new <code>Array</code> around it and returns that.
+/// Returns <code>nil</code> otherwise.
+  #if defined(__OBJC__)
+static SWIFT_INLINE_THUNK swift::Optional<Array<T_0_0>> _bridgeFromObjectiveCAdoptingNativeStorageOf(id _Nonnull source) SWIFT_SYMBOL("s:Sa44_bridgeFromObjectiveCAdoptingNativeStorageOfySayxGSgyXlFZ");
+#endif
+/// Private initializer used for bridging.
+/// Only use this initializer when both conditions are true:
+/// <ul>
+///   <li>
+///     it is statically known that the given <code>NSArray</code> is immutable;
+///   </li>
+///   <li>
+///     <code>Element</code> is bridged verbatim to Objective-C (i.e.,
+///     is a reference type).
+///   </li>
+/// </ul>
+  #if defined(__OBJC__)
+static SWIFT_INLINE_THUNK Array<T_0_0> init(id _Nonnull _immutableCocoaArray) SWIFT_SYMBOL("s:Sa20_immutableCocoaArraySayxGyXl_tcfc");
+#endif
+/// Creates an array from the given array literal.
+/// Do not call this initializer directly. It is used by the compiler
+/// when you use an array literal. Instead, create a new array by using an
+/// array literal as its value. To do this, enclose a comma-separated list of
+/// values in square brackets.
+/// Here, an array of strings is created from an array literal holding
+/// only strings.
+/// \code
+/// let ingredients = ["cocoa beans", "sugar", "cocoa butter", "salt"]
+///
+/// \endcode\param elements A variadic list of elements of the new array.
+///
+  static SWIFT_INLINE_THUNK Array<T_0_0> init(const Array<T_0_0>& elements) SWIFT_SYMBOL("s:Sa12arrayLiteralSayxGxd_tcfc");
+private:
+  SWIFT_INLINE_THUNK Array(swift::_impl::ValueWitnessTable * _Nonnull vwTable) noexcept : _storage(vwTable->size, vwTable->getAlignment()) {}
+  static SWIFT_INLINE_THUNK Array _make() noexcept {
+    auto metadata = _impl::$sSaMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    return Array(vwTable);
+  }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage.getOpaquePointer(); }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage.getOpaquePointer(); }
+
+  swift::_impl::OpaqueStorage _storage;
+  friend class _impl::_impl_Array<T_0_0>;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $sSayxGD;
+  static inline constexpr $sSayxGD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class _impl_Array {
+public:
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(Array<T_0_0> &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const Array<T_0_0> &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER Array<T_0_0> returnNewValue(T callable) {
+    auto result = Array<T_0_0>::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$sSaMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+struct TypeMetadataTrait<swift::Array<T_0_0>> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return swift::_impl::$sSaMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata())._0;
+  }
+};
+namespace _impl{
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+inline const constexpr bool isValueType<swift::Array<T_0_0>> = true;
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+inline const constexpr bool isOpaqueLayout<swift::Array<T_0_0>> = true;
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+struct implClassFor<swift::Array<T_0_0>> { using type = swift::_impl::_impl_Array<T_0_0>; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+
+class SWIFT_SYMBOL("s:SS8UTF8ViewV") UTF8View;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<swift::UTF8View> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+class SWIFT_SYMBOL("s:SS5IndexV") String_Index;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<swift::String_Index> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+namespace _impl {
+
+class _impl_String_Index;
+
+// Type metadata accessor for Index
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $sSS5IndexVMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("s:SS5IndexV") String_Index final {
+public:
+  SWIFT_INLINE_THUNK ~String_Index() noexcept {
+    auto metadata = _impl::$sSS5IndexVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK String_Index(const String_Index &other) noexcept {
+    auto metadata = _impl::$sSS5IndexVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK String_Index &operator =(const String_Index &other) noexcept {
+    auto metadata = _impl::$sSS5IndexVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK String_Index &operator =(String_Index &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER String_Index(String_Index &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+  SWIFT_INLINE_THUNK swift::Int getEncodedOffset() const SWIFT_SYMBOL("s:SS5IndexV13encodedOffsetSivp");
+/// Creates a new index at the specified code unit offset.
+/// \param offset An offset in code units.
+///
+  static SWIFT_INLINE_THUNK String_Index init(swift::Int offset) SWIFT_SYMBOL("s:SS5IndexV13encodedOffsetABSi_tcfc");
+/// Creates an index in the given string that corresponds exactly to the
+/// specified position.
+/// If the index passed as <code>sourcePosition</code> represents the start of an
+/// extended grapheme cluster—the element type of a string—then the
+/// initializer succeeds.
+/// The following example converts the position of the Unicode scalar <code>"e"</code>
+/// into its corresponding position in the string. The character at that
+/// position is the composed <code>"é"</code> character.
+/// \code
+/// let cafe = "Cafe\u{0301}"
+/// print(cafe)
+/// // Prints "Café"
+///
+/// let scalarsIndex = cafe.unicodeScalars.firstIndex(of: "e")!
+/// let stringIndex = String.Index(scalarsIndex, within: cafe)!
+///
+/// print(cafe[...stringIndex])
+/// // Prints "Café"
+///
+/// \endcodeIf the index passed as <code>sourcePosition</code> doesn’t have an exact
+/// corresponding position in <code>target</code>, the result of the initializer is
+/// <code>nil</code>. For example, an attempt to convert the position of the combining
+/// acute accent (<code>"\u{0301}"</code>) fails. Combining Unicode scalars do not have
+/// their own position in a string.
+/// \code
+/// let nextScalarsIndex = cafe.unicodeScalars.index(after: scalarsIndex)
+/// let nextStringIndex = String.Index(nextScalarsIndex, within: cafe)
+///
+/// print(nextStringIndex)
+/// // Prints "nil"
+///
+/// \endcode\param sourcePosition A position in a view of the <code>target</code> parameter.
+/// <code>sourcePosition</code> must be a valid index of at least one of the views
+/// of <code>target</code>.
+///
+/// \param target The string referenced by the resulting index.
+///
+  static SWIFT_INLINE_THUNK swift::Optional<String_Index> init(const String_Index& sourcePosition, const String& target) SWIFT_SYMBOL("s:SS5IndexV_6withinABSgAB_SStcfc");
+/// Returns the position in the given UTF-8 view that corresponds exactly to
+/// this index.
+/// This example first finds the position of the character <code>"é"</code>, and then
+/// uses this method find the same position in the string’s <code>utf8</code> view.
+/// \code
+/// let cafe = "Café"
+/// if let i = cafe.firstIndex(of: "é") {
+///     let j = i.samePosition(in: cafe.utf8)!
+///     print(Array(cafe.utf8[j...]))
+/// }
+/// // Prints "[195, 169]"
+///
+/// \endcode\param utf8 The view to use for the index conversion. This index
+/// must be a valid index of at least one view of the string shared by
+/// <code>utf8</code>.
+///
+///
+/// returns:
+/// The position in <code>utf8</code> that corresponds exactly to this index.
+/// If this index does not have an exact corresponding position in <code>utf8</code>,
+/// this method returns <code>nil</code>. For example, an attempt to convert the
+/// position of a UTF-16 trailing surrogate returns <code>nil</code>.
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> samePositionIn(const UTF8View& utf8) const SWIFT_SYMBOL("s:SS5IndexV12samePosition2inABSgSS8UTF8ViewV_tF");
+  SWIFT_INLINE_THUNK swift::Int getHashValue() const SWIFT_SYMBOL("s:SS5IndexV9hashValueSivp");
+/// Returns the position in the given string that corresponds exactly to this
+/// index.
+/// This example first finds the position of a space (UTF-8 code point <code>32</code>)
+/// in a string’s <code>utf8</code> view and then uses this method find the same position
+/// in the string.
+/// \code
+/// let cafe = "Café 🍵"
+/// let i = cafe.unicodeScalars.firstIndex(of: "🍵")!
+/// let j = i.samePosition(in: cafe)!
+/// print(cafe[j...])
+/// // Prints "🍵"
+///
+/// \endcode\param characters The string to use for the index conversion.
+/// This index must be a valid index of at least one view of <code>characters</code>.
+///
+///
+/// returns:
+/// The position in <code>characters</code> that corresponds exactly to
+/// this index. If this index does not have an exact corresponding
+/// position in <code>characters</code>, this method returns <code>nil</code>. For example,
+/// an attempt to convert the position of a UTF-8 continuation byte
+/// returns <code>nil</code>.
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> samePositionIn(const String& characters) const SWIFT_SYMBOL("s:SS5IndexV12samePosition2inABSgSS_tF");
+/// Creates an index in the given UTF-8 view that corresponds exactly to the
+/// specified <code>UTF16View</code> position.
+/// The following example finds the position of a space in a string’s <code>utf16</code>
+/// view and then converts that position to an index in the string’s
+/// <code>utf8</code> view.
+/// \code
+/// let cafe = "Café 🍵"
+///
+/// let utf16Index = cafe.utf16.firstIndex(of: 32)!
+/// let utf8Index = String.UTF8View.Index(utf16Index, within: cafe.utf8)!
+///
+/// print(Array(cafe.utf8[..<utf8Index]))
+/// // Prints "[67, 97, 102, 195, 169]"
+///
+/// \endcodeIf the position passed in <code>utf16Index</code> doesn’t have an exact
+/// corresponding position in <code>utf8</code>, the result of the initializer is
+/// <code>nil</code>. For example, because UTF-8 and UTF-16 represent high Unicode code
+/// points differently, an attempt to convert the position of the trailing
+/// surrogate of a UTF-16 surrogate pair fails.
+/// The next example attempts to convert the indices of the two UTF-16 code
+/// points that represent the teacup emoji (<code>"🍵"</code>). The index of the lead
+/// surrogate is successfully converted to a position in <code>utf8</code>, but the
+/// index of the trailing surrogate is not.
+/// \code
+/// let emojiHigh = cafe.utf16.index(after: utf16Index)
+/// print(String.UTF8View.Index(emojiHigh, within: cafe.utf8))
+/// // Prints "Optional(String.Index(...))"
+///
+/// let emojiLow = cafe.utf16.index(after: emojiHigh)
+/// print(String.UTF8View.Index(emojiLow, within: cafe.utf8))
+/// // Prints "nil"
+///
+/// \endcode\param idx A position in a <code>String</code> or one of its views.
+///
+/// \param target The <code>UTF8View</code> in which to find the new position.
+///
+  static SWIFT_INLINE_THUNK swift::Optional<String_Index> init(const String_Index& idx, const UTF8View& target) SWIFT_SYMBOL("s:SS5IndexV_6withinABSgAB_SS8UTF8ViewVtcfc");
+private:
+  SWIFT_INLINE_THUNK String_Index() noexcept {}
+  static SWIFT_INLINE_THUNK String_Index _make() noexcept { return String_Index(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_String_Index;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $sSS5IndexVD;
+  static inline constexpr $sSS5IndexVD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_String_Index {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(String_Index &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const String_Index &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER String_Index returnNewValue(T callable) {
+    auto result = String_Index::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$sSS5IndexVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<swift::String_Index> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return swift::_impl::$sSS5IndexVMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<swift::String_Index> = true;
+template<>
+struct implClassFor<swift::String_Index> { using type = swift::_impl::_impl_String_Index; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+
+/// A type that represents either a wrapped value or the absence of a value.
+/// You use the <code>Optional</code> type whenever you use optional values, even if you
+/// never type the word <code>Optional</code>. Swift’s type system usually shows the
+/// wrapped type’s name with a trailing question mark (<code>?</code>) instead of showing
+/// the full type name. For example, if a variable has the type <code>Int?</code>, that’s
+/// just another way of writing <code>Optional<Int></code>. The shortened form is
+/// preferred for ease of reading and writing code.
+/// The types of <code>shortForm</code> and <code>longForm</code> in the following code sample are
+/// the same:
+/// \code
+/// let shortForm: Int? = Int("42")
+/// let longForm: Optional<Int> = Int("42")
+///
+/// \endcodeThe <code>Optional</code> type is an enumeration with two cases. <code>Optional.none</code> is
+/// equivalent to the <code>nil</code> literal. <code>Optional.some(Wrapped)</code> stores a wrapped
+/// value. For example:
+/// \code
+/// let number: Int? = Optional.some(42)
+/// let noNumber: Int? = Optional.none
+/// print(noNumber == nil)
+/// // Prints "true"
+///
+/// \endcodeYou must unwrap the value of an <code>Optional</code> instance before you can use it
+/// in many contexts. Because Swift provides several ways to safely unwrap
+/// optional values, you can choose the one that helps you write clear,
+/// concise code.
+/// The following examples use this dictionary of image names and file paths:
+/// \code
+/// let imagePaths = ["star": "/glyphs/star.png",
+///                   "portrait": "/images/content/portrait.jpg",
+///                   "spacer": "/images/shared/spacer.gif"]
+///
+/// \endcodeGetting a dictionary’s value using a key returns an optional value, so
+/// <code>imagePaths["star"]</code> has type <code>Optional<String></code> or, written in the
+/// preferred manner, <code>String?</code>.
+/// <h2>Optional Binding</h2>
+/// To conditionally bind the wrapped value of an <code>Optional</code> instance to a new
+/// variable, use one of the optional binding control structures, including
+/// <code>if let</code>, <code>guard let</code>, and <code>switch</code>.
+/// \code
+/// if let starPath = imagePaths["star"] {
+///     print("The star image is at '\(starPath)'")
+/// } else {
+///     print("Couldn't find the star image")
+/// }
+/// // Prints "The star image is at '/glyphs/star.png'"
+///
+/// \endcode<h2>Optional Chaining</h2>
+/// To safely access the properties and methods of a wrapped instance, use the
+/// postfix optional chaining operator (postfix <code>?</code>). The following example uses
+/// optional chaining to access the <code>hasSuffix(_:)</code> method on a <code>String?</code>
+/// instance.
+/// \code
+/// if imagePaths["star"]?.hasSuffix(".png") == true {
+///     print("The star image is in PNG format")
+/// }
+/// // Prints "The star image is in PNG format"
+///
+/// \endcode<h2>Using the Nil-Coalescing Operator</h2>
+/// Use the nil-coalescing operator (<code>??</code>) to supply a default value in case
+/// the <code>Optional</code> instance is <code>nil</code>. Here a default path is supplied for an
+/// image that is missing from <code>imagePaths</code>.
+/// \code
+/// let defaultImagePath = "/images/default.png"
+/// let heartPath = imagePaths["heart"] ?? defaultImagePath
+/// print(heartPath)
+/// // Prints "/images/default.png"
+///
+/// \endcodeThe <code>??</code> operator also works with another <code>Optional</code> instance on the
+/// right-hand side. As a result, you can chain multiple <code>??</code> operators
+/// together.
+/// \code
+/// let shapePath = imagePaths["cir"] ?? imagePaths["squ"] ?? defaultImagePath
+/// print(shapePath)
+/// // Prints "/images/default.png"
+///
+/// \endcode<h2>Unconditional Unwrapping</h2>
+/// When you’re certain that an instance of <code>Optional</code> contains a value, you
+/// can unconditionally unwrap the value by using the forced
+/// unwrap operator (postfix <code>!</code>). For example, the result of the failable <code>Int</code>
+/// initializer is unconditionally unwrapped in the example below.
+/// \code
+/// let number = Int("42")!
+/// print(number)
+/// // Prints "42"
+///
+/// \endcodeYou can also perform unconditional optional chaining by using the postfix
+/// <code>!</code> operator.
+/// \code
+/// let isPNG = imagePaths["star"]!.hasSuffix(".png")
+/// print(isPNG)
+/// // Prints "true"
+///
+/// \endcodeUnconditionally unwrapping a <code>nil</code> instance with <code>!</code> triggers a runtime
+/// error.
+namespace _impl {
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class _impl_Optional;
+
+static_assert(1 <= 3, "unsupported generic requirement list for metadata func");
+// Type metadata accessor for Optional
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $sSqMa(swift::_impl::MetadataRequestTy, void * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL;
+
+// Tags for resilient enum Optional
+extern "C" {
+extern unsigned $sSq4noneyxSgABmlFWC;
+extern unsigned $sSq4someyxSgxcABmlFWC;
+}
+
+} // namespace _impl
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SWIFT_SYMBOL("s:Sq") Optional final {
+public:
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  SWIFT_INLINE_THUNK ~Optional() noexcept {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK Optional(const Optional &other) noexcept {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    _storage = swift::_impl::OpaqueStorage(vwTable->size, vwTable->getAlignment());
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK Optional &operator =(const Optional &other) noexcept {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK Optional &operator =(Optional &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER Optional(Optional &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    some SWIFT_SYMBOL("s:Sq4someyxSgxcABmlF"),
+    none SWIFT_SYMBOL("s:Sq4noneyxSgABmlF")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_some {  // impl struct for case some
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::some;
+    }
+    SWIFT_INLINE_THUNK Optional<T_0_0> operator()(const T_0_0& val) const;
+  } some SWIFT_SYMBOL("s:Sq4someyxSgxcABmlF");
+  SWIFT_INLINE_THUNK bool isSome() const;
+  SWIFT_INLINE_THUNK T_0_0 getSome() const;
+
+  inline const static struct _impl_none {  // impl struct for case none
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::none;
+    }
+    SWIFT_INLINE_THUNK Optional<T_0_0> operator()() const;
+  } none SWIFT_SYMBOL("s:Sq4noneyxSgABmlF");
+  SWIFT_INLINE_THUNK bool isNone() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::some;
+      case 1: return cases::none;
+      default: abort();
+    }
+  }
+
+  #if defined(__OBJC__)
+SWIFT_INLINE_THUNK id _Nonnull _bridgeToObjectiveC() const SWIFT_SYMBOL("s:Sq19_bridgeToObjectiveCyXlyF");
+#endif
+  #if defined(__OBJC__)
+static SWIFT_INLINE_THUNK void _forceBridgeFromObjectiveCResult(id _Nonnull source, swift::Optional<Optional<T_0_0>>& result) SWIFT_SYMBOL("s:Sq26_forceBridgeFromObjectiveC_6resultyyXl_xSgSgztFZ");
+#endif
+  #if defined(__OBJC__)
+static SWIFT_INLINE_THUNK bool _conditionallyBridgeFromObjectiveCResult(id _Nonnull source, swift::Optional<Optional<T_0_0>>& result) SWIFT_SYMBOL("s:Sq34_conditionallyBridgeFromObjectiveC_6resultSbyXl_xSgSgztFZ");
+#endif
+  #if defined(__OBJC__)
+static SWIFT_INLINE_THUNK swift::Optional<T_0_0> _unconditionallyBridgeFromObjectiveC(id _Nullable source) SWIFT_SYMBOL("s:Sq36_unconditionallyBridgeFromObjectiveCyxSgyXlSgFZ");
+#endif
+  SWIFT_INLINE_THUNK String getDebugDescription() const SWIFT_SYMBOL("s:Sq16debugDescriptionSSvp");
+  SWIFT_INLINE_THUNK T_0_0 getUnsafelyUnwrapped() const SWIFT_SYMBOL("s:Sq17unsafelyUnwrappedxvp");
+/// Creates an instance that stores the given value.
+  static SWIFT_INLINE_THUNK swift::Optional<T_0_0> init(const T_0_0& some_) SWIFT_SYMBOL("s:SqsRi_zrlEyxSgxcfc");
+#define SWIFT_CXX_INTEROP_OPTIONAL_MIXIN
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnon-modular-include-in-framework-module"
+// Allow user to find the header using additional include paths
+#if __has_include(<swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+#include <swiftToCxx/_SwiftStdlibCxxOverlay.h>
+// Look for the C++ interop support header relative to clang's resource dir:
+//  '<toolchain>/usr/lib/clang/<version>/include/../../../swift/swiftToCxx'.
+#elif __has_include(<../../../swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+#include <../../../swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>
+#elif __has_include(<../../../../../lib/swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+//  '<toolchain>/usr/local/lib/clang/<version>/include/../../../../../lib/swift/swiftToCxx'.
+#include <../../../../../lib/swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>
+#endif
+#pragma clang diagnostic pop
+private:
+  SWIFT_INLINE_THUNK Optional(swift::_impl::ValueWitnessTable * _Nonnull vwTable) noexcept : _storage(vwTable->size, vwTable->getAlignment()) {}
+  static SWIFT_INLINE_THUNK Optional _make() noexcept {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    return Optional(vwTable);
+  }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage.getOpaquePointer(); }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage.getOpaquePointer(); }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  swift::_impl::OpaqueStorage _storage;
+  friend class _impl::_impl_Optional<T_0_0>;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $sxSgD;
+  static inline constexpr $sxSgD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class _impl_Optional {
+public:
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(Optional<T_0_0> &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const Optional<T_0_0> &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER Optional<T_0_0> returnNewValue(T callable) {
+    auto result = Optional<T_0_0>::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+struct TypeMetadataTrait<swift::Optional<T_0_0>> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return swift::_impl::$sSqMa(0, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata())._0;
+  }
+};
+namespace _impl{
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+inline const constexpr bool isValueType<swift::Optional<T_0_0>> = true;
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+inline const constexpr bool isOpaqueLayout<swift::Optional<T_0_0>> = true;
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+struct implClassFor<swift::Optional<T_0_0>> { using type = swift::_impl::_impl_Optional<T_0_0>; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+
+namespace _impl {
+
+class _impl_String;
+
+// Type metadata accessor for String
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $sSSMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("s:SS") String final {
+public:
+  SWIFT_INLINE_THUNK ~String() noexcept {
+    auto metadata = _impl::$sSSMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK String(const String &other) noexcept {
+    auto metadata = _impl::$sSSMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK String &operator =(const String &other) noexcept {
+    auto metadata = _impl::$sSSMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK String &operator =(String &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER String(String &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+/// Creates an empty string.
+/// Using this initializer is equivalent to initializing a string with an
+/// empty string literal.
+/// \code
+/// let empty = ""
+/// let alsoEmpty = String()
+///
+/// \endcode
+  static SWIFT_INLINE_THUNK String init() SWIFT_SYMBOL("s:S2Sycfc");
+  SWIFT_INLINE_THUNK String_Index getStartIndex() const SWIFT_SYMBOL("s:SS10startIndexSS0B0Vvp");
+  SWIFT_INLINE_THUNK String_Index getEndIndex() const SWIFT_SYMBOL("s:SS8endIndexSS0B0Vvp");
+  SWIFT_INLINE_THUNK swift::Int getCount() const SWIFT_SYMBOL("s:SS5countSivp");
+/// Returns the distance between two indices.
+/// complexity:
+/// O(<em>n</em>), where <em>n</em> is the resulting distance.
+/// \param start A valid index of the collection.
+///
+/// \param end Another valid index of the collection. If <code>end</code> is equal to
+/// <code>start</code>, the result is zero.
+///
+///
+/// returns:
+/// The distance between <code>start</code> and <code>end</code>.
+  SWIFT_INLINE_THUNK swift::Int distanceFromTo(const String_Index& start, const String_Index& end) const SWIFT_SYMBOL("s:SS8distance4from2toSiSS5IndexV_AEtF");
+/// Reserves enough space in the string’s underlying storage to store the
+/// specified number of ASCII characters.
+/// Because each character in a string can require more than a single ASCII
+/// character’s worth of storage, additional allocation may be necessary
+/// when adding characters to a string after a call to
+/// <code>reserveCapacity(_:)</code>.
+/// complexity:
+/// O(<em>n</em>)
+/// \param n The minimum number of ASCII character’s worth of storage
+/// to allocate.
+///
+  SWIFT_INLINE_THUNK void reserveCapacity(swift::Int n) SWIFT_SYMBOL("s:SS15reserveCapacityyySiF");
+/// Appends the given string to this string.
+/// The following example builds a customized greeting by using the
+/// <code>append(_:)</code> method:
+/// \code
+/// var greeting = "Hello, "
+/// if let name = getUserName() {
+///     greeting.append(name)
+/// } else {
+///     greeting.append("friend")
+/// }
+/// print(greeting)
+/// // Prints "Hello, friend"
+///
+/// \endcode\param other Another string.
+///
+  SWIFT_INLINE_THUNK void append(const String& other) SWIFT_SYMBOL("s:SS6appendyySSF");
+  SWIFT_INLINE_THUNK void appendContentsOf(const String& newElements) SWIFT_SYMBOL("s:SS6append10contentsOfySS_tF");
+/// Replaces this string with the empty string.
+/// Calling this method invalidates any existing indices for use with this
+/// string.
+/// \param keepCapacity Pass <code>true</code> to prevent the release of the
+/// string’s allocated storage. Retaining the storage can be a useful
+/// optimization when you’re planning to grow the string again. The
+/// default value is <code>false</code>.
+///
+  SWIFT_INLINE_THUNK void removeAllKeepingCapacity(bool keepCapacity) SWIFT_SYMBOL("s:SS9removeAll15keepingCapacityySb_tF");
+  SWIFT_INLINE_THUNK UTF8View getUtf8() const SWIFT_SYMBOL("s:SS4utf8SS8UTF8ViewVvp");
+  SWIFT_INLINE_THUNK void setUtf8(const UTF8View& newValue) SWIFT_SYMBOL("s:SS4utf8SS8UTF8ViewVvp");
+  SWIFT_INLINE_THUNK String getCharacters() const SWIFT_SYMBOL("s:SS10charactersSSvp");
+  SWIFT_INLINE_THUNK void setCharacters(const String& newValue) SWIFT_SYMBOL("s:SS10charactersSSvp");
+  SWIFT_INLINE_THUNK swift::Int getHashValue() const SWIFT_SYMBOL("s:SS9hashValueSivp");
+  SWIFT_INLINE_THUNK bool isEmpty() const SWIFT_SYMBOL("s:SS7isEmptySbvp");
+  SWIFT_INLINE_THUNK Array<uint8_t> get_nfcCodeUnits() const SWIFT_SYMBOL("s:SS13_nfcCodeUnitsSays5UInt8VGvp");
+/// Returns a lowercase version of the string.
+/// Here’s an example of transforming a string to all lowercase letters.
+/// \code
+/// let cafe = "BBQ Café 🍵"
+/// print(cafe.lowercased())
+/// // Prints "bbq café 🍵"
+///
+/// \endcodecomplexity:
+/// O(<em>n</em>)
+///
+/// returns:
+/// A lowercase copy of the string.
+  SWIFT_INLINE_THUNK String lowercased() const SWIFT_SYMBOL("s:SS10lowercasedSSyF");
+/// Returns an uppercase version of the string.
+/// The following example transforms a string to uppercase letters:
+/// \code
+/// let cafe = "Café 🍵"
+/// print(cafe.uppercased())
+/// // Prints "CAFÉ 🍵"
+///
+/// \endcodecomplexity:
+/// O(<em>n</em>)
+///
+/// returns:
+/// An uppercase copy of the string.
+  SWIFT_INLINE_THUNK String uppercased() const SWIFT_SYMBOL("s:SS10uppercasedSSyF");
+  SWIFT_INLINE_THUNK String getDescription() const SWIFT_SYMBOL("s:SS11descriptionSSvp");
+  SWIFT_INLINE_THUNK String getDebugDescription() const SWIFT_SYMBOL("s:SS16debugDescriptionSSvp");
+/// Appends the given string to this string.
+/// \param other A string to append.
+///
+  SWIFT_INLINE_THUNK void write(const String& other) SWIFT_SYMBOL("s:SS5writeyySSF");
+  SWIFT_INLINE_THUNK void _dump() const SWIFT_SYMBOL("s:SS5_dumpyyF");
+  SWIFT_INLINE_THUNK bool hasPrefix(const String& prefix) const SWIFT_SYMBOL("s:SS9hasPrefixySbSSF");
+  SWIFT_INLINE_THUNK bool hasSuffix(const String& suffix) const SWIFT_SYMBOL("s:SS9hasSuffixySbSSF");
+  #if defined(__OBJC__)
+SWIFT_INLINE_THUNK id _Nonnull _bridgeToObjectiveCImpl() const SWIFT_SYMBOL("s:SS23_bridgeToObjectiveCImplyXlyF");
+#endif
+#if defined(__OBJC__)
+  SWIFT_INLINE_THUNK operator NSString * _Nonnull () const noexcept {
+    return (__bridge_transfer NSString *)(_impl::$sSS10FoundationE19_bridgeToObjectiveCSo8NSStringCyF(_impl::swift_interop_passDirect_Swift_String(_getOpaquePointer())));
+  }
+static SWIFT_INLINE_THUNK String init(NSString * _Nonnull nsString) noexcept {
+    auto result = _make();
+    auto res = _impl::$sSS10FoundationE36_unconditionallyBridgeFromObjectiveCySSSo8NSStringCSgFZ((__bridge void *)nsString);
+    memcpy(result._getOpaquePointer(), &res, sizeof(res));
+    return result;
+  }
+
+#endif // defined(__OBJC__)
+#define SWIFT_CXX_INTEROP_STRING_MIXIN
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnon-modular-include-in-framework-module"
+// Allow user to find the header using additional include paths
+#if __has_include(<swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+#include <swiftToCxx/_SwiftStdlibCxxOverlay.h>
+// Look for the C++ interop support header relative to clang's resource dir:
+//  '<toolchain>/usr/lib/clang/<version>/include/../../../swift/swiftToCxx'.
+#elif __has_include(<../../../swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+#include <../../../swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>
+#elif __has_include(<../../../../../lib/swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+//  '<toolchain>/usr/local/lib/clang/<version>/include/../../../../../lib/swift/swiftToCxx'.
+#include <../../../../../lib/swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>
+#endif
+#pragma clang diagnostic pop
+private:
+  SWIFT_INLINE_THUNK String() noexcept {}
+  static SWIFT_INLINE_THUNK String _make() noexcept { return String(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  alignas(8) char _storage[16];
+  friend class _impl::_impl_String;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $sSSD;
+  static inline constexpr $sSSD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_String {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(String &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const String &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER String returnNewValue(T callable) {
+    auto result = String::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$sSSMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<swift::String> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return swift::_impl::$sSSMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<swift::String> = true;
+template<>
+struct implClassFor<swift::String> { using type = swift::_impl::_impl_String; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+
+namespace _impl {
+
+class _impl_UTF8View;
+
+// Type metadata accessor for UTF8View
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $sSS8UTF8ViewVMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("s:SS8UTF8ViewV") UTF8View final {
+public:
+  SWIFT_INLINE_THUNK ~UTF8View() noexcept {
+    auto metadata = _impl::$sSS8UTF8ViewVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK UTF8View(const UTF8View &other) noexcept {
+    auto metadata = _impl::$sSS8UTF8ViewVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK UTF8View &operator =(const UTF8View &other) noexcept {
+    auto metadata = _impl::$sSS8UTF8ViewVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK UTF8View &operator =(UTF8View &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER UTF8View(UTF8View &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+  SWIFT_INLINE_THUNK String_Index getStartIndex() const SWIFT_SYMBOL("s:SS8UTF8ViewV10startIndexSS0D0Vvp");
+  SWIFT_INLINE_THUNK String_Index getEndIndex() const SWIFT_SYMBOL("s:SS8UTF8ViewV8endIndexSS0D0Vvp");
+/// Returns the next consecutive position after <code>i</code>.
+/// precondition:
+/// The next position is representable.
+  SWIFT_INLINE_THUNK String_Index indexAfter(const String_Index& i) const SWIFT_SYMBOL("s:SS8UTF8ViewV5index5afterSS5IndexVAF_tF");
+  SWIFT_INLINE_THUNK String_Index indexBefore(const String_Index& i) const SWIFT_SYMBOL("s:SS8UTF8ViewV5index6beforeSS5IndexVAF_tF");
+  SWIFT_INLINE_THUNK String_Index indexOffsetBy(const String_Index& i, swift::Int n) const SWIFT_SYMBOL("s:SS8UTF8ViewV5index_8offsetBySS5IndexVAF_SitF");
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> indexOffsetByLimitedBy(const String_Index& i, swift::Int n, const String_Index& limit) const SWIFT_SYMBOL("s:SS8UTF8ViewV5index_8offsetBy07limitedE0SS5IndexVSgAG_SiAGtF");
+  SWIFT_INLINE_THUNK swift::Int distanceFromTo(const String_Index& i, const String_Index& j) const SWIFT_SYMBOL("s:SS8UTF8ViewV8distance4from2toSiSS5IndexV_AGtF");
+SWIFT_INLINE_THUNK uint8_t operator [](const String_Index& i) const SWIFT_SYMBOL("s:SS8UTF8ViewVys5UInt8VSS5IndexVcig");
+  SWIFT_INLINE_THUNK String getDebugDescription() const SWIFT_SYMBOL("s:SS8UTF8ViewV16debugDescriptionSSvp");
+  SWIFT_INLINE_THUNK String getDescription() const SWIFT_SYMBOL("s:SS8UTF8ViewV11descriptionSSvp");
+  SWIFT_INLINE_THUNK swift::Int getCount() const SWIFT_SYMBOL("s:SS8UTF8ViewV5countSivp");
+private:
+  SWIFT_INLINE_THUNK UTF8View() noexcept {}
+  static SWIFT_INLINE_THUNK UTF8View _make() noexcept { return UTF8View(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  alignas(8) char _storage[16];
+  friend class _impl::_impl_UTF8View;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $sSS8UTF8ViewVD;
+  static inline constexpr $sSS8UTF8ViewVD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_UTF8View {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(UTF8View &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const UTF8View &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER UTF8View returnNewValue(T callable) {
+    auto result = UTF8View::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$sSS8UTF8ViewVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<swift::UTF8View> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return swift::_impl::$sSS8UTF8ViewVMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<swift::UTF8View> = true;
+template<>
+struct implClassFor<swift::UTF8View> { using type = swift::_impl::_impl_UTF8View; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace swift SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("swift") {
+
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK Array<T_0_0> Array<T_0_0>::init() {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::_impl_Array<T_0_0>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_void_ptr_0_8(result, swift::_impl::$sS2ayxGycfC(swift::TypeMetadataTrait<T_0_0>::getTypeMetadata()));
+  });
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK Array<T_0_0> Array<T_0_0>::init(const T_0_0& repeatedValue, swift::Int count) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  alignas(alignof(T_0_0)) char copyBuffer_consumedParamCopy_repeatedValue[sizeof(T_0_0)];
+  auto &consumedParamCopy_repeatedValue = *(new(copyBuffer_consumedParamCopy_repeatedValue) T_0_0(repeatedValue));
+  swift::_impl::ConsumedValueStorageDestroyer<T_0_0> storageGuard_consumedParamCopy_repeatedValue(consumedParamCopy_repeatedValue);
+  return swift::_impl::_impl_Array<T_0_0>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_void_ptr_0_8(result, swift::_impl::$sSa9repeating5countSayxGx_SitcfC(swift::_impl::getOpaquePointer(consumedParamCopy_repeatedValue), count, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata()));
+  });
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK void Array<T_0_0>::reserveCapacity(swift::Int minimumCapacity) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  swift::_impl::$sSa15reserveCapacityyySiF(minimumCapacity, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK void Array<T_0_0>::append(const T_0_0& newElement) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  alignas(alignof(T_0_0)) char copyBuffer_consumedParamCopy_newElement[sizeof(T_0_0)];
+  auto &consumedParamCopy_newElement = *(new(copyBuffer_consumedParamCopy_newElement) T_0_0(newElement));
+  swift::_impl::ConsumedValueStorageDestroyer<T_0_0> storageGuard_consumedParamCopy_newElement(consumedParamCopy_newElement);
+  swift::_impl::$sSa6appendyyxnF(swift::_impl::getOpaquePointer(consumedParamCopy_newElement), swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Optional<T_0_0> Array<T_0_0>::_customRemoveLast() {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::_impl_Optional<T_0_0>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::$sSa17_customRemoveLastxSgyF(result, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  });
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK T_0_0 Array<T_0_0>::removeAt(swift::Int index) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+  if constexpr (std::is_base_of<::swift::_impl::RefCountedClass, T_0_0>::value) {
+  void *returnValue;
+  swift::_impl::$sSa6remove2atxSi_tF(reinterpret_cast<void *>(&returnValue), index, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  return ::swift::_impl::implClassFor<T_0_0>::type::makeRetained(returnValue);
+  } else if constexpr (::swift::_impl::isValueType<T_0_0>) {
+  return ::swift::_impl::implClassFor<T_0_0>::type::returnNewValue([&](void * _Nonnull returnValue) SWIFT_INLINE_THUNK_ATTRIBUTES {
+swift::_impl::$sSa6remove2atxSi_tF(returnValue, index, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  });
+  } else if constexpr (::swift::_impl::isSwiftBridgedCxxRecord<T_0_0>) {
+alignas(alignof(T_0_0)) char storage[sizeof(T_0_0)];
+auto * _Nonnull storageObjectPtr = reinterpret_cast<T_0_0 *>(storage);
+swift::_impl::$sSa6remove2atxSi_tF(storage, index, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+T_0_0 result(static_cast<T_0_0 &&>(*storageObjectPtr));
+storageObjectPtr->~T_0_0();
+return result;
+  } else {
+  T_0_0 returnValue;
+swift::_impl::$sSa6remove2atxSi_tF(reinterpret_cast<void *>(&returnValue), index, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  return returnValue;
+  }
+#pragma clang diagnostic pop
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK void Array<T_0_0>::insertAt(const T_0_0& newElement, swift::Int i) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  alignas(alignof(T_0_0)) char copyBuffer_consumedParamCopy_newElement[sizeof(T_0_0)];
+  auto &consumedParamCopy_newElement = *(new(copyBuffer_consumedParamCopy_newElement) T_0_0(newElement));
+  swift::_impl::ConsumedValueStorageDestroyer<T_0_0> storageGuard_consumedParamCopy_newElement(consumedParamCopy_newElement);
+  swift::_impl::$sSa6insert_2atyxn_SitF(swift::_impl::getOpaquePointer(consumedParamCopy_newElement), i, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK void Array<T_0_0>::removeAllKeepingCapacity(bool keepCapacity) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  swift::_impl::$sSa9removeAll15keepingCapacityySb_tF(keepCapacity, swift::TypeMetadataTrait<Array<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Int Array<T_0_0>::getStartIndex() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::$sSa10startIndexSivg(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Int Array<T_0_0>::getEndIndex() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::$sSa8endIndexSivg(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Int Array<T_0_0>::distanceFromTo(swift::Int start, swift::Int end) const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::$sSa8distance4from2toS2i_SitF(start, end, swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK T_0_0 Array<T_0_0>::operator [](swift::Int index) const SWIFT_SYMBOL("s:SayxSicig") {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+  if constexpr (std::is_base_of<::swift::_impl::RefCountedClass, T_0_0>::value) {
+  void *returnValue;
+  swift::_impl::$sSayxSicig(reinterpret_cast<void *>(&returnValue), index, swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  return ::swift::_impl::implClassFor<T_0_0>::type::makeRetained(returnValue);
+  } else if constexpr (::swift::_impl::isValueType<T_0_0>) {
+  return ::swift::_impl::implClassFor<T_0_0>::type::returnNewValue([&](void * _Nonnull returnValue) SWIFT_INLINE_THUNK_ATTRIBUTES {
+swift::_impl::$sSayxSicig(returnValue, index, swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  });
+  } else if constexpr (::swift::_impl::isSwiftBridgedCxxRecord<T_0_0>) {
+alignas(alignof(T_0_0)) char storage[sizeof(T_0_0)];
+auto * _Nonnull storageObjectPtr = reinterpret_cast<T_0_0 *>(storage);
+swift::_impl::$sSayxSicig(storage, index, swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+T_0_0 result(static_cast<T_0_0 &&>(*storageObjectPtr));
+storageObjectPtr->~T_0_0();
+return result;
+  } else {
+  T_0_0 returnValue;
+swift::_impl::$sSayxSicig(reinterpret_cast<void *>(&returnValue), index, swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  return returnValue;
+  }
+#pragma clang diagnostic pop
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Int Array<T_0_0>::getCount() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::$sSa5countSivg(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK bool Array<T_0_0>::_hoistableIsNativeTypeChecked() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::$sSa29_hoistableIsNativeTypeCheckedSbyF(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Int Array<T_0_0>::getCapacity() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::$sSa8capacitySivg(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK id _Nullable Array<T_0_0>::get_owner() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+return (__bridge_transfer id)(__bridge void *)swift::_impl::$sSa6_owneryXlSgvg(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+#endif
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK String Array<T_0_0>::getDescription() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSa11descriptionSSvg(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata()));
+  });
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK String Array<T_0_0>::getDebugDescription() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSa16debugDescriptionSSvg(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata()));
+  });
+  }
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK id _Nonnull Array<T_0_0>::_bridgeToObjectiveCImpl() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+return (__bridge_transfer id)(__bridge void *)swift::_impl::$sSa23_bridgeToObjectiveCImplyXlyF(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(_getOpaquePointer()), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+#endif
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Optional<Array<T_0_0>> Array<T_0_0>::_bridgeFromObjectiveCAdoptingNativeStorageOf(id _Nonnull source) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::_impl_Optional<Array<T_0_0>>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSa44_bridgeFromObjectiveCAdoptingNativeStorageOfySayxGSgyXlFZ(source, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata()));
+  });
+  }
+#endif
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK Array<T_0_0> Array<T_0_0>::init(id _Nonnull _immutableCocoaArray) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  alignas(alignof(id _Nonnull)) char copyBuffer_consumedParamCopy__immutableCocoaArray[sizeof(id _Nonnull)];
+  auto &consumedParamCopy__immutableCocoaArray = *(new(copyBuffer_consumedParamCopy__immutableCocoaArray) id _Nonnull(_immutableCocoaArray));
+  swift::_impl::ConsumedValueStorageDestroyer<id _Nonnull> storageGuard_consumedParamCopy__immutableCocoaArray(consumedParamCopy__immutableCocoaArray);
+  return swift::_impl::_impl_Array<T_0_0>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_void_ptr_0_8(result, swift::_impl::$sSa20_immutableCocoaArraySayxGyXl_tcfC(consumedParamCopy__immutableCocoaArray, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata()));
+  });
+  }
+#endif
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK Array<T_0_0> Array<T_0_0>::init(const Array<T_0_0>& elements) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  alignas(alignof(Array<T_0_0>)) char copyBuffer_consumedParamCopy_elements[sizeof(Array<T_0_0>)];
+  auto &consumedParamCopy_elements = *(new(copyBuffer_consumedParamCopy_elements) Array<T_0_0>(elements));
+  swift::_impl::ConsumedValueStorageDestroyer<Array<T_0_0>> storageGuard_consumedParamCopy_elements(consumedParamCopy_elements);
+  return swift::_impl::_impl_Array<T_0_0>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_void_ptr_0_8(result, swift::_impl::$sSa12arrayLiteralSayxGxd_tcfC(swift::_impl::swift_interop_passDirect_swift_void_ptr_0_8(swift::_impl::_impl_Array<T_0_0>::getOpaquePointer(consumedParamCopy_elements)), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata()));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int String_Index::getEncodedOffset() const {
+  return swift::_impl::$sSS5IndexV13encodedOffsetSivg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK String_Index String_Index::init(swift::Int offset) {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS5IndexV13encodedOffsetABSi_tcfC(offset));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> String_Index::init(const String_Index& sourcePosition, const String& target) {
+  alignas(alignof(String)) char copyBuffer_consumedParamCopy_target[sizeof(String)];
+  auto &consumedParamCopy_target = *(new(copyBuffer_consumedParamCopy_target) String(target));
+  swift::_impl::ConsumedValueStorageDestroyer<String> storageGuard_consumedParamCopy_target(consumedParamCopy_target);
+  return swift::_impl::_impl_Optional<String_Index>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_uint8_t_8_9(result, swift::_impl::$sSS5IndexV_6withinABSgAB_SStcfC(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(sourcePosition)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(consumedParamCopy_target))));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> String_Index::samePositionIn(const UTF8View& utf8) const {
+  return swift::_impl::_impl_Optional<String_Index>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_uint8_t_8_9(result, swift::_impl::$sSS5IndexV12samePosition2inABSgSS8UTF8ViewV_tF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_UTF8View::getOpaquePointer(utf8)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int String_Index::getHashValue() const {
+  return swift::_impl::$sSS5IndexV9hashValueSivg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> String_Index::samePositionIn(const String& characters) const {
+  return swift::_impl::_impl_Optional<String_Index>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_uint8_t_8_9(result, swift::_impl::$sSS5IndexV12samePosition2inABSgSS_tF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(characters)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> String_Index::init(const String_Index& idx, const UTF8View& target) {
+  alignas(alignof(UTF8View)) char copyBuffer_consumedParamCopy_target[sizeof(UTF8View)];
+  auto &consumedParamCopy_target = *(new(copyBuffer_consumedParamCopy_target) UTF8View(target));
+  swift::_impl::ConsumedValueStorageDestroyer<UTF8View> storageGuard_consumedParamCopy_target(consumedParamCopy_target);
+  return swift::_impl::_impl_Optional<String_Index>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_uint8_t_8_9(result, swift::_impl::$sSS5IndexV_6withinABSgAB_SS8UTF8ViewVtcfC(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(idx)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_UTF8View::getOpaquePointer(consumedParamCopy_target))));
+  });
+  }
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+  SWIFT_INLINE_THUNK Optional<T_0_0> Optional<T_0_0>::_impl_some::operator()(const T_0_0& val) const {
+    auto result = Optional<T_0_0>::_make();
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+if constexpr (std::is_base_of<::swift::_impl::RefCountedClass, T_0_0>::value) {
+    void *ptr = ::swift::_impl::_impl_RefCountedClass::copyOpaquePointer(val);
+    memcpy(result._getOpaquePointer(), &ptr, sizeof(ptr));
+} else if constexpr (::swift::_impl::isValueType<T_0_0>) {
+    alignas(T_0_0) unsigned char buffer[sizeof(T_0_0)];
+    auto *valCopy = new(buffer) T_0_0(val);
+    swift::_impl::implClassFor<T_0_0>::type::initializeWithTake(result._getOpaquePointer(), swift::_impl::implClassFor<T_0_0>::type::getOpaquePointer(*valCopy));
+} else {
+    memcpy(result._getOpaquePointer(), &val, sizeof(val));
+}
+#pragma clang diagnostic pop
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+  SWIFT_INLINE_THUNK  bool Optional<T_0_0>::isSome() const {
+    return *this == Optional<T_0_0>::some;
+  }
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+  SWIFT_INLINE_THUNK T_0_0 Optional<T_0_0>::getSome() const {
+    if (!isSome()) abort();
+    alignas(Optional) unsigned char buffer[sizeof(Optional)];
+    auto *thisCopy = new(buffer) Optional(*this);
+    char * _Nonnull payloadFromDestruction = thisCopy->_destructiveProjectEnumData();
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+  if constexpr (std::is_base_of<::swift::_impl::RefCountedClass, T_0_0>::value) {
+  void *returnValue;
+  returnValue = *reinterpret_cast<void **>(payloadFromDestruction);
+  return ::swift::_impl::implClassFor<T_0_0>::type::makeRetained(returnValue);
+  } else if constexpr (::swift::_impl::isValueType<T_0_0>) {
+  return ::swift::_impl::implClassFor<T_0_0>::type::returnNewValue([&](void * _Nonnull returnValue) SWIFT_INLINE_THUNK_ATTRIBUTES {
+  return ::swift::_impl::implClassFor<T_0_0>::type::initializeWithTake(reinterpret_cast<char * _Nonnull>(returnValue), payloadFromDestruction);
+  });
+  } else if constexpr (::swift::_impl::isSwiftBridgedCxxRecord<T_0_0>) {
+abort();
+  } else {
+  T_0_0 returnValue;
+memcpy(&returnValue, payloadFromDestruction, sizeof(returnValue));
+  return returnValue;
+  }
+#pragma clang diagnostic pop
+}
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+  SWIFT_INLINE_THUNK Optional<T_0_0> Optional<T_0_0>::_impl_none::operator()() const {
+    auto result = Optional<T_0_0>::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+  SWIFT_INLINE_THUNK  bool Optional<T_0_0>::isNone() const {
+    return *this == Optional<T_0_0>::none;
+  }
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK id _Nonnull Optional<T_0_0>::_bridgeToObjectiveC() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+return (__bridge_transfer id)(__bridge void *)swift::_impl::$sSq19_bridgeToObjectiveCyXlyF(swift::TypeMetadataTrait<Optional<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  }
+#endif
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK void Optional<T_0_0>::_forceBridgeFromObjectiveCResult(id _Nonnull source, swift::Optional<Optional<T_0_0>>& result) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  swift::_impl::$sSq26_forceBridgeFromObjectiveC_6resultyyXl_xSgSgztFZ(source, swift::_impl::_impl_Optional<Optional<T_0_0>>::getOpaquePointer(result), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+#endif
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK bool Optional<T_0_0>::_conditionallyBridgeFromObjectiveCResult(id _Nonnull source, swift::Optional<Optional<T_0_0>>& result) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::$sSq34_conditionallyBridgeFromObjectiveC_6resultSbyXl_xSgSgztFZ(source, swift::_impl::_impl_Optional<Optional<T_0_0>>::getOpaquePointer(result), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  }
+#endif
+  #if defined(__OBJC__)
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Optional<T_0_0> Optional<T_0_0>::_unconditionallyBridgeFromObjectiveC(id _Nullable source) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::_impl_Optional<T_0_0>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::$sSq36_unconditionallyBridgeFromObjectiveCyxSgyXlSgFZ(result, source, swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  });
+  }
+#endif
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK String Optional<T_0_0>::getDebugDescription() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSq16debugDescriptionSSvg(swift::TypeMetadataTrait<Optional<T_0_0>>::getTypeMetadata(), _getOpaquePointer()));
+  });
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK T_0_0 Optional<T_0_0>::getUnsafelyUnwrapped() const {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+  if constexpr (std::is_base_of<::swift::_impl::RefCountedClass, T_0_0>::value) {
+  void *returnValue;
+  swift::_impl::$sSq17unsafelyUnwrappedxvg(reinterpret_cast<void *>(&returnValue), swift::TypeMetadataTrait<Optional<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  return ::swift::_impl::implClassFor<T_0_0>::type::makeRetained(returnValue);
+  } else if constexpr (::swift::_impl::isValueType<T_0_0>) {
+  return ::swift::_impl::implClassFor<T_0_0>::type::returnNewValue([&](void * _Nonnull returnValue) SWIFT_INLINE_THUNK_ATTRIBUTES {
+swift::_impl::$sSq17unsafelyUnwrappedxvg(returnValue, swift::TypeMetadataTrait<Optional<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  });
+  } else if constexpr (::swift::_impl::isSwiftBridgedCxxRecord<T_0_0>) {
+alignas(alignof(T_0_0)) char storage[sizeof(T_0_0)];
+auto * _Nonnull storageObjectPtr = reinterpret_cast<T_0_0 *>(storage);
+swift::_impl::$sSq17unsafelyUnwrappedxvg(storage, swift::TypeMetadataTrait<Optional<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+T_0_0 result(static_cast<T_0_0 &&>(*storageObjectPtr));
+storageObjectPtr->~T_0_0();
+return result;
+  } else {
+  T_0_0 returnValue;
+swift::_impl::$sSq17unsafelyUnwrappedxvg(reinterpret_cast<void *>(&returnValue), swift::TypeMetadataTrait<Optional<T_0_0>>::getTypeMetadata(), _getOpaquePointer());
+  return returnValue;
+  }
+#pragma clang diagnostic pop
+  }
+  template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+SWIFT_INLINE_THUNK swift::Optional<T_0_0> Optional<T_0_0>::init(const T_0_0& some_) {
+#ifndef __cpp_concepts
+static_assert(swift::isUsableInGenericContext<T_0_0>, "type cannot be used in a Swift generic context");
+#endif // __cpp_concepts
+  alignas(alignof(T_0_0)) char copyBuffer_consumedParamCopy_some[sizeof(T_0_0)];
+  auto &consumedParamCopy_some = *(new(copyBuffer_consumedParamCopy_some) T_0_0(some_));
+  swift::_impl::ConsumedValueStorageDestroyer<T_0_0> storageGuard_consumedParamCopy_some(consumedParamCopy_some);
+  return swift::_impl::_impl_Optional<T_0_0>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::$sSqyxSgxcfC(result, swift::_impl::getOpaquePointer(consumedParamCopy_some), swift::TypeMetadataTrait<T_0_0>::getTypeMetadata());
+  });
+  }
+  SWIFT_INLINE_THUNK String String::init() {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sS2SycfC());
+  });
+  }
+  SWIFT_INLINE_THUNK String_Index String::getStartIndex() const {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS10startIndexSS0B0Vvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String_Index String::getEndIndex() const {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS8endIndexSS0B0Vvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int String::getCount() const {
+  return swift::_impl::$sSS5countSivg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK swift::Int String::distanceFromTo(const String_Index& start, const String_Index& end) const {
+  return swift::_impl::$sSS8distance4from2toSiSS5IndexV_AEtF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(start)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(end)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK void String::reserveCapacity(swift::Int n) {
+  swift::_impl::$sSS15reserveCapacityyySiF(n, _getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK void String::append(const String& other) {
+  swift::_impl::$sSS6appendyySSF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(other)), _getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK void String::appendContentsOf(const String& newElements) {
+  swift::_impl::$sSS6append10contentsOfySS_tF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(newElements)), _getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK void String::removeAllKeepingCapacity(bool keepCapacity) {
+  swift::_impl::$sSS9removeAll15keepingCapacityySb_tF(keepCapacity, _getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK UTF8View String::getUtf8() const {
+  return swift::_impl::_impl_UTF8View::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS4utf8SS8UTF8ViewVvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK void String::setUtf8(const UTF8View& newValue) {
+  alignas(alignof(UTF8View)) char copyBuffer_consumedParamCopy_newValue[sizeof(UTF8View)];
+  auto &consumedParamCopy_newValue = *(new(copyBuffer_consumedParamCopy_newValue) UTF8View(newValue));
+  swift::_impl::ConsumedValueStorageDestroyer<UTF8View> storageGuard_consumedParamCopy_newValue(consumedParamCopy_newValue);
+  swift::_impl::$sSS4utf8SS8UTF8ViewVvs(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_UTF8View::getOpaquePointer(consumedParamCopy_newValue)), _getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK String String::getCharacters() const {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS10charactersSSvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK void String::setCharacters(const String& newValue) {
+  alignas(alignof(String)) char copyBuffer_consumedParamCopy_newValue[sizeof(String)];
+  auto &consumedParamCopy_newValue = *(new(copyBuffer_consumedParamCopy_newValue) String(newValue));
+  swift::_impl::ConsumedValueStorageDestroyer<String> storageGuard_consumedParamCopy_newValue(consumedParamCopy_newValue);
+  swift::_impl::$sSS10charactersSSvs(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(consumedParamCopy_newValue)), _getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK swift::Int String::getHashValue() const {
+  return swift::_impl::$sSS9hashValueSivg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK bool String::isEmpty() const {
+  return swift::_impl::$sSS7isEmptySbvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK Array<uint8_t> String::get_nfcCodeUnits() const {
+  return swift::_impl::_impl_Array<uint8_t>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_void_ptr_0_8(result, swift::_impl::$sSS13_nfcCodeUnitsSays5UInt8VGvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String String::lowercased() const {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS10lowercasedSSyF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String String::uppercased() const {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS10uppercasedSSyF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String String::getDescription() const {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS11descriptionSSvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String String::getDebugDescription() const {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS16debugDescriptionSSvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK void String::write(const String& other) {
+  swift::_impl::$sSS5writeyySSF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(other)), _getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK void String::_dump() const {
+  swift::_impl::$sSS5_dumpyyF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK bool String::hasPrefix(const String& prefix) const {
+  return swift::_impl::$sSS9hasPrefixySbSSF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(prefix)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK bool String::hasSuffix(const String& suffix) const {
+  return swift::_impl::$sSS9hasSuffixySbSSF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(swift::_impl::_impl_String::getOpaquePointer(suffix)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  #if defined(__OBJC__)
+SWIFT_INLINE_THUNK id _Nonnull String::_bridgeToObjectiveCImpl() const {
+return (__bridge_transfer id)(__bridge void *)swift::_impl::$sSS23_bridgeToObjectiveCImplyXlyF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+#endif
+  SWIFT_INLINE_THUNK String_Index UTF8View::getStartIndex() const {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS8UTF8ViewV10startIndexSS0D0Vvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String_Index UTF8View::getEndIndex() const {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS8UTF8ViewV8endIndexSS0D0Vvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String_Index UTF8View::indexAfter(const String_Index& i) const {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS8UTF8ViewV5index5afterSS5IndexVAF_tF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(i)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String_Index UTF8View::indexBefore(const String_Index& i) const {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS8UTF8ViewV5index6beforeSS5IndexVAF_tF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(i)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String_Index UTF8View::indexOffsetBy(const String_Index& i, swift::Int n) const {
+  return swift::_impl::_impl_String_Index::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8(result, swift::_impl::$sSS8UTF8ViewV5index_8offsetBySS5IndexVAF_SitF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(i)), n, swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Optional<String_Index> UTF8View::indexOffsetByLimitedBy(const String_Index& i, swift::Int n, const String_Index& limit) const {
+  return swift::_impl::_impl_Optional<String_Index>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_uint8_t_8_9(result, swift::_impl::$sSS8UTF8ViewV5index_8offsetBy07limitedE0SS5IndexVSgAG_SiAGtF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(i)), n, swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(limit)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int UTF8View::distanceFromTo(const String_Index& i, const String_Index& j) const {
+  return swift::_impl::$sSS8UTF8ViewV8distance4from2toSiSS5IndexV_AGtF(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(i)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(j)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+SWIFT_INLINE_THUNK uint8_t UTF8View::operator [](const String_Index& i) const SWIFT_SYMBOL("s:SS8UTF8ViewVys5UInt8VSS5IndexVcig") {
+  return swift::_impl::$sSS8UTF8ViewVys5UInt8VSS5IndexVcig(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8(swift::_impl::_impl_String_Index::getOpaquePointer(i)), swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK String UTF8View::getDebugDescription() const {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS8UTF8ViewV16debugDescriptionSSvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK String UTF8View::getDescription() const {
+  return swift::_impl::_impl_String::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    swift::_impl::swift_interop_returnDirect_swift_uint64_t_0_8_void_ptr_8_16(result, swift::_impl::$sSS8UTF8ViewV11descriptionSSvg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer())));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int UTF8View::getCount() const {
+  return swift::_impl::$sSS8UTF8ViewV5countSivg(swift::_impl::swift_interop_passDirect_swift_uint64_t_0_8_void_ptr_8_16(_getOpaquePointer()));
+  }
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '!==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '%(_:_:)'.
+
+// Unavailable in C++: Swift operator function '%=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '<=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '==(_:_:)'.
+
+// Unavailable in C++: Swift operator function '===(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '>=(_:_:)'.
+
+// Unavailable in C++: Swift operator function '??(_:_:)'.
+
+// Unavailable in C++: Swift operator function '??(_:_:)'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class AdditiveArithmetic { } SWIFT_UNAVAILABLE_MSG("protocol 'AdditiveArithmetic' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'AnyClass'.
+
+class AnyKeyPath { } SWIFT_UNAVAILABLE_MSG("class 'AnyKeyPath' is not yet exposed to C++");
+
+// Unavailable in C++: Swift type alias 'AnyObject'.
+
+// Unavailable in C++: Swift type alias 'ArrayLiteralConvertible'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class BidirectionalCollection { } SWIFT_UNAVAILABLE_MSG("protocol 'BidirectionalCollection' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'BidirectionalIndexable'.
+
+// Unavailable in C++: Swift type alias 'BidirectionalSlice'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class BinaryFloatingPoint { } SWIFT_UNAVAILABLE_MSG("protocol 'BinaryFloatingPoint' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class BinaryInteger { } SWIFT_UNAVAILABLE_MSG("protocol 'BinaryInteger' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class BitwiseCopyable { } SWIFT_UNAVAILABLE_MSG("protocol 'BitwiseCopyable' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'BooleanLiteralConvertible'.
+
+// Unavailable in C++: Swift type alias 'BooleanLiteralType'.
+
+// Unavailable in C++: Swift type alias 'CBool'.
+
+// Unavailable in C++: Swift type alias 'CChar'.
+
+// Unavailable in C++: Swift type alias 'CChar16'.
+
+// Unavailable in C++: Swift type alias 'CChar32'.
+
+// Unavailable in C++: Swift type alias 'CChar8'.
+
+// Unavailable in C++: Swift type alias 'CDouble'.
+
+// Unavailable in C++: Swift type alias 'CFloat'.
+
+// Unavailable in C++: Swift type alias 'CFloat16'.
+
+// Unavailable in C++: Swift type alias 'CInt'.
+
+// Unavailable in C++: Swift type alias 'CLong'.
+
+// Unavailable in C++: Swift type alias 'CLongDouble'.
+
+// Unavailable in C++: Swift type alias 'CLongLong'.
+
+// Unavailable in C++: Swift type alias 'CShort'.
+
+// Unavailable in C++: Swift type alias 'CSignedChar'.
+
+// Unavailable in C++: Swift type alias 'CUnsignedChar'.
+
+// Unavailable in C++: Swift type alias 'CUnsignedInt'.
+
+// Unavailable in C++: Swift type alias 'CUnsignedLong'.
+
+// Unavailable in C++: Swift type alias 'CUnsignedLongLong'.
+
+// Unavailable in C++: Swift type alias 'CUnsignedShort'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CVarArg { } SWIFT_UNAVAILABLE_MSG("protocol 'CVarArg' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'CWideChar'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CaseIterable { } SWIFT_UNAVAILABLE_MSG("protocol 'CaseIterable' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'ClosedRangeIndex'.
+
+// Unavailable in C++: Swift type alias 'Codable'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CodingKey { } SWIFT_UNAVAILABLE_MSG("protocol 'CodingKey' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CodingKeyRepresentable { } SWIFT_UNAVAILABLE_MSG("protocol 'CodingKeyRepresentable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Collection { } SWIFT_UNAVAILABLE_MSG("protocol 'Collection' can not yet be represented in C++");
+
+class CommandLine { } SWIFT_UNAVAILABLE_MSG("'CommandLine' is a zero sized value type, it cannot be exposed to C++ yet");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Comparable { } SWIFT_UNAVAILABLE_MSG("protocol 'Comparable' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'ConcurrentValue'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Copyable { } SWIFT_UNAVAILABLE_MSG("protocol 'Copyable' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'CountableClosedRange'.
+
+// Unavailable in C++: Swift type alias 'CountablePartialRangeFrom'.
+
+// Unavailable in C++: Swift type alias 'CountableRange'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CustomDebugStringConvertible { } SWIFT_UNAVAILABLE_MSG("protocol 'CustomDebugStringConvertible' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CustomLeafReflectable { } SWIFT_UNAVAILABLE_MSG("protocol 'CustomLeafReflectable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CustomPlaygroundDisplayConvertible { } SWIFT_UNAVAILABLE_MSG("protocol 'CustomPlaygroundDisplayConvertible' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'CustomPlaygroundQuickLookable'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CustomReflectable { } SWIFT_UNAVAILABLE_MSG("protocol 'CustomReflectable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class CustomStringConvertible { } SWIFT_UNAVAILABLE_MSG("protocol 'CustomStringConvertible' can not yet be represented in C++");
+
+// Unavailable in C++: Swift macro 'DebugDescription()'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Decodable { } SWIFT_UNAVAILABLE_MSG("protocol 'Decodable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Decoder { } SWIFT_UNAVAILABLE_MSG("protocol 'Decoder' can not yet be represented in C++");
+
+class DecodingError { } SWIFT_UNAVAILABLE_MSG("enum 'DecodingError' is not yet exposed to C++");
+
+// Unavailable in C++: Swift type alias 'DefaultBidirectionalIndices'.
+
+// Unavailable in C++: Swift type alias 'DefaultRandomAccessIndices'.
+
+// Unavailable in C++: Swift type alias 'DictionaryIndex'.
+
+// Unavailable in C++: Swift type alias 'DictionaryIterator'.
+
+// Unavailable in C++: Swift type alias 'DictionaryLiteral'.
+
+// Unavailable in C++: Swift type alias 'DictionaryLiteralConvertible'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class DurationProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'DurationProtocol' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'EmptyIterator'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Encodable { } SWIFT_UNAVAILABLE_MSG("protocol 'Encodable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Encoder { } SWIFT_UNAVAILABLE_MSG("protocol 'Encoder' can not yet be represented in C++");
+
+class EncodingError { } SWIFT_UNAVAILABLE_MSG("enum 'EncodingError' is not yet exposed to C++");
+
+// Unavailable in C++: Swift type alias 'EnumeratedIterator'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Equatable { } SWIFT_UNAVAILABLE_MSG("protocol 'Equatable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Escapable { } SWIFT_UNAVAILABLE_MSG("protocol 'Escapable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByArrayLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByArrayLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByBooleanLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByBooleanLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByDictionaryLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByDictionaryLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByExtendedGraphemeClusterLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByExtendedGraphemeClusterLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByFloatLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByFloatLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByIntegerLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByIntegerLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByNilLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByNilLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByStringInterpolation { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByStringInterpolation' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByStringLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByStringLiteral' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class ExpressibleByUnicodeScalarLiteral { } SWIFT_UNAVAILABLE_MSG("protocol 'ExpressibleByUnicodeScalarLiteral' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'ExtendedGraphemeClusterLiteralConvertible'.
+
+// Unavailable in C++: Swift type alias 'ExtendedGraphemeClusterType'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class FixedWidthInteger { } SWIFT_UNAVAILABLE_MSG("protocol 'FixedWidthInteger' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'FlattenBidirectionalCollection'.
+
+// Unavailable in C++: Swift type alias 'FlattenBidirectionalCollectionIndex'.
+
+// Unavailable in C++: Swift type alias 'FlattenCollection'.
+
+// Unavailable in C++: Swift type alias 'FlattenCollectionIndex'.
+
+// Unavailable in C++: Swift type alias 'Float32'.
+
+// Unavailable in C++: Swift type alias 'Float64'.
+
+// Unavailable in C++: Swift type alias 'FloatLiteralConvertible'.
+
+// Unavailable in C++: Swift type alias 'FloatLiteralType'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class FloatingPoint { } SWIFT_UNAVAILABLE_MSG("protocol 'FloatingPoint' can not yet be represented in C++");
+
+class FloatingPointClassification { } SWIFT_UNAVAILABLE_MSG("enum 'FloatingPointClassification' is not yet exposed to C++");
+
+class FloatingPointRoundingRule { } SWIFT_UNAVAILABLE_MSG("enum 'FloatingPointRoundingRule' is not yet exposed to C++");
+
+class FloatingPointSign { } SWIFT_UNAVAILABLE_MSG("enum 'FloatingPointSign' is not yet exposed to C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Hashable { } SWIFT_UNAVAILABLE_MSG("protocol 'Hashable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Identifiable { } SWIFT_UNAVAILABLE_MSG("protocol 'Identifiable' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'ImplicitlyUnwrappedOptional'.
+
+// Unavailable in C++: Swift type alias 'Indexable'.
+
+// Unavailable in C++: Swift type alias 'IndexableBase'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class InstantProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'InstantProtocol' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'IntegerLiteralConvertible'.
+
+// Unavailable in C++: Swift type alias 'IntegerLiteralType'.
+
+// Unavailable in C++: Swift type alias 'IteratorOverOne'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class IteratorProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'IteratorProtocol' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'JoinedIterator'.
+
+template<class T_0_0, class T_0_1>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0> && swift::isUsableInGenericContext<T_0_1>
+#endif // __cpp_concepts
+class KeyPath { } SWIFT_UNAVAILABLE_MSG("generic generic class 'KeyPath' can not yet be exposed to C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class KeyedDecodingContainerProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'KeyedDecodingContainerProtocol' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class KeyedEncodingContainerProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'KeyedEncodingContainerProtocol' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'LazyBidirectionalCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyCollection'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class LazyCollectionProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'LazyCollectionProtocol' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'LazyDropWhileBidirectionalCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyDropWhileCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyDropWhileIndex'.
+
+// Unavailable in C++: Swift type alias 'LazyDropWhileIterator'.
+
+// Unavailable in C++: Swift type alias 'LazyFilterBidirectionalCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyFilterCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyFilterIndex'.
+
+// Unavailable in C++: Swift type alias 'LazyFilterIterator'.
+
+// Unavailable in C++: Swift type alias 'LazyMapBidirectionalCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyMapCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyMapIterator'.
+
+// Unavailable in C++: Swift type alias 'LazyMapRandomAccessCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyPrefixWhileBidirectionalCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyPrefixWhileCollection'.
+
+// Unavailable in C++: Swift type alias 'LazyPrefixWhileIndex'.
+
+// Unavailable in C++: Swift type alias 'LazyPrefixWhileIterator'.
+
+// Unavailable in C++: Swift type alias 'LazyRandomAccessCollection'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class LazySequenceProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'LazySequenceProtocol' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class LosslessStringConvertible { } SWIFT_UNAVAILABLE_MSG("protocol 'LosslessStringConvertible' can not yet be represented in C++");
+
+template<class T_0_0, class T_0_1>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0> && swift::isUsableInGenericContext<T_0_1>
+#endif // __cpp_concepts
+class ManagedBuffer { } SWIFT_UNAVAILABLE_MSG("generic generic class 'ManagedBuffer' can not yet be exposed to C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class MemoryLayout { } SWIFT_UNAVAILABLE_MSG("'MemoryLayout' is a zero sized value type, it cannot be exposed to C++ yet");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class MirrorPath { } SWIFT_UNAVAILABLE_MSG("protocol 'MirrorPath' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'MutableBidirectionalSlice'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class MutableCollection { } SWIFT_UNAVAILABLE_MSG("protocol 'MutableCollection' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'MutableIndexable'.
+
+// Unavailable in C++: Swift type alias 'MutableRandomAccessSlice'.
+
+// Unavailable in C++: Swift type alias 'MutableRangeReplaceableBidirectionalSlice'.
+
+// Unavailable in C++: Swift type alias 'MutableRangeReplaceableRandomAccessSlice'.
+
+// Unavailable in C++: Swift type alias 'MutableRangeReplaceableSlice'.
+
+// Unavailable in C++: Swift type alias 'MutableSlice'.
+
+class Never { } SWIFT_UNAVAILABLE_MSG("'Never' is a zero sized value type, it cannot be exposed to C++ yet");
+
+// Unavailable in C++: Swift type alias 'NilLiteralConvertible'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Numeric { } SWIFT_UNAVAILABLE_MSG("protocol 'Numeric' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class OptionSet { } SWIFT_UNAVAILABLE_MSG("protocol 'OptionSet' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class PartialKeyPath { } SWIFT_UNAVAILABLE_MSG("generic generic class 'PartialKeyPath' can not yet be exposed to C++");
+
+// Unavailable in C++: Swift type alias 'PlaygroundQuickLook'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class RandomAccessCollection { } SWIFT_UNAVAILABLE_MSG("protocol 'RandomAccessCollection' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'RandomAccessIndexable'.
+
+// Unavailable in C++: Swift type alias 'RandomAccessSlice'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class RandomNumberGenerator { } SWIFT_UNAVAILABLE_MSG("protocol 'RandomNumberGenerator' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class RangeExpression { } SWIFT_UNAVAILABLE_MSG("protocol 'RangeExpression' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'RangeReplaceableBidirectionalSlice'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class RangeReplaceableCollection { } SWIFT_UNAVAILABLE_MSG("protocol 'RangeReplaceableCollection' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'RangeReplaceableIndexable'.
+
+// Unavailable in C++: Swift type alias 'RangeReplaceableRandomAccessSlice'.
+
+// Unavailable in C++: Swift type alias 'RangeReplaceableSlice'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class RawRepresentable { } SWIFT_UNAVAILABLE_MSG("protocol 'RawRepresentable' can not yet be represented in C++");
+
+template<class T_0_0, class T_0_1>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0> && swift::isUsableInGenericContext<T_0_1>
+#endif // __cpp_concepts
+class ReferenceWritableKeyPath { } SWIFT_UNAVAILABLE_MSG("generic generic class 'ReferenceWritableKeyPath' can not yet be exposed to C++");
+
+template<class T_0_0, class T_0_1>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0> && swift::isUsableInGenericContext<T_0_1>
+#endif // __cpp_concepts
+class Result { } SWIFT_UNAVAILABLE_MSG("generic requirements for generic enum 'Result' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'ReversedIndex'.
+
+// Unavailable in C++: Swift type alias 'ReversedRandomAccessCollection'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SIMD { } SWIFT_UNAVAILABLE_MSG("protocol 'SIMD' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SIMDScalar { } SWIFT_UNAVAILABLE_MSG("protocol 'SIMDScalar' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SIMDStorage { } SWIFT_UNAVAILABLE_MSG("protocol 'SIMDStorage' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Sendable { } SWIFT_UNAVAILABLE_MSG("protocol 'Sendable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Sequence { } SWIFT_UNAVAILABLE_MSG("protocol 'Sequence' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SetAlgebra { } SWIFT_UNAVAILABLE_MSG("protocol 'SetAlgebra' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'SetIndex'.
+
+// Unavailable in C++: Swift type alias 'SetIterator'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SignedInteger { } SWIFT_UNAVAILABLE_MSG("protocol 'SignedInteger' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SignedNumeric { } SWIFT_UNAVAILABLE_MSG("protocol 'SignedNumeric' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SingleValueDecodingContainer { } SWIFT_UNAVAILABLE_MSG("protocol 'SingleValueDecodingContainer' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class SingleValueEncodingContainer { } SWIFT_UNAVAILABLE_MSG("protocol 'SingleValueEncodingContainer' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class Strideable { } SWIFT_UNAVAILABLE_MSG("protocol 'Strideable' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'StringInterpolationConvertible'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class StringInterpolationProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'StringInterpolationProtocol' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'StringLiteralConvertible'.
+
+// Unavailable in C++: Swift type alias 'StringLiteralType'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class StringProtocol { } SWIFT_UNAVAILABLE_MSG("protocol 'StringProtocol' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class TextOutputStream { } SWIFT_UNAVAILABLE_MSG("protocol 'TextOutputStream' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class TextOutputStreamable { } SWIFT_UNAVAILABLE_MSG("protocol 'TextOutputStreamable' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'UTF16'.
+
+// Unavailable in C++: Swift type alias 'UTF32'.
+
+// Unavailable in C++: Swift type alias 'UTF8'.
+
+// Unavailable in C++: Swift type alias 'UnboundedRange'.
+
+class UnboundedRange_ { } SWIFT_UNAVAILABLE_MSG("'UnboundedRange_' is a zero sized value type, it cannot be exposed to C++ yet");
+
+// Unavailable in C++: Swift type alias 'UnfoldFirstSequence'.
+
+class Unicode { } SWIFT_UNAVAILABLE_MSG("'Unicode' is a zero sized value type, it cannot be exposed to C++ yet");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class UnicodeCodec { } SWIFT_UNAVAILABLE_MSG("protocol 'UnicodeCodec' can not yet be represented in C++");
+
+class UnicodeDecodingResult { } SWIFT_UNAVAILABLE_MSG("enum 'UnicodeDecodingResult' is not yet exposed to C++");
+
+// Unavailable in C++: Swift type alias 'UnicodeScalar'.
+
+// Unavailable in C++: Swift type alias 'UnicodeScalarLiteralConvertible'.
+
+// Unavailable in C++: Swift type alias 'UnicodeScalarType'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class UnkeyedDecodingContainer { } SWIFT_UNAVAILABLE_MSG("protocol 'UnkeyedDecodingContainer' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class UnkeyedEncodingContainer { } SWIFT_UNAVAILABLE_MSG("protocol 'UnkeyedEncodingContainer' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'UnsafeBufferPointerIterator'.
+
+// Unavailable in C++: Swift type alias 'UnsafeConcurrentValue'.
+
+// Unavailable in C++: Swift type alias 'UnsafeMutableRawBufferPointerIterator'.
+
+// Unavailable in C++: Swift type alias 'UnsafeRawBufferPointerIterator'.
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class UnsafeSendable { } SWIFT_UNAVAILABLE_MSG("protocol 'UnsafeSendable' can not yet be represented in C++");
+
+template<class T_0_0>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0>
+#endif // __cpp_concepts
+class UnsignedInteger { } SWIFT_UNAVAILABLE_MSG("protocol 'UnsignedInteger' can not yet be represented in C++");
+
+// Unavailable in C++: Swift type alias 'Void'.
+
+template<class T_0_0, class T_0_1>
+#ifdef __cpp_concepts
+requires swift::isUsableInGenericContext<T_0_0> && swift::isUsableInGenericContext<T_0_1>
+#endif // __cpp_concepts
+class WritableKeyPath { } SWIFT_UNAVAILABLE_MSG("generic generic class 'WritableKeyPath' can not yet be exposed to C++");
+
+// Unavailable in C++: Swift type alias 'Zip2Iterator'.
+
+// Unavailable in C++: Swift global function 'abs(_:)'.
+
+// Unavailable in C++: Swift global function 'all(_:)'.
+
+// Unavailable in C++: Swift global function 'any(_:)'.
+
+// Unavailable in C++: Swift global function 'assert(_:_:file:line:)'.
+
+// Unavailable in C++: Swift global function 'assertionFailure(_:file:line:)'.
+
+// Unavailable in C++: Swift macro 'column()'.
+
+// Unavailable in C++: Swift global function 'debugPrint(_:separator:terminator:)'.
+
+// Unavailable in C++: Swift global function 'debugPrint(_:separator:terminator:to:)'.
+
+// Unavailable in C++: Swift macro 'dsohandle()'.
+
+// Unavailable in C++: Swift global function 'dump(_:name:indent:maxDepth:maxItems:)'.
+
+// Unavailable in C++: Swift global function 'dump(_:to:name:indent:maxDepth:maxItems:)'.
+
+// Unavailable in C++: Swift macro 'error(_:)'.
+
+// Unavailable in C++: Swift global function 'exchange(_:with:)'.
+
+// Unavailable in C++: Swift macro 'externalMacro(module:type:)'.
+
+// Unavailable in C++: Swift global function 'fatalError(_:file:line:)'.
+
+// Unavailable in C++: Swift macro 'file()'.
+
+// Unavailable in C++: Swift macro 'fileID()'.
+
+// Unavailable in C++: Swift macro 'filePath()'.
+
+// Unavailable in C++: Swift macro 'function()'.
+
+// Unavailable in C++: Swift global function 'getVaList(_:)'.
+
+// Unavailable in C++: Swift global function 'isKnownUniquelyReferenced(_:)'.
+
+// Unavailable in C++: Swift global function 'isKnownUniquelyReferenced(_:)'.
+
+// Unavailable in C++: Swift macro 'line()'.
+
+// Unavailable in C++: Swift global function 'max(_:_:)'.
+
+// Unavailable in C++: Swift global function 'max(_:_:_:_:)'.
+
+// Unavailable in C++: Swift global function 'min(_:_:)'.
+
+// Unavailable in C++: Swift global function 'min(_:_:_:_:)'.
+
+// Unavailable in C++: Swift global function 'numericCast(_:)'.
+
+// Unavailable in C++: Swift global function 'pointwiseMax(_:_:)'.
+
+// Unavailable in C++: Swift global function 'pointwiseMax(_:_:)'.
+
+// Unavailable in C++: Swift global function 'pointwiseMin(_:_:)'.
+
+// Unavailable in C++: Swift global function 'pointwiseMin(_:_:)'.
+
+// Unavailable in C++: Swift global function 'precondition(_:_:file:line:)'.
+
+// Unavailable in C++: Swift global function 'preconditionFailure(_:file:line:)'.
+
+// Unavailable in C++: Swift global function 'print(_:separator:terminator:)'.
+
+// Unavailable in C++: Swift global function 'print(_:separator:terminator:to:)'.
+
+// Unavailable in C++: Swift global function 'readLine(strippingNewline:)'.
+
+// Unavailable in C++: Swift global function 'repeatElement(_:count:)'.
+
+// Unavailable in C++: Swift global function 'sequence(first:next:)'.
+
+// Unavailable in C++: Swift global function 'sequence(state:next:)'.
+
+// Unavailable in C++: Swift global function 'stride(from:through:by:)'.
+
+// Unavailable in C++: Swift global function 'stride(from:to:by:)'.
+
+// Unavailable in C++: Swift global function 'swap(_:_:)'.
+
+// Unavailable in C++: Swift global function 'transcode(_:_:_:_:stopOnError:)'.
+
+// Unavailable in C++: Swift global function 'transcode(_:from:to:stoppingOnError:into:)'.
+
+// Unavailable in C++: Swift global function 'type(of:)'.
+
+// Unavailable in C++: Swift global function 'unsafeBitCast(_:to:)'.
+
+// Unavailable in C++: Swift global function 'unsafeDowncast(_:to:)'.
+
+// Unavailable in C++: Swift macro 'warning(_:)'.
+
+// Unavailable in C++: Swift global function 'withExtendedLifetime(_:_:)'.
+
+// Unavailable in C++: Swift global function 'withExtendedLifetime(_:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafeBytes(of:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafeBytes(of:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafeMutableBytes(of:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafeMutablePointer(to:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafePointer(to:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafePointer(to:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafeTemporaryAllocation(byteCount:alignment:_:)'.
+
+// Unavailable in C++: Swift global function 'withUnsafeTemporaryAllocation(of:capacity:_:)'.
+
+// Unavailable in C++: Swift global function 'withVaList(_:_:)'.
+
+// Unavailable in C++: Swift global function 'withoutActuallyEscaping(_:do:)'.
+
+// Unavailable in C++: Swift global function 'zip(_:_:)'.
+
+// Unavailable in C++: Swift operator function '~=(_:_:)'.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnon-modular-include-in-framework-module"
+// Allow user to find the header using additional include paths
+#if __has_include(<swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+#include <swiftToCxx/_SwiftStdlibCxxOverlay.h>
+// Look for the C++ interop support header relative to clang's resource dir:
+//  '<toolchain>/usr/lib/clang/<version>/include/../../../swift/swiftToCxx'.
+#elif __has_include(<../../../swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+#include <../../../swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>
+#elif __has_include(<../../../../../lib/swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>)
+//  '<toolchain>/usr/local/lib/clang/<version>/include/../../../../../lib/swift/swiftToCxx'.
+#include <../../../../../lib/swift/swiftToCxx/_SwiftStdlibCxxOverlay.h>
+#endif
+#pragma clang diagnostic pop
+
+} // namespace swift
+
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+#undef SWIFT_SYMBOL
+#endif // SWIFT_SWIFT_H
 #ifdef SWIFT_SYMBOL
 #undef SWIFT_SYMBOL
 #endif
@@ -1324,10 +13227,3947 @@ struct TypeMetadataTrait<swift::UInt> {
 } // namespace swift
 
 #endif
+#endif
+#ifdef __cplusplus
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+namespace _impl {
+extern "C" {
+#endif
+
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 {
+  uint64_t _1;
+  uint8_t _2;
+};
+
+static SWIFT_C_INLINE_THUNK void swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(char * _Nonnull result, struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 value) {
+  memcpy(result + 0, &value._1, 8);
+  memcpy(result + 8, &value._2, 1);
+}
+
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage18AppearanceColorKeyO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+// Stub struct to be used to pass/return values to/from Swift functions.
+struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 {
+  uint64_t _1;
+};
+
+static SWIFT_C_INLINE_THUNK struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 swift_interop_passDirect_BlinkEngage_uint64_t_0_8(const char * _Nonnull value) {
+  struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 result;
+  memcpy(&result._1, value + 0, 8);
+  return result;
+}
+
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage18AppearanceColorKeyO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_AppearanceColorKey {
+  _Alignas(8) char _storage[8];
+};
+
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage21AppearanceFontNameKeyO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage21AppearanceFontNameKeyO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_AppearanceFontNameKey {
+  _Alignas(8) char _storage[8];
+};
+
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage17AppearanceIconKeyO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage17AppearanceIconKeyO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_AppearanceIconKey {
+  _Alignas(8) char _storage[8];
+};
+
+
+#ifdef __cplusplus
+}
+}
+}
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wreserved-identifier"
 namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
 
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey") AppearanceColorKey;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::AppearanceColorKey> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// Keys for custom colors. Return a color for a key from your <code>Theme</code> to customize that part of the UI (backgrounds, labels, icon tints).
+namespace _impl {
+
+class _impl_AppearanceColorKey;
+
+// Type metadata accessor for AppearanceColorKey
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage18AppearanceColorKeyOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey") AppearanceColorKey final {
+public:
+  SWIFT_INLINE_THUNK ~AppearanceColorKey() noexcept {
+    auto metadata = _impl::$s11BlinkEngage18AppearanceColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey(const AppearanceColorKey &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage18AppearanceColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey &operator =(const AppearanceColorKey &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage18AppearanceColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey &operator =(AppearanceColorKey &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER AppearanceColorKey(AppearanceColorKey &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    offerWallHeaderBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderBackground"),
+    offerWallHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderTitleLabel"),
+    offerWallHeaderSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderSubtitleLabel"),
+    offerWallHeaderBackButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderBackButtonIcon"),
+    offerWallBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallBackground"),
+    offerWallSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallSectionHeaderLabel"),
+    offerWallSectionHeaderShowMoreIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallSectionHeaderShowMoreIcon"),
+    offerWallSectionHeaderShowMoreBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallSectionHeaderShowMoreBackground"),
+    offerWallFloatingButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallFloatingButtonBackground"),
+    offerWallFloatingButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallFloatingButtonLabel"),
+    offerWallMoreMerchantsIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallMoreMerchantsIcon"),
+    offerRewardPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferRewardPointsLabel"),
+    offerTagLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferTagLabel"),
+    offerTagBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferTagBackground"),
+    offerBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferBackground"),
+    offerBrandLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferBrandLabel"),
+    offerDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDescriptionLabel"),
+    offerEligibleMerchantsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferEligibleMerchantsLabel"),
+    offerDetailsExpirationLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsExpirationLabel"),
+    offerDetailsClipLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsClipLabel"),
+    offerClipButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClipButtonIcon"),
+    offerClipButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClipButtonBackground"),
+    offerClippedButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedButtonIcon"),
+    offerClippedButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedButtonBackground"),
+    offerClippedToastMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedToastMessageLabel"),
+    offerClippedToastMessageBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedToastMessageBackground"),
+    offerDetailsClipRequiredLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsClipRequiredLabel"),
+    offerDetailsClipRequiredBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsClipRequiredBackground"),
+    offerDetailsSectionHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsSectionHeaderTitleLabel"),
+    offerDetailsSectionHeaderToggleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsSectionHeaderToggleLabel"),
+    offerDetailsSectionBodyLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsSectionBodyLabel"),
+    offerDetailsShortDescription SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsShortDescription"),
+    offerDetailsFinePrintLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsFinePrintLabel"),
+    offerDetailsBuyOptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsBuyOptionLabel"),
+    offerDetailsBuyOptionBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsBuyOptionBackground"),
+    storesHeaderBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresHeaderBackground"),
+    storesHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresHeaderTitleLabel"),
+    storesListSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListSectionHeaderLabel"),
+    storesListBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListBackground"),
+    storesListItemBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemBackground"),
+    storesListItemDefaultIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemDefaultIcon"),
+    storesListItemTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemTitleLabel"),
+    storesListItemSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemSubtitleLabel"),
+    adLoadingLoadingBarLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingLoadingBarLabel"),
+    adLoadingLoadingBarBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingLoadingBarBackground"),
+    adLoadingLoadingBarProgress SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingLoadingBarProgress"),
+    adLoadingDefaultTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingDefaultTitleLabel"),
+    adLoadingDefaultDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingDefaultDescriptionLabel"),
+    errorModalIconBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalIconBackground"),
+    errorModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalTitleLabel"),
+    errorModalDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalDescriptionLabel"),
+    errorModalBackButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalBackButtonLabel"),
+    errorModalBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalBackground"),
+    postScanHeaderBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanHeaderBackground"),
+    postScanTotalPointsBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanTotalPointsBackground"),
+    postScanTotalPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanTotalPointsLabel"),
+    postScanReceiptButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanReceiptButtonIcon"),
+    postScanReceiptButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanReceiptButtonBackground"),
+    postScanFooterButtonTitle SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanFooterButtonTitle"),
+    postScanFooterBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanFooterBackground"),
+    postScanMerchantNameLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanMerchantNameLabel"),
+    postScanTripInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanTripInfoLabel"),
+    postScanNoBoostsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanNoBoostsLabel"),
+    postScanSuccessTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanSuccessTitleLabel"),
+    postScanSuccessDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanSuccessDescriptionLabel"),
+    postScanBoostTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostTitleLabel"),
+    postScanBoostDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostDescriptionLabel"),
+    postScanBoostSkipButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostSkipButtonLabel"),
+    postScanBoostClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostClaimButtonLabel"),
+    postScanBoostClaimButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostClaimButtonIcon"),
+    postScanBoostClaimButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostClaimButtonBackground"),
+    postScanPurchasePointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanPurchasePointsLabel"),
+    postScanPurchaseBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanPurchaseBackground"),
+    postScanQualifiedPurchaseBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanQualifiedPurchaseBackground"),
+    postScanPurchaseInfoIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanPurchaseInfoIcon"),
+    postScanUGCPurchaseBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseBackground"),
+    postScanUGCPurchaseClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonLabel"),
+    postScanUGCPurchaseClaimButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonIcon"),
+    postScanUGCPurchaseClaimButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonBackground"),
+    postScanUGCPurchaseBorder SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseBorder"),
+    purchaseRowLabelColor SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPurchaseRowLabelColor"),
+    purchaseRowMetadataLabelColor SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPurchaseRowMetadataLabelColor"),
+    missedEarningsNavigationTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationTitleLabel"),
+    missedEarningsNavigationDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationDescriptionLabel"),
+    missedEarningsNavigationEditButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationEditButtonIcon"),
+    missedEarningsNavigationEditButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationEditButtonBackground"),
+    missedEarningsNavigationSaveButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon"),
+    missedEarningsNavigationSaveButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationSaveButtonBackground"),
+    missedEarningsFieldEditIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsFieldEditIcon"),
+    missedEarningsAddNewFieldLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsAddNewFieldLabel"),
+    missedEarningsModifiedFieldBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsModifiedFieldBackground"),
+    missedEarningsListSectionTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsListSectionTitleLabel"),
+    missedEarningsTripItemLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsTripItemLabel"),
+    missedEarningsEditModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalTitleLabel"),
+    missedEarningsEditModalSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalSubtitleLabel"),
+    missedEarningsEditModalInputLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalInputLabel"),
+    missedEarningsEditModalInputPlaceholderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalInputPlaceholderLabel"),
+    missedEarningsEditModalInputValueLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalInputValueLabel"),
+    missedEarningsEditModalCancelButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalCancelButtonLabel"),
+    missedEarningsEditModalSaveButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalSaveButtonLabel"),
+    missedEarningsEditModalSaveButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalSaveButtonBackground"),
+    missedEarningsEditModalBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalBackground"),
+    missedEarningsEditModalDatePicker SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalDatePicker"),
+    missedEarningsAlertTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsAlertTitleLabel"),
+    missedEarningsAlertMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsAlertMessageLabel"),
+    ugcBarcodeDetectedBorder SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcBarcodeDetectedBorder"),
+    ugcBarcodeDetectedIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcBarcodeDetectedIcon"),
+    ugcNavigationButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcNavigationButtonIcon"),
+    ugcNavigationButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcNavigationButtonBackground"),
+    ugcProductInfoBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcProductInfoBackground"),
+    ugcProductInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcProductInfoLabel"),
+    ugcToastMessageWarningIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcToastMessageWarningIcon"),
+    ugcRetakeButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcRetakeButtonLabel"),
+    ugcRetakeButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcRetakeButtonBackground"),
+    ugcSubmitButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcSubmitButtonLabel"),
+    ugcSubmitButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcSubmitButtonBackground")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_offerWallHeaderBackground {  // impl struct for case offerWallHeaderBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallHeaderBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallHeaderBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderBackground");
+  SWIFT_INLINE_THUNK bool isOfferWallHeaderBackground() const;
+
+  inline const static struct _impl_offerWallHeaderTitleLabel {  // impl struct for case offerWallHeaderTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallHeaderTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderTitleLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallHeaderTitleLabel() const;
+
+  inline const static struct _impl_offerWallHeaderSubtitleLabel {  // impl struct for case offerWallHeaderSubtitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallHeaderSubtitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallHeaderSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderSubtitleLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallHeaderSubtitleLabel() const;
+
+  inline const static struct _impl_offerWallHeaderBackButtonIcon {  // impl struct for case offerWallHeaderBackButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallHeaderBackButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallHeaderBackButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallHeaderBackButtonIcon");
+  SWIFT_INLINE_THUNK bool isOfferWallHeaderBackButtonIcon() const;
+
+  inline const static struct _impl_offerWallBackground {  // impl struct for case offerWallBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallBackground");
+  SWIFT_INLINE_THUNK bool isOfferWallBackground() const;
+
+  inline const static struct _impl_offerWallSectionHeaderLabel {  // impl struct for case offerWallSectionHeaderLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallSectionHeaderLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallSectionHeaderLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallSectionHeaderLabel() const;
+
+  inline const static struct _impl_offerWallSectionHeaderShowMoreIcon {  // impl struct for case offerWallSectionHeaderShowMoreIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallSectionHeaderShowMoreIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallSectionHeaderShowMoreIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallSectionHeaderShowMoreIcon");
+  SWIFT_INLINE_THUNK bool isOfferWallSectionHeaderShowMoreIcon() const;
+
+  inline const static struct _impl_offerWallSectionHeaderShowMoreBackground {  // impl struct for case offerWallSectionHeaderShowMoreBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallSectionHeaderShowMoreBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallSectionHeaderShowMoreBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallSectionHeaderShowMoreBackground");
+  SWIFT_INLINE_THUNK bool isOfferWallSectionHeaderShowMoreBackground() const;
+
+  inline const static struct _impl_offerWallFloatingButtonBackground {  // impl struct for case offerWallFloatingButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallFloatingButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallFloatingButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallFloatingButtonBackground");
+  SWIFT_INLINE_THUNK bool isOfferWallFloatingButtonBackground() const;
+
+  inline const static struct _impl_offerWallFloatingButtonLabel {  // impl struct for case offerWallFloatingButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallFloatingButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallFloatingButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallFloatingButtonLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallFloatingButtonLabel() const;
+
+  inline const static struct _impl_offerWallMoreMerchantsIcon {  // impl struct for case offerWallMoreMerchantsIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallMoreMerchantsIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerWallMoreMerchantsIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferWallMoreMerchantsIcon");
+  SWIFT_INLINE_THUNK bool isOfferWallMoreMerchantsIcon() const;
+
+  inline const static struct _impl_offerRewardPointsLabel {  // impl struct for case offerRewardPointsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerRewardPointsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerRewardPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferRewardPointsLabel");
+  SWIFT_INLINE_THUNK bool isOfferRewardPointsLabel() const;
+
+  inline const static struct _impl_offerTagLabel {  // impl struct for case offerTagLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerTagLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerTagLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferTagLabel");
+  SWIFT_INLINE_THUNK bool isOfferTagLabel() const;
+
+  inline const static struct _impl_offerTagBackground {  // impl struct for case offerTagBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerTagBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerTagBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferTagBackground");
+  SWIFT_INLINE_THUNK bool isOfferTagBackground() const;
+
+  inline const static struct _impl_offerBackground {  // impl struct for case offerBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferBackground");
+  SWIFT_INLINE_THUNK bool isOfferBackground() const;
+
+  inline const static struct _impl_offerBrandLabel {  // impl struct for case offerBrandLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerBrandLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerBrandLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferBrandLabel");
+  SWIFT_INLINE_THUNK bool isOfferBrandLabel() const;
+
+  inline const static struct _impl_offerDescriptionLabel {  // impl struct for case offerDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isOfferDescriptionLabel() const;
+
+  inline const static struct _impl_offerEligibleMerchantsLabel {  // impl struct for case offerEligibleMerchantsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerEligibleMerchantsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerEligibleMerchantsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferEligibleMerchantsLabel");
+  SWIFT_INLINE_THUNK bool isOfferEligibleMerchantsLabel() const;
+
+  inline const static struct _impl_offerDetailsExpirationLabel {  // impl struct for case offerDetailsExpirationLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsExpirationLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsExpirationLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsExpirationLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsExpirationLabel() const;
+
+  inline const static struct _impl_offerDetailsClipLabel {  // impl struct for case offerDetailsClipLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsClipLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsClipLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsClipLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsClipLabel() const;
+
+  inline const static struct _impl_offerClipButtonIcon {  // impl struct for case offerClipButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerClipButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerClipButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClipButtonIcon");
+  SWIFT_INLINE_THUNK bool isOfferClipButtonIcon() const;
+
+  inline const static struct _impl_offerClipButtonBackground {  // impl struct for case offerClipButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerClipButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerClipButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClipButtonBackground");
+  SWIFT_INLINE_THUNK bool isOfferClipButtonBackground() const;
+
+  inline const static struct _impl_offerClippedButtonIcon {  // impl struct for case offerClippedButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerClippedButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerClippedButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedButtonIcon");
+  SWIFT_INLINE_THUNK bool isOfferClippedButtonIcon() const;
+
+  inline const static struct _impl_offerClippedButtonBackground {  // impl struct for case offerClippedButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerClippedButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerClippedButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedButtonBackground");
+  SWIFT_INLINE_THUNK bool isOfferClippedButtonBackground() const;
+
+  inline const static struct _impl_offerClippedToastMessageLabel {  // impl struct for case offerClippedToastMessageLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerClippedToastMessageLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerClippedToastMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedToastMessageLabel");
+  SWIFT_INLINE_THUNK bool isOfferClippedToastMessageLabel() const;
+
+  inline const static struct _impl_offerClippedToastMessageBackground {  // impl struct for case offerClippedToastMessageBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerClippedToastMessageBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerClippedToastMessageBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferClippedToastMessageBackground");
+  SWIFT_INLINE_THUNK bool isOfferClippedToastMessageBackground() const;
+
+  inline const static struct _impl_offerDetailsClipRequiredLabel {  // impl struct for case offerDetailsClipRequiredLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsClipRequiredLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsClipRequiredLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsClipRequiredLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsClipRequiredLabel() const;
+
+  inline const static struct _impl_offerDetailsClipRequiredBackground {  // impl struct for case offerDetailsClipRequiredBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsClipRequiredBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsClipRequiredBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsClipRequiredBackground");
+  SWIFT_INLINE_THUNK bool isOfferDetailsClipRequiredBackground() const;
+
+  inline const static struct _impl_offerDetailsSectionHeaderTitleLabel {  // impl struct for case offerDetailsSectionHeaderTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsSectionHeaderTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsSectionHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsSectionHeaderTitleLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsSectionHeaderTitleLabel() const;
+
+  inline const static struct _impl_offerDetailsSectionHeaderToggleLabel {  // impl struct for case offerDetailsSectionHeaderToggleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsSectionHeaderToggleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsSectionHeaderToggleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsSectionHeaderToggleLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsSectionHeaderToggleLabel() const;
+
+  inline const static struct _impl_offerDetailsSectionBodyLabel {  // impl struct for case offerDetailsSectionBodyLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsSectionBodyLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsSectionBodyLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsSectionBodyLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsSectionBodyLabel() const;
+
+  inline const static struct _impl_offerDetailsShortDescription {  // impl struct for case offerDetailsShortDescription
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsShortDescription;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsShortDescription SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsShortDescription");
+  SWIFT_INLINE_THUNK bool isOfferDetailsShortDescription() const;
+
+  inline const static struct _impl_offerDetailsFinePrintLabel {  // impl struct for case offerDetailsFinePrintLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsFinePrintLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsFinePrintLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsFinePrintLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsFinePrintLabel() const;
+
+  inline const static struct _impl_offerDetailsBuyOptionLabel {  // impl struct for case offerDetailsBuyOptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsBuyOptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsBuyOptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsBuyOptionLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsBuyOptionLabel() const;
+
+  inline const static struct _impl_offerDetailsBuyOptionBackground {  // impl struct for case offerDetailsBuyOptionBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsBuyOptionBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsBuyOptionBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsBuyOptionBackground");
+  SWIFT_INLINE_THUNK bool isOfferDetailsBuyOptionBackground() const;
+
+  inline const static struct _impl_storesHeaderBackground {  // impl struct for case storesHeaderBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesHeaderBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesHeaderBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresHeaderBackground");
+  SWIFT_INLINE_THUNK bool isStoresHeaderBackground() const;
+
+  inline const static struct _impl_storesHeaderTitleLabel {  // impl struct for case storesHeaderTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesHeaderTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresHeaderTitleLabel");
+  SWIFT_INLINE_THUNK bool isStoresHeaderTitleLabel() const;
+
+  inline const static struct _impl_storesListSectionHeaderLabel {  // impl struct for case storesListSectionHeaderLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListSectionHeaderLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesListSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListSectionHeaderLabel");
+  SWIFT_INLINE_THUNK bool isStoresListSectionHeaderLabel() const;
+
+  inline const static struct _impl_storesListBackground {  // impl struct for case storesListBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesListBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListBackground");
+  SWIFT_INLINE_THUNK bool isStoresListBackground() const;
+
+  inline const static struct _impl_storesListItemBackground {  // impl struct for case storesListItemBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListItemBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesListItemBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemBackground");
+  SWIFT_INLINE_THUNK bool isStoresListItemBackground() const;
+
+  inline const static struct _impl_storesListItemDefaultIcon {  // impl struct for case storesListItemDefaultIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListItemDefaultIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesListItemDefaultIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemDefaultIcon");
+  SWIFT_INLINE_THUNK bool isStoresListItemDefaultIcon() const;
+
+  inline const static struct _impl_storesListItemTitleLabel {  // impl struct for case storesListItemTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListItemTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesListItemTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemTitleLabel");
+  SWIFT_INLINE_THUNK bool isStoresListItemTitleLabel() const;
+
+  inline const static struct _impl_storesListItemSubtitleLabel {  // impl struct for case storesListItemSubtitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListItemSubtitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } storesListItemSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListItemSubtitleLabel");
+  SWIFT_INLINE_THUNK bool isStoresListItemSubtitleLabel() const;
+
+  inline const static struct _impl_adLoadingLoadingBarLabel {  // impl struct for case adLoadingLoadingBarLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingLoadingBarLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } adLoadingLoadingBarLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingLoadingBarLabel");
+  SWIFT_INLINE_THUNK bool isAdLoadingLoadingBarLabel() const;
+
+  inline const static struct _impl_adLoadingLoadingBarBackground {  // impl struct for case adLoadingLoadingBarBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingLoadingBarBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } adLoadingLoadingBarBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingLoadingBarBackground");
+  SWIFT_INLINE_THUNK bool isAdLoadingLoadingBarBackground() const;
+
+  inline const static struct _impl_adLoadingLoadingBarProgress {  // impl struct for case adLoadingLoadingBarProgress
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingLoadingBarProgress;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } adLoadingLoadingBarProgress SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingLoadingBarProgress");
+  SWIFT_INLINE_THUNK bool isAdLoadingLoadingBarProgress() const;
+
+  inline const static struct _impl_adLoadingDefaultTitleLabel {  // impl struct for case adLoadingDefaultTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingDefaultTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } adLoadingDefaultTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingDefaultTitleLabel");
+  SWIFT_INLINE_THUNK bool isAdLoadingDefaultTitleLabel() const;
+
+  inline const static struct _impl_adLoadingDefaultDescriptionLabel {  // impl struct for case adLoadingDefaultDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingDefaultDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } adLoadingDefaultDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyAdLoadingDefaultDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isAdLoadingDefaultDescriptionLabel() const;
+
+  inline const static struct _impl_errorModalIconBackground {  // impl struct for case errorModalIconBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalIconBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } errorModalIconBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalIconBackground");
+  SWIFT_INLINE_THUNK bool isErrorModalIconBackground() const;
+
+  inline const static struct _impl_errorModalTitleLabel {  // impl struct for case errorModalTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } errorModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalTitleLabel");
+  SWIFT_INLINE_THUNK bool isErrorModalTitleLabel() const;
+
+  inline const static struct _impl_errorModalDescriptionLabel {  // impl struct for case errorModalDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } errorModalDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isErrorModalDescriptionLabel() const;
+
+  inline const static struct _impl_errorModalBackButtonLabel {  // impl struct for case errorModalBackButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalBackButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } errorModalBackButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalBackButtonLabel");
+  SWIFT_INLINE_THUNK bool isErrorModalBackButtonLabel() const;
+
+  inline const static struct _impl_errorModalBackground {  // impl struct for case errorModalBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } errorModalBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyErrorModalBackground");
+  SWIFT_INLINE_THUNK bool isErrorModalBackground() const;
+
+  inline const static struct _impl_postScanHeaderBackground {  // impl struct for case postScanHeaderBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanHeaderBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanHeaderBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanHeaderBackground");
+  SWIFT_INLINE_THUNK bool isPostScanHeaderBackground() const;
+
+  inline const static struct _impl_postScanTotalPointsBackground {  // impl struct for case postScanTotalPointsBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanTotalPointsBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanTotalPointsBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanTotalPointsBackground");
+  SWIFT_INLINE_THUNK bool isPostScanTotalPointsBackground() const;
+
+  inline const static struct _impl_postScanTotalPointsLabel {  // impl struct for case postScanTotalPointsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanTotalPointsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanTotalPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanTotalPointsLabel");
+  SWIFT_INLINE_THUNK bool isPostScanTotalPointsLabel() const;
+
+  inline const static struct _impl_postScanReceiptButtonIcon {  // impl struct for case postScanReceiptButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanReceiptButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanReceiptButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanReceiptButtonIcon");
+  SWIFT_INLINE_THUNK bool isPostScanReceiptButtonIcon() const;
+
+  inline const static struct _impl_postScanReceiptButtonBackground {  // impl struct for case postScanReceiptButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanReceiptButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanReceiptButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanReceiptButtonBackground");
+  SWIFT_INLINE_THUNK bool isPostScanReceiptButtonBackground() const;
+
+  inline const static struct _impl_postScanFooterButtonTitle {  // impl struct for case postScanFooterButtonTitle
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanFooterButtonTitle;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanFooterButtonTitle SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanFooterButtonTitle");
+  SWIFT_INLINE_THUNK bool isPostScanFooterButtonTitle() const;
+
+  inline const static struct _impl_postScanFooterBackground {  // impl struct for case postScanFooterBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanFooterBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanFooterBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanFooterBackground");
+  SWIFT_INLINE_THUNK bool isPostScanFooterBackground() const;
+
+  inline const static struct _impl_postScanMerchantNameLabel {  // impl struct for case postScanMerchantNameLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanMerchantNameLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanMerchantNameLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanMerchantNameLabel");
+  SWIFT_INLINE_THUNK bool isPostScanMerchantNameLabel() const;
+
+  inline const static struct _impl_postScanTripInfoLabel {  // impl struct for case postScanTripInfoLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanTripInfoLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanTripInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanTripInfoLabel");
+  SWIFT_INLINE_THUNK bool isPostScanTripInfoLabel() const;
+
+  inline const static struct _impl_postScanNoBoostsLabel {  // impl struct for case postScanNoBoostsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanNoBoostsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanNoBoostsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanNoBoostsLabel");
+  SWIFT_INLINE_THUNK bool isPostScanNoBoostsLabel() const;
+
+  inline const static struct _impl_postScanSuccessTitleLabel {  // impl struct for case postScanSuccessTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanSuccessTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanSuccessTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanSuccessTitleLabel");
+  SWIFT_INLINE_THUNK bool isPostScanSuccessTitleLabel() const;
+
+  inline const static struct _impl_postScanSuccessDescriptionLabel {  // impl struct for case postScanSuccessDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanSuccessDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanSuccessDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanSuccessDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isPostScanSuccessDescriptionLabel() const;
+
+  inline const static struct _impl_postScanBoostTitleLabel {  // impl struct for case postScanBoostTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanBoostTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostTitleLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostTitleLabel() const;
+
+  inline const static struct _impl_postScanBoostDescriptionLabel {  // impl struct for case postScanBoostDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanBoostDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostDescriptionLabel() const;
+
+  inline const static struct _impl_postScanBoostSkipButtonLabel {  // impl struct for case postScanBoostSkipButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostSkipButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanBoostSkipButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostSkipButtonLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostSkipButtonLabel() const;
+
+  inline const static struct _impl_postScanBoostClaimButtonLabel {  // impl struct for case postScanBoostClaimButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostClaimButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanBoostClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostClaimButtonLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostClaimButtonLabel() const;
+
+  inline const static struct _impl_postScanBoostClaimButtonIcon {  // impl struct for case postScanBoostClaimButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostClaimButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanBoostClaimButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostClaimButtonIcon");
+  SWIFT_INLINE_THUNK bool isPostScanBoostClaimButtonIcon() const;
+
+  inline const static struct _impl_postScanBoostClaimButtonBackground {  // impl struct for case postScanBoostClaimButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostClaimButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanBoostClaimButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostClaimButtonBackground");
+  SWIFT_INLINE_THUNK bool isPostScanBoostClaimButtonBackground() const;
+
+  inline const static struct _impl_postScanPurchasePointsLabel {  // impl struct for case postScanPurchasePointsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanPurchasePointsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanPurchasePointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanPurchasePointsLabel");
+  SWIFT_INLINE_THUNK bool isPostScanPurchasePointsLabel() const;
+
+  inline const static struct _impl_postScanPurchaseBackground {  // impl struct for case postScanPurchaseBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanPurchaseBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanPurchaseBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanPurchaseBackground");
+  SWIFT_INLINE_THUNK bool isPostScanPurchaseBackground() const;
+
+  inline const static struct _impl_postScanQualifiedPurchaseBackground {  // impl struct for case postScanQualifiedPurchaseBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanQualifiedPurchaseBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanQualifiedPurchaseBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanQualifiedPurchaseBackground");
+  SWIFT_INLINE_THUNK bool isPostScanQualifiedPurchaseBackground() const;
+
+  inline const static struct _impl_postScanPurchaseInfoIcon {  // impl struct for case postScanPurchaseInfoIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanPurchaseInfoIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanPurchaseInfoIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanPurchaseInfoIcon");
+  SWIFT_INLINE_THUNK bool isPostScanPurchaseInfoIcon() const;
+
+  inline const static struct _impl_postScanUGCPurchaseBackground {  // impl struct for case postScanUGCPurchaseBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanUGCPurchaseBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanUGCPurchaseBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseBackground");
+  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseBackground() const;
+
+  inline const static struct _impl_postScanUGCPurchaseClaimButtonLabel {  // impl struct for case postScanUGCPurchaseClaimButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanUGCPurchaseClaimButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanUGCPurchaseClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonLabel");
+  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseClaimButtonLabel() const;
+
+  inline const static struct _impl_postScanUGCPurchaseClaimButtonIcon {  // impl struct for case postScanUGCPurchaseClaimButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanUGCPurchaseClaimButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanUGCPurchaseClaimButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonIcon");
+  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseClaimButtonIcon() const;
+
+  inline const static struct _impl_postScanUGCPurchaseClaimButtonBackground {  // impl struct for case postScanUGCPurchaseClaimButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanUGCPurchaseClaimButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanUGCPurchaseClaimButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonBackground");
+  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseClaimButtonBackground() const;
+
+  inline const static struct _impl_postScanUGCPurchaseBorder {  // impl struct for case postScanUGCPurchaseBorder
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanUGCPurchaseBorder;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanUGCPurchaseBorder SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseBorder");
+  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseBorder() const;
+
+  inline const static struct _impl_purchaseRowLabelColor {  // impl struct for case purchaseRowLabelColor
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::purchaseRowLabelColor;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } purchaseRowLabelColor SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPurchaseRowLabelColor");
+  SWIFT_INLINE_THUNK bool isPurchaseRowLabelColor() const;
+
+  inline const static struct _impl_purchaseRowMetadataLabelColor {  // impl struct for case purchaseRowMetadataLabelColor
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::purchaseRowMetadataLabelColor;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } purchaseRowMetadataLabelColor SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPurchaseRowMetadataLabelColor");
+  SWIFT_INLINE_THUNK bool isPurchaseRowMetadataLabelColor() const;
+
+  inline const static struct _impl_missedEarningsNavigationTitleLabel {  // impl struct for case missedEarningsNavigationTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsNavigationTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsNavigationDescriptionLabel {  // impl struct for case missedEarningsNavigationDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsNavigationDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationDescriptionLabel() const;
+
+  inline const static struct _impl_missedEarningsNavigationEditButtonIcon {  // impl struct for case missedEarningsNavigationEditButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationEditButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsNavigationEditButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationEditButtonIcon");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationEditButtonIcon() const;
+
+  inline const static struct _impl_missedEarningsNavigationEditButtonBackground {  // impl struct for case missedEarningsNavigationEditButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationEditButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsNavigationEditButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationEditButtonBackground");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationEditButtonBackground() const;
+
+  inline const static struct _impl_missedEarningsNavigationSaveButtonIcon {  // impl struct for case missedEarningsNavigationSaveButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationSaveButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsNavigationSaveButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationSaveButtonIcon() const;
+
+  inline const static struct _impl_missedEarningsNavigationSaveButtonBackground {  // impl struct for case missedEarningsNavigationSaveButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationSaveButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsNavigationSaveButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationSaveButtonBackground");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationSaveButtonBackground() const;
+
+  inline const static struct _impl_missedEarningsFieldEditIcon {  // impl struct for case missedEarningsFieldEditIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsFieldEditIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsFieldEditIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsFieldEditIcon");
+  SWIFT_INLINE_THUNK bool isMissedEarningsFieldEditIcon() const;
+
+  inline const static struct _impl_missedEarningsAddNewFieldLabel {  // impl struct for case missedEarningsAddNewFieldLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsAddNewFieldLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsAddNewFieldLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsAddNewFieldLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsAddNewFieldLabel() const;
+
+  inline const static struct _impl_missedEarningsModifiedFieldBackground {  // impl struct for case missedEarningsModifiedFieldBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsModifiedFieldBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsModifiedFieldBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsModifiedFieldBackground");
+  SWIFT_INLINE_THUNK bool isMissedEarningsModifiedFieldBackground() const;
+
+  inline const static struct _impl_missedEarningsListSectionTitleLabel {  // impl struct for case missedEarningsListSectionTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsListSectionTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsListSectionTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsListSectionTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsListSectionTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsTripItemLabel {  // impl struct for case missedEarningsTripItemLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsTripItemLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsTripItemLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsTripItemLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsTripItemLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalTitleLabel {  // impl struct for case missedEarningsEditModalTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalSubtitleLabel {  // impl struct for case missedEarningsEditModalSubtitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalSubtitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalSubtitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalSubtitleLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalInputLabel {  // impl struct for case missedEarningsEditModalInputLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalInputLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalInputLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalInputLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalInputLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalInputPlaceholderLabel {  // impl struct for case missedEarningsEditModalInputPlaceholderLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalInputPlaceholderLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalInputPlaceholderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalInputPlaceholderLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalInputPlaceholderLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalInputValueLabel {  // impl struct for case missedEarningsEditModalInputValueLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalInputValueLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalInputValueLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalInputValueLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalInputValueLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalCancelButtonLabel {  // impl struct for case missedEarningsEditModalCancelButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalCancelButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalCancelButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalCancelButtonLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalCancelButtonLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalSaveButtonLabel {  // impl struct for case missedEarningsEditModalSaveButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalSaveButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalSaveButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalSaveButtonLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalSaveButtonLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalSaveButtonBackground {  // impl struct for case missedEarningsEditModalSaveButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalSaveButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalSaveButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalSaveButtonBackground");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalSaveButtonBackground() const;
+
+  inline const static struct _impl_missedEarningsEditModalBackground {  // impl struct for case missedEarningsEditModalBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalBackground");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalBackground() const;
+
+  inline const static struct _impl_missedEarningsEditModalDatePicker {  // impl struct for case missedEarningsEditModalDatePicker
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalDatePicker;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsEditModalDatePicker SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsEditModalDatePicker");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalDatePicker() const;
+
+  inline const static struct _impl_missedEarningsAlertTitleLabel {  // impl struct for case missedEarningsAlertTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsAlertTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsAlertTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsAlertTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsAlertTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsAlertMessageLabel {  // impl struct for case missedEarningsAlertMessageLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsAlertMessageLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsAlertMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsAlertMessageLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsAlertMessageLabel() const;
+
+  inline const static struct _impl_ugcBarcodeDetectedBorder {  // impl struct for case ugcBarcodeDetectedBorder
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcBarcodeDetectedBorder;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcBarcodeDetectedBorder SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcBarcodeDetectedBorder");
+  SWIFT_INLINE_THUNK bool isUgcBarcodeDetectedBorder() const;
+
+  inline const static struct _impl_ugcBarcodeDetectedIcon {  // impl struct for case ugcBarcodeDetectedIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcBarcodeDetectedIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcBarcodeDetectedIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcBarcodeDetectedIcon");
+  SWIFT_INLINE_THUNK bool isUgcBarcodeDetectedIcon() const;
+
+  inline const static struct _impl_ugcNavigationButtonIcon {  // impl struct for case ugcNavigationButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcNavigationButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcNavigationButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcNavigationButtonIcon");
+  SWIFT_INLINE_THUNK bool isUgcNavigationButtonIcon() const;
+
+  inline const static struct _impl_ugcNavigationButtonBackground {  // impl struct for case ugcNavigationButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcNavigationButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcNavigationButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcNavigationButtonBackground");
+  SWIFT_INLINE_THUNK bool isUgcNavigationButtonBackground() const;
+
+  inline const static struct _impl_ugcProductInfoBackground {  // impl struct for case ugcProductInfoBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcProductInfoBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcProductInfoBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcProductInfoBackground");
+  SWIFT_INLINE_THUNK bool isUgcProductInfoBackground() const;
+
+  inline const static struct _impl_ugcProductInfoLabel {  // impl struct for case ugcProductInfoLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcProductInfoLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcProductInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcProductInfoLabel");
+  SWIFT_INLINE_THUNK bool isUgcProductInfoLabel() const;
+
+  inline const static struct _impl_ugcToastMessageWarningIcon {  // impl struct for case ugcToastMessageWarningIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcToastMessageWarningIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcToastMessageWarningIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcToastMessageWarningIcon");
+  SWIFT_INLINE_THUNK bool isUgcToastMessageWarningIcon() const;
+
+  inline const static struct _impl_ugcRetakeButtonLabel {  // impl struct for case ugcRetakeButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcRetakeButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcRetakeButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcRetakeButtonLabel");
+  SWIFT_INLINE_THUNK bool isUgcRetakeButtonLabel() const;
+
+  inline const static struct _impl_ugcRetakeButtonBackground {  // impl struct for case ugcRetakeButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcRetakeButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcRetakeButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcRetakeButtonBackground");
+  SWIFT_INLINE_THUNK bool isUgcRetakeButtonBackground() const;
+
+  inline const static struct _impl_ugcSubmitButtonLabel {  // impl struct for case ugcSubmitButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcSubmitButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcSubmitButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcSubmitButtonLabel");
+  SWIFT_INLINE_THUNK bool isUgcSubmitButtonLabel() const;
+
+  inline const static struct _impl_ugcSubmitButtonBackground {  // impl struct for case ugcSubmitButtonBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcSubmitButtonBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } ugcSubmitButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyUgcSubmitButtonBackground");
+  SWIFT_INLINE_THUNK bool isUgcSubmitButtonBackground() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::offerWallHeaderBackground;
+      case 1: return cases::offerWallHeaderTitleLabel;
+      case 2: return cases::offerWallHeaderSubtitleLabel;
+      case 3: return cases::offerWallHeaderBackButtonIcon;
+      case 4: return cases::offerWallBackground;
+      case 5: return cases::offerWallSectionHeaderLabel;
+      case 6: return cases::offerWallSectionHeaderShowMoreIcon;
+      case 7: return cases::offerWallSectionHeaderShowMoreBackground;
+      case 8: return cases::offerWallFloatingButtonBackground;
+      case 9: return cases::offerWallFloatingButtonLabel;
+      case 10: return cases::offerWallMoreMerchantsIcon;
+      case 11: return cases::offerRewardPointsLabel;
+      case 12: return cases::offerTagLabel;
+      case 13: return cases::offerTagBackground;
+      case 14: return cases::offerBackground;
+      case 15: return cases::offerBrandLabel;
+      case 16: return cases::offerDescriptionLabel;
+      case 17: return cases::offerEligibleMerchantsLabel;
+      case 18: return cases::offerDetailsExpirationLabel;
+      case 19: return cases::offerDetailsClipLabel;
+      case 20: return cases::offerClipButtonIcon;
+      case 21: return cases::offerClipButtonBackground;
+      case 22: return cases::offerClippedButtonIcon;
+      case 23: return cases::offerClippedButtonBackground;
+      case 24: return cases::offerClippedToastMessageLabel;
+      case 25: return cases::offerClippedToastMessageBackground;
+      case 26: return cases::offerDetailsClipRequiredLabel;
+      case 27: return cases::offerDetailsClipRequiredBackground;
+      case 28: return cases::offerDetailsSectionHeaderTitleLabel;
+      case 29: return cases::offerDetailsSectionHeaderToggleLabel;
+      case 30: return cases::offerDetailsSectionBodyLabel;
+      case 31: return cases::offerDetailsShortDescription;
+      case 32: return cases::offerDetailsFinePrintLabel;
+      case 33: return cases::offerDetailsBuyOptionLabel;
+      case 34: return cases::offerDetailsBuyOptionBackground;
+      case 35: return cases::storesHeaderBackground;
+      case 36: return cases::storesHeaderTitleLabel;
+      case 37: return cases::storesListSectionHeaderLabel;
+      case 38: return cases::storesListBackground;
+      case 39: return cases::storesListItemBackground;
+      case 40: return cases::storesListItemDefaultIcon;
+      case 41: return cases::storesListItemTitleLabel;
+      case 42: return cases::storesListItemSubtitleLabel;
+      case 43: return cases::adLoadingLoadingBarLabel;
+      case 44: return cases::adLoadingLoadingBarBackground;
+      case 45: return cases::adLoadingLoadingBarProgress;
+      case 46: return cases::adLoadingDefaultTitleLabel;
+      case 47: return cases::adLoadingDefaultDescriptionLabel;
+      case 48: return cases::errorModalIconBackground;
+      case 49: return cases::errorModalTitleLabel;
+      case 50: return cases::errorModalDescriptionLabel;
+      case 51: return cases::errorModalBackButtonLabel;
+      case 52: return cases::errorModalBackground;
+      case 53: return cases::postScanHeaderBackground;
+      case 54: return cases::postScanTotalPointsBackground;
+      case 55: return cases::postScanTotalPointsLabel;
+      case 56: return cases::postScanReceiptButtonIcon;
+      case 57: return cases::postScanReceiptButtonBackground;
+      case 58: return cases::postScanFooterButtonTitle;
+      case 59: return cases::postScanFooterBackground;
+      case 60: return cases::postScanMerchantNameLabel;
+      case 61: return cases::postScanTripInfoLabel;
+      case 62: return cases::postScanNoBoostsLabel;
+      case 63: return cases::postScanSuccessTitleLabel;
+      case 64: return cases::postScanSuccessDescriptionLabel;
+      case 65: return cases::postScanBoostTitleLabel;
+      case 66: return cases::postScanBoostDescriptionLabel;
+      case 67: return cases::postScanBoostSkipButtonLabel;
+      case 68: return cases::postScanBoostClaimButtonLabel;
+      case 69: return cases::postScanBoostClaimButtonIcon;
+      case 70: return cases::postScanBoostClaimButtonBackground;
+      case 71: return cases::postScanPurchasePointsLabel;
+      case 72: return cases::postScanPurchaseBackground;
+      case 73: return cases::postScanQualifiedPurchaseBackground;
+      case 74: return cases::postScanPurchaseInfoIcon;
+      case 75: return cases::postScanUGCPurchaseBackground;
+      case 76: return cases::postScanUGCPurchaseClaimButtonLabel;
+      case 77: return cases::postScanUGCPurchaseClaimButtonIcon;
+      case 78: return cases::postScanUGCPurchaseClaimButtonBackground;
+      case 79: return cases::postScanUGCPurchaseBorder;
+      case 80: return cases::purchaseRowLabelColor;
+      case 81: return cases::purchaseRowMetadataLabelColor;
+      case 82: return cases::missedEarningsNavigationTitleLabel;
+      case 83: return cases::missedEarningsNavigationDescriptionLabel;
+      case 84: return cases::missedEarningsNavigationEditButtonIcon;
+      case 85: return cases::missedEarningsNavigationEditButtonBackground;
+      case 86: return cases::missedEarningsNavigationSaveButtonIcon;
+      case 87: return cases::missedEarningsNavigationSaveButtonBackground;
+      case 88: return cases::missedEarningsFieldEditIcon;
+      case 89: return cases::missedEarningsAddNewFieldLabel;
+      case 90: return cases::missedEarningsModifiedFieldBackground;
+      case 91: return cases::missedEarningsListSectionTitleLabel;
+      case 92: return cases::missedEarningsTripItemLabel;
+      case 93: return cases::missedEarningsEditModalTitleLabel;
+      case 94: return cases::missedEarningsEditModalSubtitleLabel;
+      case 95: return cases::missedEarningsEditModalInputLabel;
+      case 96: return cases::missedEarningsEditModalInputPlaceholderLabel;
+      case 97: return cases::missedEarningsEditModalInputValueLabel;
+      case 98: return cases::missedEarningsEditModalCancelButtonLabel;
+      case 99: return cases::missedEarningsEditModalSaveButtonLabel;
+      case 100: return cases::missedEarningsEditModalSaveButtonBackground;
+      case 101: return cases::missedEarningsEditModalBackground;
+      case 102: return cases::missedEarningsEditModalDatePicker;
+      case 103: return cases::missedEarningsAlertTitleLabel;
+      case 104: return cases::missedEarningsAlertMessageLabel;
+      case 105: return cases::ugcBarcodeDetectedBorder;
+      case 106: return cases::ugcBarcodeDetectedIcon;
+      case 107: return cases::ugcNavigationButtonIcon;
+      case 108: return cases::ugcNavigationButtonBackground;
+      case 109: return cases::ugcProductInfoBackground;
+      case 110: return cases::ugcProductInfoLabel;
+      case 111: return cases::ugcToastMessageWarningIcon;
+      case 112: return cases::ugcRetakeButtonLabel;
+      case 113: return cases::ugcRetakeButtonBackground;
+      case 114: return cases::ugcSubmitButtonLabel;
+      case 115: return cases::ugcSubmitButtonBackground;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<AppearanceColorKey> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage18AppearanceColorKeyO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage18AppearanceColorKeyO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK AppearanceColorKey() noexcept {}
+  static SWIFT_INLINE_THUNK AppearanceColorKey _make() noexcept { return AppearanceColorKey(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage18AppearanceColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage18AppearanceColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage18AppearanceColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_AppearanceColorKey;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage18AppearanceColorKeyOD;
+  static inline constexpr $s11BlinkEngage18AppearanceColorKeyOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_AppearanceColorKey {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(AppearanceColorKey &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const AppearanceColorKey &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER AppearanceColorKey returnNewValue(T callable) {
+    auto result = AppearanceColorKey::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage18AppearanceColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::AppearanceColorKey> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage18AppearanceColorKeyOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::AppearanceColorKey> = true;
+template<>
+struct implClassFor<BlinkEngage::AppearanceColorKey> { using type = BlinkEngage::_impl::_impl_AppearanceColorKey; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey") AppearanceFontNameKey;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::AppearanceFontNameKey> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// Keys for custom fonts. Return a font name (e.g. <code>"Outfit-Bold"</code>) for a key from your <code>Theme</code> to use that font for the corresponding label; return <code>nil</code> to use the default or your <code>globalFontMatrix</code> by weight.
+namespace _impl {
+
+class _impl_AppearanceFontNameKey;
+
+// Type metadata accessor for AppearanceFontNameKey
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage21AppearanceFontNameKeyOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey") AppearanceFontNameKey final {
+public:
+  SWIFT_INLINE_THUNK ~AppearanceFontNameKey() noexcept {
+    auto metadata = _impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey(const AppearanceFontNameKey &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey &operator =(const AppearanceFontNameKey &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey &operator =(AppearanceFontNameKey &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER AppearanceFontNameKey(AppearanceFontNameKey &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    offerWallHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallHeaderTitleLabel"),
+    offerWallHeaderSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallHeaderSubtitleLabel"),
+    offerWallSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallSectionHeaderLabel"),
+    offerWallFloatingButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallFloatingButtonLabel"),
+    offerRewardPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferRewardPointsLabel"),
+    offerTagLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferTagLabel"),
+    offerBrandLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferBrandLabel"),
+    offerDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDescriptionLabel"),
+    offerEligibleMerchantsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferEligibleMerchantsLabel"),
+    offerDetailsExpirationLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsExpirationLabel"),
+    offerDetailsClipLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsClipLabel"),
+    offerClippedToastMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferClippedToastMessageLabel"),
+    offerDetailsClipRequiredLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsClipRequiredLabel"),
+    offerDetailsSectionHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsSectionHeaderTitleLabel"),
+    offerDetailsSectionHeaderToggleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsSectionHeaderToggleLabel"),
+    offerDetailsSectionBodyLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsSectionBodyLabel"),
+    offerDetailsShortDescription SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsShortDescription"),
+    offerDetailsFinePrintLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsFinePrintLabel"),
+    offerDetailsBuyOptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsBuyOptionLabel"),
+    storesHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresHeaderTitleLabel"),
+    storesListSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresListSectionHeaderLabel"),
+    storesListItemTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresListItemTitleLabel"),
+    storesListItemSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresListItemSubtitleLabel"),
+    adLoadingLoadingBarLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyAdLoadingLoadingBarLabel"),
+    adLoadingDefaultTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyAdLoadingDefaultTitleLabel"),
+    adLoadingDefaultDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyAdLoadingDefaultDescriptionLabel"),
+    errorModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyErrorModalTitleLabel"),
+    errorModalDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyErrorModalDescriptionLabel"),
+    errorModalBackButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyErrorModalBackButtonLabel"),
+    postScanTotalPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanTotalPointsLabel"),
+    postScanFooterButtonTitle SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanFooterButtonTitle"),
+    postScanMerchantNameLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanMerchantNameLabel"),
+    postScanTripInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanTripInfoLabel"),
+    postScanNoBoostsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanNoBoostsLabel"),
+    postScanSuccessTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanSuccessTitleLabel"),
+    postScanSuccessDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanSuccessDescriptionLabel"),
+    postScanBoostTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostTitleLabel"),
+    postScanBoostDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostDescriptionLabel"),
+    postScanBoostSkipButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostSkipButtonLabel"),
+    postScanBoostClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostClaimButtonLabel"),
+    postScanPurchasePointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanPurchasePointsLabel"),
+    postScanUGCPurchaseClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanUGCPurchaseClaimButtonLabel"),
+    purchaseRowLabelFont SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPurchaseRowLabelFont"),
+    purchaseRowMetadataLabelFont SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPurchaseRowMetadataLabelFont"),
+    missedEarningsNavigationTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsNavigationTitleLabel"),
+    missedEarningsNavigationDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsNavigationDescriptionLabel"),
+    missedEarningsListSectionTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsListSectionTitleLabel"),
+    missedEarningsTripItemLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsTripItemLabel"),
+    missedEarningsEditModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalTitleLabel"),
+    missedEarningsEditModalSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalSubtitleLabel"),
+    missedEarningsEditModalInputLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalInputLabel"),
+    missedEarningsEditModalInputPlaceholderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalInputPlaceholderLabel"),
+    missedEarningsEditModalInputValueLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalInputValueLabel"),
+    missedEarningsEditModalCancelButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalCancelButtonLabel"),
+    missedEarningsEditModalSaveButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalSaveButtonLabel"),
+    missedEarningsAlertTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsAlertTitleLabel"),
+    missedEarningsAlertMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsAlertMessageLabel"),
+    ugcProductInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyUgcProductInfoLabel"),
+    ugcRetakeButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyUgcRetakeButtonLabel"),
+    ugcSubmitButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyUgcSubmitButtonLabel")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_offerWallHeaderTitleLabel {  // impl struct for case offerWallHeaderTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallHeaderTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerWallHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallHeaderTitleLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallHeaderTitleLabel() const;
+
+  inline const static struct _impl_offerWallHeaderSubtitleLabel {  // impl struct for case offerWallHeaderSubtitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallHeaderSubtitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerWallHeaderSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallHeaderSubtitleLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallHeaderSubtitleLabel() const;
+
+  inline const static struct _impl_offerWallSectionHeaderLabel {  // impl struct for case offerWallSectionHeaderLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallSectionHeaderLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerWallSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallSectionHeaderLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallSectionHeaderLabel() const;
+
+  inline const static struct _impl_offerWallFloatingButtonLabel {  // impl struct for case offerWallFloatingButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallFloatingButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerWallFloatingButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferWallFloatingButtonLabel");
+  SWIFT_INLINE_THUNK bool isOfferWallFloatingButtonLabel() const;
+
+  inline const static struct _impl_offerRewardPointsLabel {  // impl struct for case offerRewardPointsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerRewardPointsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerRewardPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferRewardPointsLabel");
+  SWIFT_INLINE_THUNK bool isOfferRewardPointsLabel() const;
+
+  inline const static struct _impl_offerTagLabel {  // impl struct for case offerTagLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerTagLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerTagLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferTagLabel");
+  SWIFT_INLINE_THUNK bool isOfferTagLabel() const;
+
+  inline const static struct _impl_offerBrandLabel {  // impl struct for case offerBrandLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerBrandLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerBrandLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferBrandLabel");
+  SWIFT_INLINE_THUNK bool isOfferBrandLabel() const;
+
+  inline const static struct _impl_offerDescriptionLabel {  // impl struct for case offerDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isOfferDescriptionLabel() const;
+
+  inline const static struct _impl_offerEligibleMerchantsLabel {  // impl struct for case offerEligibleMerchantsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerEligibleMerchantsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerEligibleMerchantsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferEligibleMerchantsLabel");
+  SWIFT_INLINE_THUNK bool isOfferEligibleMerchantsLabel() const;
+
+  inline const static struct _impl_offerDetailsExpirationLabel {  // impl struct for case offerDetailsExpirationLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsExpirationLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsExpirationLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsExpirationLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsExpirationLabel() const;
+
+  inline const static struct _impl_offerDetailsClipLabel {  // impl struct for case offerDetailsClipLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsClipLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsClipLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsClipLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsClipLabel() const;
+
+  inline const static struct _impl_offerClippedToastMessageLabel {  // impl struct for case offerClippedToastMessageLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerClippedToastMessageLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerClippedToastMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferClippedToastMessageLabel");
+  SWIFT_INLINE_THUNK bool isOfferClippedToastMessageLabel() const;
+
+  inline const static struct _impl_offerDetailsClipRequiredLabel {  // impl struct for case offerDetailsClipRequiredLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsClipRequiredLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsClipRequiredLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsClipRequiredLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsClipRequiredLabel() const;
+
+  inline const static struct _impl_offerDetailsSectionHeaderTitleLabel {  // impl struct for case offerDetailsSectionHeaderTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsSectionHeaderTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsSectionHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsSectionHeaderTitleLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsSectionHeaderTitleLabel() const;
+
+  inline const static struct _impl_offerDetailsSectionHeaderToggleLabel {  // impl struct for case offerDetailsSectionHeaderToggleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsSectionHeaderToggleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsSectionHeaderToggleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsSectionHeaderToggleLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsSectionHeaderToggleLabel() const;
+
+  inline const static struct _impl_offerDetailsSectionBodyLabel {  // impl struct for case offerDetailsSectionBodyLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsSectionBodyLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsSectionBodyLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsSectionBodyLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsSectionBodyLabel() const;
+
+  inline const static struct _impl_offerDetailsShortDescription {  // impl struct for case offerDetailsShortDescription
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsShortDescription;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsShortDescription SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsShortDescription");
+  SWIFT_INLINE_THUNK bool isOfferDetailsShortDescription() const;
+
+  inline const static struct _impl_offerDetailsFinePrintLabel {  // impl struct for case offerDetailsFinePrintLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsFinePrintLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsFinePrintLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsFinePrintLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsFinePrintLabel() const;
+
+  inline const static struct _impl_offerDetailsBuyOptionLabel {  // impl struct for case offerDetailsBuyOptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsBuyOptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsBuyOptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsBuyOptionLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsBuyOptionLabel() const;
+
+  inline const static struct _impl_storesHeaderTitleLabel {  // impl struct for case storesHeaderTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesHeaderTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } storesHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresHeaderTitleLabel");
+  SWIFT_INLINE_THUNK bool isStoresHeaderTitleLabel() const;
+
+  inline const static struct _impl_storesListSectionHeaderLabel {  // impl struct for case storesListSectionHeaderLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListSectionHeaderLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } storesListSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresListSectionHeaderLabel");
+  SWIFT_INLINE_THUNK bool isStoresListSectionHeaderLabel() const;
+
+  inline const static struct _impl_storesListItemTitleLabel {  // impl struct for case storesListItemTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListItemTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } storesListItemTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresListItemTitleLabel");
+  SWIFT_INLINE_THUNK bool isStoresListItemTitleLabel() const;
+
+  inline const static struct _impl_storesListItemSubtitleLabel {  // impl struct for case storesListItemSubtitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::storesListItemSubtitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } storesListItemSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresListItemSubtitleLabel");
+  SWIFT_INLINE_THUNK bool isStoresListItemSubtitleLabel() const;
+
+  inline const static struct _impl_adLoadingLoadingBarLabel {  // impl struct for case adLoadingLoadingBarLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingLoadingBarLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } adLoadingLoadingBarLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyAdLoadingLoadingBarLabel");
+  SWIFT_INLINE_THUNK bool isAdLoadingLoadingBarLabel() const;
+
+  inline const static struct _impl_adLoadingDefaultTitleLabel {  // impl struct for case adLoadingDefaultTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingDefaultTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } adLoadingDefaultTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyAdLoadingDefaultTitleLabel");
+  SWIFT_INLINE_THUNK bool isAdLoadingDefaultTitleLabel() const;
+
+  inline const static struct _impl_adLoadingDefaultDescriptionLabel {  // impl struct for case adLoadingDefaultDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::adLoadingDefaultDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } adLoadingDefaultDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyAdLoadingDefaultDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isAdLoadingDefaultDescriptionLabel() const;
+
+  inline const static struct _impl_errorModalTitleLabel {  // impl struct for case errorModalTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } errorModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyErrorModalTitleLabel");
+  SWIFT_INLINE_THUNK bool isErrorModalTitleLabel() const;
+
+  inline const static struct _impl_errorModalDescriptionLabel {  // impl struct for case errorModalDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } errorModalDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyErrorModalDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isErrorModalDescriptionLabel() const;
+
+  inline const static struct _impl_errorModalBackButtonLabel {  // impl struct for case errorModalBackButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::errorModalBackButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } errorModalBackButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyErrorModalBackButtonLabel");
+  SWIFT_INLINE_THUNK bool isErrorModalBackButtonLabel() const;
+
+  inline const static struct _impl_postScanTotalPointsLabel {  // impl struct for case postScanTotalPointsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanTotalPointsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanTotalPointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanTotalPointsLabel");
+  SWIFT_INLINE_THUNK bool isPostScanTotalPointsLabel() const;
+
+  inline const static struct _impl_postScanFooterButtonTitle {  // impl struct for case postScanFooterButtonTitle
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanFooterButtonTitle;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanFooterButtonTitle SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanFooterButtonTitle");
+  SWIFT_INLINE_THUNK bool isPostScanFooterButtonTitle() const;
+
+  inline const static struct _impl_postScanMerchantNameLabel {  // impl struct for case postScanMerchantNameLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanMerchantNameLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanMerchantNameLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanMerchantNameLabel");
+  SWIFT_INLINE_THUNK bool isPostScanMerchantNameLabel() const;
+
+  inline const static struct _impl_postScanTripInfoLabel {  // impl struct for case postScanTripInfoLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanTripInfoLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanTripInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanTripInfoLabel");
+  SWIFT_INLINE_THUNK bool isPostScanTripInfoLabel() const;
+
+  inline const static struct _impl_postScanNoBoostsLabel {  // impl struct for case postScanNoBoostsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanNoBoostsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanNoBoostsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanNoBoostsLabel");
+  SWIFT_INLINE_THUNK bool isPostScanNoBoostsLabel() const;
+
+  inline const static struct _impl_postScanSuccessTitleLabel {  // impl struct for case postScanSuccessTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanSuccessTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanSuccessTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanSuccessTitleLabel");
+  SWIFT_INLINE_THUNK bool isPostScanSuccessTitleLabel() const;
+
+  inline const static struct _impl_postScanSuccessDescriptionLabel {  // impl struct for case postScanSuccessDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanSuccessDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanSuccessDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanSuccessDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isPostScanSuccessDescriptionLabel() const;
+
+  inline const static struct _impl_postScanBoostTitleLabel {  // impl struct for case postScanBoostTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanBoostTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostTitleLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostTitleLabel() const;
+
+  inline const static struct _impl_postScanBoostDescriptionLabel {  // impl struct for case postScanBoostDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanBoostDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostDescriptionLabel() const;
+
+  inline const static struct _impl_postScanBoostSkipButtonLabel {  // impl struct for case postScanBoostSkipButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostSkipButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanBoostSkipButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostSkipButtonLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostSkipButtonLabel() const;
+
+  inline const static struct _impl_postScanBoostClaimButtonLabel {  // impl struct for case postScanBoostClaimButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostClaimButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanBoostClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostClaimButtonLabel");
+  SWIFT_INLINE_THUNK bool isPostScanBoostClaimButtonLabel() const;
+
+  inline const static struct _impl_postScanPurchasePointsLabel {  // impl struct for case postScanPurchasePointsLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanPurchasePointsLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanPurchasePointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanPurchasePointsLabel");
+  SWIFT_INLINE_THUNK bool isPostScanPurchasePointsLabel() const;
+
+  inline const static struct _impl_postScanUGCPurchaseClaimButtonLabel {  // impl struct for case postScanUGCPurchaseClaimButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanUGCPurchaseClaimButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanUGCPurchaseClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanUGCPurchaseClaimButtonLabel");
+  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseClaimButtonLabel() const;
+
+  inline const static struct _impl_purchaseRowLabelFont {  // impl struct for case purchaseRowLabelFont
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::purchaseRowLabelFont;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } purchaseRowLabelFont SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPurchaseRowLabelFont");
+  SWIFT_INLINE_THUNK bool isPurchaseRowLabelFont() const;
+
+  inline const static struct _impl_purchaseRowMetadataLabelFont {  // impl struct for case purchaseRowMetadataLabelFont
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::purchaseRowMetadataLabelFont;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } purchaseRowMetadataLabelFont SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPurchaseRowMetadataLabelFont");
+  SWIFT_INLINE_THUNK bool isPurchaseRowMetadataLabelFont() const;
+
+  inline const static struct _impl_missedEarningsNavigationTitleLabel {  // impl struct for case missedEarningsNavigationTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsNavigationTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsNavigationTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsNavigationDescriptionLabel {  // impl struct for case missedEarningsNavigationDescriptionLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationDescriptionLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsNavigationDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsNavigationDescriptionLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationDescriptionLabel() const;
+
+  inline const static struct _impl_missedEarningsListSectionTitleLabel {  // impl struct for case missedEarningsListSectionTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsListSectionTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsListSectionTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsListSectionTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsListSectionTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsTripItemLabel {  // impl struct for case missedEarningsTripItemLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsTripItemLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsTripItemLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsTripItemLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsTripItemLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalTitleLabel {  // impl struct for case missedEarningsEditModalTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsEditModalTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalSubtitleLabel {  // impl struct for case missedEarningsEditModalSubtitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalSubtitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsEditModalSubtitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalSubtitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalSubtitleLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalInputLabel {  // impl struct for case missedEarningsEditModalInputLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalInputLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsEditModalInputLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalInputLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalInputLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalInputPlaceholderLabel {  // impl struct for case missedEarningsEditModalInputPlaceholderLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalInputPlaceholderLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsEditModalInputPlaceholderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalInputPlaceholderLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalInputPlaceholderLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalInputValueLabel {  // impl struct for case missedEarningsEditModalInputValueLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalInputValueLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsEditModalInputValueLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalInputValueLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalInputValueLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalCancelButtonLabel {  // impl struct for case missedEarningsEditModalCancelButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalCancelButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsEditModalCancelButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalCancelButtonLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalCancelButtonLabel() const;
+
+  inline const static struct _impl_missedEarningsEditModalSaveButtonLabel {  // impl struct for case missedEarningsEditModalSaveButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsEditModalSaveButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsEditModalSaveButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsEditModalSaveButtonLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsEditModalSaveButtonLabel() const;
+
+  inline const static struct _impl_missedEarningsAlertTitleLabel {  // impl struct for case missedEarningsAlertTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsAlertTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsAlertTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsAlertTitleLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsAlertTitleLabel() const;
+
+  inline const static struct _impl_missedEarningsAlertMessageLabel {  // impl struct for case missedEarningsAlertMessageLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsAlertMessageLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } missedEarningsAlertMessageLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsAlertMessageLabel");
+  SWIFT_INLINE_THUNK bool isMissedEarningsAlertMessageLabel() const;
+
+  inline const static struct _impl_ugcProductInfoLabel {  // impl struct for case ugcProductInfoLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcProductInfoLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } ugcProductInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyUgcProductInfoLabel");
+  SWIFT_INLINE_THUNK bool isUgcProductInfoLabel() const;
+
+  inline const static struct _impl_ugcRetakeButtonLabel {  // impl struct for case ugcRetakeButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcRetakeButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } ugcRetakeButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyUgcRetakeButtonLabel");
+  SWIFT_INLINE_THUNK bool isUgcRetakeButtonLabel() const;
+
+  inline const static struct _impl_ugcSubmitButtonLabel {  // impl struct for case ugcSubmitButtonLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcSubmitButtonLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } ugcSubmitButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyUgcSubmitButtonLabel");
+  SWIFT_INLINE_THUNK bool isUgcSubmitButtonLabel() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::offerWallHeaderTitleLabel;
+      case 1: return cases::offerWallHeaderSubtitleLabel;
+      case 2: return cases::offerWallSectionHeaderLabel;
+      case 3: return cases::offerWallFloatingButtonLabel;
+      case 4: return cases::offerRewardPointsLabel;
+      case 5: return cases::offerTagLabel;
+      case 6: return cases::offerBrandLabel;
+      case 7: return cases::offerDescriptionLabel;
+      case 8: return cases::offerEligibleMerchantsLabel;
+      case 9: return cases::offerDetailsExpirationLabel;
+      case 10: return cases::offerDetailsClipLabel;
+      case 11: return cases::offerClippedToastMessageLabel;
+      case 12: return cases::offerDetailsClipRequiredLabel;
+      case 13: return cases::offerDetailsSectionHeaderTitleLabel;
+      case 14: return cases::offerDetailsSectionHeaderToggleLabel;
+      case 15: return cases::offerDetailsSectionBodyLabel;
+      case 16: return cases::offerDetailsShortDescription;
+      case 17: return cases::offerDetailsFinePrintLabel;
+      case 18: return cases::offerDetailsBuyOptionLabel;
+      case 19: return cases::storesHeaderTitleLabel;
+      case 20: return cases::storesListSectionHeaderLabel;
+      case 21: return cases::storesListItemTitleLabel;
+      case 22: return cases::storesListItemSubtitleLabel;
+      case 23: return cases::adLoadingLoadingBarLabel;
+      case 24: return cases::adLoadingDefaultTitleLabel;
+      case 25: return cases::adLoadingDefaultDescriptionLabel;
+      case 26: return cases::errorModalTitleLabel;
+      case 27: return cases::errorModalDescriptionLabel;
+      case 28: return cases::errorModalBackButtonLabel;
+      case 29: return cases::postScanTotalPointsLabel;
+      case 30: return cases::postScanFooterButtonTitle;
+      case 31: return cases::postScanMerchantNameLabel;
+      case 32: return cases::postScanTripInfoLabel;
+      case 33: return cases::postScanNoBoostsLabel;
+      case 34: return cases::postScanSuccessTitleLabel;
+      case 35: return cases::postScanSuccessDescriptionLabel;
+      case 36: return cases::postScanBoostTitleLabel;
+      case 37: return cases::postScanBoostDescriptionLabel;
+      case 38: return cases::postScanBoostSkipButtonLabel;
+      case 39: return cases::postScanBoostClaimButtonLabel;
+      case 40: return cases::postScanPurchasePointsLabel;
+      case 41: return cases::postScanUGCPurchaseClaimButtonLabel;
+      case 42: return cases::purchaseRowLabelFont;
+      case 43: return cases::purchaseRowMetadataLabelFont;
+      case 44: return cases::missedEarningsNavigationTitleLabel;
+      case 45: return cases::missedEarningsNavigationDescriptionLabel;
+      case 46: return cases::missedEarningsListSectionTitleLabel;
+      case 47: return cases::missedEarningsTripItemLabel;
+      case 48: return cases::missedEarningsEditModalTitleLabel;
+      case 49: return cases::missedEarningsEditModalSubtitleLabel;
+      case 50: return cases::missedEarningsEditModalInputLabel;
+      case 51: return cases::missedEarningsEditModalInputPlaceholderLabel;
+      case 52: return cases::missedEarningsEditModalInputValueLabel;
+      case 53: return cases::missedEarningsEditModalCancelButtonLabel;
+      case 54: return cases::missedEarningsEditModalSaveButtonLabel;
+      case 55: return cases::missedEarningsAlertTitleLabel;
+      case 56: return cases::missedEarningsAlertMessageLabel;
+      case 57: return cases::ugcProductInfoLabel;
+      case 58: return cases::ugcRetakeButtonLabel;
+      case 59: return cases::ugcSubmitButtonLabel;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<AppearanceFontNameKey> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage21AppearanceFontNameKeyO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage21AppearanceFontNameKeyO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK AppearanceFontNameKey() noexcept {}
+  static SWIFT_INLINE_THUNK AppearanceFontNameKey _make() noexcept { return AppearanceFontNameKey(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_AppearanceFontNameKey;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage21AppearanceFontNameKeyOD;
+  static inline constexpr $s11BlinkEngage21AppearanceFontNameKeyOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_AppearanceFontNameKey {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(AppearanceFontNameKey &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const AppearanceFontNameKey &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER AppearanceFontNameKey returnNewValue(T callable) {
+    auto result = AppearanceFontNameKey::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::AppearanceFontNameKey> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage21AppearanceFontNameKeyOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::AppearanceFontNameKey> = true;
+template<>
+struct implClassFor<BlinkEngage::AppearanceFontNameKey> { using type = BlinkEngage::_impl::_impl_AppearanceFontNameKey; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey") AppearanceIconKey;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::AppearanceIconKey> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// Keys for custom images. Return an image for a key from your <code>Theme</code> to replace that icon; return <code>nil</code> to use the default (if any). When you return <code>nil</code>, the matching color key may still be used to tint the default icon.
+namespace _impl {
+
+class _impl_AppearanceIconKey;
+
+// Type metadata accessor for AppearanceIconKey
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage17AppearanceIconKeyOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey") AppearanceIconKey final {
+public:
+  SWIFT_INLINE_THUNK ~AppearanceIconKey() noexcept {
+    auto metadata = _impl::$s11BlinkEngage17AppearanceIconKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey(const AppearanceIconKey &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage17AppearanceIconKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey &operator =(const AppearanceIconKey &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage17AppearanceIconKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey &operator =(AppearanceIconKey &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER AppearanceIconKey(AppearanceIconKey &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    offerRewardIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyOfferRewardIcon"),
+    offerWallFloatingButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyOfferWallFloatingButtonIcon"),
+    missedEarningsNavigationEditButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyMissedEarningsNavigationEditButtonIcon"),
+    missedEarningsFieldEditIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyMissedEarningsFieldEditIcon"),
+    postScanReceiptButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyPostScanReceiptButtonIcon"),
+    postScanBoostDefaultIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyPostScanBoostDefaultIcon"),
+    postScanSuccessIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyPostScanSuccessIcon"),
+    ugcBarcodeDetectedIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyUgcBarcodeDetectedIcon"),
+    ugcToastMessageWarningIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyUgcToastMessageWarningIcon")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_offerRewardIcon {  // impl struct for case offerRewardIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerRewardIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } offerRewardIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyOfferRewardIcon");
+  SWIFT_INLINE_THUNK bool isOfferRewardIcon() const;
+
+  inline const static struct _impl_offerWallFloatingButtonIcon {  // impl struct for case offerWallFloatingButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerWallFloatingButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } offerWallFloatingButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyOfferWallFloatingButtonIcon");
+  SWIFT_INLINE_THUNK bool isOfferWallFloatingButtonIcon() const;
+
+  inline const static struct _impl_missedEarningsNavigationEditButtonIcon {  // impl struct for case missedEarningsNavigationEditButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationEditButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } missedEarningsNavigationEditButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyMissedEarningsNavigationEditButtonIcon");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationEditButtonIcon() const;
+
+  inline const static struct _impl_missedEarningsFieldEditIcon {  // impl struct for case missedEarningsFieldEditIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsFieldEditIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } missedEarningsFieldEditIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyMissedEarningsFieldEditIcon");
+  SWIFT_INLINE_THUNK bool isMissedEarningsFieldEditIcon() const;
+
+  inline const static struct _impl_postScanReceiptButtonIcon {  // impl struct for case postScanReceiptButtonIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanReceiptButtonIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } postScanReceiptButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyPostScanReceiptButtonIcon");
+  SWIFT_INLINE_THUNK bool isPostScanReceiptButtonIcon() const;
+
+  inline const static struct _impl_postScanBoostDefaultIcon {  // impl struct for case postScanBoostDefaultIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanBoostDefaultIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } postScanBoostDefaultIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyPostScanBoostDefaultIcon");
+  SWIFT_INLINE_THUNK bool isPostScanBoostDefaultIcon() const;
+
+  inline const static struct _impl_postScanSuccessIcon {  // impl struct for case postScanSuccessIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanSuccessIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } postScanSuccessIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyPostScanSuccessIcon");
+  SWIFT_INLINE_THUNK bool isPostScanSuccessIcon() const;
+
+  inline const static struct _impl_ugcBarcodeDetectedIcon {  // impl struct for case ugcBarcodeDetectedIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcBarcodeDetectedIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } ugcBarcodeDetectedIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyUgcBarcodeDetectedIcon");
+  SWIFT_INLINE_THUNK bool isUgcBarcodeDetectedIcon() const;
+
+  inline const static struct _impl_ugcToastMessageWarningIcon {  // impl struct for case ugcToastMessageWarningIcon
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::ugcToastMessageWarningIcon;
+    }
+    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
+  } ugcToastMessageWarningIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyUgcToastMessageWarningIcon");
+  SWIFT_INLINE_THUNK bool isUgcToastMessageWarningIcon() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::offerRewardIcon;
+      case 1: return cases::offerWallFloatingButtonIcon;
+      case 2: return cases::missedEarningsNavigationEditButtonIcon;
+      case 3: return cases::missedEarningsFieldEditIcon;
+      case 4: return cases::postScanReceiptButtonIcon;
+      case 5: return cases::postScanBoostDefaultIcon;
+      case 6: return cases::postScanSuccessIcon;
+      case 7: return cases::ugcBarcodeDetectedIcon;
+      case 8: return cases::ugcToastMessageWarningIcon;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<AppearanceIconKey> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage17AppearanceIconKeyO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage17AppearanceIconKeyO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK AppearanceIconKey() noexcept {}
+  static SWIFT_INLINE_THUNK AppearanceIconKey _make() noexcept { return AppearanceIconKey(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage17AppearanceIconKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage17AppearanceIconKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage17AppearanceIconKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_AppearanceIconKey;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage17AppearanceIconKeyOD;
+  static inline constexpr $s11BlinkEngage17AppearanceIconKeyOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_AppearanceIconKey {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(AppearanceIconKey &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const AppearanceIconKey &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER AppearanceIconKey returnNewValue(T callable) {
+    auto result = AppearanceIconKey::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage17AppearanceIconKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::AppearanceIconKey> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage17AppearanceIconKeyOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::AppearanceIconKey> = true;
+template<>
+struct implClassFor<BlinkEngage::AppearanceIconKey> { using type = BlinkEngage::_impl::_impl_AppearanceIconKey; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallHeaderBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallHeaderBackground() const {
+    return *this == AppearanceColorKey::offerWallHeaderBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallHeaderTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallHeaderTitleLabel() const {
+    return *this == AppearanceColorKey::offerWallHeaderTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallHeaderSubtitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(2);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallHeaderSubtitleLabel() const {
+    return *this == AppearanceColorKey::offerWallHeaderSubtitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallHeaderBackButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(3);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallHeaderBackButtonIcon() const {
+    return *this == AppearanceColorKey::offerWallHeaderBackButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(4);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallBackground() const {
+    return *this == AppearanceColorKey::offerWallBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallSectionHeaderLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(5);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallSectionHeaderLabel() const {
+    return *this == AppearanceColorKey::offerWallSectionHeaderLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallSectionHeaderShowMoreIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(6);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallSectionHeaderShowMoreIcon() const {
+    return *this == AppearanceColorKey::offerWallSectionHeaderShowMoreIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallSectionHeaderShowMoreBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(7);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallSectionHeaderShowMoreBackground() const {
+    return *this == AppearanceColorKey::offerWallSectionHeaderShowMoreBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallFloatingButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(8);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallFloatingButtonBackground() const {
+    return *this == AppearanceColorKey::offerWallFloatingButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallFloatingButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(9);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallFloatingButtonLabel() const {
+    return *this == AppearanceColorKey::offerWallFloatingButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallMoreMerchantsIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(10);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferWallMoreMerchantsIcon() const {
+    return *this == AppearanceColorKey::offerWallMoreMerchantsIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerRewardPointsLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(11);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferRewardPointsLabel() const {
+    return *this == AppearanceColorKey::offerRewardPointsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerTagLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(12);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferTagLabel() const {
+    return *this == AppearanceColorKey::offerTagLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerTagBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(13);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferTagBackground() const {
+    return *this == AppearanceColorKey::offerTagBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(14);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferBackground() const {
+    return *this == AppearanceColorKey::offerBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerBrandLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(15);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferBrandLabel() const {
+    return *this == AppearanceColorKey::offerBrandLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDescriptionLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(16);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDescriptionLabel() const {
+    return *this == AppearanceColorKey::offerDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerEligibleMerchantsLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(17);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferEligibleMerchantsLabel() const {
+    return *this == AppearanceColorKey::offerEligibleMerchantsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsExpirationLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(18);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsExpirationLabel() const {
+    return *this == AppearanceColorKey::offerDetailsExpirationLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsClipLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(19);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsClipLabel() const {
+    return *this == AppearanceColorKey::offerDetailsClipLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerClipButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(20);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferClipButtonIcon() const {
+    return *this == AppearanceColorKey::offerClipButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerClipButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(21);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferClipButtonBackground() const {
+    return *this == AppearanceColorKey::offerClipButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerClippedButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(22);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferClippedButtonIcon() const {
+    return *this == AppearanceColorKey::offerClippedButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerClippedButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(23);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferClippedButtonBackground() const {
+    return *this == AppearanceColorKey::offerClippedButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerClippedToastMessageLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(24);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferClippedToastMessageLabel() const {
+    return *this == AppearanceColorKey::offerClippedToastMessageLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerClippedToastMessageBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(25);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferClippedToastMessageBackground() const {
+    return *this == AppearanceColorKey::offerClippedToastMessageBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsClipRequiredLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(26);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsClipRequiredLabel() const {
+    return *this == AppearanceColorKey::offerDetailsClipRequiredLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsClipRequiredBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(27);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsClipRequiredBackground() const {
+    return *this == AppearanceColorKey::offerDetailsClipRequiredBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsSectionHeaderTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(28);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsSectionHeaderTitleLabel() const {
+    return *this == AppearanceColorKey::offerDetailsSectionHeaderTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsSectionHeaderToggleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(29);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsSectionHeaderToggleLabel() const {
+    return *this == AppearanceColorKey::offerDetailsSectionHeaderToggleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsSectionBodyLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(30);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsSectionBodyLabel() const {
+    return *this == AppearanceColorKey::offerDetailsSectionBodyLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsShortDescription::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(31);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsShortDescription() const {
+    return *this == AppearanceColorKey::offerDetailsShortDescription;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsFinePrintLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(32);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsFinePrintLabel() const {
+    return *this == AppearanceColorKey::offerDetailsFinePrintLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsBuyOptionLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(33);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsBuyOptionLabel() const {
+    return *this == AppearanceColorKey::offerDetailsBuyOptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsBuyOptionBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(34);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsBuyOptionBackground() const {
+    return *this == AppearanceColorKey::offerDetailsBuyOptionBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesHeaderBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(35);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresHeaderBackground() const {
+    return *this == AppearanceColorKey::storesHeaderBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesHeaderTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(36);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresHeaderTitleLabel() const {
+    return *this == AppearanceColorKey::storesHeaderTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListSectionHeaderLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(37);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListSectionHeaderLabel() const {
+    return *this == AppearanceColorKey::storesListSectionHeaderLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(38);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListBackground() const {
+    return *this == AppearanceColorKey::storesListBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListItemBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(39);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListItemBackground() const {
+    return *this == AppearanceColorKey::storesListItemBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListItemDefaultIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(40);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListItemDefaultIcon() const {
+    return *this == AppearanceColorKey::storesListItemDefaultIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListItemTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(41);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListItemTitleLabel() const {
+    return *this == AppearanceColorKey::storesListItemTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListItemSubtitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(42);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListItemSubtitleLabel() const {
+    return *this == AppearanceColorKey::storesListItemSubtitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_adLoadingLoadingBarLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(43);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isAdLoadingLoadingBarLabel() const {
+    return *this == AppearanceColorKey::adLoadingLoadingBarLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_adLoadingLoadingBarBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(44);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isAdLoadingLoadingBarBackground() const {
+    return *this == AppearanceColorKey::adLoadingLoadingBarBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_adLoadingLoadingBarProgress::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(45);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isAdLoadingLoadingBarProgress() const {
+    return *this == AppearanceColorKey::adLoadingLoadingBarProgress;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_adLoadingDefaultTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(46);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isAdLoadingDefaultTitleLabel() const {
+    return *this == AppearanceColorKey::adLoadingDefaultTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_adLoadingDefaultDescriptionLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(47);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isAdLoadingDefaultDescriptionLabel() const {
+    return *this == AppearanceColorKey::adLoadingDefaultDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_errorModalIconBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(48);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isErrorModalIconBackground() const {
+    return *this == AppearanceColorKey::errorModalIconBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_errorModalTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(49);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isErrorModalTitleLabel() const {
+    return *this == AppearanceColorKey::errorModalTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_errorModalDescriptionLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(50);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isErrorModalDescriptionLabel() const {
+    return *this == AppearanceColorKey::errorModalDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_errorModalBackButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(51);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isErrorModalBackButtonLabel() const {
+    return *this == AppearanceColorKey::errorModalBackButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_errorModalBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(52);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isErrorModalBackground() const {
+    return *this == AppearanceColorKey::errorModalBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanHeaderBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(53);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanHeaderBackground() const {
+    return *this == AppearanceColorKey::postScanHeaderBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanTotalPointsBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(54);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanTotalPointsBackground() const {
+    return *this == AppearanceColorKey::postScanTotalPointsBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanTotalPointsLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(55);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanTotalPointsLabel() const {
+    return *this == AppearanceColorKey::postScanTotalPointsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanReceiptButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(56);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanReceiptButtonIcon() const {
+    return *this == AppearanceColorKey::postScanReceiptButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanReceiptButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(57);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanReceiptButtonBackground() const {
+    return *this == AppearanceColorKey::postScanReceiptButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanFooterButtonTitle::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(58);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanFooterButtonTitle() const {
+    return *this == AppearanceColorKey::postScanFooterButtonTitle;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanFooterBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(59);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanFooterBackground() const {
+    return *this == AppearanceColorKey::postScanFooterBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanMerchantNameLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(60);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanMerchantNameLabel() const {
+    return *this == AppearanceColorKey::postScanMerchantNameLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanTripInfoLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(61);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanTripInfoLabel() const {
+    return *this == AppearanceColorKey::postScanTripInfoLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanNoBoostsLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(62);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanNoBoostsLabel() const {
+    return *this == AppearanceColorKey::postScanNoBoostsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanSuccessTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(63);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanSuccessTitleLabel() const {
+    return *this == AppearanceColorKey::postScanSuccessTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanSuccessDescriptionLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(64);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanSuccessDescriptionLabel() const {
+    return *this == AppearanceColorKey::postScanSuccessDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(65);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostTitleLabel() const {
+    return *this == AppearanceColorKey::postScanBoostTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostDescriptionLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(66);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostDescriptionLabel() const {
+    return *this == AppearanceColorKey::postScanBoostDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostSkipButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(67);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostSkipButtonLabel() const {
+    return *this == AppearanceColorKey::postScanBoostSkipButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostClaimButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(68);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostClaimButtonLabel() const {
+    return *this == AppearanceColorKey::postScanBoostClaimButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostClaimButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(69);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostClaimButtonIcon() const {
+    return *this == AppearanceColorKey::postScanBoostClaimButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostClaimButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(70);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostClaimButtonBackground() const {
+    return *this == AppearanceColorKey::postScanBoostClaimButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanPurchasePointsLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(71);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanPurchasePointsLabel() const {
+    return *this == AppearanceColorKey::postScanPurchasePointsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanPurchaseBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(72);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanPurchaseBackground() const {
+    return *this == AppearanceColorKey::postScanPurchaseBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanQualifiedPurchaseBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(73);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanQualifiedPurchaseBackground() const {
+    return *this == AppearanceColorKey::postScanQualifiedPurchaseBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanPurchaseInfoIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(74);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanPurchaseInfoIcon() const {
+    return *this == AppearanceColorKey::postScanPurchaseInfoIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanUGCPurchaseBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(75);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanUGCPurchaseBackground() const {
+    return *this == AppearanceColorKey::postScanUGCPurchaseBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanUGCPurchaseClaimButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(76);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanUGCPurchaseClaimButtonLabel() const {
+    return *this == AppearanceColorKey::postScanUGCPurchaseClaimButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanUGCPurchaseClaimButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(77);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanUGCPurchaseClaimButtonIcon() const {
+    return *this == AppearanceColorKey::postScanUGCPurchaseClaimButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanUGCPurchaseClaimButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(78);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanUGCPurchaseClaimButtonBackground() const {
+    return *this == AppearanceColorKey::postScanUGCPurchaseClaimButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanUGCPurchaseBorder::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(79);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanUGCPurchaseBorder() const {
+    return *this == AppearanceColorKey::postScanUGCPurchaseBorder;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_purchaseRowLabelColor::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(80);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPurchaseRowLabelColor() const {
+    return *this == AppearanceColorKey::purchaseRowLabelColor;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_purchaseRowMetadataLabelColor::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(81);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPurchaseRowMetadataLabelColor() const {
+    return *this == AppearanceColorKey::purchaseRowMetadataLabelColor;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(82);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationTitleLabel() const {
+    return *this == AppearanceColorKey::missedEarningsNavigationTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationDescriptionLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(83);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationDescriptionLabel() const {
+    return *this == AppearanceColorKey::missedEarningsNavigationDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationEditButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(84);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationEditButtonIcon() const {
+    return *this == AppearanceColorKey::missedEarningsNavigationEditButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationEditButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(85);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationEditButtonBackground() const {
+    return *this == AppearanceColorKey::missedEarningsNavigationEditButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationSaveButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(86);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationSaveButtonIcon() const {
+    return *this == AppearanceColorKey::missedEarningsNavigationSaveButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationSaveButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(87);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationSaveButtonBackground() const {
+    return *this == AppearanceColorKey::missedEarningsNavigationSaveButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsFieldEditIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(88);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsFieldEditIcon() const {
+    return *this == AppearanceColorKey::missedEarningsFieldEditIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsAddNewFieldLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(89);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsAddNewFieldLabel() const {
+    return *this == AppearanceColorKey::missedEarningsAddNewFieldLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsModifiedFieldBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(90);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsModifiedFieldBackground() const {
+    return *this == AppearanceColorKey::missedEarningsModifiedFieldBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsListSectionTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(91);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsListSectionTitleLabel() const {
+    return *this == AppearanceColorKey::missedEarningsListSectionTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsTripItemLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(92);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsTripItemLabel() const {
+    return *this == AppearanceColorKey::missedEarningsTripItemLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(93);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalTitleLabel() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalSubtitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(94);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalSubtitleLabel() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalSubtitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalInputLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(95);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalInputLabel() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalInputLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalInputPlaceholderLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(96);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalInputPlaceholderLabel() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalInputPlaceholderLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalInputValueLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(97);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalInputValueLabel() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalInputValueLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalCancelButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(98);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalCancelButtonLabel() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalCancelButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalSaveButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(99);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalSaveButtonLabel() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalSaveButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalSaveButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(100);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalSaveButtonBackground() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalSaveButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(101);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalBackground() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalDatePicker::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(102);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalDatePicker() const {
+    return *this == AppearanceColorKey::missedEarningsEditModalDatePicker;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsAlertTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(103);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsAlertTitleLabel() const {
+    return *this == AppearanceColorKey::missedEarningsAlertTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsAlertMessageLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(104);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsAlertMessageLabel() const {
+    return *this == AppearanceColorKey::missedEarningsAlertMessageLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcBarcodeDetectedBorder::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(105);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcBarcodeDetectedBorder() const {
+    return *this == AppearanceColorKey::ugcBarcodeDetectedBorder;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcBarcodeDetectedIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(106);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcBarcodeDetectedIcon() const {
+    return *this == AppearanceColorKey::ugcBarcodeDetectedIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcNavigationButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(107);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcNavigationButtonIcon() const {
+    return *this == AppearanceColorKey::ugcNavigationButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcNavigationButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(108);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcNavigationButtonBackground() const {
+    return *this == AppearanceColorKey::ugcNavigationButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcProductInfoBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(109);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcProductInfoBackground() const {
+    return *this == AppearanceColorKey::ugcProductInfoBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcProductInfoLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(110);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcProductInfoLabel() const {
+    return *this == AppearanceColorKey::ugcProductInfoLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcToastMessageWarningIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(111);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcToastMessageWarningIcon() const {
+    return *this == AppearanceColorKey::ugcToastMessageWarningIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcRetakeButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(112);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcRetakeButtonLabel() const {
+    return *this == AppearanceColorKey::ugcRetakeButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcRetakeButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(113);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcRetakeButtonBackground() const {
+    return *this == AppearanceColorKey::ugcRetakeButtonBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcSubmitButtonLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(114);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcSubmitButtonLabel() const {
+    return *this == AppearanceColorKey::ugcSubmitButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcSubmitButtonBackground::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(115);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcSubmitButtonBackground() const {
+    return *this == AppearanceColorKey::ugcSubmitButtonBackground;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<AppearanceColorKey> AppearanceColorKey::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<AppearanceColorKey>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage18AppearanceColorKeyO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int AppearanceColorKey::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage18AppearanceColorKeyO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerWallHeaderTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferWallHeaderTitleLabel() const {
+    return *this == AppearanceFontNameKey::offerWallHeaderTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerWallHeaderSubtitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferWallHeaderSubtitleLabel() const {
+    return *this == AppearanceFontNameKey::offerWallHeaderSubtitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerWallSectionHeaderLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(2);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferWallSectionHeaderLabel() const {
+    return *this == AppearanceFontNameKey::offerWallSectionHeaderLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerWallFloatingButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(3);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferWallFloatingButtonLabel() const {
+    return *this == AppearanceFontNameKey::offerWallFloatingButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerRewardPointsLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(4);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferRewardPointsLabel() const {
+    return *this == AppearanceFontNameKey::offerRewardPointsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerTagLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(5);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferTagLabel() const {
+    return *this == AppearanceFontNameKey::offerTagLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerBrandLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(6);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferBrandLabel() const {
+    return *this == AppearanceFontNameKey::offerBrandLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDescriptionLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(7);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDescriptionLabel() const {
+    return *this == AppearanceFontNameKey::offerDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerEligibleMerchantsLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(8);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferEligibleMerchantsLabel() const {
+    return *this == AppearanceFontNameKey::offerEligibleMerchantsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsExpirationLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(9);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsExpirationLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsExpirationLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsClipLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(10);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsClipLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsClipLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerClippedToastMessageLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(11);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferClippedToastMessageLabel() const {
+    return *this == AppearanceFontNameKey::offerClippedToastMessageLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsClipRequiredLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(12);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsClipRequiredLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsClipRequiredLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsSectionHeaderTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(13);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsSectionHeaderTitleLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsSectionHeaderTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsSectionHeaderToggleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(14);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsSectionHeaderToggleLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsSectionHeaderToggleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsSectionBodyLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(15);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsSectionBodyLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsSectionBodyLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsShortDescription::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(16);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsShortDescription() const {
+    return *this == AppearanceFontNameKey::offerDetailsShortDescription;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsFinePrintLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(17);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsFinePrintLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsFinePrintLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsBuyOptionLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(18);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsBuyOptionLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsBuyOptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_storesHeaderTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(19);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isStoresHeaderTitleLabel() const {
+    return *this == AppearanceFontNameKey::storesHeaderTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_storesListSectionHeaderLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(20);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isStoresListSectionHeaderLabel() const {
+    return *this == AppearanceFontNameKey::storesListSectionHeaderLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_storesListItemTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(21);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isStoresListItemTitleLabel() const {
+    return *this == AppearanceFontNameKey::storesListItemTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_storesListItemSubtitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(22);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isStoresListItemSubtitleLabel() const {
+    return *this == AppearanceFontNameKey::storesListItemSubtitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_adLoadingLoadingBarLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(23);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isAdLoadingLoadingBarLabel() const {
+    return *this == AppearanceFontNameKey::adLoadingLoadingBarLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_adLoadingDefaultTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(24);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isAdLoadingDefaultTitleLabel() const {
+    return *this == AppearanceFontNameKey::adLoadingDefaultTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_adLoadingDefaultDescriptionLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(25);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isAdLoadingDefaultDescriptionLabel() const {
+    return *this == AppearanceFontNameKey::adLoadingDefaultDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_errorModalTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(26);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isErrorModalTitleLabel() const {
+    return *this == AppearanceFontNameKey::errorModalTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_errorModalDescriptionLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(27);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isErrorModalDescriptionLabel() const {
+    return *this == AppearanceFontNameKey::errorModalDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_errorModalBackButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(28);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isErrorModalBackButtonLabel() const {
+    return *this == AppearanceFontNameKey::errorModalBackButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanTotalPointsLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(29);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanTotalPointsLabel() const {
+    return *this == AppearanceFontNameKey::postScanTotalPointsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanFooterButtonTitle::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(30);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanFooterButtonTitle() const {
+    return *this == AppearanceFontNameKey::postScanFooterButtonTitle;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanMerchantNameLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(31);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanMerchantNameLabel() const {
+    return *this == AppearanceFontNameKey::postScanMerchantNameLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanTripInfoLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(32);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanTripInfoLabel() const {
+    return *this == AppearanceFontNameKey::postScanTripInfoLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanNoBoostsLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(33);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanNoBoostsLabel() const {
+    return *this == AppearanceFontNameKey::postScanNoBoostsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanSuccessTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(34);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanSuccessTitleLabel() const {
+    return *this == AppearanceFontNameKey::postScanSuccessTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanSuccessDescriptionLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(35);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanSuccessDescriptionLabel() const {
+    return *this == AppearanceFontNameKey::postScanSuccessDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanBoostTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(36);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanBoostTitleLabel() const {
+    return *this == AppearanceFontNameKey::postScanBoostTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanBoostDescriptionLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(37);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanBoostDescriptionLabel() const {
+    return *this == AppearanceFontNameKey::postScanBoostDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanBoostSkipButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(38);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanBoostSkipButtonLabel() const {
+    return *this == AppearanceFontNameKey::postScanBoostSkipButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanBoostClaimButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(39);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanBoostClaimButtonLabel() const {
+    return *this == AppearanceFontNameKey::postScanBoostClaimButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanPurchasePointsLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(40);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanPurchasePointsLabel() const {
+    return *this == AppearanceFontNameKey::postScanPurchasePointsLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanUGCPurchaseClaimButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(41);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanUGCPurchaseClaimButtonLabel() const {
+    return *this == AppearanceFontNameKey::postScanUGCPurchaseClaimButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_purchaseRowLabelFont::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(42);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPurchaseRowLabelFont() const {
+    return *this == AppearanceFontNameKey::purchaseRowLabelFont;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_purchaseRowMetadataLabelFont::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(43);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPurchaseRowMetadataLabelFont() const {
+    return *this == AppearanceFontNameKey::purchaseRowMetadataLabelFont;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsNavigationTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(44);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsNavigationTitleLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsNavigationTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsNavigationDescriptionLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(45);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsNavigationDescriptionLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsNavigationDescriptionLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsListSectionTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(46);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsListSectionTitleLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsListSectionTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsTripItemLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(47);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsTripItemLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsTripItemLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(48);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalTitleLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsEditModalTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalSubtitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(49);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalSubtitleLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsEditModalSubtitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalInputLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(50);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalInputLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsEditModalInputLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalInputPlaceholderLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(51);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalInputPlaceholderLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsEditModalInputPlaceholderLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalInputValueLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(52);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalInputValueLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsEditModalInputValueLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalCancelButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(53);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalCancelButtonLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsEditModalCancelButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalSaveButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(54);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalSaveButtonLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsEditModalSaveButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsAlertTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(55);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsAlertTitleLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsAlertTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsAlertMessageLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(56);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsAlertMessageLabel() const {
+    return *this == AppearanceFontNameKey::missedEarningsAlertMessageLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_ugcProductInfoLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(57);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isUgcProductInfoLabel() const {
+    return *this == AppearanceFontNameKey::ugcProductInfoLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_ugcRetakeButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(58);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isUgcRetakeButtonLabel() const {
+    return *this == AppearanceFontNameKey::ugcRetakeButtonLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_ugcSubmitButtonLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(59);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isUgcSubmitButtonLabel() const {
+    return *this == AppearanceFontNameKey::ugcSubmitButtonLabel;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<AppearanceFontNameKey> AppearanceFontNameKey::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<AppearanceFontNameKey>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage21AppearanceFontNameKeyO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int AppearanceFontNameKey::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage21AppearanceFontNameKeyO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_offerRewardIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isOfferRewardIcon() const {
+    return *this == AppearanceIconKey::offerRewardIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_offerWallFloatingButtonIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isOfferWallFloatingButtonIcon() const {
+    return *this == AppearanceIconKey::offerWallFloatingButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_missedEarningsNavigationEditButtonIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(2);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isMissedEarningsNavigationEditButtonIcon() const {
+    return *this == AppearanceIconKey::missedEarningsNavigationEditButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_missedEarningsFieldEditIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(3);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isMissedEarningsFieldEditIcon() const {
+    return *this == AppearanceIconKey::missedEarningsFieldEditIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_postScanReceiptButtonIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(4);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isPostScanReceiptButtonIcon() const {
+    return *this == AppearanceIconKey::postScanReceiptButtonIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_postScanBoostDefaultIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(5);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isPostScanBoostDefaultIcon() const {
+    return *this == AppearanceIconKey::postScanBoostDefaultIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_postScanSuccessIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(6);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isPostScanSuccessIcon() const {
+    return *this == AppearanceIconKey::postScanSuccessIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_ugcBarcodeDetectedIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(7);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isUgcBarcodeDetectedIcon() const {
+    return *this == AppearanceIconKey::ugcBarcodeDetectedIcon;
+  }
+  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_ugcToastMessageWarningIcon::operator()() const {
+    auto result = AppearanceIconKey::_make();
+    result._destructiveInjectEnumTag(8);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isUgcToastMessageWarningIcon() const {
+    return *this == AppearanceIconKey::ugcToastMessageWarningIcon;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<AppearanceIconKey> AppearanceIconKey::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<AppearanceIconKey>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage17AppearanceIconKeyO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int AppearanceIconKey::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage17AppearanceIconKeyO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
 
 } // namespace BlinkEngage
 

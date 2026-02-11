@@ -50,15 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         BlinkEngageSDK.shared.rewardCurrencyName = "points"
         BlinkEngageSDK.shared.rewardCurrencyPerDollar = 100.0
 
-         // Optional: set to nil to show rewardCurrencyName instead
-        BlinkEngageSDK.shared.rewardCurrencyIcon = UIImage(named: "coin_icon")
-        
-        // Customize default appearance
-        // Additional Offer Wall customizations can be provided via the available delegate methods
-        BlinkEngageSDK.shared.appearance.offerWallHeaderBackgroundColor = .systemBlue
-        BlinkEngageSDK.shared.appearance.offerWallHeaderTextColor = .white
-        BlinkEngageSDK.shared.appearance.receiptSummaryHeaderBackgroundColor = .systemGreen
-        BlinkEngageSDK.shared.appearance.receiptSummaryHeaderTextColor = .white
+        // Styling: pass a custom Theme (e.g. MyTheme from [Styling (Theme)](#styling-theme) below).
+        BlinkEngageSDK.shared.appearance = Appearance(theme: MyTheme())
         
         // Optional: Enable debug mode for development (shows test ad units)
         BlinkEngageSDK.shared.debugModeEnabled = false
@@ -67,26 +60,74 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Depending on `context`, this callback will either solicit a reward amount from the host app, which it should return as an `NSNumber`, or it will inform the host app, via the `rewardAmount` parameter, of an amount (in host app currency) that BlinkEngage awarded to the user
         BlinkEngageSDK.shared.rewardCallback = { context, scanResults, rewardAmount in
             switch context {
-            if context == "ScanFinished" {
-                // Return base reward value for scan completion, if any.
-                // Use `scanResults` if the reward amount varies dynamically depending on receipt information.
-                return NSNumber(value: 10.0) // Return base rewards value
-            } else if context == "Promo" {
-                // Handle promotional rewards. No return value is required
+            case "ScanFinished":
+                return NSNumber(value: 10.0) // Base reward for scan completion; use scanResults if amount varies.
+            case "Promo":
                 print("User earned \(rewardAmount?.doubleValue ?? 0) points from promo")
-            } else if context == "Boost" {
-                // Handle boost rewards. No return value is required
+                return nil
+            case "Boost":
                 print("User earned \(rewardAmount?.doubleValue ?? 0) points from boost")
-            } else if context == "BarcodeCollection" {
-                // Handle barcode collection rewards. No return value is required
+                return nil
+            case "BarcodeCollection":
                 print("User earned \(rewardAmount?.doubleValue ?? 0) points from barcode collection")
+                return nil
+            default:
+                return nil
             }
-            return nil
         }
         return true
     }
 }
 ```
+
+### Styling (Theme)
+
+Control colors, fonts, and images across the SDK (offer wall, receipt summary, loading screen, error modals, missed earnings, etc.) by implementing the `Theme` protocol and passing your theme when creating `Appearance`:
+
+```swift
+class MyTheme: NSObject, Theme {
+    var isRewardIconEnabled: Bool { true }   // Show default reward icon when no custom image is provided
+    var isMerchantIconEnabled: Bool { true } // Load merchant logos on the Stores screen
+    var globalFontMatrix: NSDictionary? {
+        // Keys: NSNumber(UIFont.Weight.rawValue), values: font name String. Used when fontName(forKey:) returns nil.
+        [
+            NSNumber(value: UIFont.Weight.ultraLight.rawValue): "Outfit-Light",
+            NSNumber(value: UIFont.Weight.thin.rawValue): "Outfit-Light",
+            NSNumber(value: UIFont.Weight.light.rawValue): "Outfit-Light",
+            NSNumber(value: UIFont.Weight.regular.rawValue): "Outfit-Regular",
+            NSNumber(value: UIFont.Weight.medium.rawValue): "Outfit-Medium",
+            NSNumber(value: UIFont.Weight.semibold.rawValue): "Outfit-SemiBold",
+            NSNumber(value: UIFont.Weight.bold.rawValue): "Outfit-Bold",
+            NSNumber(value: UIFont.Weight.heavy.rawValue): "Outfit-ExtraBold",
+            NSNumber(value: UIFont.Weight.black.rawValue): "Outfit-Black",
+        ] as NSDictionary
+    }
+
+    func color(forKey key: AppearanceColorKey) -> UIColor? {
+        switch key {
+        case .postScanHeaderBackground: return .systemBlue
+        case .offerWallHeaderBackground: return .systemIndigo
+        default: return nil  // Use SDK default for all other keys
+        }
+    }
+
+    func fontName(forKey key: AppearanceFontNameKey) -> String? {
+        nil  // Use SDK default fonts; or return e.g. "Outfit-Bold" for specific keys
+    }
+
+    func image(forKey key: AppearanceIconKey) -> UIImage? {
+        if key == .offerRewardIcon { return UIImage(named: "my_coin") }
+        return nil
+    }
+}
+
+// During setup:
+BlinkEngageSDK.shared.appearance = Appearance(theme: MyTheme())
+```
+
+- Return `nil` from `color`, `fontName`, or `image` for any key to use the SDK default.
+- Use `AppearanceColorKey`, `AppearanceFontNameKey`, and `AppearanceIconKey` (see SDK headers) for the full list of customizable keys.
+- To use default styling, pass `Appearance(theme: nil)` or `Appearance()`.
 
 ### Presenting Offer Wall
 ```swift
@@ -100,17 +141,6 @@ class YourViewController: UIViewController {
 }
 
 extension YourViewController: OffersWallViewControllerDelegate {
-    func offerWallShouldDisplayHeaderView(_ viewController: OffersWallViewController) -> Bool {
-        return true // or false to hide header
-    }
-    
-    // Optional delegate methods
-    
-    // Customize the title of the Offer Wall
-    func offerWallHeaderTitle(_ viewController: OffersWallViewController) -> String? {
-        return "My Offers"
-    }
-    
     // We’ll present a floating “Scan Receipt” action button and this callback will be triggered if the user clicks it.
     func offerWallDidSelectFloatingAction(_ viewController: OffersWallViewController) {
         // Handle floating action button tap

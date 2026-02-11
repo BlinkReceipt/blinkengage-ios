@@ -13,6 +13,231 @@ import WebKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+@objc public enum AppearanceColorKey : Swift.Int {
+  case offerWallHeaderBackground
+  case offerWallHeaderTitleLabel
+  case offerWallHeaderSubtitleLabel
+  case offerWallHeaderBackButtonIcon
+  case offerWallBackground
+  case offerWallSectionHeaderLabel
+  case offerWallSectionHeaderShowMoreIcon
+  case offerWallSectionHeaderShowMoreBackground
+  case offerWallFloatingButtonBackground
+  case offerWallFloatingButtonLabel
+  case offerWallMoreMerchantsIcon
+  case offerRewardPointsLabel
+  case offerTagLabel
+  case offerTagBackground
+  case offerBackground
+  case offerBrandLabel
+  case offerDescriptionLabel
+  case offerEligibleMerchantsLabel
+  case offerDetailsExpirationLabel
+  case offerDetailsClipLabel
+  case offerClipButtonIcon
+  case offerClipButtonBackground
+  case offerClippedButtonIcon
+  case offerClippedButtonBackground
+  case offerClippedToastMessageLabel
+  case offerClippedToastMessageBackground
+  case offerDetailsClipRequiredLabel
+  case offerDetailsClipRequiredBackground
+  case offerDetailsSectionHeaderTitleLabel
+  case offerDetailsSectionHeaderToggleLabel
+  case offerDetailsSectionBodyLabel
+  case offerDetailsShortDescription
+  case offerDetailsFinePrintLabel
+  case offerDetailsBuyOptionLabel
+  case offerDetailsBuyOptionBackground
+  case storesHeaderBackground
+  case storesHeaderTitleLabel
+  case storesListSectionHeaderLabel
+  case storesListBackground
+  case storesListItemBackground
+  case storesListItemDefaultIcon
+  case storesListItemTitleLabel
+  case storesListItemSubtitleLabel
+  case adLoadingLoadingBarLabel
+  case adLoadingLoadingBarBackground
+  case adLoadingLoadingBarProgress
+  case adLoadingDefaultTitleLabel
+  case adLoadingDefaultDescriptionLabel
+  case errorModalIconBackground
+  case errorModalTitleLabel
+  case errorModalDescriptionLabel
+  case errorModalBackButtonLabel
+  case errorModalBackground
+  case postScanHeaderBackground
+  case postScanTotalPointsBackground
+  case postScanTotalPointsLabel
+  case postScanReceiptButtonIcon
+  case postScanReceiptButtonBackground
+  case postScanFooterButtonTitle
+  case postScanFooterBackground
+  case postScanMerchantNameLabel
+  case postScanTripInfoLabel
+  case postScanNoBoostsLabel
+  case postScanSuccessTitleLabel
+  case postScanSuccessDescriptionLabel
+  case postScanBoostTitleLabel
+  case postScanBoostDescriptionLabel
+  case postScanBoostSkipButtonLabel
+  case postScanBoostClaimButtonLabel
+  case postScanBoostClaimButtonIcon
+  case postScanBoostClaimButtonBackground
+  case postScanPurchasePointsLabel
+  case postScanPurchaseBackground
+  case postScanQualifiedPurchaseBackground
+  case postScanPurchaseInfoIcon
+  case postScanUGCPurchaseBackground
+  case postScanUGCPurchaseClaimButtonLabel
+  case postScanUGCPurchaseClaimButtonIcon
+  case postScanUGCPurchaseClaimButtonBackground
+  case postScanUGCPurchaseBorder
+  case purchaseRowLabelColor
+  case purchaseRowMetadataLabelColor
+  case missedEarningsNavigationTitleLabel
+  case missedEarningsNavigationDescriptionLabel
+  case missedEarningsNavigationEditButtonIcon
+  case missedEarningsNavigationEditButtonBackground
+  case missedEarningsNavigationSaveButtonIcon
+  case missedEarningsNavigationSaveButtonBackground
+  case missedEarningsFieldEditIcon
+  case missedEarningsAddNewFieldLabel
+  case missedEarningsModifiedFieldBackground
+  case missedEarningsListSectionTitleLabel
+  case missedEarningsTripItemLabel
+  case missedEarningsEditModalTitleLabel
+  case missedEarningsEditModalSubtitleLabel
+  case missedEarningsEditModalInputLabel
+  case missedEarningsEditModalInputPlaceholderLabel
+  case missedEarningsEditModalInputValueLabel
+  case missedEarningsEditModalCancelButtonLabel
+  case missedEarningsEditModalSaveButtonLabel
+  case missedEarningsEditModalSaveButtonBackground
+  case missedEarningsEditModalBackground
+  case missedEarningsEditModalDatePicker
+  case missedEarningsAlertTitleLabel
+  case missedEarningsAlertMessageLabel
+  case ugcBarcodeDetectedBorder
+  case ugcBarcodeDetectedIcon
+  case ugcNavigationButtonIcon
+  case ugcNavigationButtonBackground
+  case ugcProductInfoBackground
+  case ugcProductInfoLabel
+  case ugcToastMessageWarningIcon
+  case ugcRetakeButtonLabel
+  case ugcRetakeButtonBackground
+  case ugcSubmitButtonLabel
+  case ugcSubmitButtonBackground
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum AppearanceIconKey : Swift.Int {
+  case offerRewardIcon
+  case offerWallFloatingButtonIcon
+  case missedEarningsNavigationEditButtonIcon
+  case missedEarningsFieldEditIcon
+  case postScanReceiptButtonIcon
+  case postScanBoostDefaultIcon
+  case postScanSuccessIcon
+  case ugcBarcodeDetectedIcon
+  case ugcToastMessageWarningIcon
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum AppearanceFontNameKey : Swift.Int {
+  case offerWallHeaderTitleLabel
+  case offerWallHeaderSubtitleLabel
+  case offerWallSectionHeaderLabel
+  case offerWallFloatingButtonLabel
+  case offerRewardPointsLabel
+  case offerTagLabel
+  case offerBrandLabel
+  case offerDescriptionLabel
+  case offerEligibleMerchantsLabel
+  case offerDetailsExpirationLabel
+  case offerDetailsClipLabel
+  case offerClippedToastMessageLabel
+  case offerDetailsClipRequiredLabel
+  case offerDetailsSectionHeaderTitleLabel
+  case offerDetailsSectionHeaderToggleLabel
+  case offerDetailsSectionBodyLabel
+  case offerDetailsShortDescription
+  case offerDetailsFinePrintLabel
+  case offerDetailsBuyOptionLabel
+  case storesHeaderTitleLabel
+  case storesListSectionHeaderLabel
+  case storesListItemTitleLabel
+  case storesListItemSubtitleLabel
+  case adLoadingLoadingBarLabel
+  case adLoadingDefaultTitleLabel
+  case adLoadingDefaultDescriptionLabel
+  case errorModalTitleLabel
+  case errorModalDescriptionLabel
+  case errorModalBackButtonLabel
+  case postScanTotalPointsLabel
+  case postScanFooterButtonTitle
+  case postScanMerchantNameLabel
+  case postScanTripInfoLabel
+  case postScanNoBoostsLabel
+  case postScanSuccessTitleLabel
+  case postScanSuccessDescriptionLabel
+  case postScanBoostTitleLabel
+  case postScanBoostDescriptionLabel
+  case postScanBoostSkipButtonLabel
+  case postScanBoostClaimButtonLabel
+  case postScanPurchasePointsLabel
+  case postScanUGCPurchaseClaimButtonLabel
+  case purchaseRowLabelFont
+  case purchaseRowMetadataLabelFont
+  case missedEarningsNavigationTitleLabel
+  case missedEarningsNavigationDescriptionLabel
+  case missedEarningsListSectionTitleLabel
+  case missedEarningsTripItemLabel
+  case missedEarningsEditModalTitleLabel
+  case missedEarningsEditModalSubtitleLabel
+  case missedEarningsEditModalInputLabel
+  case missedEarningsEditModalInputPlaceholderLabel
+  case missedEarningsEditModalInputValueLabel
+  case missedEarningsEditModalCancelButtonLabel
+  case missedEarningsEditModalSaveButtonLabel
+  case missedEarningsAlertTitleLabel
+  case missedEarningsAlertMessageLabel
+  case ugcProductInfoLabel
+  case ugcRetakeButtonLabel
+  case ugcSubmitButtonLabel
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public protocol Theme {
+  @objc var isRewardIconEnabled: Swift.Bool { get }
+  @objc var isMerchantIconEnabled: Swift.Bool { get }
+  @objc var globalFontMatrix: Foundation.NSDictionary? { get }
+  @objc func color(forKey key: BlinkEngage.AppearanceColorKey) -> UIKit.UIColor?
+  @objc func fontName(forKey key: BlinkEngage.AppearanceFontNameKey) -> Swift.String?
+  @objc func image(forKey key: BlinkEngage.AppearanceIconKey) -> UIKit.UIImage?
+}
+@objc public protocol OffersWallViewControllerDelegate {
+  @objc optional func offerWallDidSelectFloatingAction(_ viewController: BlinkEngage.OffersWallViewController)
+  @objc optional func offerWallShouldDisplayFloatingAction(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.Bool
+}
+@_hasMissingDesignatedInitializers @objc(OffersWallViewController) @_Concurrency.MainActor @preconcurrency public class OffersWallViewController : UIKit.UIViewController {
+  @objc @_Concurrency.MainActor @preconcurrency weak public var delegate: (any BlinkEngage.OffersWallViewControllerDelegate)?
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public init()
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
+  @objc deinit
+}
 @_inheritsConvenienceInitializers @objc public class BlinkEngageUser : ObjectiveC.NSObject {
   @objc public var emailHash: Swift.String? {
     @objc get
@@ -29,34 +254,12 @@ import _SwiftConcurrencyShims
   @objc override dynamic public init()
   @objc deinit
 }
-@objc public protocol OffersWallViewControllerDelegate {
-  @objc optional func offerWallDidSelectFloatingAction(_ viewController: BlinkEngage.OffersWallViewController)
-  @objc optional func offerWallShouldDisplayFloatingAction(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.Bool
-  @objc optional func offerWallHeaderTitle(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.String?
-  @objc func offerWallShouldDisplayHeaderView(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.Bool
-}
-@_hasMissingDesignatedInitializers @objc(OffersWallViewController) @_Concurrency.MainActor @preconcurrency public class OffersWallViewController : UIKit.UIViewController {
-  @objc @_Concurrency.MainActor @preconcurrency weak public var delegate: (any BlinkEngage.OffersWallViewControllerDelegate)?
-  @_Concurrency.MainActor @preconcurrency @objc dynamic public init()
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
-  @objc deinit
-}
-@_inheritsConvenienceInitializers @objc public class BlinkEngageAppearance : ObjectiveC.NSObject {
-  @objc public var offerWallHeaderBackgroundColor: UIKit.UIColor
-  @objc public var offerWallHeaderTextColor: UIKit.UIColor
-  @objc public var receiptSummaryHeaderBackgroundColor: UIKit.UIColor
-  @objc public var receiptSummaryHeaderTextColor: UIKit.UIColor
-  @objc override dynamic public init()
-  @objc deinit
-}
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class BlinkEngageSDK : ObjectiveC.NSObject {
   @objc final public let user: BlinkEngage.BlinkEngageUser
   @objc public static let shared: BlinkEngage.BlinkEngageSDK
-  @objc public var appearance: BlinkEngage.BlinkEngageAppearance
+  @_Concurrency.MainActor @objc public var appearance: BlinkEngage.Appearance
   @objc public var rewardCurrencyName: Swift.String
   @objc public var rewardCurrencyPerDollar: Swift.Double
-  @objc public var rewardCurrencyIcon: UIKit.UIImage?
   @objc public var userPayoutPercentage: Swift.Double
   @objc public var debugModeEnabled: Swift.Bool {
     @objc get
@@ -65,3 +268,18 @@ import _SwiftConcurrencyShims
   @objc public var rewardCallback: ((_ context: Swift.String, _ scanResults: [Swift.String : Any]?, _ rewardAmount: Foundation.NSNumber?) -> Foundation.NSNumber?)?
   @objc deinit
 }
+@_inheritsConvenienceInitializers @objc final public class Appearance : ObjectiveC.NSObject {
+  @objc final public let theme: (any BlinkEngage.Theme)?
+  @objc override dynamic public init()
+  @objc public init(theme: (any BlinkEngage.Theme)?)
+  @objc deinit
+}
+extension BlinkEngage.AppearanceColorKey : Swift.Equatable {}
+extension BlinkEngage.AppearanceColorKey : Swift.Hashable {}
+extension BlinkEngage.AppearanceColorKey : Swift.RawRepresentable {}
+extension BlinkEngage.AppearanceIconKey : Swift.Equatable {}
+extension BlinkEngage.AppearanceIconKey : Swift.Hashable {}
+extension BlinkEngage.AppearanceIconKey : Swift.RawRepresentable {}
+extension BlinkEngage.AppearanceFontNameKey : Swift.Equatable {}
+extension BlinkEngage.AppearanceFontNameKey : Swift.Hashable {}
+extension BlinkEngage.AppearanceFontNameKey : Swift.RawRepresentable {}
