@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "BlinkEngage",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v15)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -16,7 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "12.11.0"),
-        .package(url: "https://github.com/BlinkReceipt/blinkreceipt-ios.git", from: "1.64.0")
+        .package(url: "https://github.com/BlinkReceipt/blinkreceipt-ios.git", from: "1.65.0")
                        
     ],
     targets: [

@@ -714,10 +714,21 @@ SWIFT_CLASS("_TtC11BlinkEngage14BlinkEngageSDK")
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BlinkEngageSDK * _Nonnull shared;)
 + (BlinkEngageSDK * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, strong) Appearance * _Nonnull appearance;
+/// The display name for the reward currency shown to users (e.g. in balances and reward text).
+/// Used in UI strings such as “25,000 pts”. The default is <code>"pts"</code>.
 @property (nonatomic, copy) NSString * _Nonnull rewardCurrencyName;
+/// The conversion rate from dollars to reward currency (e.g. how many reward units per $1).
+/// Used when converting payout amounts to the in-app reward amount for display and calculations.
+/// The default is <code>100.0</code> (e.g. $1 = 100 reward units).
 @property (nonatomic) double rewardCurrencyPerDollar;
+/// The fraction of the reward amount paid out to the user for scanned receipts.
+/// Valid range is <code>0.4</code> (40%) to <code>1.0</code> (100%). The default is <code>0.6</code> (60%).
+/// Values outside the range are clamped to the nearest bound.
+/// note:
+/// Applies to all reward types except offer wall coupons.
 @property (nonatomic) double userPayoutPercentage;
-/// Enable in development to show test adUnits
+/// When <code>true</code>, uses test ad units so you can verify ad flow without serving real ads.
+/// The default is <code>false</code>. Enable only during development; leave disabled in production.
 @property (nonatomic) BOOL debugModeEnabled;
 /// Called when the user has earned a reward.
 /// \param context A string describing the reward context (e.g. “Promo”, “ScanFinished”, “Boost”).
@@ -742,13 +753,26 @@ SWIFT_CLASS("_TtC11BlinkEngage15BlinkEngageUser")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+/// Type of offers to display in the offer wall list.
+typedef SWIFT_ENUM(NSInteger, OfferWallViewType, open) {
+/// Show all offers (default).
+  OfferWallViewTypeAll = 0,
+/// Show only offers the user has clipped.
+  OfferWallViewTypeClipped = 1,
+};
+
 @protocol OffersWallViewControllerDelegate;
 @class NSCoder;
 @class NSBundle;
 SWIFT_CLASS_NAMED("OffersWallViewController")
 @interface OffersWallViewController : UIViewController
 @property (nonatomic, weak) id <OffersWallViewControllerDelegate> _Nullable delegate;
+@property (nonatomic, readonly) enum OfferWallViewType offersType;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+/// Initializes the offer wall with the given view type (all offers or clipped offers only).
+/// \param offerWallViewType <code>.all</code> for all offers, <code>.clipped</code> for offers the user has clipped.
+///
+- (nonnull instancetype)initWithOfferWallViewType:(enum OfferWallViewType)offerWallViewType OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 - (void)viewWillAppear:(BOOL)animated;
@@ -760,6 +784,7 @@ SWIFT_PROTOCOL("_TtP11BlinkEngage32OffersWallViewControllerDelegate_")
 @optional
 - (void)offerWallDidSelectFloatingAction:(OffersWallViewController * _Nonnull)viewController;
 - (BOOL)offerWallShouldDisplayFloatingAction:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
+- (void)offerWall:(OffersWallViewController * _Nonnull)viewController didUpdateClippedOffersCount:(NSInteger)count;
 @end
 
 @class UIColor;
@@ -4685,6 +4710,12 @@ struct BlinkEngage_AppearanceIconKey {
   _Alignas(8) char _storage[8];
 };
 
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage17OfferWallViewTypeO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage17OfferWallViewTypeO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_OfferWallViewType {
+  _Alignas(8) char _storage[8];
+};
+
 
 #ifdef __cplusplus
 }
@@ -7075,6 +7106,203 @@ struct implClassFor<BlinkEngage::AppearanceIconKey> { using type = BlinkEngage::
 
 namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
 
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@OfferWallViewType") OfferWallViewType;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::OfferWallViewType> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// Type of offers to display in the offer wall list.
+namespace _impl {
+
+class _impl_OfferWallViewType;
+
+// Type metadata accessor for OfferWallViewType
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage17OfferWallViewTypeOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@OfferWallViewType") OfferWallViewType final {
+public:
+  SWIFT_INLINE_THUNK ~OfferWallViewType() noexcept {
+    auto metadata = _impl::$s11BlinkEngage17OfferWallViewTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK OfferWallViewType(const OfferWallViewType &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage17OfferWallViewTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK OfferWallViewType &operator =(const OfferWallViewType &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage17OfferWallViewTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK OfferWallViewType &operator =(OfferWallViewType &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER OfferWallViewType(OfferWallViewType &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    all SWIFT_SYMBOL("c:@M@BlinkEngage@E@OfferWallViewType@OfferWallViewTypeAll"),
+    clipped SWIFT_SYMBOL("c:@M@BlinkEngage@E@OfferWallViewType@OfferWallViewTypeClipped")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_all {  // impl struct for case all
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::all;
+    }
+    SWIFT_INLINE_THUNK OfferWallViewType operator()() const;
+  } all SWIFT_SYMBOL("c:@M@BlinkEngage@E@OfferWallViewType@OfferWallViewTypeAll");
+  SWIFT_INLINE_THUNK bool isAll() const;
+
+  inline const static struct _impl_clipped {  // impl struct for case clipped
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::clipped;
+    }
+    SWIFT_INLINE_THUNK OfferWallViewType operator()() const;
+  } clipped SWIFT_SYMBOL("c:@M@BlinkEngage@E@OfferWallViewType@OfferWallViewTypeClipped");
+  SWIFT_INLINE_THUNK bool isClipped() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::all;
+      case 1: return cases::clipped;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<OfferWallViewType> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage17OfferWallViewTypeO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage17OfferWallViewTypeO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK OfferWallViewType() noexcept {}
+  static SWIFT_INLINE_THUNK OfferWallViewType _make() noexcept { return OfferWallViewType(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage17OfferWallViewTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage17OfferWallViewTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage17OfferWallViewTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_OfferWallViewType;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage17OfferWallViewTypeOD;
+  static inline constexpr $s11BlinkEngage17OfferWallViewTypeOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_OfferWallViewType {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(OfferWallViewType &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const OfferWallViewType &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER OfferWallViewType returnNewValue(T callable) {
+    auto result = OfferWallViewType::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage17OfferWallViewTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::OfferWallViewType> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage17OfferWallViewTypeOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::OfferWallViewType> = true;
+template<>
+struct implClassFor<BlinkEngage::OfferWallViewType> { using type = BlinkEngage::_impl::_impl_OfferWallViewType; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallHeaderBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
     result._destructiveInjectEnumTag(0);
@@ -8578,6 +8806,30 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK swift::Int AppearanceIconKey::getRawValue() const {
   return BlinkEngage::_impl::$s11BlinkEngage17AppearanceIconKeyO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK OfferWallViewType OfferWallViewType::_impl_all::operator()() const {
+    auto result = OfferWallViewType::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool OfferWallViewType::isAll() const {
+    return *this == OfferWallViewType::all;
+  }
+  SWIFT_INLINE_THUNK OfferWallViewType OfferWallViewType::_impl_clipped::operator()() const {
+    auto result = OfferWallViewType::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool OfferWallViewType::isClipped() const {
+    return *this == OfferWallViewType::clipped;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<OfferWallViewType> OfferWallViewType::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<OfferWallViewType>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage17OfferWallViewTypeO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int OfferWallViewType::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage17OfferWallViewTypeO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
   }
 
 } // namespace BlinkEngage
@@ -9303,10 +9555,21 @@ SWIFT_CLASS("_TtC11BlinkEngage14BlinkEngageSDK")
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BlinkEngageSDK * _Nonnull shared;)
 + (BlinkEngageSDK * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, strong) Appearance * _Nonnull appearance;
+/// The display name for the reward currency shown to users (e.g. in balances and reward text).
+/// Used in UI strings such as “25,000 pts”. The default is <code>"pts"</code>.
 @property (nonatomic, copy) NSString * _Nonnull rewardCurrencyName;
+/// The conversion rate from dollars to reward currency (e.g. how many reward units per $1).
+/// Used when converting payout amounts to the in-app reward amount for display and calculations.
+/// The default is <code>100.0</code> (e.g. $1 = 100 reward units).
 @property (nonatomic) double rewardCurrencyPerDollar;
+/// The fraction of the reward amount paid out to the user for scanned receipts.
+/// Valid range is <code>0.4</code> (40%) to <code>1.0</code> (100%). The default is <code>0.6</code> (60%).
+/// Values outside the range are clamped to the nearest bound.
+/// note:
+/// Applies to all reward types except offer wall coupons.
 @property (nonatomic) double userPayoutPercentage;
-/// Enable in development to show test adUnits
+/// When <code>true</code>, uses test ad units so you can verify ad flow without serving real ads.
+/// The default is <code>false</code>. Enable only during development; leave disabled in production.
 @property (nonatomic) BOOL debugModeEnabled;
 /// Called when the user has earned a reward.
 /// \param context A string describing the reward context (e.g. “Promo”, “ScanFinished”, “Boost”).
@@ -9331,13 +9594,26 @@ SWIFT_CLASS("_TtC11BlinkEngage15BlinkEngageUser")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+/// Type of offers to display in the offer wall list.
+typedef SWIFT_ENUM(NSInteger, OfferWallViewType, open) {
+/// Show all offers (default).
+  OfferWallViewTypeAll = 0,
+/// Show only offers the user has clipped.
+  OfferWallViewTypeClipped = 1,
+};
+
 @protocol OffersWallViewControllerDelegate;
 @class NSCoder;
 @class NSBundle;
 SWIFT_CLASS_NAMED("OffersWallViewController")
 @interface OffersWallViewController : UIViewController
 @property (nonatomic, weak) id <OffersWallViewControllerDelegate> _Nullable delegate;
+@property (nonatomic, readonly) enum OfferWallViewType offersType;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+/// Initializes the offer wall with the given view type (all offers or clipped offers only).
+/// \param offerWallViewType <code>.all</code> for all offers, <code>.clipped</code> for offers the user has clipped.
+///
+- (nonnull instancetype)initWithOfferWallViewType:(enum OfferWallViewType)offerWallViewType OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 - (void)viewWillAppear:(BOOL)animated;
@@ -9349,6 +9625,7 @@ SWIFT_PROTOCOL("_TtP11BlinkEngage32OffersWallViewControllerDelegate_")
 @optional
 - (void)offerWallDidSelectFloatingAction:(OffersWallViewController * _Nonnull)viewController;
 - (BOOL)offerWallShouldDisplayFloatingAction:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
+- (void)offerWall:(OffersWallViewController * _Nonnull)viewController didUpdateClippedOffersCount:(NSInteger)count;
 @end
 
 @class UIColor;
@@ -13274,6 +13551,12 @@ struct BlinkEngage_AppearanceIconKey {
   _Alignas(8) char _storage[8];
 };
 
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage17OfferWallViewTypeO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage17OfferWallViewTypeO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_OfferWallViewType {
+  _Alignas(8) char _storage[8];
+};
+
 
 #ifdef __cplusplus
 }
@@ -15664,6 +15947,203 @@ struct implClassFor<BlinkEngage::AppearanceIconKey> { using type = BlinkEngage::
 
 namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
 
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@OfferWallViewType") OfferWallViewType;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::OfferWallViewType> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// Type of offers to display in the offer wall list.
+namespace _impl {
+
+class _impl_OfferWallViewType;
+
+// Type metadata accessor for OfferWallViewType
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage17OfferWallViewTypeOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@OfferWallViewType") OfferWallViewType final {
+public:
+  SWIFT_INLINE_THUNK ~OfferWallViewType() noexcept {
+    auto metadata = _impl::$s11BlinkEngage17OfferWallViewTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK OfferWallViewType(const OfferWallViewType &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage17OfferWallViewTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK OfferWallViewType &operator =(const OfferWallViewType &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage17OfferWallViewTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK OfferWallViewType &operator =(OfferWallViewType &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER OfferWallViewType(OfferWallViewType &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    all SWIFT_SYMBOL("c:@M@BlinkEngage@E@OfferWallViewType@OfferWallViewTypeAll"),
+    clipped SWIFT_SYMBOL("c:@M@BlinkEngage@E@OfferWallViewType@OfferWallViewTypeClipped")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_all {  // impl struct for case all
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::all;
+    }
+    SWIFT_INLINE_THUNK OfferWallViewType operator()() const;
+  } all SWIFT_SYMBOL("c:@M@BlinkEngage@E@OfferWallViewType@OfferWallViewTypeAll");
+  SWIFT_INLINE_THUNK bool isAll() const;
+
+  inline const static struct _impl_clipped {  // impl struct for case clipped
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::clipped;
+    }
+    SWIFT_INLINE_THUNK OfferWallViewType operator()() const;
+  } clipped SWIFT_SYMBOL("c:@M@BlinkEngage@E@OfferWallViewType@OfferWallViewTypeClipped");
+  SWIFT_INLINE_THUNK bool isClipped() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::all;
+      case 1: return cases::clipped;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<OfferWallViewType> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage17OfferWallViewTypeO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage17OfferWallViewTypeO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK OfferWallViewType() noexcept {}
+  static SWIFT_INLINE_THUNK OfferWallViewType _make() noexcept { return OfferWallViewType(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage17OfferWallViewTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage17OfferWallViewTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage17OfferWallViewTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_OfferWallViewType;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage17OfferWallViewTypeOD;
+  static inline constexpr $s11BlinkEngage17OfferWallViewTypeOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_OfferWallViewType {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(OfferWallViewType &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const OfferWallViewType &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER OfferWallViewType returnNewValue(T callable) {
+    auto result = OfferWallViewType::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage17OfferWallViewTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::OfferWallViewType> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage17OfferWallViewTypeOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::OfferWallViewType> = true;
+template<>
+struct implClassFor<BlinkEngage::OfferWallViewType> { using type = BlinkEngage::_impl::_impl_OfferWallViewType; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerWallHeaderBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
     result._destructiveInjectEnumTag(0);
@@ -17167,6 +17647,30 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK swift::Int AppearanceIconKey::getRawValue() const {
   return BlinkEngage::_impl::$s11BlinkEngage17AppearanceIconKeyO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK OfferWallViewType OfferWallViewType::_impl_all::operator()() const {
+    auto result = OfferWallViewType::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool OfferWallViewType::isAll() const {
+    return *this == OfferWallViewType::all;
+  }
+  SWIFT_INLINE_THUNK OfferWallViewType OfferWallViewType::_impl_clipped::operator()() const {
+    auto result = OfferWallViewType::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool OfferWallViewType::isClipped() const {
+    return *this == OfferWallViewType::clipped;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<OfferWallViewType> OfferWallViewType::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<OfferWallViewType>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage17OfferWallViewTypeO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int OfferWallViewType::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage17OfferWallViewTypeO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
   }
 
 } // namespace BlinkEngage

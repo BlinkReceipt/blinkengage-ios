@@ -134,7 +134,8 @@ BlinkEngageSDK.shared.appearance = Appearance(theme: MyTheme())
 class YourViewController: UIViewController {
     
     func displayOfferWall() {
-        let offerWallViewController = OffersWallViewController()
+        // Show all offers (default), or use .clipped to show only offers the user has clipped
+        let offerWallViewController = OffersWallViewController(offerWallViewType: .all)
         offerWallViewController.delegate = self
         present(offerWallViewController, animated: true)
     }
@@ -150,7 +151,40 @@ extension YourViewController: OffersWallViewControllerDelegate {
     func offerWallShouldDisplayFloatingAction(_ viewController: OffersWallViewController) -> Bool {
         return true // or false to hide floating action
     }
+    
+    // Called when the offer list loads or when the user clips/unclips an offer. Use the count to update a badge or other UI.
+    func offerWall(_ viewController: OffersWallViewController, didUpdateClippedOffersCount count: Int) {
+        tabBarItem.badgeValue = count > 0 ? "\(count)" : nil
+    }
 }
+```
+
+**Clipped count delegate:** Implement `offerWall(_:didUpdateClippedOffersCount:)` to be notified when the number of clipped offers changes (initial load, clip, or unclip). Use it to show a badge on a tab or button without polling.
+
+```swift
+// Example: update a tab bar badge or custom label when clipped count changes
+func offerWall(_ viewController: OffersWallViewController, didUpdateClippedOffersCount count: Int) {
+    tabBarItem.badgeValue = count > 0 ? "\(count)" : nil
+    // or: clippedCountLabel.text = "\(count) saved"
+}
+```
+
+**Offer wall view types:**
+- **`.all`** — Show all offers (default).
+- **`.clipped`** — Show only offers the user has clipped.
+
+**All offers (default):**
+```swift
+let offerWall = OffersWallViewController(offerWallViewType: .all)
+offerWall.delegate = self
+present(offerWall, animated: true)
+```
+
+**Clipped offers only:**
+```swift
+let clippedWall = OffersWallViewController(offerWallViewType: .clipped)
+clippedWall.delegate = self
+present(clippedWall, animated: true)
 ```
 
 ### Receipt Scanning Flow
