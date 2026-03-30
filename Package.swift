@@ -15,8 +15,8 @@ let package = Package(
             targets: ["BlinkEngage", "BlinkEngageWrapper"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "12.11.0"),
-        .package(url: "https://github.com/BlinkReceipt/blinkreceipt-ios.git", from: "1.65.0")
+        .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", .upToNextMinor(from: "12.12.0")),
+        .package(url: "https://github.com/BlinkReceipt/blinkreceipt-ios.git", .upToNextMinor(from: "1.66.1"))
                        
     ],
     targets: [

@@ -381,7 +381,7 @@ typedef SWIFT_ENUM(NSInteger, AppearanceColorKey, open) {
   AppearanceColorKeyOfferDetailsClipRequiredLabel = 26,
 /// “Clip Required” badge background on the offer details screen.
   AppearanceColorKeyOfferDetailsClipRequiredBackground = 27,
-/// Section header titles on the offer details screen (e.g. “Eligible UPCs”, “Qualifying Details”, “Description”, “Fine Print”).
+/// Section header titles on the offer details screen (e.g. “Eligible Products”, “Qualifying Details”, “Description”, “Fine Print”).
   AppearanceColorKeyOfferDetailsSectionHeaderTitleLabel = 28,
 /// Section header toggle (“See all” / “See less”) in groups that have expand/collapse on the offer details screen.
   AppearanceColorKeyOfferDetailsSectionHeaderToggleLabel = 29,
@@ -389,174 +389,176 @@ typedef SWIFT_ENUM(NSInteger, AppearanceColorKey, open) {
   AppearanceColorKeyOfferDetailsSectionBodyLabel = 30,
 /// Short description under the offer title on the offer details screen (e.g. coupon description and payout).
   AppearanceColorKeyOfferDetailsShortDescription = 31,
+/// Primary title on the offer details screen.
+  AppearanceColorKeyOfferDetailsTitleLabel = 32,
+/// “Earn …” reward line below the primary title on the offer details screen.
+  AppearanceColorKeyOfferDetailsEarnRewardLabel = 33,
 /// Fine print / full terms body on the offer details screen.
-  AppearanceColorKeyOfferDetailsFinePrintLabel = 32,
+  AppearanceColorKeyOfferDetailsFinePrintLabel = 34,
 /// Label text in the buying options list on the offer details screen (e.g. “Buy any X eligible products” and payout amount).
-  AppearanceColorKeyOfferDetailsBuyOptionLabel = 33,
+  AppearanceColorKeyOfferDetailsBuyOptionLabel = 35,
 /// Background of each row in the buying options list on the offer details screen.
-  AppearanceColorKeyOfferDetailsBuyOptionBackground = 34,
+  AppearanceColorKeyOfferDetailsBuyOptionBackground = 36,
+/// Tag chip label text on the offer details screen
+  AppearanceColorKeyOfferDetailsTagChipLabel = 37,
+/// Tag chip outline on the offer details screen.
+  AppearanceColorKeyOfferDetailsTagChipBorder = 38,
 /// Background of the stores screen header bar (e.g. “Stores” title bar).
-  AppearanceColorKeyStoresHeaderBackground = 35,
+  AppearanceColorKeyStoresHeaderBackground = 39,
 /// Title label in the stores screen header (e.g. “Stores”).
-  AppearanceColorKeyStoresHeaderTitleLabel = 36,
+  AppearanceColorKeyStoresHeaderTitleLabel = 40,
 /// Section header label in the stores list (e.g. group titles).
-  AppearanceColorKeyStoresListSectionHeaderLabel = 37,
+  AppearanceColorKeyStoresListSectionHeaderLabel = 41,
 /// Background of the stores list area.
-  AppearanceColorKeyStoresListBackground = 38,
+  AppearanceColorKeyStoresListBackground = 42,
 /// Background of each store item in the list.
-  AppearanceColorKeyStoresListItemBackground = 39,
+  AppearanceColorKeyStoresListItemBackground = 43,
 /// Default thumbnail icon for each store item in the list.
-  AppearanceColorKeyStoresListItemDefaultIcon = 40,
+  AppearanceColorKeyStoresListItemDefaultIcon = 44,
 /// Title label for each store item in the list.
-  AppearanceColorKeyStoresListItemTitleLabel = 41,
+  AppearanceColorKeyStoresListItemTitleLabel = 45,
 /// Subtitle label for each store item in the list.
-  AppearanceColorKeyStoresListItemSubtitleLabel = 42,
+  AppearanceColorKeyStoresListItemSubtitleLabel = 46,
 /// Label text and icon tint on the ad loading screen progress bar (e.g. “Scanning receipt”, arrow button).
-  AppearanceColorKeyAdLoadingLoadingBarLabel = 43,
+  AppearanceColorKeyAdLoadingLoadingBarLabel = 47,
 /// Background of the ad loading screen progress bar track.
-  AppearanceColorKeyAdLoadingLoadingBarBackground = 44,
+  AppearanceColorKeyAdLoadingLoadingBarBackground = 48,
 /// Progress fill color of the ad loading screen progress bar.
-  AppearanceColorKeyAdLoadingLoadingBarProgress = 45,
+  AppearanceColorKeyAdLoadingLoadingBarProgress = 49,
 /// Title label on the loading screen (e.g. “Hang tight!”).
-  AppearanceColorKeyAdLoadingDefaultTitleLabel = 46,
+  AppearanceColorKeyAdLoadingDefaultTitleLabel = 50,
 /// Description label on the loading screen (e.g. “Exclusive rewards are coming your way!”).
-  AppearanceColorKeyAdLoadingDefaultDescriptionLabel = 47,
+  AppearanceColorKeyAdLoadingDefaultDescriptionLabel = 51,
 /// Background of the warning icon (e.g. “!”) on the error modal.
-  AppearanceColorKeyErrorModalIconBackground = 48,
+  AppearanceColorKeyErrorModalIconBackground = 52,
 /// Title label on the error modal (e.g. “Oops!”, “Invalid Receipt”).
-  AppearanceColorKeyErrorModalTitleLabel = 49,
+  AppearanceColorKeyErrorModalTitleLabel = 53,
 /// Description / message label on the error modal.
-  AppearanceColorKeyErrorModalDescriptionLabel = 50,
+  AppearanceColorKeyErrorModalDescriptionLabel = 54,
 /// “Back to offers” / dismiss button label on the error modal.
-  AppearanceColorKeyErrorModalBackButtonLabel = 51,
+  AppearanceColorKeyErrorModalBackButtonLabel = 55,
 /// Background of the error modal.
-  AppearanceColorKeyErrorModalBackground = 52,
+  AppearanceColorKeyErrorModalBackground = 56,
 /// Background of the receipt summary screen header bar.
-  AppearanceColorKeyPostScanHeaderBackground = 53,
+  AppearanceColorKeyPostScanHeaderBackground = 57,
 /// Background of the total points pill (coin + amount) in the receipt summary header.
-  AppearanceColorKeyPostScanTotalPointsBackground = 54,
+  AppearanceColorKeyPostScanTotalPointsBackground = 58,
 /// Total points amount label in the receipt summary header.
-  AppearanceColorKeyPostScanTotalPointsLabel = 55,
+  AppearanceColorKeyPostScanTotalPointsLabel = 59,
 /// Icon tint for the receipt / missed earnings button in the receipt summary header.
-  AppearanceColorKeyPostScanReceiptButtonIcon = 56,
+  AppearanceColorKeyPostScanReceiptButtonIcon = 60,
 /// Background of the receipt / missed earnings button in the receipt summary header.
-  AppearanceColorKeyPostScanReceiptButtonBackground = 57,
+  AppearanceColorKeyPostScanReceiptButtonBackground = 61,
 /// Title (text color) of the continue button in the receipt summary footer.
-  AppearanceColorKeyPostScanFooterButtonTitle = 58,
+  AppearanceColorKeyPostScanFooterButtonTitle = 62,
 /// Background of the receipt summary footer.
-  AppearanceColorKeyPostScanFooterBackground = 59,
+  AppearanceColorKeyPostScanFooterBackground = 63,
 /// Merchant name label in the trip summary.
-  AppearanceColorKeyPostScanMerchantNameLabel = 60,
+  AppearanceColorKeyPostScanMerchantNameLabel = 64,
 /// Trip info label (date and total) in the trip summary.
-  AppearanceColorKeyPostScanTripInfoLabel = 61,
+  AppearanceColorKeyPostScanTripInfoLabel = 65,
 /// Label in the “no boosts” empty state (e.g. “No more boosts are available…”).
-  AppearanceColorKeyPostScanNoBoostsLabel = 62,
+  AppearanceColorKeyPostScanNoBoostsLabel = 66,
+/// Section header title label (e.g. “Your Rewards”).
+  AppearanceColorKeyPostScanSectionHeaderTitleLabel = 67,
 /// Title label (e.g. “Nice Scan!”) in the first/success state of the boost area.
-  AppearanceColorKeyPostScanSuccessTitleLabel = 63,
+  AppearanceColorKeyPostScanSuccessTitleLabel = 68,
 /// Description label in the first/success state of the boost area (e.g. points earned).
-  AppearanceColorKeyPostScanSuccessDescriptionLabel = 64,
+  AppearanceColorKeyPostScanSuccessDescriptionLabel = 69,
 /// Title label on post-scan boost cards in the receipt summary (e.g. offer title).
-  AppearanceColorKeyPostScanBoostTitleLabel = 65,
+  AppearanceColorKeyPostScanBoostTitleLabel = 70,
 /// Description label on post-scan boost cards in the receipt summary (e.g. offer subtitle).
-  AppearanceColorKeyPostScanBoostDescriptionLabel = 66,
+  AppearanceColorKeyPostScanBoostDescriptionLabel = 71,
 /// Label (text color) on the “Skip” button below post-scan boost cards.
-  AppearanceColorKeyPostScanBoostSkipButtonLabel = 67,
+  AppearanceColorKeyPostScanBoostSkipButtonLabel = 72,
 /// Label (text color) on the “Claim” button below post-scan boost cards.
-  AppearanceColorKeyPostScanBoostClaimButtonLabel = 68,
+  AppearanceColorKeyPostScanBoostClaimButtonLabel = 73,
 /// Icon tint for the “Claim” button below post-scan boost cards.
-  AppearanceColorKeyPostScanBoostClaimButtonIcon = 69,
+  AppearanceColorKeyPostScanBoostClaimButtonIcon = 74,
 /// Background color of the “Claim” button below post-scan boost cards.
-  AppearanceColorKeyPostScanBoostClaimButtonBackground = 70,
+  AppearanceColorKeyPostScanBoostClaimButtonBackground = 75,
 /// Points label (e.g. “+100”) on purchase rows that show reward points.
-  AppearanceColorKeyPostScanPurchasePointsLabel = 71,
+  AppearanceColorKeyPostScanPurchasePointsLabel = 76,
 /// Background of a standard product row in the receipt summary.
-  AppearanceColorKeyPostScanPurchaseBackground = 72,
+  AppearanceColorKeyPostScanPurchaseBackground = 77,
 /// Background of product rows that show reward points.
-  AppearanceColorKeyPostScanQualifiedPurchaseBackground = 73,
-/// Info icon tint on product rows in the receipt summary.
-  AppearanceColorKeyPostScanPurchaseInfoIcon = 74,
-/// Background of the product row when it shows a claim task.
-  AppearanceColorKeyPostScanUGCPurchaseBackground = 75,
-/// Claim button label color on the product row when it shows a claim task.
-  AppearanceColorKeyPostScanUGCPurchaseClaimButtonLabel = 76,
-/// Claim button icon tint on the product row when it shows a claim task.
-  AppearanceColorKeyPostScanUGCPurchaseClaimButtonIcon = 77,
-/// Claim button background on the product row when it shows a claim task.
-  AppearanceColorKeyPostScanUGCPurchaseClaimButtonBackground = 78,
-/// Border color on the product row when it shows a claim task.
-  AppearanceColorKeyPostScanUGCPurchaseBorder = 79,
+  AppearanceColorKeyPostScanQualifiedPurchaseBackground = 78,
+/// Info icon tint on product rows with an active earn task in the receipt summary.
+  AppearanceColorKeyPostScanPurchaseInfoIcon = 79,
+/// Background of a product row with an active earn task (UGC barcode, inline GAM).
+  AppearanceColorKeyPostScanUGCPurchaseBackground = 80,
 /// Product name label color on product rows (receipt summary and Missed Earnings).
-  AppearanceColorKeyPurchaseRowLabelColor = 80,
+  AppearanceColorKeyPurchaseRowLabelColor = 81,
 /// Metadata line label color on product rows (receipt summary and Missed Earnings).
-  AppearanceColorKeyPurchaseRowMetadataLabelColor = 81,
+  AppearanceColorKeyPurchaseRowMetadataLabelColor = 82,
 /// Title label in the Missed Earnings navigation header (e.g. “Missing rewards?”).
-  AppearanceColorKeyMissedEarningsNavigationTitleLabel = 82,
+  AppearanceColorKeyMissedEarningsNavigationTitleLabel = 83,
 /// Description label in the Missed Earnings navigation header (e.g. “Edit this receipt if any details are off”).
-  AppearanceColorKeyMissedEarningsNavigationDescriptionLabel = 83,
+  AppearanceColorKeyMissedEarningsNavigationDescriptionLabel = 84,
 /// Icon tint for the Edit button in the Missed Earnings header.
-  AppearanceColorKeyMissedEarningsNavigationEditButtonIcon = 84,
+  AppearanceColorKeyMissedEarningsNavigationEditButtonIcon = 85,
 /// Background of the Edit button in the Missed Earnings navigation header.
-  AppearanceColorKeyMissedEarningsNavigationEditButtonBackground = 85,
+  AppearanceColorKeyMissedEarningsNavigationEditButtonBackground = 86,
 /// Icon tint of the Save button in the Missed Earnings header.
-  AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon = 86,
+  AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon = 87,
 /// Background of the Save button in the Missed Earnings header.
-  AppearanceColorKeyMissedEarningsNavigationSaveButtonBackground = 87,
+  AppearanceColorKeyMissedEarningsNavigationSaveButtonBackground = 88,
 /// Icon tint for the edit button on each field row in Missed Earnings.
-  AppearanceColorKeyMissedEarningsFieldEditIcon = 88,
+  AppearanceColorKeyMissedEarningsFieldEditIcon = 89,
 /// Label and icon (text/tint color) for the “add new field” control in the Missed Earnings screen.
-  AppearanceColorKeyMissedEarningsAddNewFieldLabel = 89,
+  AppearanceColorKeyMissedEarningsAddNewFieldLabel = 90,
 /// Background of field rows that have been modified in the Missed Earnings screen.
-  AppearanceColorKeyMissedEarningsModifiedFieldBackground = 90,
+  AppearanceColorKeyMissedEarningsModifiedFieldBackground = 91,
 /// Section header title label in the Missed Earnings list (e.g. “Merchant”, “Date”, “Products”).
-  AppearanceColorKeyMissedEarningsListSectionTitleLabel = 91,
+  AppearanceColorKeyMissedEarningsListSectionTitleLabel = 92,
 /// Label text in Missed Earnings merchant and date rows only.
-  AppearanceColorKeyMissedEarningsTripItemLabel = 92,
+  AppearanceColorKeyMissedEarningsTripItemLabel = 93,
 /// Title label at the top of the Missed Earnings edit field modal (e.g. “Merchant Name”, “Receipt Date”).
-  AppearanceColorKeyMissedEarningsEditModalTitleLabel = 93,
+  AppearanceColorKeyMissedEarningsEditModalTitleLabel = 94,
 /// Subtitle label at the top of the Missed Earnings edit modal.
-  AppearanceColorKeyMissedEarningsEditModalSubtitleLabel = 94,
+  AppearanceColorKeyMissedEarningsEditModalSubtitleLabel = 95,
 /// Label for text field titles in the Missed Earnings edit field modal (e.g. “Captured Merchant Name”).
-  AppearanceColorKeyMissedEarningsEditModalInputLabel = 95,
+  AppearanceColorKeyMissedEarningsEditModalInputLabel = 96,
 /// Placeholder text color in the Missed Earnings edit field modal text fields.
-  AppearanceColorKeyMissedEarningsEditModalInputPlaceholderLabel = 96,
+  AppearanceColorKeyMissedEarningsEditModalInputPlaceholderLabel = 97,
 /// Text field value / caption labels in the Missed Earnings edit field modal.
-  AppearanceColorKeyMissedEarningsEditModalInputValueLabel = 97,
+  AppearanceColorKeyMissedEarningsEditModalInputValueLabel = 98,
 /// Cancel button label (text color) in the Missed Earnings edit field modal.
-  AppearanceColorKeyMissedEarningsEditModalCancelButtonLabel = 98,
+  AppearanceColorKeyMissedEarningsEditModalCancelButtonLabel = 99,
 /// Save button label (text color) in the Missed Earnings edit field modal.
-  AppearanceColorKeyMissedEarningsEditModalSaveButtonLabel = 99,
+  AppearanceColorKeyMissedEarningsEditModalSaveButtonLabel = 100,
 /// Save button background in the Missed Earnings edit field modal.
-  AppearanceColorKeyMissedEarningsEditModalSaveButtonBackground = 100,
+  AppearanceColorKeyMissedEarningsEditModalSaveButtonBackground = 101,
 /// Background of the Missed Earnings edit field modal.
-  AppearanceColorKeyMissedEarningsEditModalBackground = 101,
+  AppearanceColorKeyMissedEarningsEditModalBackground = 102,
 /// Tint color of the date picker in the Missed Earnings edit field modal (e.g. selected date highlight).
-  AppearanceColorKeyMissedEarningsEditModalDatePicker = 102,
+  AppearanceColorKeyMissedEarningsEditModalDatePicker = 103,
 /// Title label in the Missed Earnings alert modal (e.g. “No updates made”, “Submit Receipt”).
-  AppearanceColorKeyMissedEarningsAlertTitleLabel = 103,
+  AppearanceColorKeyMissedEarningsAlertTitleLabel = 104,
 /// Message/body label in the Missed Earnings alert modal.
-  AppearanceColorKeyMissedEarningsAlertMessageLabel = 104,
+  AppearanceColorKeyMissedEarningsAlertMessageLabel = 105,
 /// Border color when a barcode is detected in the product capture camera.
-  AppearanceColorKeyUgcBarcodeDetectedBorder = 105,
+  AppearanceColorKeyUgcBarcodeDetectedBorder = 106,
 /// Icon tint when a barcode is detected in the product capture screen.
-  AppearanceColorKeyUgcBarcodeDetectedIcon = 106,
+  AppearanceColorKeyUgcBarcodeDetectedIcon = 107,
 /// Icon tint for navigation buttons (e.g. close, torch) in the product capture header.
-  AppearanceColorKeyUgcNavigationButtonIcon = 107,
+  AppearanceColorKeyUgcNavigationButtonIcon = 108,
 /// Background of navigation buttons (close, torch) in the product capture header.
-  AppearanceColorKeyUgcNavigationButtonBackground = 108,
+  AppearanceColorKeyUgcNavigationButtonBackground = 109,
 /// Background of the product info badges (product name and barcode/UPC) in the product capture screen.
-  AppearanceColorKeyUgcProductInfoBackground = 109,
+  AppearanceColorKeyUgcProductInfoBackground = 110,
 /// Label text color in the product info badges (product name and barcode/UPC).
-  AppearanceColorKeyUgcProductInfoLabel = 110,
+  AppearanceColorKeyUgcProductInfoLabel = 111,
 /// Warning icon tint in the product capture toast message.
-  AppearanceColorKeyUgcToastMessageWarningIcon = 111,
+  AppearanceColorKeyUgcToastMessageWarningIcon = 112,
 /// “Retake” button label (text color) in the product capture footer.
-  AppearanceColorKeyUgcRetakeButtonLabel = 112,
+  AppearanceColorKeyUgcRetakeButtonLabel = 113,
 /// “Retake” button background in the product capture footer.
-  AppearanceColorKeyUgcRetakeButtonBackground = 113,
+  AppearanceColorKeyUgcRetakeButtonBackground = 114,
 /// “Submit” button label (text color) in the product capture footer.
-  AppearanceColorKeyUgcSubmitButtonLabel = 114,
+  AppearanceColorKeyUgcSubmitButtonLabel = 115,
 /// “Submit” button background in the product capture footer.
-  AppearanceColorKeyUgcSubmitButtonBackground = 115,
+  AppearanceColorKeyUgcSubmitButtonBackground = 116,
 };
 
 /// Keys for custom fonts. Return a font name (e.g. <code>"Outfit-Bold"</code>) for a key from your <code>Theme</code> to use that font for the corresponding label; return <code>nil</code> to use the default or your <code>globalFontMatrix</code> by weight.
@@ -587,7 +589,7 @@ typedef SWIFT_ENUM(NSInteger, AppearanceFontNameKey, open) {
   AppearanceFontNameKeyOfferClippedToastMessageLabel = 11,
 /// “Clip Required” badge label on the offer details screen.
   AppearanceFontNameKeyOfferDetailsClipRequiredLabel = 12,
-/// Section header titles on the offer details screen (e.g. “Eligible UPCs”, “Qualifying Details”, “Description”, “Fine Print”).
+/// Section header titles on the offer details screen (e.g. “Eligible Products”, “Qualifying Details”, “Description”, “Fine Print”).
   AppearanceFontNameKeyOfferDetailsSectionHeaderTitleLabel = 13,
 /// Section header toggle (“See all” / “See less”) in groups that have expand/collapse on the offer details screen.
   AppearanceFontNameKeyOfferDetailsSectionHeaderToggleLabel = 14,
@@ -595,92 +597,98 @@ typedef SWIFT_ENUM(NSInteger, AppearanceFontNameKey, open) {
   AppearanceFontNameKeyOfferDetailsSectionBodyLabel = 15,
 /// Short description under the offer title on the offer details screen (e.g. coupon description and payout).
   AppearanceFontNameKeyOfferDetailsShortDescription = 16,
+/// Primary title on the offer details screen.
+  AppearanceFontNameKeyOfferDetailsTitleLabel = 17,
+/// “Earn …” reward line below the primary title on the offer details screen.
+  AppearanceFontNameKeyOfferDetailsEarnRewardLabel = 18,
 /// Fine print / full terms body on the offer details screen.
-  AppearanceFontNameKeyOfferDetailsFinePrintLabel = 17,
+  AppearanceFontNameKeyOfferDetailsFinePrintLabel = 19,
 /// Label text in the buying options list on the offer details screen (e.g. “Buy any X eligible products” and payout amount).
-  AppearanceFontNameKeyOfferDetailsBuyOptionLabel = 18,
+  AppearanceFontNameKeyOfferDetailsBuyOptionLabel = 20,
+/// Tag chip label font on the offer details screen.
+  AppearanceFontNameKeyOfferDetailsTagChipLabel = 21,
 /// Title label in the stores screen header (e.g. “Stores”).
-  AppearanceFontNameKeyStoresHeaderTitleLabel = 19,
+  AppearanceFontNameKeyStoresHeaderTitleLabel = 22,
 /// Section header label in the stores list (e.g. group titles).
-  AppearanceFontNameKeyStoresListSectionHeaderLabel = 20,
+  AppearanceFontNameKeyStoresListSectionHeaderLabel = 23,
 /// Title label for each store item in the list.
-  AppearanceFontNameKeyStoresListItemTitleLabel = 21,
+  AppearanceFontNameKeyStoresListItemTitleLabel = 24,
 /// Subtitle label for each store item in the list.
-  AppearanceFontNameKeyStoresListItemSubtitleLabel = 22,
+  AppearanceFontNameKeyStoresListItemSubtitleLabel = 25,
 /// Label text on the ad loading screen progress bar (e.g. “Scanning receipt”).
-  AppearanceFontNameKeyAdLoadingLoadingBarLabel = 23,
+  AppearanceFontNameKeyAdLoadingLoadingBarLabel = 26,
 /// Title label on the ad loading screen (e.g. “Hang tight!”).
-  AppearanceFontNameKeyAdLoadingDefaultTitleLabel = 24,
+  AppearanceFontNameKeyAdLoadingDefaultTitleLabel = 27,
 /// Description label on the ad loading screen (e.g. “Exclusive rewards are coming your way!”).
-  AppearanceFontNameKeyAdLoadingDefaultDescriptionLabel = 25,
+  AppearanceFontNameKeyAdLoadingDefaultDescriptionLabel = 28,
 /// Title label on the error modal (e.g. “Oops!”, “Invalid Receipt”).
-  AppearanceFontNameKeyErrorModalTitleLabel = 26,
+  AppearanceFontNameKeyErrorModalTitleLabel = 29,
 /// Description / message label on the error modal.
-  AppearanceFontNameKeyErrorModalDescriptionLabel = 27,
+  AppearanceFontNameKeyErrorModalDescriptionLabel = 30,
 /// “Back to offers” / dismiss button label on the error modal.
-  AppearanceFontNameKeyErrorModalBackButtonLabel = 28,
+  AppearanceFontNameKeyErrorModalBackButtonLabel = 31,
 /// Total points amount label in the receipt summary header.
-  AppearanceFontNameKeyPostScanTotalPointsLabel = 29,
+  AppearanceFontNameKeyPostScanTotalPointsLabel = 32,
 /// Title of the continue button in the receipt summary footer.
-  AppearanceFontNameKeyPostScanFooterButtonTitle = 30,
+  AppearanceFontNameKeyPostScanFooterButtonTitle = 33,
 /// Merchant name label in the trip summary.
-  AppearanceFontNameKeyPostScanMerchantNameLabel = 31,
+  AppearanceFontNameKeyPostScanMerchantNameLabel = 34,
 /// Trip info label (date and total) in the trip summary.
-  AppearanceFontNameKeyPostScanTripInfoLabel = 32,
+  AppearanceFontNameKeyPostScanTripInfoLabel = 35,
 /// Label in the “no boosts” empty state (e.g. “No more boosts are available…”).
-  AppearanceFontNameKeyPostScanNoBoostsLabel = 33,
+  AppearanceFontNameKeyPostScanNoBoostsLabel = 36,
+/// Section header title label (e.g. “Your Rewards”).
+  AppearanceFontNameKeyPostScanSectionHeaderTitleLabel = 37,
 /// Title label in the first/success state of the boost area (e.g. “Nice Scan!”).
-  AppearanceFontNameKeyPostScanSuccessTitleLabel = 34,
+  AppearanceFontNameKeyPostScanSuccessTitleLabel = 38,
 /// Description label in the first/success state of the boost area.
-  AppearanceFontNameKeyPostScanSuccessDescriptionLabel = 35,
+  AppearanceFontNameKeyPostScanSuccessDescriptionLabel = 39,
 /// Title label on post-scan boost cards in the receipt summary.
-  AppearanceFontNameKeyPostScanBoostTitleLabel = 36,
+  AppearanceFontNameKeyPostScanBoostTitleLabel = 40,
 /// Description label on post-scan boost cards in the receipt summary.
-  AppearanceFontNameKeyPostScanBoostDescriptionLabel = 37,
+  AppearanceFontNameKeyPostScanBoostDescriptionLabel = 41,
 /// Label on the “Skip” button below post-scan boost cards.
-  AppearanceFontNameKeyPostScanBoostSkipButtonLabel = 38,
+  AppearanceFontNameKeyPostScanBoostSkipButtonLabel = 42,
 /// Label on the “Claim” button below post-scan boost cards.
-  AppearanceFontNameKeyPostScanBoostClaimButtonLabel = 39,
+  AppearanceFontNameKeyPostScanBoostClaimButtonLabel = 43,
 /// Points label (e.g. “+100”) on purchase rows that show reward points.
-  AppearanceFontNameKeyPostScanPurchasePointsLabel = 40,
-/// Claim button label font on the product row when it shows a claim task.
-  AppearanceFontNameKeyPostScanUGCPurchaseClaimButtonLabel = 41,
+  AppearanceFontNameKeyPostScanPurchasePointsLabel = 44,
 /// Product name label font on product rows (receipt summary and Missed Earnings).
-  AppearanceFontNameKeyPurchaseRowLabelFont = 42,
+  AppearanceFontNameKeyPurchaseRowLabelFont = 45,
 /// Metadata line label font on product rows (receipt summary and Missed Earnings).
-  AppearanceFontNameKeyPurchaseRowMetadataLabelFont = 43,
+  AppearanceFontNameKeyPurchaseRowMetadataLabelFont = 46,
 /// Title label in the Missed Earnings navigation header (e.g. “Missing rewards?”).
-  AppearanceFontNameKeyMissedEarningsNavigationTitleLabel = 44,
+  AppearanceFontNameKeyMissedEarningsNavigationTitleLabel = 47,
 /// Description label in the Missed Earnings navigation header (e.g. “Edit this receipt if any details are off”).
-  AppearanceFontNameKeyMissedEarningsNavigationDescriptionLabel = 45,
+  AppearanceFontNameKeyMissedEarningsNavigationDescriptionLabel = 48,
 /// Section header title in the Missed Earnings list (e.g. “Merchant”, “Date”, “Products”).
-  AppearanceFontNameKeyMissedEarningsListSectionTitleLabel = 46,
+  AppearanceFontNameKeyMissedEarningsListSectionTitleLabel = 49,
 /// Label text in Missed Earnings merchant and date rows only.
-  AppearanceFontNameKeyMissedEarningsTripItemLabel = 47,
+  AppearanceFontNameKeyMissedEarningsTripItemLabel = 50,
 /// Title label at the top of the Missed Earnings edit field modal.
-  AppearanceFontNameKeyMissedEarningsEditModalTitleLabel = 48,
+  AppearanceFontNameKeyMissedEarningsEditModalTitleLabel = 51,
 /// Subtitle label at the top of the Missed Earnings edit field modal.
-  AppearanceFontNameKeyMissedEarningsEditModalSubtitleLabel = 49,
+  AppearanceFontNameKeyMissedEarningsEditModalSubtitleLabel = 52,
 /// Label for text field titles in the Missed Earnings edit field modal.
-  AppearanceFontNameKeyMissedEarningsEditModalInputLabel = 50,
+  AppearanceFontNameKeyMissedEarningsEditModalInputLabel = 53,
 /// Placeholder text font in the Missed Earnings edit modal.
-  AppearanceFontNameKeyMissedEarningsEditModalInputPlaceholderLabel = 51,
+  AppearanceFontNameKeyMissedEarningsEditModalInputPlaceholderLabel = 54,
 /// Text field value / caption labels in the Missed Earnings edit field modal.
-  AppearanceFontNameKeyMissedEarningsEditModalInputValueLabel = 52,
+  AppearanceFontNameKeyMissedEarningsEditModalInputValueLabel = 55,
 /// Cancel button label in the Missed Earnings edit field modal.
-  AppearanceFontNameKeyMissedEarningsEditModalCancelButtonLabel = 53,
+  AppearanceFontNameKeyMissedEarningsEditModalCancelButtonLabel = 56,
 /// Save button label in the Missed Earnings edit field modal.
-  AppearanceFontNameKeyMissedEarningsEditModalSaveButtonLabel = 54,
+  AppearanceFontNameKeyMissedEarningsEditModalSaveButtonLabel = 57,
 /// Title label in the Missed Earnings alert modal.
-  AppearanceFontNameKeyMissedEarningsAlertTitleLabel = 55,
+  AppearanceFontNameKeyMissedEarningsAlertTitleLabel = 58,
 /// Message/body label in the Missed Earnings alert modal.
-  AppearanceFontNameKeyMissedEarningsAlertMessageLabel = 56,
+  AppearanceFontNameKeyMissedEarningsAlertMessageLabel = 59,
 /// Label text in the product info badges (product name and barcode/UPC) on the product capture screen.
-  AppearanceFontNameKeyUgcProductInfoLabel = 57,
+  AppearanceFontNameKeyUgcProductInfoLabel = 60,
 /// “Retake” button label in the product capture footer.
-  AppearanceFontNameKeyUgcRetakeButtonLabel = 58,
+  AppearanceFontNameKeyUgcRetakeButtonLabel = 61,
 /// “Submit” button label in the product capture footer.
-  AppearanceFontNameKeyUgcSubmitButtonLabel = 59,
+  AppearanceFontNameKeyUgcSubmitButtonLabel = 62,
 };
 
 /// Keys for custom images. Return an image for a key from your <code>Theme</code> to replace that icon; return <code>nil</code> to use the default (if any). When you return <code>nil</code>, the matching color key may still be used to tint the default icon.
@@ -4821,9 +4829,13 @@ public:
     offerDetailsSectionHeaderToggleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsSectionHeaderToggleLabel"),
     offerDetailsSectionBodyLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsSectionBodyLabel"),
     offerDetailsShortDescription SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsShortDescription"),
+    offerDetailsTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsTitleLabel"),
+    offerDetailsEarnRewardLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsEarnRewardLabel"),
     offerDetailsFinePrintLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsFinePrintLabel"),
     offerDetailsBuyOptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsBuyOptionLabel"),
     offerDetailsBuyOptionBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsBuyOptionBackground"),
+    offerDetailsTagChipLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsTagChipLabel"),
+    offerDetailsTagChipBorder SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsTagChipBorder"),
     storesHeaderBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresHeaderBackground"),
     storesHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresHeaderTitleLabel"),
     storesListSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyStoresListSectionHeaderLabel"),
@@ -4852,6 +4864,7 @@ public:
     postScanMerchantNameLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanMerchantNameLabel"),
     postScanTripInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanTripInfoLabel"),
     postScanNoBoostsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanNoBoostsLabel"),
+    postScanSectionHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanSectionHeaderTitleLabel"),
     postScanSuccessTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanSuccessTitleLabel"),
     postScanSuccessDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanSuccessDescriptionLabel"),
     postScanBoostTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanBoostTitleLabel"),
@@ -4865,10 +4878,6 @@ public:
     postScanQualifiedPurchaseBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanQualifiedPurchaseBackground"),
     postScanPurchaseInfoIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanPurchaseInfoIcon"),
     postScanUGCPurchaseBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseBackground"),
-    postScanUGCPurchaseClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonLabel"),
-    postScanUGCPurchaseClaimButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonIcon"),
-    postScanUGCPurchaseClaimButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonBackground"),
-    postScanUGCPurchaseBorder SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseBorder"),
     purchaseRowLabelColor SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPurchaseRowLabelColor"),
     purchaseRowMetadataLabelColor SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPurchaseRowMetadataLabelColor"),
     missedEarningsNavigationTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationTitleLabel"),
@@ -5165,6 +5174,22 @@ public:
   } offerDetailsShortDescription SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsShortDescription");
   SWIFT_INLINE_THUNK bool isOfferDetailsShortDescription() const;
 
+  inline const static struct _impl_offerDetailsTitleLabel {  // impl struct for case offerDetailsTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsTitleLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsTitleLabel() const;
+
+  inline const static struct _impl_offerDetailsEarnRewardLabel {  // impl struct for case offerDetailsEarnRewardLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsEarnRewardLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsEarnRewardLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsEarnRewardLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsEarnRewardLabel() const;
+
   inline const static struct _impl_offerDetailsFinePrintLabel {  // impl struct for case offerDetailsFinePrintLabel
     SWIFT_INLINE_THUNK constexpr operator cases() const {
       return cases::offerDetailsFinePrintLabel;
@@ -5188,6 +5213,22 @@ public:
     SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
   } offerDetailsBuyOptionBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsBuyOptionBackground");
   SWIFT_INLINE_THUNK bool isOfferDetailsBuyOptionBackground() const;
+
+  inline const static struct _impl_offerDetailsTagChipLabel {  // impl struct for case offerDetailsTagChipLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsTagChipLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsTagChipLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsTagChipLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsTagChipLabel() const;
+
+  inline const static struct _impl_offerDetailsTagChipBorder {  // impl struct for case offerDetailsTagChipBorder
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsTagChipBorder;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } offerDetailsTagChipBorder SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyOfferDetailsTagChipBorder");
+  SWIFT_INLINE_THUNK bool isOfferDetailsTagChipBorder() const;
 
   inline const static struct _impl_storesHeaderBackground {  // impl struct for case storesHeaderBackground
     SWIFT_INLINE_THUNK constexpr operator cases() const {
@@ -5413,6 +5454,14 @@ public:
   } postScanNoBoostsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanNoBoostsLabel");
   SWIFT_INLINE_THUNK bool isPostScanNoBoostsLabel() const;
 
+  inline const static struct _impl_postScanSectionHeaderTitleLabel {  // impl struct for case postScanSectionHeaderTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanSectionHeaderTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } postScanSectionHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanSectionHeaderTitleLabel");
+  SWIFT_INLINE_THUNK bool isPostScanSectionHeaderTitleLabel() const;
+
   inline const static struct _impl_postScanSuccessTitleLabel {  // impl struct for case postScanSuccessTitleLabel
     SWIFT_INLINE_THUNK constexpr operator cases() const {
       return cases::postScanSuccessTitleLabel;
@@ -5516,38 +5565,6 @@ public:
     SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
   } postScanUGCPurchaseBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseBackground");
   SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseBackground() const;
-
-  inline const static struct _impl_postScanUGCPurchaseClaimButtonLabel {  // impl struct for case postScanUGCPurchaseClaimButtonLabel
-    SWIFT_INLINE_THUNK constexpr operator cases() const {
-      return cases::postScanUGCPurchaseClaimButtonLabel;
-    }
-    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
-  } postScanUGCPurchaseClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonLabel");
-  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseClaimButtonLabel() const;
-
-  inline const static struct _impl_postScanUGCPurchaseClaimButtonIcon {  // impl struct for case postScanUGCPurchaseClaimButtonIcon
-    SWIFT_INLINE_THUNK constexpr operator cases() const {
-      return cases::postScanUGCPurchaseClaimButtonIcon;
-    }
-    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
-  } postScanUGCPurchaseClaimButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonIcon");
-  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseClaimButtonIcon() const;
-
-  inline const static struct _impl_postScanUGCPurchaseClaimButtonBackground {  // impl struct for case postScanUGCPurchaseClaimButtonBackground
-    SWIFT_INLINE_THUNK constexpr operator cases() const {
-      return cases::postScanUGCPurchaseClaimButtonBackground;
-    }
-    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
-  } postScanUGCPurchaseClaimButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseClaimButtonBackground");
-  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseClaimButtonBackground() const;
-
-  inline const static struct _impl_postScanUGCPurchaseBorder {  // impl struct for case postScanUGCPurchaseBorder
-    SWIFT_INLINE_THUNK constexpr operator cases() const {
-      return cases::postScanUGCPurchaseBorder;
-    }
-    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
-  } postScanUGCPurchaseBorder SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPostScanUGCPurchaseBorder");
-  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseBorder() const;
 
   inline const static struct _impl_purchaseRowLabelColor {  // impl struct for case purchaseRowLabelColor
     SWIFT_INLINE_THUNK constexpr operator cases() const {
@@ -5872,90 +5889,91 @@ public:
       case 29: return cases::offerDetailsSectionHeaderToggleLabel;
       case 30: return cases::offerDetailsSectionBodyLabel;
       case 31: return cases::offerDetailsShortDescription;
-      case 32: return cases::offerDetailsFinePrintLabel;
-      case 33: return cases::offerDetailsBuyOptionLabel;
-      case 34: return cases::offerDetailsBuyOptionBackground;
-      case 35: return cases::storesHeaderBackground;
-      case 36: return cases::storesHeaderTitleLabel;
-      case 37: return cases::storesListSectionHeaderLabel;
-      case 38: return cases::storesListBackground;
-      case 39: return cases::storesListItemBackground;
-      case 40: return cases::storesListItemDefaultIcon;
-      case 41: return cases::storesListItemTitleLabel;
-      case 42: return cases::storesListItemSubtitleLabel;
-      case 43: return cases::adLoadingLoadingBarLabel;
-      case 44: return cases::adLoadingLoadingBarBackground;
-      case 45: return cases::adLoadingLoadingBarProgress;
-      case 46: return cases::adLoadingDefaultTitleLabel;
-      case 47: return cases::adLoadingDefaultDescriptionLabel;
-      case 48: return cases::errorModalIconBackground;
-      case 49: return cases::errorModalTitleLabel;
-      case 50: return cases::errorModalDescriptionLabel;
-      case 51: return cases::errorModalBackButtonLabel;
-      case 52: return cases::errorModalBackground;
-      case 53: return cases::postScanHeaderBackground;
-      case 54: return cases::postScanTotalPointsBackground;
-      case 55: return cases::postScanTotalPointsLabel;
-      case 56: return cases::postScanReceiptButtonIcon;
-      case 57: return cases::postScanReceiptButtonBackground;
-      case 58: return cases::postScanFooterButtonTitle;
-      case 59: return cases::postScanFooterBackground;
-      case 60: return cases::postScanMerchantNameLabel;
-      case 61: return cases::postScanTripInfoLabel;
-      case 62: return cases::postScanNoBoostsLabel;
-      case 63: return cases::postScanSuccessTitleLabel;
-      case 64: return cases::postScanSuccessDescriptionLabel;
-      case 65: return cases::postScanBoostTitleLabel;
-      case 66: return cases::postScanBoostDescriptionLabel;
-      case 67: return cases::postScanBoostSkipButtonLabel;
-      case 68: return cases::postScanBoostClaimButtonLabel;
-      case 69: return cases::postScanBoostClaimButtonIcon;
-      case 70: return cases::postScanBoostClaimButtonBackground;
-      case 71: return cases::postScanPurchasePointsLabel;
-      case 72: return cases::postScanPurchaseBackground;
-      case 73: return cases::postScanQualifiedPurchaseBackground;
-      case 74: return cases::postScanPurchaseInfoIcon;
-      case 75: return cases::postScanUGCPurchaseBackground;
-      case 76: return cases::postScanUGCPurchaseClaimButtonLabel;
-      case 77: return cases::postScanUGCPurchaseClaimButtonIcon;
-      case 78: return cases::postScanUGCPurchaseClaimButtonBackground;
-      case 79: return cases::postScanUGCPurchaseBorder;
-      case 80: return cases::purchaseRowLabelColor;
-      case 81: return cases::purchaseRowMetadataLabelColor;
-      case 82: return cases::missedEarningsNavigationTitleLabel;
-      case 83: return cases::missedEarningsNavigationDescriptionLabel;
-      case 84: return cases::missedEarningsNavigationEditButtonIcon;
-      case 85: return cases::missedEarningsNavigationEditButtonBackground;
-      case 86: return cases::missedEarningsNavigationSaveButtonIcon;
-      case 87: return cases::missedEarningsNavigationSaveButtonBackground;
-      case 88: return cases::missedEarningsFieldEditIcon;
-      case 89: return cases::missedEarningsAddNewFieldLabel;
-      case 90: return cases::missedEarningsModifiedFieldBackground;
-      case 91: return cases::missedEarningsListSectionTitleLabel;
-      case 92: return cases::missedEarningsTripItemLabel;
-      case 93: return cases::missedEarningsEditModalTitleLabel;
-      case 94: return cases::missedEarningsEditModalSubtitleLabel;
-      case 95: return cases::missedEarningsEditModalInputLabel;
-      case 96: return cases::missedEarningsEditModalInputPlaceholderLabel;
-      case 97: return cases::missedEarningsEditModalInputValueLabel;
-      case 98: return cases::missedEarningsEditModalCancelButtonLabel;
-      case 99: return cases::missedEarningsEditModalSaveButtonLabel;
-      case 100: return cases::missedEarningsEditModalSaveButtonBackground;
-      case 101: return cases::missedEarningsEditModalBackground;
-      case 102: return cases::missedEarningsEditModalDatePicker;
-      case 103: return cases::missedEarningsAlertTitleLabel;
-      case 104: return cases::missedEarningsAlertMessageLabel;
-      case 105: return cases::ugcBarcodeDetectedBorder;
-      case 106: return cases::ugcBarcodeDetectedIcon;
-      case 107: return cases::ugcNavigationButtonIcon;
-      case 108: return cases::ugcNavigationButtonBackground;
-      case 109: return cases::ugcProductInfoBackground;
-      case 110: return cases::ugcProductInfoLabel;
-      case 111: return cases::ugcToastMessageWarningIcon;
-      case 112: return cases::ugcRetakeButtonLabel;
-      case 113: return cases::ugcRetakeButtonBackground;
-      case 114: return cases::ugcSubmitButtonLabel;
-      case 115: return cases::ugcSubmitButtonBackground;
+      case 32: return cases::offerDetailsTitleLabel;
+      case 33: return cases::offerDetailsEarnRewardLabel;
+      case 34: return cases::offerDetailsFinePrintLabel;
+      case 35: return cases::offerDetailsBuyOptionLabel;
+      case 36: return cases::offerDetailsBuyOptionBackground;
+      case 37: return cases::offerDetailsTagChipLabel;
+      case 38: return cases::offerDetailsTagChipBorder;
+      case 39: return cases::storesHeaderBackground;
+      case 40: return cases::storesHeaderTitleLabel;
+      case 41: return cases::storesListSectionHeaderLabel;
+      case 42: return cases::storesListBackground;
+      case 43: return cases::storesListItemBackground;
+      case 44: return cases::storesListItemDefaultIcon;
+      case 45: return cases::storesListItemTitleLabel;
+      case 46: return cases::storesListItemSubtitleLabel;
+      case 47: return cases::adLoadingLoadingBarLabel;
+      case 48: return cases::adLoadingLoadingBarBackground;
+      case 49: return cases::adLoadingLoadingBarProgress;
+      case 50: return cases::adLoadingDefaultTitleLabel;
+      case 51: return cases::adLoadingDefaultDescriptionLabel;
+      case 52: return cases::errorModalIconBackground;
+      case 53: return cases::errorModalTitleLabel;
+      case 54: return cases::errorModalDescriptionLabel;
+      case 55: return cases::errorModalBackButtonLabel;
+      case 56: return cases::errorModalBackground;
+      case 57: return cases::postScanHeaderBackground;
+      case 58: return cases::postScanTotalPointsBackground;
+      case 59: return cases::postScanTotalPointsLabel;
+      case 60: return cases::postScanReceiptButtonIcon;
+      case 61: return cases::postScanReceiptButtonBackground;
+      case 62: return cases::postScanFooterButtonTitle;
+      case 63: return cases::postScanFooterBackground;
+      case 64: return cases::postScanMerchantNameLabel;
+      case 65: return cases::postScanTripInfoLabel;
+      case 66: return cases::postScanNoBoostsLabel;
+      case 67: return cases::postScanSectionHeaderTitleLabel;
+      case 68: return cases::postScanSuccessTitleLabel;
+      case 69: return cases::postScanSuccessDescriptionLabel;
+      case 70: return cases::postScanBoostTitleLabel;
+      case 71: return cases::postScanBoostDescriptionLabel;
+      case 72: return cases::postScanBoostSkipButtonLabel;
+      case 73: return cases::postScanBoostClaimButtonLabel;
+      case 74: return cases::postScanBoostClaimButtonIcon;
+      case 75: return cases::postScanBoostClaimButtonBackground;
+      case 76: return cases::postScanPurchasePointsLabel;
+      case 77: return cases::postScanPurchaseBackground;
+      case 78: return cases::postScanQualifiedPurchaseBackground;
+      case 79: return cases::postScanPurchaseInfoIcon;
+      case 80: return cases::postScanUGCPurchaseBackground;
+      case 81: return cases::purchaseRowLabelColor;
+      case 82: return cases::purchaseRowMetadataLabelColor;
+      case 83: return cases::missedEarningsNavigationTitleLabel;
+      case 84: return cases::missedEarningsNavigationDescriptionLabel;
+      case 85: return cases::missedEarningsNavigationEditButtonIcon;
+      case 86: return cases::missedEarningsNavigationEditButtonBackground;
+      case 87: return cases::missedEarningsNavigationSaveButtonIcon;
+      case 88: return cases::missedEarningsNavigationSaveButtonBackground;
+      case 89: return cases::missedEarningsFieldEditIcon;
+      case 90: return cases::missedEarningsAddNewFieldLabel;
+      case 91: return cases::missedEarningsModifiedFieldBackground;
+      case 92: return cases::missedEarningsListSectionTitleLabel;
+      case 93: return cases::missedEarningsTripItemLabel;
+      case 94: return cases::missedEarningsEditModalTitleLabel;
+      case 95: return cases::missedEarningsEditModalSubtitleLabel;
+      case 96: return cases::missedEarningsEditModalInputLabel;
+      case 97: return cases::missedEarningsEditModalInputPlaceholderLabel;
+      case 98: return cases::missedEarningsEditModalInputValueLabel;
+      case 99: return cases::missedEarningsEditModalCancelButtonLabel;
+      case 100: return cases::missedEarningsEditModalSaveButtonLabel;
+      case 101: return cases::missedEarningsEditModalSaveButtonBackground;
+      case 102: return cases::missedEarningsEditModalBackground;
+      case 103: return cases::missedEarningsEditModalDatePicker;
+      case 104: return cases::missedEarningsAlertTitleLabel;
+      case 105: return cases::missedEarningsAlertMessageLabel;
+      case 106: return cases::ugcBarcodeDetectedBorder;
+      case 107: return cases::ugcBarcodeDetectedIcon;
+      case 108: return cases::ugcNavigationButtonIcon;
+      case 109: return cases::ugcNavigationButtonBackground;
+      case 110: return cases::ugcProductInfoBackground;
+      case 111: return cases::ugcProductInfoLabel;
+      case 112: return cases::ugcToastMessageWarningIcon;
+      case 113: return cases::ugcRetakeButtonLabel;
+      case 114: return cases::ugcRetakeButtonBackground;
+      case 115: return cases::ugcSubmitButtonLabel;
+      case 116: return cases::ugcSubmitButtonBackground;
       default: abort();
     }
   }
@@ -6143,8 +6161,11 @@ public:
     offerDetailsSectionHeaderToggleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsSectionHeaderToggleLabel"),
     offerDetailsSectionBodyLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsSectionBodyLabel"),
     offerDetailsShortDescription SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsShortDescription"),
+    offerDetailsTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsTitleLabel"),
+    offerDetailsEarnRewardLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsEarnRewardLabel"),
     offerDetailsFinePrintLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsFinePrintLabel"),
     offerDetailsBuyOptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsBuyOptionLabel"),
+    offerDetailsTagChipLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsTagChipLabel"),
     storesHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresHeaderTitleLabel"),
     storesListSectionHeaderLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresListSectionHeaderLabel"),
     storesListItemTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyStoresListItemTitleLabel"),
@@ -6160,6 +6181,7 @@ public:
     postScanMerchantNameLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanMerchantNameLabel"),
     postScanTripInfoLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanTripInfoLabel"),
     postScanNoBoostsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanNoBoostsLabel"),
+    postScanSectionHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanSectionHeaderTitleLabel"),
     postScanSuccessTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanSuccessTitleLabel"),
     postScanSuccessDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanSuccessDescriptionLabel"),
     postScanBoostTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostTitleLabel"),
@@ -6167,7 +6189,6 @@ public:
     postScanBoostSkipButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostSkipButtonLabel"),
     postScanBoostClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanBoostClaimButtonLabel"),
     postScanPurchasePointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanPurchasePointsLabel"),
-    postScanUGCPurchaseClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanUGCPurchaseClaimButtonLabel"),
     purchaseRowLabelFont SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPurchaseRowLabelFont"),
     purchaseRowMetadataLabelFont SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPurchaseRowMetadataLabelFont"),
     missedEarningsNavigationTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyMissedEarningsNavigationTitleLabel"),
@@ -6326,6 +6347,22 @@ public:
   } offerDetailsShortDescription SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsShortDescription");
   SWIFT_INLINE_THUNK bool isOfferDetailsShortDescription() const;
 
+  inline const static struct _impl_offerDetailsTitleLabel {  // impl struct for case offerDetailsTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsTitleLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsTitleLabel() const;
+
+  inline const static struct _impl_offerDetailsEarnRewardLabel {  // impl struct for case offerDetailsEarnRewardLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsEarnRewardLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsEarnRewardLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsEarnRewardLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsEarnRewardLabel() const;
+
   inline const static struct _impl_offerDetailsFinePrintLabel {  // impl struct for case offerDetailsFinePrintLabel
     SWIFT_INLINE_THUNK constexpr operator cases() const {
       return cases::offerDetailsFinePrintLabel;
@@ -6341,6 +6378,14 @@ public:
     SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
   } offerDetailsBuyOptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsBuyOptionLabel");
   SWIFT_INLINE_THUNK bool isOfferDetailsBuyOptionLabel() const;
+
+  inline const static struct _impl_offerDetailsTagChipLabel {  // impl struct for case offerDetailsTagChipLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::offerDetailsTagChipLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } offerDetailsTagChipLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyOfferDetailsTagChipLabel");
+  SWIFT_INLINE_THUNK bool isOfferDetailsTagChipLabel() const;
 
   inline const static struct _impl_storesHeaderTitleLabel {  // impl struct for case storesHeaderTitleLabel
     SWIFT_INLINE_THUNK constexpr operator cases() const {
@@ -6462,6 +6507,14 @@ public:
   } postScanNoBoostsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanNoBoostsLabel");
   SWIFT_INLINE_THUNK bool isPostScanNoBoostsLabel() const;
 
+  inline const static struct _impl_postScanSectionHeaderTitleLabel {  // impl struct for case postScanSectionHeaderTitleLabel
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::postScanSectionHeaderTitleLabel;
+    }
+    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
+  } postScanSectionHeaderTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanSectionHeaderTitleLabel");
+  SWIFT_INLINE_THUNK bool isPostScanSectionHeaderTitleLabel() const;
+
   inline const static struct _impl_postScanSuccessTitleLabel {  // impl struct for case postScanSuccessTitleLabel
     SWIFT_INLINE_THUNK constexpr operator cases() const {
       return cases::postScanSuccessTitleLabel;
@@ -6517,14 +6570,6 @@ public:
     SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
   } postScanPurchasePointsLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanPurchasePointsLabel");
   SWIFT_INLINE_THUNK bool isPostScanPurchasePointsLabel() const;
-
-  inline const static struct _impl_postScanUGCPurchaseClaimButtonLabel {  // impl struct for case postScanUGCPurchaseClaimButtonLabel
-    SWIFT_INLINE_THUNK constexpr operator cases() const {
-      return cases::postScanUGCPurchaseClaimButtonLabel;
-    }
-    SWIFT_INLINE_THUNK AppearanceFontNameKey operator()() const;
-  } postScanUGCPurchaseClaimButtonLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceFontNameKey@AppearanceFontNameKeyPostScanUGCPurchaseClaimButtonLabel");
-  SWIFT_INLINE_THUNK bool isPostScanUGCPurchaseClaimButtonLabel() const;
 
   inline const static struct _impl_purchaseRowLabelFont {  // impl struct for case purchaseRowLabelFont
     SWIFT_INLINE_THUNK constexpr operator cases() const {
@@ -6690,49 +6735,52 @@ public:
       case 14: return cases::offerDetailsSectionHeaderToggleLabel;
       case 15: return cases::offerDetailsSectionBodyLabel;
       case 16: return cases::offerDetailsShortDescription;
-      case 17: return cases::offerDetailsFinePrintLabel;
-      case 18: return cases::offerDetailsBuyOptionLabel;
-      case 19: return cases::storesHeaderTitleLabel;
-      case 20: return cases::storesListSectionHeaderLabel;
-      case 21: return cases::storesListItemTitleLabel;
-      case 22: return cases::storesListItemSubtitleLabel;
-      case 23: return cases::adLoadingLoadingBarLabel;
-      case 24: return cases::adLoadingDefaultTitleLabel;
-      case 25: return cases::adLoadingDefaultDescriptionLabel;
-      case 26: return cases::errorModalTitleLabel;
-      case 27: return cases::errorModalDescriptionLabel;
-      case 28: return cases::errorModalBackButtonLabel;
-      case 29: return cases::postScanTotalPointsLabel;
-      case 30: return cases::postScanFooterButtonTitle;
-      case 31: return cases::postScanMerchantNameLabel;
-      case 32: return cases::postScanTripInfoLabel;
-      case 33: return cases::postScanNoBoostsLabel;
-      case 34: return cases::postScanSuccessTitleLabel;
-      case 35: return cases::postScanSuccessDescriptionLabel;
-      case 36: return cases::postScanBoostTitleLabel;
-      case 37: return cases::postScanBoostDescriptionLabel;
-      case 38: return cases::postScanBoostSkipButtonLabel;
-      case 39: return cases::postScanBoostClaimButtonLabel;
-      case 40: return cases::postScanPurchasePointsLabel;
-      case 41: return cases::postScanUGCPurchaseClaimButtonLabel;
-      case 42: return cases::purchaseRowLabelFont;
-      case 43: return cases::purchaseRowMetadataLabelFont;
-      case 44: return cases::missedEarningsNavigationTitleLabel;
-      case 45: return cases::missedEarningsNavigationDescriptionLabel;
-      case 46: return cases::missedEarningsListSectionTitleLabel;
-      case 47: return cases::missedEarningsTripItemLabel;
-      case 48: return cases::missedEarningsEditModalTitleLabel;
-      case 49: return cases::missedEarningsEditModalSubtitleLabel;
-      case 50: return cases::missedEarningsEditModalInputLabel;
-      case 51: return cases::missedEarningsEditModalInputPlaceholderLabel;
-      case 52: return cases::missedEarningsEditModalInputValueLabel;
-      case 53: return cases::missedEarningsEditModalCancelButtonLabel;
-      case 54: return cases::missedEarningsEditModalSaveButtonLabel;
-      case 55: return cases::missedEarningsAlertTitleLabel;
-      case 56: return cases::missedEarningsAlertMessageLabel;
-      case 57: return cases::ugcProductInfoLabel;
-      case 58: return cases::ugcRetakeButtonLabel;
-      case 59: return cases::ugcSubmitButtonLabel;
+      case 17: return cases::offerDetailsTitleLabel;
+      case 18: return cases::offerDetailsEarnRewardLabel;
+      case 19: return cases::offerDetailsFinePrintLabel;
+      case 20: return cases::offerDetailsBuyOptionLabel;
+      case 21: return cases::offerDetailsTagChipLabel;
+      case 22: return cases::storesHeaderTitleLabel;
+      case 23: return cases::storesListSectionHeaderLabel;
+      case 24: return cases::storesListItemTitleLabel;
+      case 25: return cases::storesListItemSubtitleLabel;
+      case 26: return cases::adLoadingLoadingBarLabel;
+      case 27: return cases::adLoadingDefaultTitleLabel;
+      case 28: return cases::adLoadingDefaultDescriptionLabel;
+      case 29: return cases::errorModalTitleLabel;
+      case 30: return cases::errorModalDescriptionLabel;
+      case 31: return cases::errorModalBackButtonLabel;
+      case 32: return cases::postScanTotalPointsLabel;
+      case 33: return cases::postScanFooterButtonTitle;
+      case 34: return cases::postScanMerchantNameLabel;
+      case 35: return cases::postScanTripInfoLabel;
+      case 36: return cases::postScanNoBoostsLabel;
+      case 37: return cases::postScanSectionHeaderTitleLabel;
+      case 38: return cases::postScanSuccessTitleLabel;
+      case 39: return cases::postScanSuccessDescriptionLabel;
+      case 40: return cases::postScanBoostTitleLabel;
+      case 41: return cases::postScanBoostDescriptionLabel;
+      case 42: return cases::postScanBoostSkipButtonLabel;
+      case 43: return cases::postScanBoostClaimButtonLabel;
+      case 44: return cases::postScanPurchasePointsLabel;
+      case 45: return cases::purchaseRowLabelFont;
+      case 46: return cases::purchaseRowMetadataLabelFont;
+      case 47: return cases::missedEarningsNavigationTitleLabel;
+      case 48: return cases::missedEarningsNavigationDescriptionLabel;
+      case 49: return cases::missedEarningsListSectionTitleLabel;
+      case 50: return cases::missedEarningsTripItemLabel;
+      case 51: return cases::missedEarningsEditModalTitleLabel;
+      case 52: return cases::missedEarningsEditModalSubtitleLabel;
+      case 53: return cases::missedEarningsEditModalInputLabel;
+      case 54: return cases::missedEarningsEditModalInputPlaceholderLabel;
+      case 55: return cases::missedEarningsEditModalInputValueLabel;
+      case 56: return cases::missedEarningsEditModalCancelButtonLabel;
+      case 57: return cases::missedEarningsEditModalSaveButtonLabel;
+      case 58: return cases::missedEarningsAlertTitleLabel;
+      case 59: return cases::missedEarningsAlertMessageLabel;
+      case 60: return cases::ugcProductInfoLabel;
+      case 61: return cases::ugcRetakeButtonLabel;
+      case 62: return cases::ugcSubmitButtonLabel;
       default: abort();
     }
   }
@@ -7559,9 +7607,25 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsShortDescription() const {
     return *this == AppearanceColorKey::offerDetailsShortDescription;
   }
-  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsFinePrintLabel::operator()() const {
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
     result._destructiveInjectEnumTag(32);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsTitleLabel() const {
+    return *this == AppearanceColorKey::offerDetailsTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsEarnRewardLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(33);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsEarnRewardLabel() const {
+    return *this == AppearanceColorKey::offerDetailsEarnRewardLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsFinePrintLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(34);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsFinePrintLabel() const {
@@ -7569,7 +7633,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsBuyOptionLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(33);
+    result._destructiveInjectEnumTag(35);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsBuyOptionLabel() const {
@@ -7577,15 +7641,31 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsBuyOptionBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(34);
+    result._destructiveInjectEnumTag(36);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsBuyOptionBackground() const {
     return *this == AppearanceColorKey::offerDetailsBuyOptionBackground;
   }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsTagChipLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(37);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsTagChipLabel() const {
+    return *this == AppearanceColorKey::offerDetailsTagChipLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_offerDetailsTagChipBorder::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(38);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isOfferDetailsTagChipBorder() const {
+    return *this == AppearanceColorKey::offerDetailsTagChipBorder;
+  }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesHeaderBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(35);
+    result._destructiveInjectEnumTag(39);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresHeaderBackground() const {
@@ -7593,7 +7673,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesHeaderTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(36);
+    result._destructiveInjectEnumTag(40);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresHeaderTitleLabel() const {
@@ -7601,7 +7681,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListSectionHeaderLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(37);
+    result._destructiveInjectEnumTag(41);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListSectionHeaderLabel() const {
@@ -7609,7 +7689,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(38);
+    result._destructiveInjectEnumTag(42);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListBackground() const {
@@ -7617,7 +7697,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListItemBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(39);
+    result._destructiveInjectEnumTag(43);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListItemBackground() const {
@@ -7625,7 +7705,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListItemDefaultIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(40);
+    result._destructiveInjectEnumTag(44);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListItemDefaultIcon() const {
@@ -7633,7 +7713,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListItemTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(41);
+    result._destructiveInjectEnumTag(45);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListItemTitleLabel() const {
@@ -7641,7 +7721,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_storesListItemSubtitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(42);
+    result._destructiveInjectEnumTag(46);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isStoresListItemSubtitleLabel() const {
@@ -7649,7 +7729,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_adLoadingLoadingBarLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(43);
+    result._destructiveInjectEnumTag(47);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isAdLoadingLoadingBarLabel() const {
@@ -7657,7 +7737,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_adLoadingLoadingBarBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(44);
+    result._destructiveInjectEnumTag(48);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isAdLoadingLoadingBarBackground() const {
@@ -7665,7 +7745,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_adLoadingLoadingBarProgress::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(45);
+    result._destructiveInjectEnumTag(49);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isAdLoadingLoadingBarProgress() const {
@@ -7673,7 +7753,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_adLoadingDefaultTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(46);
+    result._destructiveInjectEnumTag(50);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isAdLoadingDefaultTitleLabel() const {
@@ -7681,7 +7761,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_adLoadingDefaultDescriptionLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(47);
+    result._destructiveInjectEnumTag(51);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isAdLoadingDefaultDescriptionLabel() const {
@@ -7689,7 +7769,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_errorModalIconBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(48);
+    result._destructiveInjectEnumTag(52);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isErrorModalIconBackground() const {
@@ -7697,7 +7777,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_errorModalTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(49);
+    result._destructiveInjectEnumTag(53);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isErrorModalTitleLabel() const {
@@ -7705,7 +7785,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_errorModalDescriptionLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(50);
+    result._destructiveInjectEnumTag(54);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isErrorModalDescriptionLabel() const {
@@ -7713,7 +7793,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_errorModalBackButtonLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(51);
+    result._destructiveInjectEnumTag(55);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isErrorModalBackButtonLabel() const {
@@ -7721,7 +7801,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_errorModalBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(52);
+    result._destructiveInjectEnumTag(56);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isErrorModalBackground() const {
@@ -7729,7 +7809,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanHeaderBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(53);
+    result._destructiveInjectEnumTag(57);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanHeaderBackground() const {
@@ -7737,7 +7817,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanTotalPointsBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(54);
+    result._destructiveInjectEnumTag(58);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanTotalPointsBackground() const {
@@ -7745,7 +7825,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanTotalPointsLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(55);
+    result._destructiveInjectEnumTag(59);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanTotalPointsLabel() const {
@@ -7753,7 +7833,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanReceiptButtonIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(56);
+    result._destructiveInjectEnumTag(60);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanReceiptButtonIcon() const {
@@ -7761,7 +7841,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanReceiptButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(57);
+    result._destructiveInjectEnumTag(61);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanReceiptButtonBackground() const {
@@ -7769,7 +7849,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanFooterButtonTitle::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(58);
+    result._destructiveInjectEnumTag(62);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanFooterButtonTitle() const {
@@ -7777,7 +7857,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanFooterBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(59);
+    result._destructiveInjectEnumTag(63);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanFooterBackground() const {
@@ -7785,7 +7865,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanMerchantNameLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(60);
+    result._destructiveInjectEnumTag(64);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanMerchantNameLabel() const {
@@ -7793,7 +7873,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanTripInfoLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(61);
+    result._destructiveInjectEnumTag(65);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanTripInfoLabel() const {
@@ -7801,15 +7881,23 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanNoBoostsLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(62);
+    result._destructiveInjectEnumTag(66);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanNoBoostsLabel() const {
     return *this == AppearanceColorKey::postScanNoBoostsLabel;
   }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanSectionHeaderTitleLabel::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(67);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanSectionHeaderTitleLabel() const {
+    return *this == AppearanceColorKey::postScanSectionHeaderTitleLabel;
+  }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanSuccessTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(63);
+    result._destructiveInjectEnumTag(68);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanSuccessTitleLabel() const {
@@ -7817,7 +7905,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanSuccessDescriptionLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(64);
+    result._destructiveInjectEnumTag(69);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanSuccessDescriptionLabel() const {
@@ -7825,7 +7913,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(65);
+    result._destructiveInjectEnumTag(70);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostTitleLabel() const {
@@ -7833,7 +7921,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostDescriptionLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(66);
+    result._destructiveInjectEnumTag(71);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostDescriptionLabel() const {
@@ -7841,7 +7929,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostSkipButtonLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(67);
+    result._destructiveInjectEnumTag(72);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostSkipButtonLabel() const {
@@ -7849,7 +7937,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostClaimButtonLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(68);
+    result._destructiveInjectEnumTag(73);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostClaimButtonLabel() const {
@@ -7857,7 +7945,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostClaimButtonIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(69);
+    result._destructiveInjectEnumTag(74);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostClaimButtonIcon() const {
@@ -7865,7 +7953,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanBoostClaimButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(70);
+    result._destructiveInjectEnumTag(75);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanBoostClaimButtonBackground() const {
@@ -7873,7 +7961,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanPurchasePointsLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(71);
+    result._destructiveInjectEnumTag(76);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanPurchasePointsLabel() const {
@@ -7881,7 +7969,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanPurchaseBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(72);
+    result._destructiveInjectEnumTag(77);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanPurchaseBackground() const {
@@ -7889,7 +7977,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanQualifiedPurchaseBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(73);
+    result._destructiveInjectEnumTag(78);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanQualifiedPurchaseBackground() const {
@@ -7897,7 +7985,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanPurchaseInfoIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(74);
+    result._destructiveInjectEnumTag(79);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanPurchaseInfoIcon() const {
@@ -7905,47 +7993,15 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanUGCPurchaseBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(75);
+    result._destructiveInjectEnumTag(80);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanUGCPurchaseBackground() const {
     return *this == AppearanceColorKey::postScanUGCPurchaseBackground;
   }
-  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanUGCPurchaseClaimButtonLabel::operator()() const {
-    auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(76);
-    return result;
-  }
-  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanUGCPurchaseClaimButtonLabel() const {
-    return *this == AppearanceColorKey::postScanUGCPurchaseClaimButtonLabel;
-  }
-  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanUGCPurchaseClaimButtonIcon::operator()() const {
-    auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(77);
-    return result;
-  }
-  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanUGCPurchaseClaimButtonIcon() const {
-    return *this == AppearanceColorKey::postScanUGCPurchaseClaimButtonIcon;
-  }
-  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanUGCPurchaseClaimButtonBackground::operator()() const {
-    auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(78);
-    return result;
-  }
-  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanUGCPurchaseClaimButtonBackground() const {
-    return *this == AppearanceColorKey::postScanUGCPurchaseClaimButtonBackground;
-  }
-  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_postScanUGCPurchaseBorder::operator()() const {
-    auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(79);
-    return result;
-  }
-  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPostScanUGCPurchaseBorder() const {
-    return *this == AppearanceColorKey::postScanUGCPurchaseBorder;
-  }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_purchaseRowLabelColor::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(80);
+    result._destructiveInjectEnumTag(81);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPurchaseRowLabelColor() const {
@@ -7953,7 +8009,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_purchaseRowMetadataLabelColor::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(81);
+    result._destructiveInjectEnumTag(82);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isPurchaseRowMetadataLabelColor() const {
@@ -7961,7 +8017,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(82);
+    result._destructiveInjectEnumTag(83);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationTitleLabel() const {
@@ -7969,7 +8025,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationDescriptionLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(83);
+    result._destructiveInjectEnumTag(84);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationDescriptionLabel() const {
@@ -7977,7 +8033,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationEditButtonIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(84);
+    result._destructiveInjectEnumTag(85);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationEditButtonIcon() const {
@@ -7985,7 +8041,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationEditButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(85);
+    result._destructiveInjectEnumTag(86);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationEditButtonBackground() const {
@@ -7993,7 +8049,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationSaveButtonIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(86);
+    result._destructiveInjectEnumTag(87);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationSaveButtonIcon() const {
@@ -8001,7 +8057,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationSaveButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(87);
+    result._destructiveInjectEnumTag(88);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationSaveButtonBackground() const {
@@ -8009,7 +8065,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsFieldEditIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(88);
+    result._destructiveInjectEnumTag(89);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsFieldEditIcon() const {
@@ -8017,7 +8073,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsAddNewFieldLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(89);
+    result._destructiveInjectEnumTag(90);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsAddNewFieldLabel() const {
@@ -8025,7 +8081,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsModifiedFieldBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(90);
+    result._destructiveInjectEnumTag(91);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsModifiedFieldBackground() const {
@@ -8033,7 +8089,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsListSectionTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(91);
+    result._destructiveInjectEnumTag(92);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsListSectionTitleLabel() const {
@@ -8041,7 +8097,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsTripItemLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(92);
+    result._destructiveInjectEnumTag(93);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsTripItemLabel() const {
@@ -8049,7 +8105,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(93);
+    result._destructiveInjectEnumTag(94);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalTitleLabel() const {
@@ -8057,7 +8113,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalSubtitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(94);
+    result._destructiveInjectEnumTag(95);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalSubtitleLabel() const {
@@ -8065,7 +8121,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalInputLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(95);
+    result._destructiveInjectEnumTag(96);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalInputLabel() const {
@@ -8073,7 +8129,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalInputPlaceholderLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(96);
+    result._destructiveInjectEnumTag(97);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalInputPlaceholderLabel() const {
@@ -8081,7 +8137,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalInputValueLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(97);
+    result._destructiveInjectEnumTag(98);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalInputValueLabel() const {
@@ -8089,7 +8145,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalCancelButtonLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(98);
+    result._destructiveInjectEnumTag(99);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalCancelButtonLabel() const {
@@ -8097,7 +8153,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalSaveButtonLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(99);
+    result._destructiveInjectEnumTag(100);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalSaveButtonLabel() const {
@@ -8105,7 +8161,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalSaveButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(100);
+    result._destructiveInjectEnumTag(101);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalSaveButtonBackground() const {
@@ -8113,7 +8169,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(101);
+    result._destructiveInjectEnumTag(102);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalBackground() const {
@@ -8121,7 +8177,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalDatePicker::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(102);
+    result._destructiveInjectEnumTag(103);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalDatePicker() const {
@@ -8129,7 +8185,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsAlertTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(103);
+    result._destructiveInjectEnumTag(104);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsAlertTitleLabel() const {
@@ -8137,7 +8193,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsAlertMessageLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(104);
+    result._destructiveInjectEnumTag(105);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsAlertMessageLabel() const {
@@ -8145,7 +8201,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcBarcodeDetectedBorder::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(105);
+    result._destructiveInjectEnumTag(106);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcBarcodeDetectedBorder() const {
@@ -8153,7 +8209,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcBarcodeDetectedIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(106);
+    result._destructiveInjectEnumTag(107);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcBarcodeDetectedIcon() const {
@@ -8161,7 +8217,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcNavigationButtonIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(107);
+    result._destructiveInjectEnumTag(108);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcNavigationButtonIcon() const {
@@ -8169,7 +8225,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcNavigationButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(108);
+    result._destructiveInjectEnumTag(109);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcNavigationButtonBackground() const {
@@ -8177,7 +8233,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcProductInfoBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(109);
+    result._destructiveInjectEnumTag(110);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcProductInfoBackground() const {
@@ -8185,7 +8241,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcProductInfoLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(110);
+    result._destructiveInjectEnumTag(111);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcProductInfoLabel() const {
@@ -8193,7 +8249,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcToastMessageWarningIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(111);
+    result._destructiveInjectEnumTag(112);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcToastMessageWarningIcon() const {
@@ -8201,7 +8257,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcRetakeButtonLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(112);
+    result._destructiveInjectEnumTag(113);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcRetakeButtonLabel() const {
@@ -8209,7 +8265,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcRetakeButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(113);
+    result._destructiveInjectEnumTag(114);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcRetakeButtonBackground() const {
@@ -8217,7 +8273,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcSubmitButtonLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(114);
+    result._destructiveInjectEnumTag(115);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcSubmitButtonLabel() const {
@@ -8225,7 +8281,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcSubmitButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(115);
+    result._destructiveInjectEnumTag(116);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcSubmitButtonBackground() const {
@@ -8375,9 +8431,25 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsShortDescription() const {
     return *this == AppearanceFontNameKey::offerDetailsShortDescription;
   }
-  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsFinePrintLabel::operator()() const {
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsTitleLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
     result._destructiveInjectEnumTag(17);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsTitleLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsTitleLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsEarnRewardLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(18);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsEarnRewardLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsEarnRewardLabel;
+  }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsFinePrintLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(19);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsFinePrintLabel() const {
@@ -8385,15 +8457,23 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsBuyOptionLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(18);
+    result._destructiveInjectEnumTag(20);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsBuyOptionLabel() const {
     return *this == AppearanceFontNameKey::offerDetailsBuyOptionLabel;
   }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_offerDetailsTagChipLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(21);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isOfferDetailsTagChipLabel() const {
+    return *this == AppearanceFontNameKey::offerDetailsTagChipLabel;
+  }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_storesHeaderTitleLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(19);
+    result._destructiveInjectEnumTag(22);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isStoresHeaderTitleLabel() const {
@@ -8401,7 +8481,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_storesListSectionHeaderLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(20);
+    result._destructiveInjectEnumTag(23);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isStoresListSectionHeaderLabel() const {
@@ -8409,7 +8489,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_storesListItemTitleLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(21);
+    result._destructiveInjectEnumTag(24);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isStoresListItemTitleLabel() const {
@@ -8417,7 +8497,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_storesListItemSubtitleLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(22);
+    result._destructiveInjectEnumTag(25);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isStoresListItemSubtitleLabel() const {
@@ -8425,7 +8505,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_adLoadingLoadingBarLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(23);
+    result._destructiveInjectEnumTag(26);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isAdLoadingLoadingBarLabel() const {
@@ -8433,7 +8513,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_adLoadingDefaultTitleLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(24);
+    result._destructiveInjectEnumTag(27);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isAdLoadingDefaultTitleLabel() const {
@@ -8441,7 +8521,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_adLoadingDefaultDescriptionLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(25);
+    result._destructiveInjectEnumTag(28);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isAdLoadingDefaultDescriptionLabel() const {
@@ -8449,7 +8529,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_errorModalTitleLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(26);
+    result._destructiveInjectEnumTag(29);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isErrorModalTitleLabel() const {
@@ -8457,7 +8537,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_errorModalDescriptionLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(27);
+    result._destructiveInjectEnumTag(30);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isErrorModalDescriptionLabel() const {
@@ -8465,7 +8545,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_errorModalBackButtonLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(28);
+    result._destructiveInjectEnumTag(31);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isErrorModalBackButtonLabel() const {
@@ -8473,7 +8553,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanTotalPointsLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(29);
+    result._destructiveInjectEnumTag(32);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanTotalPointsLabel() const {
@@ -8481,7 +8561,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanFooterButtonTitle::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(30);
+    result._destructiveInjectEnumTag(33);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanFooterButtonTitle() const {
@@ -8489,7 +8569,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanMerchantNameLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(31);
+    result._destructiveInjectEnumTag(34);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanMerchantNameLabel() const {
@@ -8497,7 +8577,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanTripInfoLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(32);
+    result._destructiveInjectEnumTag(35);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanTripInfoLabel() const {
@@ -8505,15 +8585,23 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanNoBoostsLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(33);
+    result._destructiveInjectEnumTag(36);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanNoBoostsLabel() const {
     return *this == AppearanceFontNameKey::postScanNoBoostsLabel;
   }
+  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanSectionHeaderTitleLabel::operator()() const {
+    auto result = AppearanceFontNameKey::_make();
+    result._destructiveInjectEnumTag(37);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanSectionHeaderTitleLabel() const {
+    return *this == AppearanceFontNameKey::postScanSectionHeaderTitleLabel;
+  }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanSuccessTitleLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(34);
+    result._destructiveInjectEnumTag(38);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanSuccessTitleLabel() const {
@@ -8521,7 +8609,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanSuccessDescriptionLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(35);
+    result._destructiveInjectEnumTag(39);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanSuccessDescriptionLabel() const {
@@ -8529,7 +8617,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanBoostTitleLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(36);
+    result._destructiveInjectEnumTag(40);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanBoostTitleLabel() const {
@@ -8537,7 +8625,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanBoostDescriptionLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(37);
+    result._destructiveInjectEnumTag(41);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanBoostDescriptionLabel() const {
@@ -8545,7 +8633,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanBoostSkipButtonLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(38);
+    result._destructiveInjectEnumTag(42);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanBoostSkipButtonLabel() const {
@@ -8553,7 +8641,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanBoostClaimButtonLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(39);
+    result._destructiveInjectEnumTag(43);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanBoostClaimButtonLabel() const {
@@ -8561,23 +8649,15 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanPurchasePointsLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(40);
+    result._destructiveInjectEnumTag(44);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanPurchasePointsLabel() const {
     return *this == AppearanceFontNameKey::postScanPurchasePointsLabel;
   }
-  SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_postScanUGCPurchaseClaimButtonLabel::operator()() const {
-    auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(41);
-    return result;
-  }
-  SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPostScanUGCPurchaseClaimButtonLabel() const {
-    return *this == AppearanceFontNameKey::postScanUGCPurchaseClaimButtonLabel;
-  }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_purchaseRowLabelFont::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(42);
+    result._destructiveInjectEnumTag(45);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPurchaseRowLabelFont() const {
@@ -8585,7 +8665,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_purchaseRowMetadataLabelFont::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(43);
+    result._destructiveInjectEnumTag(46);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isPurchaseRowMetadataLabelFont() const {
@@ -8593,7 +8673,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsNavigationTitleLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(44);
+    result._destructiveInjectEnumTag(47);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsNavigationTitleLabel() const {
@@ -8601,7 +8681,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsNavigationDescriptionLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(45);
+    result._destructiveInjectEnumTag(48);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsNavigationDescriptionLabel() const {
@@ -8609,7 +8689,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsListSectionTitleLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(46);
+    result._destructiveInjectEnumTag(49);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsListSectionTitleLabel() const {
@@ -8617,7 +8697,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsTripItemLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(47);
+    result._destructiveInjectEnumTag(50);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsTripItemLabel() const {
@@ -8625,7 +8705,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalTitleLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(48);
+    result._destructiveInjectEnumTag(51);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalTitleLabel() const {
@@ -8633,7 +8713,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalSubtitleLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(49);
+    result._destructiveInjectEnumTag(52);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalSubtitleLabel() const {
@@ -8641,7 +8721,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalInputLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(50);
+    result._destructiveInjectEnumTag(53);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalInputLabel() const {
@@ -8649,7 +8729,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalInputPlaceholderLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(51);
+    result._destructiveInjectEnumTag(54);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalInputPlaceholderLabel() const {
@@ -8657,7 +8737,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalInputValueLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(52);
+    result._destructiveInjectEnumTag(55);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalInputValueLabel() const {
@@ -8665,7 +8745,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalCancelButtonLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(53);
+    result._destructiveInjectEnumTag(56);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalCancelButtonLabel() const {
@@ -8673,7 +8753,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsEditModalSaveButtonLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(54);
+    result._destructiveInjectEnumTag(57);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsEditModalSaveButtonLabel() const {
@@ -8681,7 +8761,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsAlertTitleLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(55);
+    result._destructiveInjectEnumTag(58);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsAlertTitleLabel() const {
@@ -8689,7 +8769,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_missedEarningsAlertMessageLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(56);
+    result._destructiveInjectEnumTag(59);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isMissedEarningsAlertMessageLabel() const {
@@ -8697,7 +8777,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_ugcProductInfoLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(57);
+    result._destructiveInjectEnumTag(60);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isUgcProductInfoLabel() const {
@@ -8705,7 +8785,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_ugcRetakeButtonLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(58);
+    result._destructiveInjectEnumTag(61);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isUgcRetakeButtonLabel() const {
@@ -8713,7 +8793,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceFontNameKey AppearanceFontNameKey::_impl_ugcSubmitButtonLabel::operator()() const {
     auto result = AppearanceFontNameKey::_make();
-    result._destructiveInjectEnumTag(59);
+    result._destructiveInjectEnumTag(62);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceFontNameKey::isUgcSubmitButtonLabel() const {

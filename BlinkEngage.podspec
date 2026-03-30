@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
   
   spec.name         = "BlinkEngage"
-  spec.version      = "1.1.1"
+  spec.version      = "1.2.0"
   spec.summary      = "BlinkEngage SDK"
   spec.description  = "This is the BlinkEngage extension for the BlinkReceipt SDK"
   
@@ -14,7 +14,7 @@ Pod::Spec.new do |spec|
   
   spec.vendored_frameworks = "BlinkEngage.xcframework"  
 
-  spec.dependency 'BlinkReceipt', '>= 1.65.0'
-  spec.dependency "Google-Mobile-Ads-SDK", "~> 12.11.0"  
+  spec.dependency 'BlinkReceipt', '~> 1.66.1'
+  spec.dependency "Google-Mobile-Ads-SDK", "~> 12.12.0"  
 
 end
