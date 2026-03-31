@@ -33,8 +33,10 @@ import BlinkReceipt
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        // Configure BlinkReceipt SDK (required for scanning experience)
+        // Configure BlinkReceipt SDK (required for scanning experience). If you don't have BOTH of these keys, talk to your Account Management team.
         BRScanManager.shared().licenseKey = "YOUR-BLINKRECEIPT-LICENSE-KEY"
+        BRScanManager.shared().prodIntelKey = "YOUR-BLINKRECEIPT-PRODINTEL-KEY"
+
         // Enable BlinkEngage integration in BlinkReceipt
         BRScanManager.shared().enableBlinkEngage = true
         
