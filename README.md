@@ -60,18 +60,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set up reward callback
         // Depending on `context`, this callback will either solicit a reward amount from the host app, which it should return as an `NSNumber`, or it will inform the host app, via the `rewardAmount` parameter, of an amount (in host app currency) that BlinkEngage awarded to the user
-        BlinkEngageSDK.shared.rewardCallback = { context, scanResults, rewardAmount in
+        BlinkEngageSDK.shared.rewardCallback = { context, scanResults, rewardAmount, blinkReceiptId in
             switch context {
             case "ScanFinished":
                 return NSNumber(value: 10.0) // Base reward for scan completion; use scanResults if amount varies.
             case "Promo":
-                print("User earned \(rewardAmount?.doubleValue ?? 0) points from promo")
+                print("User earned \(rewardAmount?.doubleValue ?? 0) points from promo (receipt: \(blinkReceiptId ?? "nil"))")
                 return nil
             case "Boost":
-                print("User earned \(rewardAmount?.doubleValue ?? 0) points from boost")
+                print("User earned \(rewardAmount?.doubleValue ?? 0) points from boost (receipt: \(blinkReceiptId ?? "nil"))")
                 return nil
             case "BarcodeCollection":
-                print("User earned \(rewardAmount?.doubleValue ?? 0) points from barcode collection")
+                print("User earned \(rewardAmount?.doubleValue ?? 0) points from barcode collection (receipt: \(blinkReceiptId ?? "nil"))")
                 return nil
             default:
                 return nil

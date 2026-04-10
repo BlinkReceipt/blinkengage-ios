@@ -745,10 +745,12 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BlinkEngageS
 ///
 /// \param rewardAmount The amount of reward earned, as an NSNumber (in reward currency units).
 ///
+/// \param blinkReceiptId Same value as <code>BRScanResults.blinkReceiptId</code> when present.
+///
 ///
 /// returns:
 /// An optional NSNumber, if a return value is relevant (custom implementation).
-@property (nonatomic, copy) NSNumber * _Nullable (^ _Nullable rewardCallback)(NSString * _Nonnull, NSDictionary<NSString *, id> * _Nullable, NSNumber * _Nullable);
+@property (nonatomic, copy) NSNumber * _Nullable (^ _Nullable rewardCallback)(NSString * _Nonnull, NSDictionary<NSString *, id> * _Nullable, NSNumber * _Nullable, NSString * _Nullable);
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -9666,10 +9668,12 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BlinkEngageS
 ///
 /// \param rewardAmount The amount of reward earned, as an NSNumber (in reward currency units).
 ///
+/// \param blinkReceiptId Same value as <code>BRScanResults.blinkReceiptId</code> when present.
+///
 ///
 /// returns:
 /// An optional NSNumber, if a return value is relevant (custom implementation).
-@property (nonatomic, copy) NSNumber * _Nullable (^ _Nullable rewardCallback)(NSString * _Nonnull, NSDictionary<NSString *, id> * _Nullable, NSNumber * _Nullable);
+@property (nonatomic, copy) NSNumber * _Nullable (^ _Nullable rewardCallback)(NSString * _Nonnull, NSDictionary<NSString *, id> * _Nullable, NSNumber * _Nullable, NSString * _Nullable);
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
