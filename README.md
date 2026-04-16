@@ -52,6 +52,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         BlinkEngageSDK.shared.rewardCurrencyName = "points"
         BlinkEngageSDK.shared.rewardCurrencyPerDollar = 100.0
 
+        // Set the default percentage of total payouts you'll give the user
+        BlinkEngageSDK.shared.userPayoutPercentage = 0.5
+
         // Styling: pass a custom Theme (e.g. MyTheme from [Styling (Theme)](#styling-theme) below).
         BlinkEngageSDK.shared.appearance = Appearance(theme: MyTheme())
         
