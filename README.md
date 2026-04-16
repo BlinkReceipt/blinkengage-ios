@@ -19,7 +19,7 @@ This framework extends the [BlinkReceipt SDK](https://github.com/BlinkReceipt/bl
 
 ### CocoaPods
 ```ruby
-pod 'BlinkEngage', '~> 1.0.0'
+pod 'BlinkEngage', '~> 1.3.0'
 ```
 Then run: `pod install`
 
