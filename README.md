@@ -4,7 +4,7 @@ This framework extends the [BlinkReceipt SDK](https://github.com/BlinkReceipt/bl
 
 ## Requirements
 
-- **iOS**: 13.0+
+- **iOS**: 15.0+
 - **Swift**: 5.9+
 - **Xcode**: 16.4+
 - **Dependencies**: Google-Mobile-Ads-SDK, BlinkReceipt SDK
@@ -19,7 +19,7 @@ This framework extends the [BlinkReceipt SDK](https://github.com/BlinkReceipt/bl
 
 ### CocoaPods
 ```ruby
-pod 'BlinkEngage', '~> 1.0.0'
+pod 'BlinkEngage', '~> 1.4.0'
 ```
 Then run: `pod install`
 
@@ -49,11 +49,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Optional for extra mapping
         BlinkEngageSDK.shared.user.clientUserId = "your_client_user_id" 
 
-        BlinkEngageSDK.shared.rewardCurrencyName = "points"
-        BlinkEngageSDK.shared.rewardCurrencyPerDollar = 100.0
+        // Configure reward currency
+        BlinkEngageSDK.shared.rewardConfig = BlinkEngageRewardConfig(
+            currencyName: "points",
+            currencyPerDollar: 100.0,
+            rewardCallback: { context, rewardAmount, blinkReceiptId in
+                switch context {
+                case "ScanFinished":
+                    return NSNumber(value: 10.0)
+                case "Promo":
+                    print("User earned \(rewardAmount?.doubleValue ?? 0) points from promo (receipt: \(blinkReceiptId ?? "nil"))")
+                    return nil
+                case "Boost":
+                    print("User earned \(rewardAmount?.doubleValue ?? 0) points from boost (receipt: \(blinkReceiptId ?? "nil"))")
+                    return nil
+                case "BarcodeCollection":
+                    print("User earned \(rewardAmount?.doubleValue ?? 0) points from barcode collection (receipt: \(blinkReceiptId ?? "nil"))")
+                    return nil
+                default:
+                    return nil
+                }
+            }
+        )
 
-        // Styling: pass a custom Theme (e.g. MyTheme from [Styling (Theme)](#styling-theme) below).
-        BlinkEngageSDK.shared.appearance = Appearance(theme: MyTheme())
+        // Styling: pass a custom Theme (e.g. BlinkEngageTheme from [Styling (Theme)](#styling-theme) below).
+        BlinkEngageSDK.shared.appearance = Appearance(theme: BlinkEngageTheme())
         
         // Optional: Enable debug mode for development (shows test ad units)
         BlinkEngageSDK.shared.debugModeEnabled = false
@@ -87,8 +107,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 Control colors, fonts, and images across the SDK (offer wall, receipt summary, loading screen, error modals, missed earnings, etc.) by implementing the `Theme` protocol and passing your theme when creating `Appearance`:
 
 ```swift
-class MyTheme: NSObject, Theme {
-    var isRewardIconEnabled: Bool { true }   // Show default reward icon when no custom image is provided
+class BlinkEngageTheme: NSObject, Theme {
     var isMerchantIconEnabled: Bool { true } // Load merchant logos on the Stores screen
     var globalFontMatrix: NSDictionary? {
         // Keys: NSNumber(UIFont.Weight.rawValue), values: font name String. Used when fontName(forKey:) returns nil.
@@ -118,13 +137,12 @@ class MyTheme: NSObject, Theme {
     }
 
     func image(forKey key: AppearanceIconKey) -> UIImage? {
-        if key == .offerRewardIcon { return UIImage(named: "my_coin") }
-        return nil
+        nil
     }
 }
 
 // During setup:
-BlinkEngageSDK.shared.appearance = Appearance(theme: MyTheme())
+BlinkEngageSDK.shared.appearance = Appearance(theme: BlinkEngageTheme())
 ```
 
 - Return `nil` from `color`, `fontName`, or `image` for any key to use the SDK default.

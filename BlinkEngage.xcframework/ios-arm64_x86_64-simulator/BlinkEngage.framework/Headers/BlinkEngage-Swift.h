@@ -281,7 +281,6 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
-@import Foundation;
 @import ObjectiveC;
 @import UIKit;
 #endif
@@ -307,261 +306,280 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if defined(__OBJC__)
 
 @protocol Theme;
-/// Configuration for the visual appearance of BlinkEngage SDK screens.
-/// Assign an instance to <code>BlinkEngageSDK.shared.appearance</code> before presenting SDK flows.
-/// Use the initializer that takes a <code>Theme</code> to apply custom colors, fonts, and images;
-/// use the default initializer to keep SDK defaults.
+/// A container that pairs a <code>Theme</code> with the SDK’s rendering pipeline.
+/// Set this on <code>BlinkEngageSDK/appearance</code> <em>before</em> you present any SDK
+/// view controller. The SDK reads the theme once per UI pass, so you can swap
+/// themes at runtime (e.g. to support light/dark mode) by assigning a new
+/// <code>Appearance</code>.
+/// \code
+/// // Apply a custom theme
+/// BlinkEngageSDK.shared.appearance = Appearance(theme: BlinkEngageTheme())
+///
+/// // Revert to built-in defaults
+/// BlinkEngageSDK.shared.appearance = Appearance()
+///
+/// \endcode
 SWIFT_CLASS("_TtC11BlinkEngage10Appearance")
 @interface Appearance : NSObject
-/// The theme used to customize SDK UI, or <code>nil</code> to use defaults.
+/// The theme the SDK queries for colors, fonts, and icons.
+/// When <code>nil</code>, every SDK screen falls back to its built-in styling.
 @property (nonatomic, readonly, strong) id <Theme> _Nullable theme;
-/// Creates an appearance with no custom theme; all SDK screens use their default styling.
+/// Creates an appearance that uses the SDK’s built-in styling for every screen.
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-/// Creates an appearance that uses the given theme for colors, fonts, and images.
-/// \param theme A theme conforming to <code>Theme</code>, or <code>nil</code> for default styling.
+/// Creates an appearance backed by a custom theme.
+/// Pass <code>nil</code> to get the same result as the parameterless <code>init()</code>.
+/// \param theme An object conforming to <code>Theme</code> that supplies
+/// colors, font names, and images — or <code>nil</code> for defaults.
 ///
 - (nonnull instancetype)initWithTheme:(id <Theme> _Nullable)theme OBJC_DESIGNATED_INITIALIZER;
 @end
 
-/// Keys for custom colors. Return a color for a key from your <code>Theme</code> to customize that part of the UI (backgrounds, labels, icon tints).
+/// Identifiers for every color the SDK can resolve from your <code>Theme</code>.
+/// Pass these to <code>Theme/color(forKey:)</code> and return a <code>UIColor</code>, or <code>nil</code>
+/// to keep the SDK default. Each case maps to one background, text color,
+/// or icon tint in the SDK’s UI.
 typedef SWIFT_ENUM(NSInteger, AppearanceColorKey, open) {
-/// Header bar at the top of the offer wall.
+/// Header bar background at the top of the offer wall.
   AppearanceColorKeyOfferWallHeaderBackground = 0,
 /// Main title text in the offer wall header.
   AppearanceColorKeyOfferWallHeaderTitleLabel = 1,
-/// Subtitle or secondary line in the offer wall header.
+/// Subtitle line in the offer wall header.
   AppearanceColorKeyOfferWallHeaderSubtitleLabel = 2,
 /// Back / close arrow in the offer wall header.
   AppearanceColorKeyOfferWallHeaderBackButtonIcon = 3,
-/// Background of the offer list area.
+/// Scrollable surface behind all offer cards.
   AppearanceColorKeyOfferWallBackground = 4,
 /// Section title (e.g. “Offers for you”) above a group of offers.
   AppearanceColorKeyOfferWallSectionHeaderLabel = 5,
-/// Arrow or chevron in the “show more” section header button.
+/// Chevron icon in the “show more” section header pill.
   AppearanceColorKeyOfferWallSectionHeaderShowMoreIcon = 6,
-/// Background of the “show more” section header button.
+/// Pill background next to the section title.
   AppearanceColorKeyOfferWallSectionHeaderShowMoreBackground = 7,
-/// Background of the floating button.
+/// Floating action button circle background.
   AppearanceColorKeyOfferWallFloatingButtonBackground = 8,
-/// Label text on the floating button.
+/// Text and icon tint inside the floating action button.
   AppearanceColorKeyOfferWallFloatingButtonLabel = 9,
-/// “More stores” or similar icon in the stores row.
+/// Overflow icon at the end of the horizontal stores strip.
   AppearanceColorKeyOfferWallMoreMerchantsIcon = 10,
-/// Reward amount or points text on each offer card.
+/// Points or dollar value shown on the card.
   AppearanceColorKeyOfferRewardPointsLabel = 11,
-/// Promo badge label (e.g. “BUY 2”) on each offer card.
+/// Promo badge label (e.g. “BUY 2”) on the card.
   AppearanceColorKeyOfferTagLabel = 12,
-/// Background of the promo badge on each offer card.
+/// Promo badge pill background on the card.
   AppearanceColorKeyOfferTagBackground = 13,
-/// Background of each offer card.
+/// Card container background.
   AppearanceColorKeyOfferBackground = 14,
-/// Brand or offer title on each offer card.
+/// Brand or offer title on the card.
   AppearanceColorKeyOfferBrandLabel = 15,
-/// Description or requirements text on each offer card.
+/// Description or requirements text below the title.
   AppearanceColorKeyOfferDescriptionLabel = 16,
-/// “Eligible at” or merchants list text on each offer card.
+/// “At Kroger, Walmart, …” eligible merchants line.
   AppearanceColorKeyOfferEligibleMerchantsLabel = 17,
-/// Expiration / “X Days Left” on the offer details screen.
+/// “X Days Left” expiration label (italic by default).
   AppearanceColorKeyOfferDetailsExpirationLabel = 18,
-/// “Clip this offer” label on the offer details screen.
+/// “Clip this offer” tap target label.
   AppearanceColorKeyOfferDetailsClipLabel = 19,
-/// Icon for the clip button on an offer card.
+/// Plus icon on the unclipped clip button.
   AppearanceColorKeyOfferClipButtonIcon = 20,
-/// Background of the clip button on an offer card.
+/// Circle behind the clip icon.
   AppearanceColorKeyOfferClipButtonBackground = 21,
-/// Icon for the clipped-state button on an offer card.
+/// Checkmark icon on the clipped-state button.
   AppearanceColorKeyOfferClippedButtonIcon = 22,
-/// Background of the clipped-state button on an offer card.
+/// Circle behind the clipped checkmark.
   AppearanceColorKeyOfferClippedButtonBackground = 23,
-/// Label text in the “Offer clipped!” message toast at the top when an offer is clipped.
+/// “Offer clipped!” confirmation banner text.
   AppearanceColorKeyOfferClippedToastMessageLabel = 24,
-/// Background of the “Offer clipped!” message toast at the top when an offer is clipped.
+/// “Offer clipped!” confirmation banner background.
   AppearanceColorKeyOfferClippedToastMessageBackground = 25,
-/// “Clip Required” badge label on the offer details screen.
+/// “Clip Required” badge text.
   AppearanceColorKeyOfferDetailsClipRequiredLabel = 26,
-/// “Clip Required” badge background on the offer details screen.
+/// “Clip Required” badge background.
   AppearanceColorKeyOfferDetailsClipRequiredBackground = 27,
-/// Section header titles on the offer details screen (e.g. “Eligible Products”, “Qualifying Details”, “Description”, “Fine Print”).
+/// Section headers (“Eligible Products”, “Fine Print”, etc.).
   AppearanceColorKeyOfferDetailsSectionHeaderTitleLabel = 28,
-/// Section header toggle (“See all” / “See less”) in groups that have expand/collapse on the offer details screen.
+/// “See all” / “See less” expand-collapse toggle.
   AppearanceColorKeyOfferDetailsSectionHeaderToggleLabel = 29,
-/// Section body text on the offer details screen (e.g. long description).
+/// Long-form text inside expanded sections.
   AppearanceColorKeyOfferDetailsSectionBodyLabel = 30,
-/// Short description under the offer title on the offer details screen (e.g. coupon description and payout).
+/// Coupon description and payout under the title.
   AppearanceColorKeyOfferDetailsShortDescription = 31,
-/// Primary title on the offer details screen.
+/// Large title at the top of the detail view.
   AppearanceColorKeyOfferDetailsTitleLabel = 32,
-/// “Earn …” reward line below the primary title on the offer details screen.
+/// “Earn …” reward amount below the title.
   AppearanceColorKeyOfferDetailsEarnRewardLabel = 33,
-/// Fine print / full terms body on the offer details screen.
+/// Legal copy at the bottom of the detail view.
   AppearanceColorKeyOfferDetailsFinePrintLabel = 34,
-/// Label text in the buying options list on the offer details screen (e.g. “Buy any X eligible products” and payout amount).
+/// “Buy any X eligible products” text in the buying options list.
   AppearanceColorKeyOfferDetailsBuyOptionLabel = 35,
-/// Background of each row in the buying options list on the offer details screen.
+/// Row background in the buying options list.
   AppearanceColorKeyOfferDetailsBuyOptionBackground = 36,
-/// Tag chip label text on the offer details screen
+/// Category tag pill text.
   AppearanceColorKeyOfferDetailsTagChipLabel = 37,
-/// Tag chip outline on the offer details screen.
+/// Category tag pill outline stroke.
   AppearanceColorKeyOfferDetailsTagChipBorder = 38,
-/// Background of the stores screen header bar (e.g. “Stores” title bar).
+/// Header bar background on the stores screen.
   AppearanceColorKeyStoresHeaderBackground = 39,
-/// Title label in the stores screen header (e.g. “Stores”).
+/// Title text in the stores header.
   AppearanceColorKeyStoresHeaderTitleLabel = 40,
-/// Section header label in the stores list (e.g. group titles).
+/// Group label above a set of stores.
   AppearanceColorKeyStoresListSectionHeaderLabel = 41,
-/// Background of the stores list area.
+/// Scrollable surface behind all store rows.
   AppearanceColorKeyStoresListBackground = 42,
-/// Background of each store item in the list.
+/// Individual store cell background.
   AppearanceColorKeyStoresListItemBackground = 43,
-/// Default thumbnail icon for each store item in the list.
+/// SF Symbol storefront icon shown when no remote logo loads.
   AppearanceColorKeyStoresListItemDefaultIcon = 44,
-/// Title label for each store item in the list.
+/// Store name label in each row.
   AppearanceColorKeyStoresListItemTitleLabel = 45,
-/// Subtitle label for each store item in the list.
+/// Offer count subtitle below the store name.
   AppearanceColorKeyStoresListItemSubtitleLabel = 46,
-/// Label text and icon tint on the ad loading screen progress bar (e.g. “Scanning receipt”, arrow button).
+/// “Scanning receipt” label and trailing arrow icon on the progress row.
   AppearanceColorKeyAdLoadingLoadingBarLabel = 47,
-/// Background of the ad loading screen progress bar track.
+/// Unfilled portion of the progress bar.
   AppearanceColorKeyAdLoadingLoadingBarBackground = 48,
-/// Progress fill color of the ad loading screen progress bar.
+/// Filled portion indicating scan progress.
   AppearanceColorKeyAdLoadingLoadingBarProgress = 49,
-/// Title label on the loading screen (e.g. “Hang tight!”).
+/// Centered headline (e.g. “Hang tight!”).
   AppearanceColorKeyAdLoadingDefaultTitleLabel = 50,
-/// Description label on the loading screen (e.g. “Exclusive rewards are coming your way!”).
+/// Subtitle (e.g. “Exclusive rewards are coming your way!”).
   AppearanceColorKeyAdLoadingDefaultDescriptionLabel = 51,
-/// Background of the warning icon (e.g. “!”) on the error modal.
+/// Circle behind the “!” warning symbol.
   AppearanceColorKeyErrorModalIconBackground = 52,
-/// Title label on the error modal (e.g. “Oops!”, “Invalid Receipt”).
+/// Headline (e.g. “Oops!”, “Invalid Receipt”).
   AppearanceColorKeyErrorModalTitleLabel = 53,
-/// Description / message label on the error modal.
+/// Explanatory message below the title.
   AppearanceColorKeyErrorModalDescriptionLabel = 54,
-/// “Back to offers” / dismiss button label on the error modal.
+/// “Back to offers” dismiss button text.
   AppearanceColorKeyErrorModalBackButtonLabel = 55,
-/// Background of the error modal.
+/// Modal card container background.
   AppearanceColorKeyErrorModalBackground = 56,
-/// Background of the receipt summary screen header bar.
+/// Colored bar at the top of the receipt summary.
   AppearanceColorKeyPostScanHeaderBackground = 57,
-/// Background of the total points pill (coin + amount) in the receipt summary header.
+/// Total-points pill background (coin icon + amount).
   AppearanceColorKeyPostScanTotalPointsBackground = 58,
-/// Total points amount label in the receipt summary header.
+/// Amount text inside the total-points pill.
   AppearanceColorKeyPostScanTotalPointsLabel = 59,
-/// Icon tint for the receipt / missed earnings button in the receipt summary header.
+/// Icon on the button that opens missed earnings.
   AppearanceColorKeyPostScanReceiptButtonIcon = 60,
-/// Background of the receipt / missed earnings button in the receipt summary header.
+/// Circle behind the receipt button icon.
   AppearanceColorKeyPostScanReceiptButtonBackground = 61,
-/// Title (text color) of the continue button in the receipt summary footer.
+/// “Continue” button text in the footer.
   AppearanceColorKeyPostScanFooterButtonTitle = 62,
-/// Background of the receipt summary footer.
+/// Footer bar background.
   AppearanceColorKeyPostScanFooterBackground = 63,
-/// Merchant name label in the trip summary.
+/// Store name in the trip summary block.
   AppearanceColorKeyPostScanMerchantNameLabel = 64,
-/// Trip info label (date and total) in the trip summary.
+/// Date and total line in the trip summary block.
   AppearanceColorKeyPostScanTripInfoLabel = 65,
-/// Label in the “no boosts” empty state (e.g. “No more boosts are available…”).
+/// Message shown when no boosts are available.
   AppearanceColorKeyPostScanNoBoostsLabel = 66,
-/// Section header title label (e.g. “Your Rewards”).
+/// Section label (e.g. “Your Rewards”).
   AppearanceColorKeyPostScanSectionHeaderTitleLabel = 67,
-/// Title label (e.g. “Nice Scan!”) in the first/success state of the boost area.
+/// “Nice Scan!” headline in the rewards area.
   AppearanceColorKeyPostScanSuccessTitleLabel = 68,
-/// Description label in the first/success state of the boost area (e.g. points earned).
+/// Points-earned description below the success title.
   AppearanceColorKeyPostScanSuccessDescriptionLabel = 69,
-/// Title label on post-scan boost cards in the receipt summary (e.g. offer title).
+/// Offer title on each boost row.
   AppearanceColorKeyPostScanBoostTitleLabel = 70,
-/// Description label on post-scan boost cards in the receipt summary (e.g. offer subtitle).
+/// Subtitle on each boost row.
   AppearanceColorKeyPostScanBoostDescriptionLabel = 71,
-/// Label (text color) on the “Skip” button below post-scan boost cards.
+/// “Skip” button text below a boost card.
   AppearanceColorKeyPostScanBoostSkipButtonLabel = 72,
-/// Label (text color) on the “Claim” button below post-scan boost cards.
+/// “Claim” button text below a boost card.
   AppearanceColorKeyPostScanBoostClaimButtonLabel = 73,
-/// Icon tint for the “Claim” button below post-scan boost cards.
+/// Icon inside the claim button (template-rendered when set).
   AppearanceColorKeyPostScanBoostClaimButtonIcon = 74,
-/// Background color of the “Claim” button below post-scan boost cards.
+/// Filled background of the claim button.
   AppearanceColorKeyPostScanBoostClaimButtonBackground = 75,
-/// Points label (e.g. “+100”) on purchase rows that show reward points.
+/// “+100” label on product rows that earned rewards.
   AppearanceColorKeyPostScanPurchasePointsLabel = 76,
-/// Background of a standard product row in the receipt summary.
+/// Default row background for scanned products.
   AppearanceColorKeyPostScanPurchaseBackground = 77,
-/// Background of product rows that show reward points.
+/// Highlighted row background when a product qualifies for points.
   AppearanceColorKeyPostScanQualifiedPurchaseBackground = 78,
-/// Info icon tint on product rows with an active earn task in the receipt summary.
+/// (i) icon on product rows with an active earn task.
   AppearanceColorKeyPostScanPurchaseInfoIcon = 79,
-/// Background of a product row with an active earn task (UGC barcode, inline GAM).
+/// Distinct row background for UGC barcode capture or inline ad.
   AppearanceColorKeyPostScanUGCPurchaseBackground = 80,
-/// Product name label color on product rows (receipt summary and Missed Earnings).
+/// Product name text on product rows (receipt summary and missed earnings).
   AppearanceColorKeyPurchaseRowLabelColor = 81,
-/// Metadata line label color on product rows (receipt summary and Missed Earnings).
+/// Metadata text (price, quantity) on product rows.
   AppearanceColorKeyPurchaseRowMetadataLabelColor = 82,
-/// Title label in the Missed Earnings navigation header (e.g. “Missing rewards?”).
+/// “Missing rewards?” headline in the navigation header.
   AppearanceColorKeyMissedEarningsNavigationTitleLabel = 83,
-/// Description label in the Missed Earnings navigation header (e.g. “Edit this receipt if any details are off”).
+/// “Edit this receipt if any details are off” subtitle.
   AppearanceColorKeyMissedEarningsNavigationDescriptionLabel = 84,
-/// Icon tint for the Edit button in the Missed Earnings header.
+/// Pen icon tint on the header edit button.
   AppearanceColorKeyMissedEarningsNavigationEditButtonIcon = 85,
-/// Background of the Edit button in the Missed Earnings navigation header.
+/// Circle behind the header edit icon.
   AppearanceColorKeyMissedEarningsNavigationEditButtonBackground = 86,
-/// Icon tint of the Save button in the Missed Earnings header.
+/// Checkmark icon tint on the header save button.
   AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon = 87,
-/// Background of the Save button in the Missed Earnings header.
+/// Circle behind the header save icon.
   AppearanceColorKeyMissedEarningsNavigationSaveButtonBackground = 88,
-/// Icon tint for the edit button on each field row in Missed Earnings.
+/// Small pen icon on each editable field row.
   AppearanceColorKeyMissedEarningsFieldEditIcon = 89,
-/// Label and icon (text/tint color) for the “add new field” control in the Missed Earnings screen.
+/// “Add new field” control text and icon tint.
   AppearanceColorKeyMissedEarningsAddNewFieldLabel = 90,
-/// Background of field rows that have been modified in the Missed Earnings screen.
+/// Highlight background on rows the user has changed.
   AppearanceColorKeyMissedEarningsModifiedFieldBackground = 91,
-/// Section header title label in the Missed Earnings list (e.g. “Merchant”, “Date”, “Products”).
+/// Group labels (“Merchant”, “Date”, “Products”).
   AppearanceColorKeyMissedEarningsListSectionTitleLabel = 92,
-/// Label text in Missed Earnings merchant and date rows only.
+/// Value text in the merchant name and date rows.
   AppearanceColorKeyMissedEarningsTripItemLabel = 93,
-/// Title label at the top of the Missed Earnings edit field modal (e.g. “Merchant Name”, “Receipt Date”).
+/// Edit modal headline (e.g. “Merchant Name”, “Receipt Date”).
   AppearanceColorKeyMissedEarningsEditModalTitleLabel = 94,
-/// Subtitle label at the top of the Missed Earnings edit modal.
+/// Instruction line below the edit modal title.
   AppearanceColorKeyMissedEarningsEditModalSubtitleLabel = 95,
-/// Label for text field titles in the Missed Earnings edit field modal (e.g. “Captured Merchant Name”).
+/// Caption above a text field (e.g. “Captured Merchant Name”).
   AppearanceColorKeyMissedEarningsEditModalInputLabel = 96,
-/// Placeholder text color in the Missed Earnings edit field modal text fields.
+/// Dimmed hint inside empty text fields.
   AppearanceColorKeyMissedEarningsEditModalInputPlaceholderLabel = 97,
-/// Text field value / caption labels in the Missed Earnings edit field modal.
+/// Typed value and helper captions in the edit form.
   AppearanceColorKeyMissedEarningsEditModalInputValueLabel = 98,
-/// Cancel button label (text color) in the Missed Earnings edit field modal.
+/// Cancel button text in the edit modal footer.
   AppearanceColorKeyMissedEarningsEditModalCancelButtonLabel = 99,
-/// Save button label (text color) in the Missed Earnings edit field modal.
+/// Save button text in the edit modal footer.
   AppearanceColorKeyMissedEarningsEditModalSaveButtonLabel = 100,
-/// Save button background in the Missed Earnings edit field modal.
+/// Filled background of the modal save button.
   AppearanceColorKeyMissedEarningsEditModalSaveButtonBackground = 101,
-/// Background of the Missed Earnings edit field modal.
+/// Edit modal card container background.
   AppearanceColorKeyMissedEarningsEditModalBackground = 102,
-/// Tint color of the date picker in the Missed Earnings edit field modal (e.g. selected date highlight).
+/// Selected-date highlight on the date picker.
   AppearanceColorKeyMissedEarningsEditModalDatePicker = 103,
-/// Title label in the Missed Earnings alert modal (e.g. “No updates made”, “Submit Receipt”).
+/// Alert headline (e.g. “No updates made”).
   AppearanceColorKeyMissedEarningsAlertTitleLabel = 104,
-/// Message/body label in the Missed Earnings alert modal.
+/// Alert body text.
   AppearanceColorKeyMissedEarningsAlertMessageLabel = 105,
-/// Border color when a barcode is detected in the product capture camera.
+/// 4 pt stroke around the barcode detection region.
   AppearanceColorKeyUgcBarcodeDetectedBorder = 106,
-/// Icon tint when a barcode is detected in the product capture screen.
+/// Icon tint shown on barcode detection.
   AppearanceColorKeyUgcBarcodeDetectedIcon = 107,
-/// Icon tint for navigation buttons (e.g. close, torch) in the product capture header.
+/// Close / torch button icon tint in the header.
   AppearanceColorKeyUgcNavigationButtonIcon = 108,
-/// Background of navigation buttons (close, torch) in the product capture header.
+/// Circle behind each header control button.
   AppearanceColorKeyUgcNavigationButtonBackground = 109,
-/// Background of the product info badges (product name and barcode/UPC) in the product capture screen.
+/// Product info pill background (product name + UPC).
   AppearanceColorKeyUgcProductInfoBackground = 110,
-/// Label text color in the product info badges (product name and barcode/UPC).
+/// Text and icon tint inside the product info pill.
   AppearanceColorKeyUgcProductInfoLabel = 111,
-/// Warning icon tint in the product capture toast message.
+/// Warning icon in the instructional toast.
   AppearanceColorKeyUgcToastMessageWarningIcon = 112,
-/// “Retake” button label (text color) in the product capture footer.
+/// “Retake” button text in the capture footer.
   AppearanceColorKeyUgcRetakeButtonLabel = 113,
-/// “Retake” button background in the product capture footer.
+/// “Retake” button background.
   AppearanceColorKeyUgcRetakeButtonBackground = 114,
-/// “Submit” button label (text color) in the product capture footer.
+/// “Submit” button text in the capture footer.
   AppearanceColorKeyUgcSubmitButtonLabel = 115,
-/// “Submit” button background in the product capture footer.
+/// “Submit” button background.
   AppearanceColorKeyUgcSubmitButtonBackground = 116,
 };
 
-/// Keys for custom fonts. Return a font name (e.g. <code>"Outfit-Bold"</code>) for a key from your <code>Theme</code> to use that font for the corresponding label; return <code>nil</code> to use the default or your <code>globalFontMatrix</code> by weight.
+/// Identifiers for every font name the SDK can resolve from your <code>Theme</code>.
+/// Pass these to <code>Theme/fontName(forKey:)</code> and return a font family name
+/// (e.g. <code>"Outfit-Bold"</code>), or <code>nil</code> to fall back to
+/// <code>Theme/globalFontMatrix</code> and then the system font. The SDK controls
+/// the point size for every label internally — you only supply the name.
 typedef SWIFT_ENUM(NSInteger, AppearanceFontNameKey, open) {
 /// Main title in the offer wall header.
   AppearanceFontNameKeyOfferWallHeaderTitleLabel = 0,
@@ -569,188 +587,415 @@ typedef SWIFT_ENUM(NSInteger, AppearanceFontNameKey, open) {
   AppearanceFontNameKeyOfferWallHeaderSubtitleLabel = 1,
 /// Section title above a group of offers.
   AppearanceFontNameKeyOfferWallSectionHeaderLabel = 2,
-/// Label on the floating button.
+/// Label on the floating action button.
   AppearanceFontNameKeyOfferWallFloatingButtonLabel = 3,
-/// Reward amount text on offer cards.
+/// Points or dollar value on the card.
   AppearanceFontNameKeyOfferRewardPointsLabel = 4,
-/// Promo badge label on offer cards.
+/// Promo badge label (e.g. “BUY 2”).
   AppearanceFontNameKeyOfferTagLabel = 5,
-/// Brand / title on offer cards.
+/// Brand or offer title on the card.
   AppearanceFontNameKeyOfferBrandLabel = 6,
-/// Description text on offer cards.
+/// Description text below the title.
   AppearanceFontNameKeyOfferDescriptionLabel = 7,
-/// Eligible merchants text on offer cards.
+/// Eligible merchants line on the card.
   AppearanceFontNameKeyOfferEligibleMerchantsLabel = 8,
-/// Expiration / “X Days Left” on the offer details screen.
+/// “X Days Left” expiration label.
   AppearanceFontNameKeyOfferDetailsExpirationLabel = 9,
-/// “Clip this offer” label on the offer details screen.
+/// “Clip this offer” tap target label.
   AppearanceFontNameKeyOfferDetailsClipLabel = 10,
-/// Label text in the “Offer clipped!” message toast at the top when an offer is clipped.
+/// “Offer clipped!” confirmation banner text.
   AppearanceFontNameKeyOfferClippedToastMessageLabel = 11,
-/// “Clip Required” badge label on the offer details screen.
+/// “Clip Required” badge text.
   AppearanceFontNameKeyOfferDetailsClipRequiredLabel = 12,
-/// Section header titles on the offer details screen (e.g. “Eligible Products”, “Qualifying Details”, “Description”, “Fine Print”).
+/// Section headers (“Eligible Products”, “Fine Print”, etc.).
   AppearanceFontNameKeyOfferDetailsSectionHeaderTitleLabel = 13,
-/// Section header toggle (“See all” / “See less”) in groups that have expand/collapse on the offer details screen.
+/// “See all” / “See less” expand-collapse toggle.
   AppearanceFontNameKeyOfferDetailsSectionHeaderToggleLabel = 14,
-/// Section body text on the offer details screen (e.g. long description).
+/// Long-form text inside expanded sections.
   AppearanceFontNameKeyOfferDetailsSectionBodyLabel = 15,
-/// Short description under the offer title on the offer details screen (e.g. coupon description and payout).
+/// Coupon description and payout under the title.
   AppearanceFontNameKeyOfferDetailsShortDescription = 16,
-/// Primary title on the offer details screen.
+/// Large title at the top of the detail view.
   AppearanceFontNameKeyOfferDetailsTitleLabel = 17,
-/// “Earn …” reward line below the primary title on the offer details screen.
+/// “Earn …” reward amount below the title.
   AppearanceFontNameKeyOfferDetailsEarnRewardLabel = 18,
-/// Fine print / full terms body on the offer details screen.
+/// Legal copy at the bottom of the detail view.
   AppearanceFontNameKeyOfferDetailsFinePrintLabel = 19,
-/// Label text in the buying options list on the offer details screen (e.g. “Buy any X eligible products” and payout amount).
+/// “Buy any X eligible products” text in the buying options list.
   AppearanceFontNameKeyOfferDetailsBuyOptionLabel = 20,
-/// Tag chip label font on the offer details screen.
+/// Category tag pill text.
   AppearanceFontNameKeyOfferDetailsTagChipLabel = 21,
-/// Title label in the stores screen header (e.g. “Stores”).
+/// Title text in the stores header.
   AppearanceFontNameKeyStoresHeaderTitleLabel = 22,
-/// Section header label in the stores list (e.g. group titles).
+/// Group label above a set of stores.
   AppearanceFontNameKeyStoresListSectionHeaderLabel = 23,
-/// Title label for each store item in the list.
+/// Store name label in each row.
   AppearanceFontNameKeyStoresListItemTitleLabel = 24,
-/// Subtitle label for each store item in the list.
+/// Offer count subtitle below the store name.
   AppearanceFontNameKeyStoresListItemSubtitleLabel = 25,
-/// Label text on the ad loading screen progress bar (e.g. “Scanning receipt”).
+/// “Scanning receipt” label on the progress row.
   AppearanceFontNameKeyAdLoadingLoadingBarLabel = 26,
-/// Title label on the ad loading screen (e.g. “Hang tight!”).
+/// Centered headline (e.g. “Hang tight!”).
   AppearanceFontNameKeyAdLoadingDefaultTitleLabel = 27,
-/// Description label on the ad loading screen (e.g. “Exclusive rewards are coming your way!”).
+/// Subtitle (e.g. “Exclusive rewards are coming your way!”).
   AppearanceFontNameKeyAdLoadingDefaultDescriptionLabel = 28,
-/// Title label on the error modal (e.g. “Oops!”, “Invalid Receipt”).
+/// Headline (e.g. “Oops!”, “Invalid Receipt”).
   AppearanceFontNameKeyErrorModalTitleLabel = 29,
-/// Description / message label on the error modal.
+/// Explanatory message below the title.
   AppearanceFontNameKeyErrorModalDescriptionLabel = 30,
-/// “Back to offers” / dismiss button label on the error modal.
+/// “Back to offers” dismiss button text.
   AppearanceFontNameKeyErrorModalBackButtonLabel = 31,
-/// Total points amount label in the receipt summary header.
+/// Amount text inside the total-points pill.
   AppearanceFontNameKeyPostScanTotalPointsLabel = 32,
-/// Title of the continue button in the receipt summary footer.
+/// “Continue” button text in the footer.
   AppearanceFontNameKeyPostScanFooterButtonTitle = 33,
-/// Merchant name label in the trip summary.
+/// Store name in the trip summary block.
   AppearanceFontNameKeyPostScanMerchantNameLabel = 34,
-/// Trip info label (date and total) in the trip summary.
+/// Date and total line in the trip summary block.
   AppearanceFontNameKeyPostScanTripInfoLabel = 35,
-/// Label in the “no boosts” empty state (e.g. “No more boosts are available…”).
+/// Message shown when no boosts are available.
   AppearanceFontNameKeyPostScanNoBoostsLabel = 36,
-/// Section header title label (e.g. “Your Rewards”).
+/// Section label (e.g. “Your Rewards”).
   AppearanceFontNameKeyPostScanSectionHeaderTitleLabel = 37,
-/// Title label in the first/success state of the boost area (e.g. “Nice Scan!”).
+/// “Nice Scan!” headline in the rewards area.
   AppearanceFontNameKeyPostScanSuccessTitleLabel = 38,
-/// Description label in the first/success state of the boost area.
+/// Points-earned description below the success title.
   AppearanceFontNameKeyPostScanSuccessDescriptionLabel = 39,
-/// Title label on post-scan boost cards in the receipt summary.
+/// Offer title on each boost row.
   AppearanceFontNameKeyPostScanBoostTitleLabel = 40,
-/// Description label on post-scan boost cards in the receipt summary.
+/// Subtitle on each boost row.
   AppearanceFontNameKeyPostScanBoostDescriptionLabel = 41,
-/// Label on the “Skip” button below post-scan boost cards.
+/// “Skip” button text below a boost card.
   AppearanceFontNameKeyPostScanBoostSkipButtonLabel = 42,
-/// Label on the “Claim” button below post-scan boost cards.
+/// “Claim” button text below a boost card.
   AppearanceFontNameKeyPostScanBoostClaimButtonLabel = 43,
-/// Points label (e.g. “+100”) on purchase rows that show reward points.
+/// “+100” label on product rows that earned rewards.
   AppearanceFontNameKeyPostScanPurchasePointsLabel = 44,
-/// Product name label font on product rows (receipt summary and Missed Earnings).
+/// Product name font on product rows (receipt summary and missed earnings).
   AppearanceFontNameKeyPurchaseRowLabelFont = 45,
-/// Metadata line label font on product rows (receipt summary and Missed Earnings).
+/// Metadata font (price, quantity) on product rows.
   AppearanceFontNameKeyPurchaseRowMetadataLabelFont = 46,
-/// Title label in the Missed Earnings navigation header (e.g. “Missing rewards?”).
+/// “Missing rewards?” headline in the navigation header.
   AppearanceFontNameKeyMissedEarningsNavigationTitleLabel = 47,
-/// Description label in the Missed Earnings navigation header (e.g. “Edit this receipt if any details are off”).
+/// “Edit this receipt if any details are off” subtitle.
   AppearanceFontNameKeyMissedEarningsNavigationDescriptionLabel = 48,
-/// Section header title in the Missed Earnings list (e.g. “Merchant”, “Date”, “Products”).
+/// Group labels (“Merchant”, “Date”, “Products”).
   AppearanceFontNameKeyMissedEarningsListSectionTitleLabel = 49,
-/// Label text in Missed Earnings merchant and date rows only.
+/// Value text in the merchant name and date rows.
   AppearanceFontNameKeyMissedEarningsTripItemLabel = 50,
-/// Title label at the top of the Missed Earnings edit field modal.
+/// Edit modal headline (e.g. “Merchant Name”, “Receipt Date”).
   AppearanceFontNameKeyMissedEarningsEditModalTitleLabel = 51,
-/// Subtitle label at the top of the Missed Earnings edit field modal.
+/// Instruction line below the edit modal title.
   AppearanceFontNameKeyMissedEarningsEditModalSubtitleLabel = 52,
-/// Label for text field titles in the Missed Earnings edit field modal.
+/// Caption above a text field (e.g. “Captured Merchant Name”).
   AppearanceFontNameKeyMissedEarningsEditModalInputLabel = 53,
-/// Placeholder text font in the Missed Earnings edit modal.
+/// Dimmed hint inside empty text fields.
   AppearanceFontNameKeyMissedEarningsEditModalInputPlaceholderLabel = 54,
-/// Text field value / caption labels in the Missed Earnings edit field modal.
+/// Typed value and helper captions in the edit form.
   AppearanceFontNameKeyMissedEarningsEditModalInputValueLabel = 55,
-/// Cancel button label in the Missed Earnings edit field modal.
+/// Cancel button text in the edit modal footer.
   AppearanceFontNameKeyMissedEarningsEditModalCancelButtonLabel = 56,
-/// Save button label in the Missed Earnings edit field modal.
+/// Save button text in the edit modal footer.
   AppearanceFontNameKeyMissedEarningsEditModalSaveButtonLabel = 57,
-/// Title label in the Missed Earnings alert modal.
+/// Alert headline (e.g. “No updates made”).
   AppearanceFontNameKeyMissedEarningsAlertTitleLabel = 58,
-/// Message/body label in the Missed Earnings alert modal.
+/// Alert body text.
   AppearanceFontNameKeyMissedEarningsAlertMessageLabel = 59,
-/// Label text in the product info badges (product name and barcode/UPC) on the product capture screen.
+/// Text inside the product info pill (product name + UPC).
   AppearanceFontNameKeyUgcProductInfoLabel = 60,
-/// “Retake” button label in the product capture footer.
+/// “Retake” button text in the capture footer.
   AppearanceFontNameKeyUgcRetakeButtonLabel = 61,
-/// “Submit” button label in the product capture footer.
+/// “Submit” button text in the capture footer.
   AppearanceFontNameKeyUgcSubmitButtonLabel = 62,
 };
 
-/// Keys for custom images. Return an image for a key from your <code>Theme</code> to replace that icon; return <code>nil</code> to use the default (if any). When you return <code>nil</code>, the matching color key may still be used to tint the default icon.
+/// Identifiers for every icon the SDK can resolve from your <code>Theme</code>.
+/// Pass these to <code>Theme/image(forKey:)</code> and return a <code>UIImage</code>, or <code>nil</code>
+/// to keep the SDK’s built-in asset. When you return <code>nil</code>, the matching
+/// <code>AppearanceColorKey</code> still tints the default icon.
+/// Supply images at the minimum size listed in each case’s documentation
+/// (in points); include @2x and @3x variants for Retina screens.
 typedef SWIFT_ENUM(NSInteger, AppearanceIconKey, open) {
-/// Reward or currency icon shown with reward amounts (e.g. on offer cards, receipt summary).
-  AppearanceIconKeyOfferRewardIcon = 0,
-/// Floating action button icon (e.g. scan receipt). Return <code>nil</code> to use the default; tint uses the floating button label color key.
-  AppearanceIconKeyOfferWallFloatingButtonIcon = 1,
-/// Edit button icon in the Missed Earnings header. Return <code>nil</code> to use the default; tint uses the edit button icon color key.
-  AppearanceIconKeyMissedEarningsNavigationEditButtonIcon = 2,
-/// Edit (pen) button icon on each field row in Missed Earnings. Return <code>nil</code> to use the default; tint uses the field edit icon color key.
-  AppearanceIconKeyMissedEarningsFieldEditIcon = 3,
-/// Receipt / missed earnings button icon in the receipt summary header. Return <code>nil</code> to use the default; tint uses the receipt button icon color key when set.
-  AppearanceIconKeyPostScanReceiptButtonIcon = 4,
-/// Placeholder image for boost cards when no custom image is available.
-  AppearanceIconKeyPostScanBoostDefaultIcon = 5,
-/// Icon in the success state of the boost area (e.g. “Nice Scan!”).
-  AppearanceIconKeyPostScanSuccessIcon = 6,
-/// Icon when a barcode is detected in the product capture screen. Return <code>nil</code> to use the default; tint uses the barcode-detected icon color key.
-  AppearanceIconKeyUgcBarcodeDetectedIcon = 7,
-/// Warning icon in the product capture toast. Return <code>nil</code> to use the default; tint uses the toast warning icon color key.
-  AppearanceIconKeyUgcToastMessageWarningIcon = 8,
+/// Floating action button icon (24 × 24 pt).
+/// Tinted by <code>AppearanceColorKey/offerWallFloatingButtonLabel</code>.
+  AppearanceIconKeyOfferWallFloatingButtonIcon = 0,
+/// Edit button icon in the missed-earnings header (18 × 18 pt).
+/// Tinted by <code>AppearanceColorKey/missedEarningsNavigationEditButtonIcon</code>.
+  AppearanceIconKeyMissedEarningsNavigationEditButtonIcon = 1,
+/// Per-row edit (pen) icon (24 × 24 pt).
+/// Tinted by <code>AppearanceColorKey/missedEarningsFieldEditIcon</code>.
+  AppearanceIconKeyMissedEarningsFieldEditIcon = 2,
+/// Receipt button icon in the summary header (40 × 40 pt).
+/// Tinted by <code>AppearanceColorKey/postScanReceiptButtonIcon</code> when set;
+/// uses original asset colors when the color key returns <code>nil</code>.
+  AppearanceIconKeyPostScanReceiptButtonIcon = 3,
+/// Placeholder image for boost cards (56 × 56 pt). Not tinted.
+  AppearanceIconKeyPostScanBoostDefaultIcon = 4,
+/// Success-state illustration (56 × 56 pt). Not tinted.
+  AppearanceIconKeyPostScanSuccessIcon = 5,
+/// Barcode-detected state icon (60 × 60 pt).
+/// Tinted by <code>AppearanceColorKey/ugcBarcodeDetectedIcon</code>.
+  AppearanceIconKeyUgcBarcodeDetectedIcon = 6,
+/// Toast warning icon (24 × 24 pt).
+/// Tinted by <code>AppearanceColorKey/ugcToastMessageWarningIcon</code>.
+  AppearanceIconKeyUgcToastMessageWarningIcon = 7,
 };
 
-@class BlinkEngageUser;
+enum RewardCurrencyLabelStyle : NSInteger;
+enum RewardCurrencyMessagingTextStyle : NSInteger;
 @class NSString;
+enum RewardCurrencyCodePosition : NSInteger;
+enum RewardCurrencyRounding : NSInteger;
+@class UIImage;
 @class NSNumber;
+/// Configuration that controls how reward amounts are formatted and displayed across the SDK.
+/// <h2>Overview</h2>
+/// <code>BlinkEngageRewardConfig</code> lets the host app control reward presentation —
+/// the unit label, an optional currency symbol, the conversion rate, a custom icon, and
+/// a callback for earned rewards.
+/// Use <code>rewardCurrencyLabelStyle</code> to choose how amounts look on list rows:
+/// icon + digits, symbol + digits, or digits + name.
+/// Use <code>rewardCurrencyMessagingTextStyle</code> for toast and celebration copy.
+/// Create an instance with only the parameters needed (every parameter has a
+/// sensible default) and assign it to <code>BlinkEngageSDK/rewardConfig</code>
+/// before presenting any SDK UI.
+/// <blockquote>
+/// Important: All properties are immutable. To change settings, create a new instance
+/// and reassign <code>BlinkEngageSDK/rewardConfig</code>. The updated config takes
+/// effect the next time an SDK view is presented; it does <em>not</em> refresh views already on screen.
+///
+/// </blockquote>
+/// <h2>Topics</h2>
+/// <h3>Display</h3>
+/// <ul>
+///   <li>
+///     <code>rewardCurrencyLabelStyle</code>
+///   </li>
+///   <li>
+///     <code>rewardCurrencyMessagingTextStyle</code>
+///   </li>
+/// </ul>
+/// <h3>Naming and Symbols</h3>
+/// <ul>
+///   <li>
+///     <code>currencyName</code>
+///   </li>
+///   <li>
+///     <code>currencyCode</code>
+///   </li>
+///   <li>
+///     <code>currencyCodePosition</code>
+///   </li>
+/// </ul>
+/// <h3>Conversion and Payout</h3>
+/// <ul>
+///   <li>
+///     <code>currencyPerDollar</code>
+///   </li>
+///   <li>
+///     <code>userPayoutPercentage</code>
+///   </li>
+///   <li>
+///     <code>rewardRounding</code>
+///   </li>
+/// </ul>
+/// <h3>Icon</h3>
+/// <ul>
+///   <li>
+///     <code>currencyImage</code>
+///   </li>
+///   <li>
+///     <code>currencyImageLocations</code>
+///   </li>
+/// </ul>
+/// <h3>Callback</h3>
+/// <ul>
+///   <li>
+///     <code>rewardCallback</code>
+///   </li>
+/// </ul>
+/// <h2>Common Configurations</h2>
+/// <em>Points (default):</em>
+/// \code
+/// // Reward icon + "1,234" on rows. "… points" in toasts.
+/// let config = BlinkEngageRewardConfig(
+///     rewardCallback: { _, _, _ in nil }
+/// )
+///
+/// \endcode<em>Dollar amounts:</em>
+/// \code
+/// // "$1,234" on rows (no icon).
+/// let config = BlinkEngageRewardConfig(
+///     currencyCode: "$",
+///     rewardCurrencyLabelStyle: .currencyCode,
+///     rewardCallback: { _, _, _ in nil }
+/// )
+///
+/// \endcode<em>Euro with trailing symbol:</em>
+/// \code
+/// // "1,234€" on rows.
+/// let config = BlinkEngageRewardConfig(
+///     currencyCode: "€",
+///     currencyCodePosition: .trailing,
+///     rewardCurrencyLabelStyle: .currencyCode,
+///     rewardCallback: { _, _, _ in nil }
+/// )
+///
+/// \endcode<em>Custom icon on selected surfaces:</em>
+/// \code
+/// let config = BlinkEngageRewardConfig(
+///     currencyName: "gems",
+///     currencyPerDollar: 1000,
+///     rewardCurrencyLabelStyle: .currencyImage,
+///     currencyImage: UIImage(named: "gem-icon"),
+///     currencyImageLocations: [.offerCell, .receiptBoost],
+///     rewardCallback: { _, _, _ in nil }
+/// )
+///
+/// \endcode
+SWIFT_CLASS("_TtC11BlinkEngage23BlinkEngageRewardConfig")
+@interface BlinkEngageRewardConfig : NSObject
+/// How reward amounts appear on list rows (offer cells, receipt lines, boosts).
+/// <em>Default:</em> <code>RewardCurrencyLabelStyle/currencyImage</code>.
+/// If set to <code>RewardCurrencyLabelStyle/currencyCode</code> but <code>currencyCode</code> is
+/// empty or <code>nil</code>, the SDK uses <code>RewardCurrencyLabelStyle/currencyName</code> instead.
+@property (nonatomic, readonly) enum RewardCurrencyLabelStyle rewardCurrencyLabelStyle;
+/// Style for SDK messages that describe rewards (toasts, scan celebration, etc.).
+/// <em>Default:</em> <code>RewardCurrencyMessagingTextStyle/currencyName</code>.
+@property (nonatomic, readonly) enum RewardCurrencyMessagingTextStyle rewardCurrencyMessagingTextStyle;
+/// Short label appended after the numeric amount (e.g. “1,234 points”).
+/// <em>Default:</em> <code>"points"</code>. Trimmed on init; empty falls back to <code>"points"</code>;
+/// truncated to 8 characters. Used when <code>rewardCurrencyLabelStyle</code> is
+/// <code>RewardCurrencyLabelStyle/currencyName</code>.
+@property (nonatomic, readonly, copy) NSString * _Nonnull currencyName;
+/// Currency symbol placed beside the amount (e.g. <code>"$"</code>, <code>"€"</code>, <code>"£"</code>).
+/// <em>Default:</em> <code>nil</code>. Trimmed on init; whitespace-only becomes <code>nil</code>.
+/// Required when <code>rewardCurrencyLabelStyle</code> is <code>RewardCurrencyLabelStyle/currencyCode</code>.
+/// Placement is controlled by <code>currencyCodePosition</code>.
+@property (nonatomic, readonly, copy) NSString * _Nullable currencyCode;
+/// Placement of <code>currencyCode</code> relative to the numeric amount.
+/// <em>Default:</em> <code>RewardCurrencyCodePosition/leading</code> (symbol before the digits).
+/// Ignored when <code>currencyCode</code> is <code>nil</code>.
+@property (nonatomic, readonly) enum RewardCurrencyCodePosition currencyCodePosition;
+/// Units per US dollar.
+/// <em>Default:</em> <code>100.0</code> ($1 = 100 units). The SDK multiplies dollar payouts
+/// by this value and then applies <code>rewardRounding</code>.
+@property (nonatomic, readonly) double currencyPerDollar;
+/// Fraction of the computed reward shown to the user.
+/// <em>Default:</em> <code>0.6</code> (60 %). Clamped to <code>0.4 … 1.0</code> on init.
+/// Applies to all reward types except offer-wall coupons.
+@property (nonatomic, readonly) double userPayoutPercentage;
+/// Precision used to round the converted reward amount before display.
+/// <em>Default:</em> <code>RewardCurrencyRounding.whole</code> (round up to the next whole
+/// unit — appropriate for points, gems, coins, and other integer-only
+/// currencies).
+/// Set to <code>RewardCurrencyRounding.decimal</code> when the reward should display
+/// fractional amounts (e.g. <code>$0.15</code>, <code>€1.20</code>, <code>0.50 credits</code>).
+@property (nonatomic, readonly) enum RewardCurrencyRounding rewardRounding;
+/// Custom reward icon for <code>RewardCurrencyLabelStyle/currencyImage</code> mode.
+/// <em>Default:</em> <code>nil</code> (the SDK uses its built-in icon). Provide a <em>square</em>
+/// asset (e.g. 24 × 24 pt) with <code>.alwaysTemplate</code> rendering for light/dark
+/// mode support.
+/// seealso:
+/// <code>currencyImageLocations</code>
+@property (nonatomic, readonly, strong) UIImage * _Nullable currencyImage;
+/// Closure invoked each time the user earns a reward.
+/// <em>Required</em> — no default value. The host app must always provide this closure.
+/// <ul>
+///   <li>
+///     <code>context</code>: One of <code>"ScanFinished"</code>, <code>"Promo"</code>, <code>"Boost"</code>, or
+///     <code>"BarcodeCollection"</code>.
+///   </li>
+///   <li>
+///     <code>rewardAmount</code>: Amount earned, or <code>nil</code> for <code>"ScanFinished"</code>.
+///   </li>
+///   <li>
+///     <code>blinkReceiptId</code>: The receipt identifier from BlinkReceipt
+///     (<code>BRScanResults.blinkReceiptId</code>), or <code>nil</code> when unavailable.
+///   </li>
+/// </ul>
+/// Return an <code>NSNumber</code> for <code>"ScanFinished"</code> (the scan reward the host
+/// app awards). Return <code>nil</code> for all other contexts.
+/// <blockquote>
+/// Important: The return value for <code>"ScanFinished"</code> is used as-is in
+/// reward currency units and is <em>not</em> passed through <code>rewardRounding</code>.
+/// When <code>rewardRounding</code> is <code>.whole</code>, return a whole-number value
+/// (e.g. <code>NSNumber(value: 10)</code>) to keep the display consistent.
+/// Fractional values are valid only when <code>rewardRounding</code> is <code>.decimal</code>.
+///
+/// </blockquote>
+/// \code
+/// let config = BlinkEngageRewardConfig(
+///     rewardCallback: { context, amount, blinkReceiptId in
+///         switch context {
+///         case "ScanFinished":
+///             return NSNumber(value: 10)
+///         default:
+///             return nil
+///         }
+///     }
+/// )
+///
+/// \endcode
+@property (nonatomic, readonly, copy) NSNumber * _Nullable (^ _Nonnull rewardCallback)(NSString * _Nonnull, NSNumber * _Nullable, NSString * _Nullable);
+/// Objective-C initializer.
+/// Pass <code>currencyImageLocations</code> as a bitwise OR of the
+/// <code>imageLocation…</code> class constants (e.g.
+/// <code>BlinkEngageRewardConfig.imageLocationOfferCell | BlinkEngageRewardConfig.imageLocationReceiptBoost</code>).
+- (nonnull instancetype)initWithCurrencyName:(NSString * _Nonnull)currencyName currencyCode:(NSString * _Nullable)currencyCode currencyCodePosition:(enum RewardCurrencyCodePosition)currencyCodePosition currencyPerDollar:(double)currencyPerDollar userPayoutPercentage:(double)userPayoutPercentage currencyImage:(UIImage * _Nullable)currencyImage currencyImageLocations:(NSInteger)currencyImageLocations rewardLabelStyle:(enum RewardCurrencyLabelStyle)rewardLabelStyle messagingTextStyle:(enum RewardCurrencyMessagingTextStyle)messagingTextStyle rewardRounding:(enum RewardCurrencyRounding)rewardRounding rewardCallback:(NSNumber * _Nullable (^ _Nonnull)(NSString * _Nonnull, NSNumber * _Nullable, NSString * _Nullable))rewardCallback;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@interface BlinkEngageRewardConfig (SWIFT_EXTENSION(BlinkEngage))
+/// Offer cell surface. Combine with bitwise OR in Objective-C.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) NSInteger imageLocationOfferCell;)
++ (NSInteger)imageLocationOfferCell SWIFT_WARN_UNUSED_RESULT;
+/// Receipt total-reward surface.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) NSInteger imageLocationReceiptTotalReward;)
++ (NSInteger)imageLocationReceiptTotalReward SWIFT_WARN_UNUSED_RESULT;
+/// Receipt boost surface.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) NSInteger imageLocationReceiptBoost;)
++ (NSInteger)imageLocationReceiptBoost SWIFT_WARN_UNUSED_RESULT;
+/// Receipt task surface.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) NSInteger imageLocationReceiptTask;)
++ (NSInteger)imageLocationReceiptTask SWIFT_WARN_UNUSED_RESULT;
+/// All surfaces.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) NSInteger imageLocationAll;)
++ (NSInteger)imageLocationAll SWIFT_WARN_UNUSED_RESULT;
+@end
+
+@class BlinkEngageUser;
 SWIFT_CLASS("_TtC11BlinkEngage14BlinkEngageSDK")
 @interface BlinkEngageSDK : NSObject
-@property (nonatomic, readonly, strong) BlinkEngageUser * _Nonnull user;
+/// Configures Google Mobile Ads and constructs the SDK. Call exactly once before <code>shared</code>.
+/// Must be called on the <em>main thread</em> — typically in
+/// <code>application(_:didFinishLaunchingWithOptions:)</code>. Calling from a background thread triggers a
+/// precondition failure. Calling more than once also triggers a precondition failure.
+/// Set <code>debugMode</code> to <code>true</code> for <em>development and internal testing builds</em>. When <code>true</code>, the SDK
+/// registers the device as a Google Mobile Ads test device so it serves <em>real ads</em> safely (no impact
+/// on production metrics or billing). In rare cases where the device cannot be registered, the SDK falls
+/// back to Google’s built-in test ads so development is never blocked. It also relaxes on-device receipt
+/// checks so the full flow can be tested efficiently.
+/// Pass <code>false</code> for App Store submissions and customer-facing builds: real ads and full validation.
+/// note:
+/// From Objective-C, use <code>startWithDebugMode:</code>.
+/// \param debugMode <code>true</code> for development and internal testing builds; <code>false</code> for App Store
+/// submissions and customer-facing builds.
+///
++ (void)startWithDebugMode:(BOOL)debugMode;
+/// Shared SDK instance; valid only after <code>start(debugMode:)</code>.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BlinkEngageSDK * _Nonnull shared;)
 + (BlinkEngageSDK * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
+@property (nonatomic, readonly, strong) BlinkEngageUser * _Nonnull user;
+/// Currency styling is applied when SDK views are loaded.
+/// Changing this property does not refresh views that are already on screen.
+/// <blockquote>
+/// Important: Assign new values <em>on the main thread</em> before presenting any SDK UI.
+///
+/// </blockquote>
+@property (nonatomic, strong) BlinkEngageRewardConfig * _Nonnull rewardConfig;
 @property (nonatomic, strong) Appearance * _Nonnull appearance;
-/// The display name for the reward currency shown to users (e.g. in balances and reward text).
-/// Used in UI strings such as “25,000 pts”. The default is <code>"pts"</code>.
-@property (nonatomic, copy) NSString * _Nonnull rewardCurrencyName;
-/// The conversion rate from dollars to reward currency (e.g. how many reward units per $1).
-/// Used when converting payout amounts to the in-app reward amount for display and calculations.
-/// The default is <code>100.0</code> (e.g. $1 = 100 reward units).
-@property (nonatomic) double rewardCurrencyPerDollar;
-/// The fraction of the reward amount paid out to the user for scanned receipts.
-/// Valid range is <code>0.4</code> (40%) to <code>1.0</code> (100%). The default is <code>0.6</code> (60%).
-/// Values outside the range are clamped to the nearest bound.
-/// note:
-/// Applies to all reward types except offer wall coupons.
-@property (nonatomic) double userPayoutPercentage;
-/// When <code>true</code>, uses test ad units so you can verify ad flow without serving real ads.
-/// The default is <code>false</code>. Enable only during development; leave disabled in production.
-@property (nonatomic) BOOL debugModeEnabled;
-/// Called when the user has earned a reward.
-/// \param context A string describing the reward context (e.g. “Promo”, “ScanFinished”, “Boost”).
-///
-/// \param scanResults A serialized BRScanResults data from BlinkReceipt.
-///
-/// \param rewardAmount The amount of reward earned, as an NSNumber (in reward currency units).
-///
-/// \param blinkReceiptId Same value as <code>BRScanResults.blinkReceiptId</code> when present.
-///
-///
-/// returns:
-/// An optional NSNumber, if a return value is relevant (custom implementation).
-@property (nonatomic, copy) NSNumber * _Nullable (^ _Nullable rewardCallback)(NSString * _Nonnull, NSDictionary<NSString *, id> * _Nullable, NSNumber * _Nullable, NSString * _Nullable);
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -778,15 +1023,24 @@ SWIFT_CLASS_NAMED("OffersWallViewController")
 @interface OffersWallViewController : UIViewController
 @property (nonatomic, weak) id <OffersWallViewControllerDelegate> _Nullable delegate;
 @property (nonatomic, readonly) enum OfferWallViewType offersType;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init;
 /// Initializes the offer wall with the given view type (all offers or clipped offers only).
 /// \param offerWallViewType <code>.all</code> for all offers, <code>.clipped</code> for offers the user has clipped.
 ///
-- (nonnull instancetype)initWithOfferWallViewType:(enum OfferWallViewType)offerWallViewType OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithOfferWallViewType:(enum OfferWallViewType)offerWallViewType;
+/// Designated initializer. Pass <code>BlinkEngageSDK/rewardConfig</code> (or a copy) so reward copy stays stable for this presentation.
+- (nonnull instancetype)initWithOfferWallViewType:(enum OfferWallViewType)offerWallViewType rewardCurrencyConfig:(BlinkEngageRewardConfig * _Nonnull)rewardCurrencyConfig OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 - (void)viewWillAppear:(BOOL)animated;
+- (void)viewDidAppear:(BOOL)animated;
+- (void)viewWillDisappear:(BOOL)animated;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
+@end
+
+@class UIPresentationController;
+@interface OffersWallViewController (SWIFT_EXTENSION(BlinkEngage)) <UIAdaptivePresentationControllerDelegate>
+- (void)presentationControllerDidDismiss:(UIPresentationController * _Nonnull)presentationController;
 @end
 
 SWIFT_PROTOCOL("_TtP11BlinkEngage32OffersWallViewControllerDelegate_")
@@ -797,34 +1051,94 @@ SWIFT_PROTOCOL("_TtP11BlinkEngage32OffersWallViewControllerDelegate_")
 - (void)offerWall:(OffersWallViewController * _Nonnull)viewController didUpdateClippedOffersCount:(NSInteger)count;
 @end
 
+/// Controls where <code>BlinkEngageRewardConfig/currencyCode</code> appears relative to the numeric amount.
+/// Only applies when <code>BlinkEngageRewardConfig/currencyCode</code> is non-<code>nil</code>.
+/// When <code>currencyCode</code> is <code>nil</code>, this value is ignored.
+typedef SWIFT_ENUM(NSInteger, RewardCurrencyCodePosition, open) {
+/// Symbol before the amount (e.g. <code>$1,234</code>).
+  RewardCurrencyCodePositionLeading = 0,
+/// Symbol after the amount (e.g. <code>1,234€</code>).
+  RewardCurrencyCodePositionTrailing = 1,
+};
+
+/// How the SDK presents the reward amount on list rows (offer cells, receipt lines, boosts).
+typedef SWIFT_ENUM(NSInteger, RewardCurrencyLabelStyle, open) {
+/// Reward icon to the left of grouped digits (custom <code>BlinkEngageRewardConfig/currencyImage</code> or built-in default when <code>nil</code>).
+  RewardCurrencyLabelStyleCurrencyImage = 0,
+/// <code>BlinkEngageRewardConfig/currencyCode</code> beside grouped digits (leading or trailing per <code>RewardCurrencyCodePosition</code>). No icon.
+  RewardCurrencyLabelStyleCurrencyCode = 1,
+/// Grouped digits followed by <code>BlinkEngageRewardConfig/currencyName</code>. No icon.
+  RewardCurrencyLabelStyleCurrencyName = 2,
+};
+
+/// How toast and celebration copy refers to the reward currency.
+typedef SWIFT_ENUM(NSInteger, RewardCurrencyMessagingTextStyle, open) {
+/// Reward name next to amounts (e.g. “You earned 250 points for this receipt!”).
+  RewardCurrencyMessagingTextStyleCurrencyName = 0,
+/// <code>BlinkEngageRewardConfig/currencyCode</code> formatting (e.g. “You earned $250 for this receipt!”).
+  RewardCurrencyMessagingTextStyleCurrencyCode = 1,
+/// Generic copy without a numeric amount (e.g. “You earned a reward for this receipt!”).
+  RewardCurrencyMessagingTextStyleNoAmount = 2,
+};
+
+/// Precision used when rounding the converted reward amount before display.
+/// The SDK multiplies a dollar payout by <code>currencyPerDollar</code> and then applies
+/// this rounding strategy to the result.
+/// Pick <code>whole</code> for unit-style currencies (points, gems, coins) where fractional
+/// values don’t make sense. Pick <code>decimal</code> when you need to show fractional
+/// amounts (e.g. <code>$0.15</code>, <code>€1.20</code>, <code>0.50 credits</code>).
+typedef SWIFT_ENUM(NSInteger, RewardCurrencyRounding, open) {
+/// Round up to the next whole unit. <code>1.4 → 2</code>, <code>1.6 → 2</code>, <code>0.5 → 1</code>, <code>0.05 → 1</code>.
+/// Default. Use for any currency that is only meaningful as an integer
+/// (points, gems, coins, tokens).
+  RewardCurrencyRoundingWhole = 0,
+/// Keep two decimal places, always rendered with two fraction digits.
+/// <code>0.155 → 0.16</code>, <code>2.13 → 2.13</code>, <code>1.5 → 1.50</code>, <code>0 → 0.00</code>.
+/// Use when the reward should display fractional amounts (e.g. <code>$0.15</code>,
+/// <code>€1.20</code>, <code>0.50 credits</code>).
+  RewardCurrencyRoundingDecimal = 1,
+};
+
+@class NSDictionary;
 @class UIColor;
-@class UIImage;
-/// Protocol for customizing the appearance of BlinkEngage SDK screens.
-/// Conform to this protocol and assign your theme to
-/// <code>BlinkEngageSDK.shared.appearance.theme</code> to override colors, fonts, and images.
-/// For any key, return <code>nil</code> from the corresponding method to use the SDK default.
+/// Implement this protocol to override the SDK’s default colors, fonts, and
+/// icons, then wrap your implementation in an <code>Appearance</code> and assign it to
+/// <code>BlinkEngageSDK/appearance</code>.
+/// Every method uses an <em>opt-in</em> model: return <code>nil</code> for any key you don’t
+/// want to customize and the SDK keeps its built-in value.
+/// The SDK resolves fonts in this order:
+/// <ol>
+///   <li>
+///     The value returned by <code>fontName(forKey:)</code> for the specific key.
+///   </li>
+///   <li>
+///     A match in <code>globalFontMatrix</code> for the label’s weight.
+///   </li>
+///   <li>
+///     The system font at the SDK’s built-in size and weight.
+///   </li>
+/// </ol>
 SWIFT_PROTOCOL("_TtP11BlinkEngage5Theme_")
 @protocol Theme
-/// When you return <code>nil</code> from <code>image(forKey: .offerRewardIcon)</code>, this controls
-/// whether the default reward icon is shown (<code>true</code>) or hidden (<code>false</code>).
-/// Ignored when you return a custom reward icon image.
-@property (nonatomic, readonly) BOOL isRewardIconEnabled;
-/// When <code>true</code>, the Stores screen loads merchant logos from their URLs when available.
-/// When <code>false</code>, the default storefront icon is always shown.
+/// Controls whether the Stores screen attempts to load merchant logos from
+/// their remote URLs. Return <code>false</code> to always show the built-in
+/// storefront icon instead.
 @property (nonatomic, readonly) BOOL isMerchantIconEnabled;
-/// Optional mapping of font weight to font name, used when you return <code>nil</code> from
-/// <code>fontName(forKey:)</code> for a given key. Keys: <code>NSNumber</code> wrapping
-/// <code>UIFont.Weight.rawValue</code>; values: font name strings. Return <code>nil</code> to use
-/// system fonts when no key-specific font is set.
+/// A weight-to-font-name map applied to every label that doesn’t have a
+/// per-key font override.
+/// Keys are <code>NSNumber(value: UIFont.Weight.rawValue)</code>, values are font
+/// name strings (e.g. <code>"Outfit-Bold"</code>). Return <code>nil</code> to fall through to
+/// the system font for all non-overridden labels.
 @property (nonatomic, readonly, strong) NSDictionary * _Nullable globalFontMatrix;
-/// Returns a custom color for the given key, or <code>nil</code> to use the SDK default.
+/// Returns a color for the given key, or <code>nil</code> to keep the SDK default.
 - (UIColor * _Nullable)colorForKey:(enum AppearanceColorKey)key SWIFT_WARN_UNUSED_RESULT;
-/// Returns a custom font name for the given key (e.g. <code>"Outfit-Bold"</code>), or <code>nil</code> to use
-/// the SDK default. The SDK applies the appropriate size for each key.
+/// Returns a font <em>name</em> (e.g. <code>"Outfit-SemiBold"</code>) for the given key,
+/// or <code>nil</code> to fall back to <code>globalFontMatrix</code> and then the system font.
+/// The SDK controls the point size internally.
 - (NSString * _Nullable)fontNameForKey:(enum AppearanceFontNameKey)key SWIFT_WARN_UNUSED_RESULT;
-/// Returns a custom image for the given key, or <code>nil</code> to use the SDK default.
-/// For the reward icon, when you return <code>nil</code>, visibility is controlled by
-/// <code>isRewardIconEnabled</code>.
+/// Returns an image for the given key, or <code>nil</code> to keep the SDK default.
+/// The SDK renders custom images as template when a matching color key
+/// exists, preserving your tint.
 - (UIImage * _Nullable)imageForKey:(enum AppearanceIconKey)key SWIFT_WARN_UNUSED_RESULT;
 @end
 
@@ -4726,6 +5040,37 @@ struct BlinkEngage_OfferWallViewType {
   _Alignas(8) char _storage[8];
 };
 
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage26RewardCurrencyCodePositionO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage26RewardCurrencyCodePositionO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_RewardCurrencyCodePosition {
+  _Alignas(8) char _storage[8];
+};
+
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage28RewardCurrencyImageLocationsV8rawValueSivg(SWIFT_CONTEXT const void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $s11BlinkEngage28RewardCurrencyImageLocationsV8rawValueACSi_tcfC(SWIFT_INDIRECT_RESULT void * _Nonnull, ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN void $s11BlinkEngage28RewardCurrencyImageLocationsV9offerCellACvgZ(SWIFT_INDIRECT_RESULT void * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $s11BlinkEngage28RewardCurrencyImageLocationsV012receiptTotalC0ACvgZ(SWIFT_INDIRECT_RESULT void * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $s11BlinkEngage28RewardCurrencyImageLocationsV12receiptBoostACvgZ(SWIFT_INDIRECT_RESULT void * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $s11BlinkEngage28RewardCurrencyImageLocationsV11receiptTaskACvgZ(SWIFT_INDIRECT_RESULT void * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $s11BlinkEngage28RewardCurrencyImageLocationsV3allACvgZ(SWIFT_INDIRECT_RESULT void * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage24RewardCurrencyLabelStyleO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage24RewardCurrencyLabelStyleO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_RewardCurrencyLabelStyle {
+  _Alignas(8) char _storage[8];
+};
+
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage32RewardCurrencyMessagingTextStyleO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage32RewardCurrencyMessagingTextStyleO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_RewardCurrencyMessagingTextStyle {
+  _Alignas(8) char _storage[8];
+};
+
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage22RewardCurrencyRoundingO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage22RewardCurrencyRoundingO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_RewardCurrencyRounding {
+  _Alignas(8) char _storage[8];
+};
+
 
 #ifdef __cplusplus
 }
@@ -4747,7 +5092,10 @@ inline const constexpr bool isUsableInGenericContext<BlinkEngage::AppearanceColo
 } // namespace swift
 
 namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
-/// Keys for custom colors. Return a color for a key from your <code>Theme</code> to customize that part of the UI (backgrounds, labels, icon tints).
+/// Identifiers for every color the SDK can resolve from your <code>Theme</code>.
+/// Pass these to <code>Theme/color(forKey:)</code> and return a <code>UIColor</code>, or <code>nil</code>
+/// to keep the SDK default. Each case maps to one background, text color,
+/// or icon tint in the SDK’s UI.
 namespace _impl {
 
 class _impl_AppearanceColorKey;
@@ -6094,7 +6442,11 @@ inline const constexpr bool isUsableInGenericContext<BlinkEngage::AppearanceFont
 } // namespace swift
 
 namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
-/// Keys for custom fonts. Return a font name (e.g. <code>"Outfit-Bold"</code>) for a key from your <code>Theme</code> to use that font for the corresponding label; return <code>nil</code> to use the default or your <code>globalFontMatrix</code> by weight.
+/// Identifiers for every font name the SDK can resolve from your <code>Theme</code>.
+/// Pass these to <code>Theme/fontName(forKey:)</code> and return a font family name
+/// (e.g. <code>"Outfit-Bold"</code>), or <code>nil</code> to fall back to
+/// <code>Theme/globalFontMatrix</code> and then the system font. The SDK controls
+/// the point size for every label internally — you only supply the name.
 namespace _impl {
 
 class _impl_AppearanceFontNameKey;
@@ -6901,7 +7253,12 @@ inline const constexpr bool isUsableInGenericContext<BlinkEngage::AppearanceIcon
 } // namespace swift
 
 namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
-/// Keys for custom images. Return an image for a key from your <code>Theme</code> to replace that icon; return <code>nil</code> to use the default (if any). When you return <code>nil</code>, the matching color key may still be used to tint the default icon.
+/// Identifiers for every icon the SDK can resolve from your <code>Theme</code>.
+/// Pass these to <code>Theme/image(forKey:)</code> and return a <code>UIImage</code>, or <code>nil</code>
+/// to keep the SDK’s built-in asset. When you return <code>nil</code>, the matching
+/// <code>AppearanceColorKey</code> still tints the default icon.
+/// Supply images at the minimum size listed in each case’s documentation
+/// (in points); include @2x and @3x variants for Retina screens.
 namespace _impl {
 
 class _impl_AppearanceIconKey;
@@ -6953,7 +7310,6 @@ public:
   }
 
   enum class cases {
-    offerRewardIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyOfferRewardIcon"),
     offerWallFloatingButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyOfferWallFloatingButtonIcon"),
     missedEarningsNavigationEditButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyMissedEarningsNavigationEditButtonIcon"),
     missedEarningsFieldEditIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyMissedEarningsFieldEditIcon"),
@@ -6966,14 +7322,6 @@ public:
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
-  inline const static struct _impl_offerRewardIcon {  // impl struct for case offerRewardIcon
-    SWIFT_INLINE_THUNK constexpr operator cases() const {
-      return cases::offerRewardIcon;
-    }
-    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
-  } offerRewardIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyOfferRewardIcon");
-  SWIFT_INLINE_THUNK bool isOfferRewardIcon() const;
-
   inline const static struct _impl_offerWallFloatingButtonIcon {  // impl struct for case offerWallFloatingButtonIcon
     SWIFT_INLINE_THUNK constexpr operator cases() const {
       return cases::offerWallFloatingButtonIcon;
@@ -7041,15 +7389,14 @@ public:
 #pragma clang diagnostic pop
   SWIFT_INLINE_THUNK operator cases() const {
     switch (_getEnumTag()) {
-      case 0: return cases::offerRewardIcon;
-      case 1: return cases::offerWallFloatingButtonIcon;
-      case 2: return cases::missedEarningsNavigationEditButtonIcon;
-      case 3: return cases::missedEarningsFieldEditIcon;
-      case 4: return cases::postScanReceiptButtonIcon;
-      case 5: return cases::postScanBoostDefaultIcon;
-      case 6: return cases::postScanSuccessIcon;
-      case 7: return cases::ugcBarcodeDetectedIcon;
-      case 8: return cases::ugcToastMessageWarningIcon;
+      case 0: return cases::offerWallFloatingButtonIcon;
+      case 1: return cases::missedEarningsNavigationEditButtonIcon;
+      case 2: return cases::missedEarningsFieldEditIcon;
+      case 3: return cases::postScanReceiptButtonIcon;
+      case 4: return cases::postScanBoostDefaultIcon;
+      case 5: return cases::postScanSuccessIcon;
+      case 6: return cases::ugcBarcodeDetectedIcon;
+      case 7: return cases::ugcToastMessageWarningIcon;
       default: abort();
     }
   }
@@ -7347,6 +7694,967 @@ template<>
 inline const constexpr bool isValueType<BlinkEngage::OfferWallViewType> = true;
 template<>
 struct implClassFor<BlinkEngage::OfferWallViewType> { using type = BlinkEngage::_impl::_impl_OfferWallViewType; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyCodePosition") RewardCurrencyCodePosition;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::RewardCurrencyCodePosition> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// Controls where <code>BlinkEngageRewardConfig/currencyCode</code> appears relative to the numeric amount.
+/// Only applies when <code>BlinkEngageRewardConfig/currencyCode</code> is non-<code>nil</code>.
+/// When <code>currencyCode</code> is <code>nil</code>, this value is ignored.
+namespace _impl {
+
+class _impl_RewardCurrencyCodePosition;
+
+// Type metadata accessor for RewardCurrencyCodePosition
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage26RewardCurrencyCodePositionOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyCodePosition") RewardCurrencyCodePosition final {
+public:
+  SWIFT_INLINE_THUNK ~RewardCurrencyCodePosition() noexcept {
+    auto metadata = _impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyCodePosition(const RewardCurrencyCodePosition &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyCodePosition &operator =(const RewardCurrencyCodePosition &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyCodePosition &operator =(RewardCurrencyCodePosition &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyCodePosition(RewardCurrencyCodePosition &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    leading SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyCodePosition@RewardCurrencyCodePositionLeading"),
+    trailing SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyCodePosition@RewardCurrencyCodePositionTrailing")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_leading {  // impl struct for case leading
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::leading;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyCodePosition operator()() const;
+  } leading SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyCodePosition@RewardCurrencyCodePositionLeading");
+  SWIFT_INLINE_THUNK bool isLeading() const;
+
+  inline const static struct _impl_trailing {  // impl struct for case trailing
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::trailing;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyCodePosition operator()() const;
+  } trailing SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyCodePosition@RewardCurrencyCodePositionTrailing");
+  SWIFT_INLINE_THUNK bool isTrailing() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::leading;
+      case 1: return cases::trailing;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyCodePosition> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage26RewardCurrencyCodePositionO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage26RewardCurrencyCodePositionO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK RewardCurrencyCodePosition() noexcept {}
+  static SWIFT_INLINE_THUNK RewardCurrencyCodePosition _make() noexcept { return RewardCurrencyCodePosition(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_RewardCurrencyCodePosition;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage26RewardCurrencyCodePositionOD;
+  static inline constexpr $s11BlinkEngage26RewardCurrencyCodePositionOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_RewardCurrencyCodePosition {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(RewardCurrencyCodePosition &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const RewardCurrencyCodePosition &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyCodePosition returnNewValue(T callable) {
+    auto result = RewardCurrencyCodePosition::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::RewardCurrencyCodePosition> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::RewardCurrencyCodePosition> = true;
+template<>
+struct implClassFor<BlinkEngage::RewardCurrencyCodePosition> { using type = BlinkEngage::_impl::_impl_RewardCurrencyCodePosition; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+class SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV") RewardCurrencyImageLocations;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::RewardCurrencyImageLocations> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+namespace _impl {
+
+class _impl_RewardCurrencyImageLocations;
+
+// Type metadata accessor for RewardCurrencyImageLocations
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage28RewardCurrencyImageLocationsVMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV") RewardCurrencyImageLocations final {
+public:
+  SWIFT_INLINE_THUNK ~RewardCurrencyImageLocations() noexcept {
+    auto metadata = _impl::$s11BlinkEngage28RewardCurrencyImageLocationsVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations(const RewardCurrencyImageLocations &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage28RewardCurrencyImageLocationsVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    _storage = swift::_impl::OpaqueStorage(vwTable->size, vwTable->getAlignment());
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations &operator =(const RewardCurrencyImageLocations &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage28RewardCurrencyImageLocationsVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations &operator =(RewardCurrencyImageLocations &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyImageLocations(RewardCurrencyImageLocations &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV8rawValueSivp");
+  static SWIFT_INLINE_THUNK RewardCurrencyImageLocations init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV8rawValueACSi_tcfc");
+  static SWIFT_INLINE_THUNK RewardCurrencyImageLocations getOfferCell() SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV9offerCellACvpZ");
+  static SWIFT_INLINE_THUNK RewardCurrencyImageLocations getReceiptTotalReward() SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV012receiptTotalC0ACvpZ");
+  static SWIFT_INLINE_THUNK RewardCurrencyImageLocations getReceiptBoost() SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV12receiptBoostACvpZ");
+  static SWIFT_INLINE_THUNK RewardCurrencyImageLocations getReceiptTask() SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV11receiptTaskACvpZ");
+  static SWIFT_INLINE_THUNK RewardCurrencyImageLocations getAll() SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV3allACvpZ");
+private:
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations(swift::_impl::ValueWitnessTable * _Nonnull vwTable) noexcept : _storage(vwTable->size, vwTable->getAlignment()) {}
+  static SWIFT_INLINE_THUNK RewardCurrencyImageLocations _make() noexcept {
+    auto metadata = _impl::$s11BlinkEngage28RewardCurrencyImageLocationsVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    return RewardCurrencyImageLocations(vwTable);
+  }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage.getOpaquePointer(); }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage.getOpaquePointer(); }
+
+  swift::_impl::OpaqueStorage _storage;
+  friend class _impl::_impl_RewardCurrencyImageLocations;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage28RewardCurrencyImageLocationsVD;
+  static inline constexpr $s11BlinkEngage28RewardCurrencyImageLocationsVD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_RewardCurrencyImageLocations {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(RewardCurrencyImageLocations &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const RewardCurrencyImageLocations &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyImageLocations returnNewValue(T callable) {
+    auto result = RewardCurrencyImageLocations::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage28RewardCurrencyImageLocationsVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::RewardCurrencyImageLocations> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsVMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::RewardCurrencyImageLocations> = true;
+template<>
+inline const constexpr bool isOpaqueLayout<BlinkEngage::RewardCurrencyImageLocations> = true;
+template<>
+struct implClassFor<BlinkEngage::RewardCurrencyImageLocations> { using type = BlinkEngage::_impl::_impl_RewardCurrencyImageLocations; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle") RewardCurrencyLabelStyle;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::RewardCurrencyLabelStyle> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// How the SDK presents the reward amount on list rows (offer cells, receipt lines, boosts).
+namespace _impl {
+
+class _impl_RewardCurrencyLabelStyle;
+
+// Type metadata accessor for RewardCurrencyLabelStyle
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage24RewardCurrencyLabelStyleOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle") RewardCurrencyLabelStyle final {
+public:
+  SWIFT_INLINE_THUNK ~RewardCurrencyLabelStyle() noexcept {
+    auto metadata = _impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyLabelStyle(const RewardCurrencyLabelStyle &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyLabelStyle &operator =(const RewardCurrencyLabelStyle &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyLabelStyle &operator =(RewardCurrencyLabelStyle &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyLabelStyle(RewardCurrencyLabelStyle &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    currencyImage SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle@RewardCurrencyLabelStyleCurrencyImage"),
+    currencyCode SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle@RewardCurrencyLabelStyleCurrencyCode"),
+    currencyName SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle@RewardCurrencyLabelStyleCurrencyName")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_currencyImage {  // impl struct for case currencyImage
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::currencyImage;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyLabelStyle operator()() const;
+  } currencyImage SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle@RewardCurrencyLabelStyleCurrencyImage");
+  SWIFT_INLINE_THUNK bool isCurrencyImage() const;
+
+  inline const static struct _impl_currencyCode {  // impl struct for case currencyCode
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::currencyCode;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyLabelStyle operator()() const;
+  } currencyCode SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle@RewardCurrencyLabelStyleCurrencyCode");
+  SWIFT_INLINE_THUNK bool isCurrencyCode() const;
+
+  inline const static struct _impl_currencyName {  // impl struct for case currencyName
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::currencyName;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyLabelStyle operator()() const;
+  } currencyName SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle@RewardCurrencyLabelStyleCurrencyName");
+  SWIFT_INLINE_THUNK bool isCurrencyName() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::currencyImage;
+      case 1: return cases::currencyCode;
+      case 2: return cases::currencyName;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyLabelStyle> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage24RewardCurrencyLabelStyleO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage24RewardCurrencyLabelStyleO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK RewardCurrencyLabelStyle() noexcept {}
+  static SWIFT_INLINE_THUNK RewardCurrencyLabelStyle _make() noexcept { return RewardCurrencyLabelStyle(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_RewardCurrencyLabelStyle;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage24RewardCurrencyLabelStyleOD;
+  static inline constexpr $s11BlinkEngage24RewardCurrencyLabelStyleOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_RewardCurrencyLabelStyle {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(RewardCurrencyLabelStyle &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const RewardCurrencyLabelStyle &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyLabelStyle returnNewValue(T callable) {
+    auto result = RewardCurrencyLabelStyle::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::RewardCurrencyLabelStyle> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::RewardCurrencyLabelStyle> = true;
+template<>
+struct implClassFor<BlinkEngage::RewardCurrencyLabelStyle> { using type = BlinkEngage::_impl::_impl_RewardCurrencyLabelStyle; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle") RewardCurrencyMessagingTextStyle;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::RewardCurrencyMessagingTextStyle> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// How toast and celebration copy refers to the reward currency.
+namespace _impl {
+
+class _impl_RewardCurrencyMessagingTextStyle;
+
+// Type metadata accessor for RewardCurrencyMessagingTextStyle
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle") RewardCurrencyMessagingTextStyle final {
+public:
+  SWIFT_INLINE_THUNK ~RewardCurrencyMessagingTextStyle() noexcept {
+    auto metadata = _impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle(const RewardCurrencyMessagingTextStyle &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle &operator =(const RewardCurrencyMessagingTextStyle &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle &operator =(RewardCurrencyMessagingTextStyle &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyMessagingTextStyle(RewardCurrencyMessagingTextStyle &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    currencyName SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle@RewardCurrencyMessagingTextStyleCurrencyName"),
+    currencyCode SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle@RewardCurrencyMessagingTextStyleCurrencyCode"),
+    noAmount SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle@RewardCurrencyMessagingTextStyleNoAmount")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_currencyName {  // impl struct for case currencyName
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::currencyName;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle operator()() const;
+  } currencyName SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle@RewardCurrencyMessagingTextStyleCurrencyName");
+  SWIFT_INLINE_THUNK bool isCurrencyName() const;
+
+  inline const static struct _impl_currencyCode {  // impl struct for case currencyCode
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::currencyCode;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle operator()() const;
+  } currencyCode SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle@RewardCurrencyMessagingTextStyleCurrencyCode");
+  SWIFT_INLINE_THUNK bool isCurrencyCode() const;
+
+  inline const static struct _impl_noAmount {  // impl struct for case noAmount
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::noAmount;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle operator()() const;
+  } noAmount SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle@RewardCurrencyMessagingTextStyleNoAmount");
+  SWIFT_INLINE_THUNK bool isNoAmount() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::currencyName;
+      case 1: return cases::currencyCode;
+      case 2: return cases::noAmount;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyMessagingTextStyle> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage32RewardCurrencyMessagingTextStyleO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage32RewardCurrencyMessagingTextStyleO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle() noexcept {}
+  static SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle _make() noexcept { return RewardCurrencyMessagingTextStyle(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_RewardCurrencyMessagingTextStyle;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage32RewardCurrencyMessagingTextStyleOD;
+  static inline constexpr $s11BlinkEngage32RewardCurrencyMessagingTextStyleOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_RewardCurrencyMessagingTextStyle {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(RewardCurrencyMessagingTextStyle &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const RewardCurrencyMessagingTextStyle &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyMessagingTextStyle returnNewValue(T callable) {
+    auto result = RewardCurrencyMessagingTextStyle::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::RewardCurrencyMessagingTextStyle> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::RewardCurrencyMessagingTextStyle> = true;
+template<>
+struct implClassFor<BlinkEngage::RewardCurrencyMessagingTextStyle> { using type = BlinkEngage::_impl::_impl_RewardCurrencyMessagingTextStyle; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyRounding") RewardCurrencyRounding;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::RewardCurrencyRounding> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// Precision used when rounding the converted reward amount before display.
+/// The SDK multiplies a dollar payout by <code>currencyPerDollar</code> and then applies
+/// this rounding strategy to the result.
+/// Pick <code>whole</code> for unit-style currencies (points, gems, coins) where fractional
+/// values don’t make sense. Pick <code>decimal</code> when you need to show fractional
+/// amounts (e.g. <code>$0.15</code>, <code>€1.20</code>, <code>0.50 credits</code>).
+namespace _impl {
+
+class _impl_RewardCurrencyRounding;
+
+// Type metadata accessor for RewardCurrencyRounding
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage22RewardCurrencyRoundingOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyRounding") RewardCurrencyRounding final {
+public:
+  SWIFT_INLINE_THUNK ~RewardCurrencyRounding() noexcept {
+    auto metadata = _impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyRounding(const RewardCurrencyRounding &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyRounding &operator =(const RewardCurrencyRounding &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyRounding &operator =(RewardCurrencyRounding &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyRounding(RewardCurrencyRounding &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    whole SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyRounding@RewardCurrencyRoundingWhole"),
+    decimal SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyRounding@RewardCurrencyRoundingDecimal")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_whole {  // impl struct for case whole
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::whole;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyRounding operator()() const;
+  } whole SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyRounding@RewardCurrencyRoundingWhole");
+  SWIFT_INLINE_THUNK bool isWhole() const;
+
+  inline const static struct _impl_decimal {  // impl struct for case decimal
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::decimal;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyRounding operator()() const;
+  } decimal SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyRounding@RewardCurrencyRoundingDecimal");
+  SWIFT_INLINE_THUNK bool isDecimal() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::whole;
+      case 1: return cases::decimal;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyRounding> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage22RewardCurrencyRoundingO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage22RewardCurrencyRoundingO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK RewardCurrencyRounding() noexcept {}
+  static SWIFT_INLINE_THUNK RewardCurrencyRounding _make() noexcept { return RewardCurrencyRounding(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_RewardCurrencyRounding;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage22RewardCurrencyRoundingOD;
+  static inline constexpr $s11BlinkEngage22RewardCurrencyRoundingOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_RewardCurrencyRounding {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(RewardCurrencyRounding &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const RewardCurrencyRounding &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyRounding returnNewValue(T callable) {
+    auto result = RewardCurrencyRounding::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::RewardCurrencyRounding> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::RewardCurrencyRounding> = true;
+template<>
+struct implClassFor<BlinkEngage::RewardCurrencyRounding> { using type = BlinkEngage::_impl::_impl_RewardCurrencyRounding; };
 } // namespace
 #pragma clang diagnostic pop
 } // namespace swift
@@ -8809,17 +10117,9 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   SWIFT_INLINE_THUNK swift::Int AppearanceFontNameKey::getRawValue() const {
   return BlinkEngage::_impl::$s11BlinkEngage21AppearanceFontNameKeyO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
   }
-  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_offerRewardIcon::operator()() const {
-    auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(0);
-    return result;
-  }
-  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isOfferRewardIcon() const {
-    return *this == AppearanceIconKey::offerRewardIcon;
-  }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_offerWallFloatingButtonIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(1);
+    result._destructiveInjectEnumTag(0);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isOfferWallFloatingButtonIcon() const {
@@ -8827,7 +10127,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_missedEarningsNavigationEditButtonIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(2);
+    result._destructiveInjectEnumTag(1);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isMissedEarningsNavigationEditButtonIcon() const {
@@ -8835,7 +10135,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_missedEarningsFieldEditIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(3);
+    result._destructiveInjectEnumTag(2);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isMissedEarningsFieldEditIcon() const {
@@ -8843,7 +10143,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_postScanReceiptButtonIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(4);
+    result._destructiveInjectEnumTag(3);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isPostScanReceiptButtonIcon() const {
@@ -8851,7 +10151,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_postScanBoostDefaultIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(5);
+    result._destructiveInjectEnumTag(4);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isPostScanBoostDefaultIcon() const {
@@ -8859,7 +10159,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_postScanSuccessIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(6);
+    result._destructiveInjectEnumTag(5);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isPostScanSuccessIcon() const {
@@ -8867,7 +10167,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_ugcBarcodeDetectedIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(7);
+    result._destructiveInjectEnumTag(6);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isUgcBarcodeDetectedIcon() const {
@@ -8875,7 +10175,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_ugcToastMessageWarningIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(8);
+    result._destructiveInjectEnumTag(7);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isUgcToastMessageWarningIcon() const {
@@ -8912,6 +10212,151 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK swift::Int OfferWallViewType::getRawValue() const {
   return BlinkEngage::_impl::$s11BlinkEngage17OfferWallViewTypeO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyCodePosition RewardCurrencyCodePosition::_impl_leading::operator()() const {
+    auto result = RewardCurrencyCodePosition::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyCodePosition::isLeading() const {
+    return *this == RewardCurrencyCodePosition::leading;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyCodePosition RewardCurrencyCodePosition::_impl_trailing::operator()() const {
+    auto result = RewardCurrencyCodePosition::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyCodePosition::isTrailing() const {
+    return *this == RewardCurrencyCodePosition::trailing;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyCodePosition> RewardCurrencyCodePosition::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<RewardCurrencyCodePosition>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage26RewardCurrencyCodePositionO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int RewardCurrencyCodePosition::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage26RewardCurrencyCodePositionO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK swift::Int RewardCurrencyImageLocations::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsV8rawValueSivg(_getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations RewardCurrencyImageLocations::init(swift::Int rawValue) {
+  return BlinkEngage::_impl::_impl_RewardCurrencyImageLocations::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsV8rawValueACSi_tcfC(result, rawValue);
+  });
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations RewardCurrencyImageLocations::getOfferCell() {
+  return BlinkEngage::_impl::_impl_RewardCurrencyImageLocations::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsV9offerCellACvgZ(result);
+  });
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations RewardCurrencyImageLocations::getReceiptTotalReward() {
+  return BlinkEngage::_impl::_impl_RewardCurrencyImageLocations::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsV012receiptTotalC0ACvgZ(result);
+  });
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations RewardCurrencyImageLocations::getReceiptBoost() {
+  return BlinkEngage::_impl::_impl_RewardCurrencyImageLocations::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsV12receiptBoostACvgZ(result);
+  });
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations RewardCurrencyImageLocations::getReceiptTask() {
+  return BlinkEngage::_impl::_impl_RewardCurrencyImageLocations::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsV11receiptTaskACvgZ(result);
+  });
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations RewardCurrencyImageLocations::getAll() {
+  return BlinkEngage::_impl::_impl_RewardCurrencyImageLocations::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsV3allACvgZ(result);
+  });
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyLabelStyle RewardCurrencyLabelStyle::_impl_currencyImage::operator()() const {
+    auto result = RewardCurrencyLabelStyle::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyLabelStyle::isCurrencyImage() const {
+    return *this == RewardCurrencyLabelStyle::currencyImage;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyLabelStyle RewardCurrencyLabelStyle::_impl_currencyCode::operator()() const {
+    auto result = RewardCurrencyLabelStyle::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyLabelStyle::isCurrencyCode() const {
+    return *this == RewardCurrencyLabelStyle::currencyCode;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyLabelStyle RewardCurrencyLabelStyle::_impl_currencyName::operator()() const {
+    auto result = RewardCurrencyLabelStyle::_make();
+    result._destructiveInjectEnumTag(2);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyLabelStyle::isCurrencyName() const {
+    return *this == RewardCurrencyLabelStyle::currencyName;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyLabelStyle> RewardCurrencyLabelStyle::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<RewardCurrencyLabelStyle>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage24RewardCurrencyLabelStyleO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int RewardCurrencyLabelStyle::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage24RewardCurrencyLabelStyleO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle RewardCurrencyMessagingTextStyle::_impl_currencyName::operator()() const {
+    auto result = RewardCurrencyMessagingTextStyle::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyMessagingTextStyle::isCurrencyName() const {
+    return *this == RewardCurrencyMessagingTextStyle::currencyName;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle RewardCurrencyMessagingTextStyle::_impl_currencyCode::operator()() const {
+    auto result = RewardCurrencyMessagingTextStyle::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyMessagingTextStyle::isCurrencyCode() const {
+    return *this == RewardCurrencyMessagingTextStyle::currencyCode;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle RewardCurrencyMessagingTextStyle::_impl_noAmount::operator()() const {
+    auto result = RewardCurrencyMessagingTextStyle::_make();
+    result._destructiveInjectEnumTag(2);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyMessagingTextStyle::isNoAmount() const {
+    return *this == RewardCurrencyMessagingTextStyle::noAmount;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyMessagingTextStyle> RewardCurrencyMessagingTextStyle::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<RewardCurrencyMessagingTextStyle>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int RewardCurrencyMessagingTextStyle::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyRounding RewardCurrencyRounding::_impl_whole::operator()() const {
+    auto result = RewardCurrencyRounding::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyRounding::isWhole() const {
+    return *this == RewardCurrencyRounding::whole;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyRounding RewardCurrencyRounding::_impl_decimal::operator()() const {
+    auto result = RewardCurrencyRounding::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyRounding::isDecimal() const {
+    return *this == RewardCurrencyRounding::decimal;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyRounding> RewardCurrencyRounding::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<RewardCurrencyRounding>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage22RewardCurrencyRoundingO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int RewardCurrencyRounding::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage22RewardCurrencyRoundingO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
   }
 
 } // namespace BlinkEngage
@@ -9204,7 +10649,6 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
-@import Foundation;
 @import ObjectiveC;
 @import UIKit;
 #endif
@@ -9230,261 +10674,280 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if defined(__OBJC__)
 
 @protocol Theme;
-/// Configuration for the visual appearance of BlinkEngage SDK screens.
-/// Assign an instance to <code>BlinkEngageSDK.shared.appearance</code> before presenting SDK flows.
-/// Use the initializer that takes a <code>Theme</code> to apply custom colors, fonts, and images;
-/// use the default initializer to keep SDK defaults.
+/// A container that pairs a <code>Theme</code> with the SDK’s rendering pipeline.
+/// Set this on <code>BlinkEngageSDK/appearance</code> <em>before</em> you present any SDK
+/// view controller. The SDK reads the theme once per UI pass, so you can swap
+/// themes at runtime (e.g. to support light/dark mode) by assigning a new
+/// <code>Appearance</code>.
+/// \code
+/// // Apply a custom theme
+/// BlinkEngageSDK.shared.appearance = Appearance(theme: BlinkEngageTheme())
+///
+/// // Revert to built-in defaults
+/// BlinkEngageSDK.shared.appearance = Appearance()
+///
+/// \endcode
 SWIFT_CLASS("_TtC11BlinkEngage10Appearance")
 @interface Appearance : NSObject
-/// The theme used to customize SDK UI, or <code>nil</code> to use defaults.
+/// The theme the SDK queries for colors, fonts, and icons.
+/// When <code>nil</code>, every SDK screen falls back to its built-in styling.
 @property (nonatomic, readonly, strong) id <Theme> _Nullable theme;
-/// Creates an appearance with no custom theme; all SDK screens use their default styling.
+/// Creates an appearance that uses the SDK’s built-in styling for every screen.
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-/// Creates an appearance that uses the given theme for colors, fonts, and images.
-/// \param theme A theme conforming to <code>Theme</code>, or <code>nil</code> for default styling.
+/// Creates an appearance backed by a custom theme.
+/// Pass <code>nil</code> to get the same result as the parameterless <code>init()</code>.
+/// \param theme An object conforming to <code>Theme</code> that supplies
+/// colors, font names, and images — or <code>nil</code> for defaults.
 ///
 - (nonnull instancetype)initWithTheme:(id <Theme> _Nullable)theme OBJC_DESIGNATED_INITIALIZER;
 @end
 
-/// Keys for custom colors. Return a color for a key from your <code>Theme</code> to customize that part of the UI (backgrounds, labels, icon tints).
+/// Identifiers for every color the SDK can resolve from your <code>Theme</code>.
+/// Pass these to <code>Theme/color(forKey:)</code> and return a <code>UIColor</code>, or <code>nil</code>
+/// to keep the SDK default. Each case maps to one background, text color,
+/// or icon tint in the SDK’s UI.
 typedef SWIFT_ENUM(NSInteger, AppearanceColorKey, open) {
-/// Header bar at the top of the offer wall.
+/// Header bar background at the top of the offer wall.
   AppearanceColorKeyOfferWallHeaderBackground = 0,
 /// Main title text in the offer wall header.
   AppearanceColorKeyOfferWallHeaderTitleLabel = 1,
-/// Subtitle or secondary line in the offer wall header.
+/// Subtitle line in the offer wall header.
   AppearanceColorKeyOfferWallHeaderSubtitleLabel = 2,
 /// Back / close arrow in the offer wall header.
   AppearanceColorKeyOfferWallHeaderBackButtonIcon = 3,
-/// Background of the offer list area.
+/// Scrollable surface behind all offer cards.
   AppearanceColorKeyOfferWallBackground = 4,
 /// Section title (e.g. “Offers for you”) above a group of offers.
   AppearanceColorKeyOfferWallSectionHeaderLabel = 5,
-/// Arrow or chevron in the “show more” section header button.
+/// Chevron icon in the “show more” section header pill.
   AppearanceColorKeyOfferWallSectionHeaderShowMoreIcon = 6,
-/// Background of the “show more” section header button.
+/// Pill background next to the section title.
   AppearanceColorKeyOfferWallSectionHeaderShowMoreBackground = 7,
-/// Background of the floating button.
+/// Floating action button circle background.
   AppearanceColorKeyOfferWallFloatingButtonBackground = 8,
-/// Label text on the floating button.
+/// Text and icon tint inside the floating action button.
   AppearanceColorKeyOfferWallFloatingButtonLabel = 9,
-/// “More stores” or similar icon in the stores row.
+/// Overflow icon at the end of the horizontal stores strip.
   AppearanceColorKeyOfferWallMoreMerchantsIcon = 10,
-/// Reward amount or points text on each offer card.
+/// Points or dollar value shown on the card.
   AppearanceColorKeyOfferRewardPointsLabel = 11,
-/// Promo badge label (e.g. “BUY 2”) on each offer card.
+/// Promo badge label (e.g. “BUY 2”) on the card.
   AppearanceColorKeyOfferTagLabel = 12,
-/// Background of the promo badge on each offer card.
+/// Promo badge pill background on the card.
   AppearanceColorKeyOfferTagBackground = 13,
-/// Background of each offer card.
+/// Card container background.
   AppearanceColorKeyOfferBackground = 14,
-/// Brand or offer title on each offer card.
+/// Brand or offer title on the card.
   AppearanceColorKeyOfferBrandLabel = 15,
-/// Description or requirements text on each offer card.
+/// Description or requirements text below the title.
   AppearanceColorKeyOfferDescriptionLabel = 16,
-/// “Eligible at” or merchants list text on each offer card.
+/// “At Kroger, Walmart, …” eligible merchants line.
   AppearanceColorKeyOfferEligibleMerchantsLabel = 17,
-/// Expiration / “X Days Left” on the offer details screen.
+/// “X Days Left” expiration label (italic by default).
   AppearanceColorKeyOfferDetailsExpirationLabel = 18,
-/// “Clip this offer” label on the offer details screen.
+/// “Clip this offer” tap target label.
   AppearanceColorKeyOfferDetailsClipLabel = 19,
-/// Icon for the clip button on an offer card.
+/// Plus icon on the unclipped clip button.
   AppearanceColorKeyOfferClipButtonIcon = 20,
-/// Background of the clip button on an offer card.
+/// Circle behind the clip icon.
   AppearanceColorKeyOfferClipButtonBackground = 21,
-/// Icon for the clipped-state button on an offer card.
+/// Checkmark icon on the clipped-state button.
   AppearanceColorKeyOfferClippedButtonIcon = 22,
-/// Background of the clipped-state button on an offer card.
+/// Circle behind the clipped checkmark.
   AppearanceColorKeyOfferClippedButtonBackground = 23,
-/// Label text in the “Offer clipped!” message toast at the top when an offer is clipped.
+/// “Offer clipped!” confirmation banner text.
   AppearanceColorKeyOfferClippedToastMessageLabel = 24,
-/// Background of the “Offer clipped!” message toast at the top when an offer is clipped.
+/// “Offer clipped!” confirmation banner background.
   AppearanceColorKeyOfferClippedToastMessageBackground = 25,
-/// “Clip Required” badge label on the offer details screen.
+/// “Clip Required” badge text.
   AppearanceColorKeyOfferDetailsClipRequiredLabel = 26,
-/// “Clip Required” badge background on the offer details screen.
+/// “Clip Required” badge background.
   AppearanceColorKeyOfferDetailsClipRequiredBackground = 27,
-/// Section header titles on the offer details screen (e.g. “Eligible Products”, “Qualifying Details”, “Description”, “Fine Print”).
+/// Section headers (“Eligible Products”, “Fine Print”, etc.).
   AppearanceColorKeyOfferDetailsSectionHeaderTitleLabel = 28,
-/// Section header toggle (“See all” / “See less”) in groups that have expand/collapse on the offer details screen.
+/// “See all” / “See less” expand-collapse toggle.
   AppearanceColorKeyOfferDetailsSectionHeaderToggleLabel = 29,
-/// Section body text on the offer details screen (e.g. long description).
+/// Long-form text inside expanded sections.
   AppearanceColorKeyOfferDetailsSectionBodyLabel = 30,
-/// Short description under the offer title on the offer details screen (e.g. coupon description and payout).
+/// Coupon description and payout under the title.
   AppearanceColorKeyOfferDetailsShortDescription = 31,
-/// Primary title on the offer details screen.
+/// Large title at the top of the detail view.
   AppearanceColorKeyOfferDetailsTitleLabel = 32,
-/// “Earn …” reward line below the primary title on the offer details screen.
+/// “Earn …” reward amount below the title.
   AppearanceColorKeyOfferDetailsEarnRewardLabel = 33,
-/// Fine print / full terms body on the offer details screen.
+/// Legal copy at the bottom of the detail view.
   AppearanceColorKeyOfferDetailsFinePrintLabel = 34,
-/// Label text in the buying options list on the offer details screen (e.g. “Buy any X eligible products” and payout amount).
+/// “Buy any X eligible products” text in the buying options list.
   AppearanceColorKeyOfferDetailsBuyOptionLabel = 35,
-/// Background of each row in the buying options list on the offer details screen.
+/// Row background in the buying options list.
   AppearanceColorKeyOfferDetailsBuyOptionBackground = 36,
-/// Tag chip label text on the offer details screen
+/// Category tag pill text.
   AppearanceColorKeyOfferDetailsTagChipLabel = 37,
-/// Tag chip outline on the offer details screen.
+/// Category tag pill outline stroke.
   AppearanceColorKeyOfferDetailsTagChipBorder = 38,
-/// Background of the stores screen header bar (e.g. “Stores” title bar).
+/// Header bar background on the stores screen.
   AppearanceColorKeyStoresHeaderBackground = 39,
-/// Title label in the stores screen header (e.g. “Stores”).
+/// Title text in the stores header.
   AppearanceColorKeyStoresHeaderTitleLabel = 40,
-/// Section header label in the stores list (e.g. group titles).
+/// Group label above a set of stores.
   AppearanceColorKeyStoresListSectionHeaderLabel = 41,
-/// Background of the stores list area.
+/// Scrollable surface behind all store rows.
   AppearanceColorKeyStoresListBackground = 42,
-/// Background of each store item in the list.
+/// Individual store cell background.
   AppearanceColorKeyStoresListItemBackground = 43,
-/// Default thumbnail icon for each store item in the list.
+/// SF Symbol storefront icon shown when no remote logo loads.
   AppearanceColorKeyStoresListItemDefaultIcon = 44,
-/// Title label for each store item in the list.
+/// Store name label in each row.
   AppearanceColorKeyStoresListItemTitleLabel = 45,
-/// Subtitle label for each store item in the list.
+/// Offer count subtitle below the store name.
   AppearanceColorKeyStoresListItemSubtitleLabel = 46,
-/// Label text and icon tint on the ad loading screen progress bar (e.g. “Scanning receipt”, arrow button).
+/// “Scanning receipt” label and trailing arrow icon on the progress row.
   AppearanceColorKeyAdLoadingLoadingBarLabel = 47,
-/// Background of the ad loading screen progress bar track.
+/// Unfilled portion of the progress bar.
   AppearanceColorKeyAdLoadingLoadingBarBackground = 48,
-/// Progress fill color of the ad loading screen progress bar.
+/// Filled portion indicating scan progress.
   AppearanceColorKeyAdLoadingLoadingBarProgress = 49,
-/// Title label on the loading screen (e.g. “Hang tight!”).
+/// Centered headline (e.g. “Hang tight!”).
   AppearanceColorKeyAdLoadingDefaultTitleLabel = 50,
-/// Description label on the loading screen (e.g. “Exclusive rewards are coming your way!”).
+/// Subtitle (e.g. “Exclusive rewards are coming your way!”).
   AppearanceColorKeyAdLoadingDefaultDescriptionLabel = 51,
-/// Background of the warning icon (e.g. “!”) on the error modal.
+/// Circle behind the “!” warning symbol.
   AppearanceColorKeyErrorModalIconBackground = 52,
-/// Title label on the error modal (e.g. “Oops!”, “Invalid Receipt”).
+/// Headline (e.g. “Oops!”, “Invalid Receipt”).
   AppearanceColorKeyErrorModalTitleLabel = 53,
-/// Description / message label on the error modal.
+/// Explanatory message below the title.
   AppearanceColorKeyErrorModalDescriptionLabel = 54,
-/// “Back to offers” / dismiss button label on the error modal.
+/// “Back to offers” dismiss button text.
   AppearanceColorKeyErrorModalBackButtonLabel = 55,
-/// Background of the error modal.
+/// Modal card container background.
   AppearanceColorKeyErrorModalBackground = 56,
-/// Background of the receipt summary screen header bar.
+/// Colored bar at the top of the receipt summary.
   AppearanceColorKeyPostScanHeaderBackground = 57,
-/// Background of the total points pill (coin + amount) in the receipt summary header.
+/// Total-points pill background (coin icon + amount).
   AppearanceColorKeyPostScanTotalPointsBackground = 58,
-/// Total points amount label in the receipt summary header.
+/// Amount text inside the total-points pill.
   AppearanceColorKeyPostScanTotalPointsLabel = 59,
-/// Icon tint for the receipt / missed earnings button in the receipt summary header.
+/// Icon on the button that opens missed earnings.
   AppearanceColorKeyPostScanReceiptButtonIcon = 60,
-/// Background of the receipt / missed earnings button in the receipt summary header.
+/// Circle behind the receipt button icon.
   AppearanceColorKeyPostScanReceiptButtonBackground = 61,
-/// Title (text color) of the continue button in the receipt summary footer.
+/// “Continue” button text in the footer.
   AppearanceColorKeyPostScanFooterButtonTitle = 62,
-/// Background of the receipt summary footer.
+/// Footer bar background.
   AppearanceColorKeyPostScanFooterBackground = 63,
-/// Merchant name label in the trip summary.
+/// Store name in the trip summary block.
   AppearanceColorKeyPostScanMerchantNameLabel = 64,
-/// Trip info label (date and total) in the trip summary.
+/// Date and total line in the trip summary block.
   AppearanceColorKeyPostScanTripInfoLabel = 65,
-/// Label in the “no boosts” empty state (e.g. “No more boosts are available…”).
+/// Message shown when no boosts are available.
   AppearanceColorKeyPostScanNoBoostsLabel = 66,
-/// Section header title label (e.g. “Your Rewards”).
+/// Section label (e.g. “Your Rewards”).
   AppearanceColorKeyPostScanSectionHeaderTitleLabel = 67,
-/// Title label (e.g. “Nice Scan!”) in the first/success state of the boost area.
+/// “Nice Scan!” headline in the rewards area.
   AppearanceColorKeyPostScanSuccessTitleLabel = 68,
-/// Description label in the first/success state of the boost area (e.g. points earned).
+/// Points-earned description below the success title.
   AppearanceColorKeyPostScanSuccessDescriptionLabel = 69,
-/// Title label on post-scan boost cards in the receipt summary (e.g. offer title).
+/// Offer title on each boost row.
   AppearanceColorKeyPostScanBoostTitleLabel = 70,
-/// Description label on post-scan boost cards in the receipt summary (e.g. offer subtitle).
+/// Subtitle on each boost row.
   AppearanceColorKeyPostScanBoostDescriptionLabel = 71,
-/// Label (text color) on the “Skip” button below post-scan boost cards.
+/// “Skip” button text below a boost card.
   AppearanceColorKeyPostScanBoostSkipButtonLabel = 72,
-/// Label (text color) on the “Claim” button below post-scan boost cards.
+/// “Claim” button text below a boost card.
   AppearanceColorKeyPostScanBoostClaimButtonLabel = 73,
-/// Icon tint for the “Claim” button below post-scan boost cards.
+/// Icon inside the claim button (template-rendered when set).
   AppearanceColorKeyPostScanBoostClaimButtonIcon = 74,
-/// Background color of the “Claim” button below post-scan boost cards.
+/// Filled background of the claim button.
   AppearanceColorKeyPostScanBoostClaimButtonBackground = 75,
-/// Points label (e.g. “+100”) on purchase rows that show reward points.
+/// “+100” label on product rows that earned rewards.
   AppearanceColorKeyPostScanPurchasePointsLabel = 76,
-/// Background of a standard product row in the receipt summary.
+/// Default row background for scanned products.
   AppearanceColorKeyPostScanPurchaseBackground = 77,
-/// Background of product rows that show reward points.
+/// Highlighted row background when a product qualifies for points.
   AppearanceColorKeyPostScanQualifiedPurchaseBackground = 78,
-/// Info icon tint on product rows with an active earn task in the receipt summary.
+/// (i) icon on product rows with an active earn task.
   AppearanceColorKeyPostScanPurchaseInfoIcon = 79,
-/// Background of a product row with an active earn task (UGC barcode, inline GAM).
+/// Distinct row background for UGC barcode capture or inline ad.
   AppearanceColorKeyPostScanUGCPurchaseBackground = 80,
-/// Product name label color on product rows (receipt summary and Missed Earnings).
+/// Product name text on product rows (receipt summary and missed earnings).
   AppearanceColorKeyPurchaseRowLabelColor = 81,
-/// Metadata line label color on product rows (receipt summary and Missed Earnings).
+/// Metadata text (price, quantity) on product rows.
   AppearanceColorKeyPurchaseRowMetadataLabelColor = 82,
-/// Title label in the Missed Earnings navigation header (e.g. “Missing rewards?”).
+/// “Missing rewards?” headline in the navigation header.
   AppearanceColorKeyMissedEarningsNavigationTitleLabel = 83,
-/// Description label in the Missed Earnings navigation header (e.g. “Edit this receipt if any details are off”).
+/// “Edit this receipt if any details are off” subtitle.
   AppearanceColorKeyMissedEarningsNavigationDescriptionLabel = 84,
-/// Icon tint for the Edit button in the Missed Earnings header.
+/// Pen icon tint on the header edit button.
   AppearanceColorKeyMissedEarningsNavigationEditButtonIcon = 85,
-/// Background of the Edit button in the Missed Earnings navigation header.
+/// Circle behind the header edit icon.
   AppearanceColorKeyMissedEarningsNavigationEditButtonBackground = 86,
-/// Icon tint of the Save button in the Missed Earnings header.
+/// Checkmark icon tint on the header save button.
   AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon = 87,
-/// Background of the Save button in the Missed Earnings header.
+/// Circle behind the header save icon.
   AppearanceColorKeyMissedEarningsNavigationSaveButtonBackground = 88,
-/// Icon tint for the edit button on each field row in Missed Earnings.
+/// Small pen icon on each editable field row.
   AppearanceColorKeyMissedEarningsFieldEditIcon = 89,
-/// Label and icon (text/tint color) for the “add new field” control in the Missed Earnings screen.
+/// “Add new field” control text and icon tint.
   AppearanceColorKeyMissedEarningsAddNewFieldLabel = 90,
-/// Background of field rows that have been modified in the Missed Earnings screen.
+/// Highlight background on rows the user has changed.
   AppearanceColorKeyMissedEarningsModifiedFieldBackground = 91,
-/// Section header title label in the Missed Earnings list (e.g. “Merchant”, “Date”, “Products”).
+/// Group labels (“Merchant”, “Date”, “Products”).
   AppearanceColorKeyMissedEarningsListSectionTitleLabel = 92,
-/// Label text in Missed Earnings merchant and date rows only.
+/// Value text in the merchant name and date rows.
   AppearanceColorKeyMissedEarningsTripItemLabel = 93,
-/// Title label at the top of the Missed Earnings edit field modal (e.g. “Merchant Name”, “Receipt Date”).
+/// Edit modal headline (e.g. “Merchant Name”, “Receipt Date”).
   AppearanceColorKeyMissedEarningsEditModalTitleLabel = 94,
-/// Subtitle label at the top of the Missed Earnings edit modal.
+/// Instruction line below the edit modal title.
   AppearanceColorKeyMissedEarningsEditModalSubtitleLabel = 95,
-/// Label for text field titles in the Missed Earnings edit field modal (e.g. “Captured Merchant Name”).
+/// Caption above a text field (e.g. “Captured Merchant Name”).
   AppearanceColorKeyMissedEarningsEditModalInputLabel = 96,
-/// Placeholder text color in the Missed Earnings edit field modal text fields.
+/// Dimmed hint inside empty text fields.
   AppearanceColorKeyMissedEarningsEditModalInputPlaceholderLabel = 97,
-/// Text field value / caption labels in the Missed Earnings edit field modal.
+/// Typed value and helper captions in the edit form.
   AppearanceColorKeyMissedEarningsEditModalInputValueLabel = 98,
-/// Cancel button label (text color) in the Missed Earnings edit field modal.
+/// Cancel button text in the edit modal footer.
   AppearanceColorKeyMissedEarningsEditModalCancelButtonLabel = 99,
-/// Save button label (text color) in the Missed Earnings edit field modal.
+/// Save button text in the edit modal footer.
   AppearanceColorKeyMissedEarningsEditModalSaveButtonLabel = 100,
-/// Save button background in the Missed Earnings edit field modal.
+/// Filled background of the modal save button.
   AppearanceColorKeyMissedEarningsEditModalSaveButtonBackground = 101,
-/// Background of the Missed Earnings edit field modal.
+/// Edit modal card container background.
   AppearanceColorKeyMissedEarningsEditModalBackground = 102,
-/// Tint color of the date picker in the Missed Earnings edit field modal (e.g. selected date highlight).
+/// Selected-date highlight on the date picker.
   AppearanceColorKeyMissedEarningsEditModalDatePicker = 103,
-/// Title label in the Missed Earnings alert modal (e.g. “No updates made”, “Submit Receipt”).
+/// Alert headline (e.g. “No updates made”).
   AppearanceColorKeyMissedEarningsAlertTitleLabel = 104,
-/// Message/body label in the Missed Earnings alert modal.
+/// Alert body text.
   AppearanceColorKeyMissedEarningsAlertMessageLabel = 105,
-/// Border color when a barcode is detected in the product capture camera.
+/// 4 pt stroke around the barcode detection region.
   AppearanceColorKeyUgcBarcodeDetectedBorder = 106,
-/// Icon tint when a barcode is detected in the product capture screen.
+/// Icon tint shown on barcode detection.
   AppearanceColorKeyUgcBarcodeDetectedIcon = 107,
-/// Icon tint for navigation buttons (e.g. close, torch) in the product capture header.
+/// Close / torch button icon tint in the header.
   AppearanceColorKeyUgcNavigationButtonIcon = 108,
-/// Background of navigation buttons (close, torch) in the product capture header.
+/// Circle behind each header control button.
   AppearanceColorKeyUgcNavigationButtonBackground = 109,
-/// Background of the product info badges (product name and barcode/UPC) in the product capture screen.
+/// Product info pill background (product name + UPC).
   AppearanceColorKeyUgcProductInfoBackground = 110,
-/// Label text color in the product info badges (product name and barcode/UPC).
+/// Text and icon tint inside the product info pill.
   AppearanceColorKeyUgcProductInfoLabel = 111,
-/// Warning icon tint in the product capture toast message.
+/// Warning icon in the instructional toast.
   AppearanceColorKeyUgcToastMessageWarningIcon = 112,
-/// “Retake” button label (text color) in the product capture footer.
+/// “Retake” button text in the capture footer.
   AppearanceColorKeyUgcRetakeButtonLabel = 113,
-/// “Retake” button background in the product capture footer.
+/// “Retake” button background.
   AppearanceColorKeyUgcRetakeButtonBackground = 114,
-/// “Submit” button label (text color) in the product capture footer.
+/// “Submit” button text in the capture footer.
   AppearanceColorKeyUgcSubmitButtonLabel = 115,
-/// “Submit” button background in the product capture footer.
+/// “Submit” button background.
   AppearanceColorKeyUgcSubmitButtonBackground = 116,
 };
 
-/// Keys for custom fonts. Return a font name (e.g. <code>"Outfit-Bold"</code>) for a key from your <code>Theme</code> to use that font for the corresponding label; return <code>nil</code> to use the default or your <code>globalFontMatrix</code> by weight.
+/// Identifiers for every font name the SDK can resolve from your <code>Theme</code>.
+/// Pass these to <code>Theme/fontName(forKey:)</code> and return a font family name
+/// (e.g. <code>"Outfit-Bold"</code>), or <code>nil</code> to fall back to
+/// <code>Theme/globalFontMatrix</code> and then the system font. The SDK controls
+/// the point size for every label internally — you only supply the name.
 typedef SWIFT_ENUM(NSInteger, AppearanceFontNameKey, open) {
 /// Main title in the offer wall header.
   AppearanceFontNameKeyOfferWallHeaderTitleLabel = 0,
@@ -9492,188 +10955,415 @@ typedef SWIFT_ENUM(NSInteger, AppearanceFontNameKey, open) {
   AppearanceFontNameKeyOfferWallHeaderSubtitleLabel = 1,
 /// Section title above a group of offers.
   AppearanceFontNameKeyOfferWallSectionHeaderLabel = 2,
-/// Label on the floating button.
+/// Label on the floating action button.
   AppearanceFontNameKeyOfferWallFloatingButtonLabel = 3,
-/// Reward amount text on offer cards.
+/// Points or dollar value on the card.
   AppearanceFontNameKeyOfferRewardPointsLabel = 4,
-/// Promo badge label on offer cards.
+/// Promo badge label (e.g. “BUY 2”).
   AppearanceFontNameKeyOfferTagLabel = 5,
-/// Brand / title on offer cards.
+/// Brand or offer title on the card.
   AppearanceFontNameKeyOfferBrandLabel = 6,
-/// Description text on offer cards.
+/// Description text below the title.
   AppearanceFontNameKeyOfferDescriptionLabel = 7,
-/// Eligible merchants text on offer cards.
+/// Eligible merchants line on the card.
   AppearanceFontNameKeyOfferEligibleMerchantsLabel = 8,
-/// Expiration / “X Days Left” on the offer details screen.
+/// “X Days Left” expiration label.
   AppearanceFontNameKeyOfferDetailsExpirationLabel = 9,
-/// “Clip this offer” label on the offer details screen.
+/// “Clip this offer” tap target label.
   AppearanceFontNameKeyOfferDetailsClipLabel = 10,
-/// Label text in the “Offer clipped!” message toast at the top when an offer is clipped.
+/// “Offer clipped!” confirmation banner text.
   AppearanceFontNameKeyOfferClippedToastMessageLabel = 11,
-/// “Clip Required” badge label on the offer details screen.
+/// “Clip Required” badge text.
   AppearanceFontNameKeyOfferDetailsClipRequiredLabel = 12,
-/// Section header titles on the offer details screen (e.g. “Eligible Products”, “Qualifying Details”, “Description”, “Fine Print”).
+/// Section headers (“Eligible Products”, “Fine Print”, etc.).
   AppearanceFontNameKeyOfferDetailsSectionHeaderTitleLabel = 13,
-/// Section header toggle (“See all” / “See less”) in groups that have expand/collapse on the offer details screen.
+/// “See all” / “See less” expand-collapse toggle.
   AppearanceFontNameKeyOfferDetailsSectionHeaderToggleLabel = 14,
-/// Section body text on the offer details screen (e.g. long description).
+/// Long-form text inside expanded sections.
   AppearanceFontNameKeyOfferDetailsSectionBodyLabel = 15,
-/// Short description under the offer title on the offer details screen (e.g. coupon description and payout).
+/// Coupon description and payout under the title.
   AppearanceFontNameKeyOfferDetailsShortDescription = 16,
-/// Primary title on the offer details screen.
+/// Large title at the top of the detail view.
   AppearanceFontNameKeyOfferDetailsTitleLabel = 17,
-/// “Earn …” reward line below the primary title on the offer details screen.
+/// “Earn …” reward amount below the title.
   AppearanceFontNameKeyOfferDetailsEarnRewardLabel = 18,
-/// Fine print / full terms body on the offer details screen.
+/// Legal copy at the bottom of the detail view.
   AppearanceFontNameKeyOfferDetailsFinePrintLabel = 19,
-/// Label text in the buying options list on the offer details screen (e.g. “Buy any X eligible products” and payout amount).
+/// “Buy any X eligible products” text in the buying options list.
   AppearanceFontNameKeyOfferDetailsBuyOptionLabel = 20,
-/// Tag chip label font on the offer details screen.
+/// Category tag pill text.
   AppearanceFontNameKeyOfferDetailsTagChipLabel = 21,
-/// Title label in the stores screen header (e.g. “Stores”).
+/// Title text in the stores header.
   AppearanceFontNameKeyStoresHeaderTitleLabel = 22,
-/// Section header label in the stores list (e.g. group titles).
+/// Group label above a set of stores.
   AppearanceFontNameKeyStoresListSectionHeaderLabel = 23,
-/// Title label for each store item in the list.
+/// Store name label in each row.
   AppearanceFontNameKeyStoresListItemTitleLabel = 24,
-/// Subtitle label for each store item in the list.
+/// Offer count subtitle below the store name.
   AppearanceFontNameKeyStoresListItemSubtitleLabel = 25,
-/// Label text on the ad loading screen progress bar (e.g. “Scanning receipt”).
+/// “Scanning receipt” label on the progress row.
   AppearanceFontNameKeyAdLoadingLoadingBarLabel = 26,
-/// Title label on the ad loading screen (e.g. “Hang tight!”).
+/// Centered headline (e.g. “Hang tight!”).
   AppearanceFontNameKeyAdLoadingDefaultTitleLabel = 27,
-/// Description label on the ad loading screen (e.g. “Exclusive rewards are coming your way!”).
+/// Subtitle (e.g. “Exclusive rewards are coming your way!”).
   AppearanceFontNameKeyAdLoadingDefaultDescriptionLabel = 28,
-/// Title label on the error modal (e.g. “Oops!”, “Invalid Receipt”).
+/// Headline (e.g. “Oops!”, “Invalid Receipt”).
   AppearanceFontNameKeyErrorModalTitleLabel = 29,
-/// Description / message label on the error modal.
+/// Explanatory message below the title.
   AppearanceFontNameKeyErrorModalDescriptionLabel = 30,
-/// “Back to offers” / dismiss button label on the error modal.
+/// “Back to offers” dismiss button text.
   AppearanceFontNameKeyErrorModalBackButtonLabel = 31,
-/// Total points amount label in the receipt summary header.
+/// Amount text inside the total-points pill.
   AppearanceFontNameKeyPostScanTotalPointsLabel = 32,
-/// Title of the continue button in the receipt summary footer.
+/// “Continue” button text in the footer.
   AppearanceFontNameKeyPostScanFooterButtonTitle = 33,
-/// Merchant name label in the trip summary.
+/// Store name in the trip summary block.
   AppearanceFontNameKeyPostScanMerchantNameLabel = 34,
-/// Trip info label (date and total) in the trip summary.
+/// Date and total line in the trip summary block.
   AppearanceFontNameKeyPostScanTripInfoLabel = 35,
-/// Label in the “no boosts” empty state (e.g. “No more boosts are available…”).
+/// Message shown when no boosts are available.
   AppearanceFontNameKeyPostScanNoBoostsLabel = 36,
-/// Section header title label (e.g. “Your Rewards”).
+/// Section label (e.g. “Your Rewards”).
   AppearanceFontNameKeyPostScanSectionHeaderTitleLabel = 37,
-/// Title label in the first/success state of the boost area (e.g. “Nice Scan!”).
+/// “Nice Scan!” headline in the rewards area.
   AppearanceFontNameKeyPostScanSuccessTitleLabel = 38,
-/// Description label in the first/success state of the boost area.
+/// Points-earned description below the success title.
   AppearanceFontNameKeyPostScanSuccessDescriptionLabel = 39,
-/// Title label on post-scan boost cards in the receipt summary.
+/// Offer title on each boost row.
   AppearanceFontNameKeyPostScanBoostTitleLabel = 40,
-/// Description label on post-scan boost cards in the receipt summary.
+/// Subtitle on each boost row.
   AppearanceFontNameKeyPostScanBoostDescriptionLabel = 41,
-/// Label on the “Skip” button below post-scan boost cards.
+/// “Skip” button text below a boost card.
   AppearanceFontNameKeyPostScanBoostSkipButtonLabel = 42,
-/// Label on the “Claim” button below post-scan boost cards.
+/// “Claim” button text below a boost card.
   AppearanceFontNameKeyPostScanBoostClaimButtonLabel = 43,
-/// Points label (e.g. “+100”) on purchase rows that show reward points.
+/// “+100” label on product rows that earned rewards.
   AppearanceFontNameKeyPostScanPurchasePointsLabel = 44,
-/// Product name label font on product rows (receipt summary and Missed Earnings).
+/// Product name font on product rows (receipt summary and missed earnings).
   AppearanceFontNameKeyPurchaseRowLabelFont = 45,
-/// Metadata line label font on product rows (receipt summary and Missed Earnings).
+/// Metadata font (price, quantity) on product rows.
   AppearanceFontNameKeyPurchaseRowMetadataLabelFont = 46,
-/// Title label in the Missed Earnings navigation header (e.g. “Missing rewards?”).
+/// “Missing rewards?” headline in the navigation header.
   AppearanceFontNameKeyMissedEarningsNavigationTitleLabel = 47,
-/// Description label in the Missed Earnings navigation header (e.g. “Edit this receipt if any details are off”).
+/// “Edit this receipt if any details are off” subtitle.
   AppearanceFontNameKeyMissedEarningsNavigationDescriptionLabel = 48,
-/// Section header title in the Missed Earnings list (e.g. “Merchant”, “Date”, “Products”).
+/// Group labels (“Merchant”, “Date”, “Products”).
   AppearanceFontNameKeyMissedEarningsListSectionTitleLabel = 49,
-/// Label text in Missed Earnings merchant and date rows only.
+/// Value text in the merchant name and date rows.
   AppearanceFontNameKeyMissedEarningsTripItemLabel = 50,
-/// Title label at the top of the Missed Earnings edit field modal.
+/// Edit modal headline (e.g. “Merchant Name”, “Receipt Date”).
   AppearanceFontNameKeyMissedEarningsEditModalTitleLabel = 51,
-/// Subtitle label at the top of the Missed Earnings edit field modal.
+/// Instruction line below the edit modal title.
   AppearanceFontNameKeyMissedEarningsEditModalSubtitleLabel = 52,
-/// Label for text field titles in the Missed Earnings edit field modal.
+/// Caption above a text field (e.g. “Captured Merchant Name”).
   AppearanceFontNameKeyMissedEarningsEditModalInputLabel = 53,
-/// Placeholder text font in the Missed Earnings edit modal.
+/// Dimmed hint inside empty text fields.
   AppearanceFontNameKeyMissedEarningsEditModalInputPlaceholderLabel = 54,
-/// Text field value / caption labels in the Missed Earnings edit field modal.
+/// Typed value and helper captions in the edit form.
   AppearanceFontNameKeyMissedEarningsEditModalInputValueLabel = 55,
-/// Cancel button label in the Missed Earnings edit field modal.
+/// Cancel button text in the edit modal footer.
   AppearanceFontNameKeyMissedEarningsEditModalCancelButtonLabel = 56,
-/// Save button label in the Missed Earnings edit field modal.
+/// Save button text in the edit modal footer.
   AppearanceFontNameKeyMissedEarningsEditModalSaveButtonLabel = 57,
-/// Title label in the Missed Earnings alert modal.
+/// Alert headline (e.g. “No updates made”).
   AppearanceFontNameKeyMissedEarningsAlertTitleLabel = 58,
-/// Message/body label in the Missed Earnings alert modal.
+/// Alert body text.
   AppearanceFontNameKeyMissedEarningsAlertMessageLabel = 59,
-/// Label text in the product info badges (product name and barcode/UPC) on the product capture screen.
+/// Text inside the product info pill (product name + UPC).
   AppearanceFontNameKeyUgcProductInfoLabel = 60,
-/// “Retake” button label in the product capture footer.
+/// “Retake” button text in the capture footer.
   AppearanceFontNameKeyUgcRetakeButtonLabel = 61,
-/// “Submit” button label in the product capture footer.
+/// “Submit” button text in the capture footer.
   AppearanceFontNameKeyUgcSubmitButtonLabel = 62,
 };
 
-/// Keys for custom images. Return an image for a key from your <code>Theme</code> to replace that icon; return <code>nil</code> to use the default (if any). When you return <code>nil</code>, the matching color key may still be used to tint the default icon.
+/// Identifiers for every icon the SDK can resolve from your <code>Theme</code>.
+/// Pass these to <code>Theme/image(forKey:)</code> and return a <code>UIImage</code>, or <code>nil</code>
+/// to keep the SDK’s built-in asset. When you return <code>nil</code>, the matching
+/// <code>AppearanceColorKey</code> still tints the default icon.
+/// Supply images at the minimum size listed in each case’s documentation
+/// (in points); include @2x and @3x variants for Retina screens.
 typedef SWIFT_ENUM(NSInteger, AppearanceIconKey, open) {
-/// Reward or currency icon shown with reward amounts (e.g. on offer cards, receipt summary).
-  AppearanceIconKeyOfferRewardIcon = 0,
-/// Floating action button icon (e.g. scan receipt). Return <code>nil</code> to use the default; tint uses the floating button label color key.
-  AppearanceIconKeyOfferWallFloatingButtonIcon = 1,
-/// Edit button icon in the Missed Earnings header. Return <code>nil</code> to use the default; tint uses the edit button icon color key.
-  AppearanceIconKeyMissedEarningsNavigationEditButtonIcon = 2,
-/// Edit (pen) button icon on each field row in Missed Earnings. Return <code>nil</code> to use the default; tint uses the field edit icon color key.
-  AppearanceIconKeyMissedEarningsFieldEditIcon = 3,
-/// Receipt / missed earnings button icon in the receipt summary header. Return <code>nil</code> to use the default; tint uses the receipt button icon color key when set.
-  AppearanceIconKeyPostScanReceiptButtonIcon = 4,
-/// Placeholder image for boost cards when no custom image is available.
-  AppearanceIconKeyPostScanBoostDefaultIcon = 5,
-/// Icon in the success state of the boost area (e.g. “Nice Scan!”).
-  AppearanceIconKeyPostScanSuccessIcon = 6,
-/// Icon when a barcode is detected in the product capture screen. Return <code>nil</code> to use the default; tint uses the barcode-detected icon color key.
-  AppearanceIconKeyUgcBarcodeDetectedIcon = 7,
-/// Warning icon in the product capture toast. Return <code>nil</code> to use the default; tint uses the toast warning icon color key.
-  AppearanceIconKeyUgcToastMessageWarningIcon = 8,
+/// Floating action button icon (24 × 24 pt).
+/// Tinted by <code>AppearanceColorKey/offerWallFloatingButtonLabel</code>.
+  AppearanceIconKeyOfferWallFloatingButtonIcon = 0,
+/// Edit button icon in the missed-earnings header (18 × 18 pt).
+/// Tinted by <code>AppearanceColorKey/missedEarningsNavigationEditButtonIcon</code>.
+  AppearanceIconKeyMissedEarningsNavigationEditButtonIcon = 1,
+/// Per-row edit (pen) icon (24 × 24 pt).
+/// Tinted by <code>AppearanceColorKey/missedEarningsFieldEditIcon</code>.
+  AppearanceIconKeyMissedEarningsFieldEditIcon = 2,
+/// Receipt button icon in the summary header (40 × 40 pt).
+/// Tinted by <code>AppearanceColorKey/postScanReceiptButtonIcon</code> when set;
+/// uses original asset colors when the color key returns <code>nil</code>.
+  AppearanceIconKeyPostScanReceiptButtonIcon = 3,
+/// Placeholder image for boost cards (56 × 56 pt). Not tinted.
+  AppearanceIconKeyPostScanBoostDefaultIcon = 4,
+/// Success-state illustration (56 × 56 pt). Not tinted.
+  AppearanceIconKeyPostScanSuccessIcon = 5,
+/// Barcode-detected state icon (60 × 60 pt).
+/// Tinted by <code>AppearanceColorKey/ugcBarcodeDetectedIcon</code>.
+  AppearanceIconKeyUgcBarcodeDetectedIcon = 6,
+/// Toast warning icon (24 × 24 pt).
+/// Tinted by <code>AppearanceColorKey/ugcToastMessageWarningIcon</code>.
+  AppearanceIconKeyUgcToastMessageWarningIcon = 7,
 };
 
-@class BlinkEngageUser;
+enum RewardCurrencyLabelStyle : NSInteger;
+enum RewardCurrencyMessagingTextStyle : NSInteger;
 @class NSString;
+enum RewardCurrencyCodePosition : NSInteger;
+enum RewardCurrencyRounding : NSInteger;
+@class UIImage;
 @class NSNumber;
+/// Configuration that controls how reward amounts are formatted and displayed across the SDK.
+/// <h2>Overview</h2>
+/// <code>BlinkEngageRewardConfig</code> lets the host app control reward presentation —
+/// the unit label, an optional currency symbol, the conversion rate, a custom icon, and
+/// a callback for earned rewards.
+/// Use <code>rewardCurrencyLabelStyle</code> to choose how amounts look on list rows:
+/// icon + digits, symbol + digits, or digits + name.
+/// Use <code>rewardCurrencyMessagingTextStyle</code> for toast and celebration copy.
+/// Create an instance with only the parameters needed (every parameter has a
+/// sensible default) and assign it to <code>BlinkEngageSDK/rewardConfig</code>
+/// before presenting any SDK UI.
+/// <blockquote>
+/// Important: All properties are immutable. To change settings, create a new instance
+/// and reassign <code>BlinkEngageSDK/rewardConfig</code>. The updated config takes
+/// effect the next time an SDK view is presented; it does <em>not</em> refresh views already on screen.
+///
+/// </blockquote>
+/// <h2>Topics</h2>
+/// <h3>Display</h3>
+/// <ul>
+///   <li>
+///     <code>rewardCurrencyLabelStyle</code>
+///   </li>
+///   <li>
+///     <code>rewardCurrencyMessagingTextStyle</code>
+///   </li>
+/// </ul>
+/// <h3>Naming and Symbols</h3>
+/// <ul>
+///   <li>
+///     <code>currencyName</code>
+///   </li>
+///   <li>
+///     <code>currencyCode</code>
+///   </li>
+///   <li>
+///     <code>currencyCodePosition</code>
+///   </li>
+/// </ul>
+/// <h3>Conversion and Payout</h3>
+/// <ul>
+///   <li>
+///     <code>currencyPerDollar</code>
+///   </li>
+///   <li>
+///     <code>userPayoutPercentage</code>
+///   </li>
+///   <li>
+///     <code>rewardRounding</code>
+///   </li>
+/// </ul>
+/// <h3>Icon</h3>
+/// <ul>
+///   <li>
+///     <code>currencyImage</code>
+///   </li>
+///   <li>
+///     <code>currencyImageLocations</code>
+///   </li>
+/// </ul>
+/// <h3>Callback</h3>
+/// <ul>
+///   <li>
+///     <code>rewardCallback</code>
+///   </li>
+/// </ul>
+/// <h2>Common Configurations</h2>
+/// <em>Points (default):</em>
+/// \code
+/// // Reward icon + "1,234" on rows. "… points" in toasts.
+/// let config = BlinkEngageRewardConfig(
+///     rewardCallback: { _, _, _ in nil }
+/// )
+///
+/// \endcode<em>Dollar amounts:</em>
+/// \code
+/// // "$1,234" on rows (no icon).
+/// let config = BlinkEngageRewardConfig(
+///     currencyCode: "$",
+///     rewardCurrencyLabelStyle: .currencyCode,
+///     rewardCallback: { _, _, _ in nil }
+/// )
+///
+/// \endcode<em>Euro with trailing symbol:</em>
+/// \code
+/// // "1,234€" on rows.
+/// let config = BlinkEngageRewardConfig(
+///     currencyCode: "€",
+///     currencyCodePosition: .trailing,
+///     rewardCurrencyLabelStyle: .currencyCode,
+///     rewardCallback: { _, _, _ in nil }
+/// )
+///
+/// \endcode<em>Custom icon on selected surfaces:</em>
+/// \code
+/// let config = BlinkEngageRewardConfig(
+///     currencyName: "gems",
+///     currencyPerDollar: 1000,
+///     rewardCurrencyLabelStyle: .currencyImage,
+///     currencyImage: UIImage(named: "gem-icon"),
+///     currencyImageLocations: [.offerCell, .receiptBoost],
+///     rewardCallback: { _, _, _ in nil }
+/// )
+///
+/// \endcode
+SWIFT_CLASS("_TtC11BlinkEngage23BlinkEngageRewardConfig")
+@interface BlinkEngageRewardConfig : NSObject
+/// How reward amounts appear on list rows (offer cells, receipt lines, boosts).
+/// <em>Default:</em> <code>RewardCurrencyLabelStyle/currencyImage</code>.
+/// If set to <code>RewardCurrencyLabelStyle/currencyCode</code> but <code>currencyCode</code> is
+/// empty or <code>nil</code>, the SDK uses <code>RewardCurrencyLabelStyle/currencyName</code> instead.
+@property (nonatomic, readonly) enum RewardCurrencyLabelStyle rewardCurrencyLabelStyle;
+/// Style for SDK messages that describe rewards (toasts, scan celebration, etc.).
+/// <em>Default:</em> <code>RewardCurrencyMessagingTextStyle/currencyName</code>.
+@property (nonatomic, readonly) enum RewardCurrencyMessagingTextStyle rewardCurrencyMessagingTextStyle;
+/// Short label appended after the numeric amount (e.g. “1,234 points”).
+/// <em>Default:</em> <code>"points"</code>. Trimmed on init; empty falls back to <code>"points"</code>;
+/// truncated to 8 characters. Used when <code>rewardCurrencyLabelStyle</code> is
+/// <code>RewardCurrencyLabelStyle/currencyName</code>.
+@property (nonatomic, readonly, copy) NSString * _Nonnull currencyName;
+/// Currency symbol placed beside the amount (e.g. <code>"$"</code>, <code>"€"</code>, <code>"£"</code>).
+/// <em>Default:</em> <code>nil</code>. Trimmed on init; whitespace-only becomes <code>nil</code>.
+/// Required when <code>rewardCurrencyLabelStyle</code> is <code>RewardCurrencyLabelStyle/currencyCode</code>.
+/// Placement is controlled by <code>currencyCodePosition</code>.
+@property (nonatomic, readonly, copy) NSString * _Nullable currencyCode;
+/// Placement of <code>currencyCode</code> relative to the numeric amount.
+/// <em>Default:</em> <code>RewardCurrencyCodePosition/leading</code> (symbol before the digits).
+/// Ignored when <code>currencyCode</code> is <code>nil</code>.
+@property (nonatomic, readonly) enum RewardCurrencyCodePosition currencyCodePosition;
+/// Units per US dollar.
+/// <em>Default:</em> <code>100.0</code> ($1 = 100 units). The SDK multiplies dollar payouts
+/// by this value and then applies <code>rewardRounding</code>.
+@property (nonatomic, readonly) double currencyPerDollar;
+/// Fraction of the computed reward shown to the user.
+/// <em>Default:</em> <code>0.6</code> (60 %). Clamped to <code>0.4 … 1.0</code> on init.
+/// Applies to all reward types except offer-wall coupons.
+@property (nonatomic, readonly) double userPayoutPercentage;
+/// Precision used to round the converted reward amount before display.
+/// <em>Default:</em> <code>RewardCurrencyRounding.whole</code> (round up to the next whole
+/// unit — appropriate for points, gems, coins, and other integer-only
+/// currencies).
+/// Set to <code>RewardCurrencyRounding.decimal</code> when the reward should display
+/// fractional amounts (e.g. <code>$0.15</code>, <code>€1.20</code>, <code>0.50 credits</code>).
+@property (nonatomic, readonly) enum RewardCurrencyRounding rewardRounding;
+/// Custom reward icon for <code>RewardCurrencyLabelStyle/currencyImage</code> mode.
+/// <em>Default:</em> <code>nil</code> (the SDK uses its built-in icon). Provide a <em>square</em>
+/// asset (e.g. 24 × 24 pt) with <code>.alwaysTemplate</code> rendering for light/dark
+/// mode support.
+/// seealso:
+/// <code>currencyImageLocations</code>
+@property (nonatomic, readonly, strong) UIImage * _Nullable currencyImage;
+/// Closure invoked each time the user earns a reward.
+/// <em>Required</em> — no default value. The host app must always provide this closure.
+/// <ul>
+///   <li>
+///     <code>context</code>: One of <code>"ScanFinished"</code>, <code>"Promo"</code>, <code>"Boost"</code>, or
+///     <code>"BarcodeCollection"</code>.
+///   </li>
+///   <li>
+///     <code>rewardAmount</code>: Amount earned, or <code>nil</code> for <code>"ScanFinished"</code>.
+///   </li>
+///   <li>
+///     <code>blinkReceiptId</code>: The receipt identifier from BlinkReceipt
+///     (<code>BRScanResults.blinkReceiptId</code>), or <code>nil</code> when unavailable.
+///   </li>
+/// </ul>
+/// Return an <code>NSNumber</code> for <code>"ScanFinished"</code> (the scan reward the host
+/// app awards). Return <code>nil</code> for all other contexts.
+/// <blockquote>
+/// Important: The return value for <code>"ScanFinished"</code> is used as-is in
+/// reward currency units and is <em>not</em> passed through <code>rewardRounding</code>.
+/// When <code>rewardRounding</code> is <code>.whole</code>, return a whole-number value
+/// (e.g. <code>NSNumber(value: 10)</code>) to keep the display consistent.
+/// Fractional values are valid only when <code>rewardRounding</code> is <code>.decimal</code>.
+///
+/// </blockquote>
+/// \code
+/// let config = BlinkEngageRewardConfig(
+///     rewardCallback: { context, amount, blinkReceiptId in
+///         switch context {
+///         case "ScanFinished":
+///             return NSNumber(value: 10)
+///         default:
+///             return nil
+///         }
+///     }
+/// )
+///
+/// \endcode
+@property (nonatomic, readonly, copy) NSNumber * _Nullable (^ _Nonnull rewardCallback)(NSString * _Nonnull, NSNumber * _Nullable, NSString * _Nullable);
+/// Objective-C initializer.
+/// Pass <code>currencyImageLocations</code> as a bitwise OR of the
+/// <code>imageLocation…</code> class constants (e.g.
+/// <code>BlinkEngageRewardConfig.imageLocationOfferCell | BlinkEngageRewardConfig.imageLocationReceiptBoost</code>).
+- (nonnull instancetype)initWithCurrencyName:(NSString * _Nonnull)currencyName currencyCode:(NSString * _Nullable)currencyCode currencyCodePosition:(enum RewardCurrencyCodePosition)currencyCodePosition currencyPerDollar:(double)currencyPerDollar userPayoutPercentage:(double)userPayoutPercentage currencyImage:(UIImage * _Nullable)currencyImage currencyImageLocations:(NSInteger)currencyImageLocations rewardLabelStyle:(enum RewardCurrencyLabelStyle)rewardLabelStyle messagingTextStyle:(enum RewardCurrencyMessagingTextStyle)messagingTextStyle rewardRounding:(enum RewardCurrencyRounding)rewardRounding rewardCallback:(NSNumber * _Nullable (^ _Nonnull)(NSString * _Nonnull, NSNumber * _Nullable, NSString * _Nullable))rewardCallback;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@interface BlinkEngageRewardConfig (SWIFT_EXTENSION(BlinkEngage))
+/// Offer cell surface. Combine with bitwise OR in Objective-C.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) NSInteger imageLocationOfferCell;)
++ (NSInteger)imageLocationOfferCell SWIFT_WARN_UNUSED_RESULT;
+/// Receipt total-reward surface.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) NSInteger imageLocationReceiptTotalReward;)
++ (NSInteger)imageLocationReceiptTotalReward SWIFT_WARN_UNUSED_RESULT;
+/// Receipt boost surface.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) NSInteger imageLocationReceiptBoost;)
++ (NSInteger)imageLocationReceiptBoost SWIFT_WARN_UNUSED_RESULT;
+/// Receipt task surface.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) NSInteger imageLocationReceiptTask;)
++ (NSInteger)imageLocationReceiptTask SWIFT_WARN_UNUSED_RESULT;
+/// All surfaces.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) NSInteger imageLocationAll;)
++ (NSInteger)imageLocationAll SWIFT_WARN_UNUSED_RESULT;
+@end
+
+@class BlinkEngageUser;
 SWIFT_CLASS("_TtC11BlinkEngage14BlinkEngageSDK")
 @interface BlinkEngageSDK : NSObject
-@property (nonatomic, readonly, strong) BlinkEngageUser * _Nonnull user;
+/// Configures Google Mobile Ads and constructs the SDK. Call exactly once before <code>shared</code>.
+/// Must be called on the <em>main thread</em> — typically in
+/// <code>application(_:didFinishLaunchingWithOptions:)</code>. Calling from a background thread triggers a
+/// precondition failure. Calling more than once also triggers a precondition failure.
+/// Set <code>debugMode</code> to <code>true</code> for <em>development and internal testing builds</em>. When <code>true</code>, the SDK
+/// registers the device as a Google Mobile Ads test device so it serves <em>real ads</em> safely (no impact
+/// on production metrics or billing). In rare cases where the device cannot be registered, the SDK falls
+/// back to Google’s built-in test ads so development is never blocked. It also relaxes on-device receipt
+/// checks so the full flow can be tested efficiently.
+/// Pass <code>false</code> for App Store submissions and customer-facing builds: real ads and full validation.
+/// note:
+/// From Objective-C, use <code>startWithDebugMode:</code>.
+/// \param debugMode <code>true</code> for development and internal testing builds; <code>false</code> for App Store
+/// submissions and customer-facing builds.
+///
++ (void)startWithDebugMode:(BOOL)debugMode;
+/// Shared SDK instance; valid only after <code>start(debugMode:)</code>.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BlinkEngageSDK * _Nonnull shared;)
 + (BlinkEngageSDK * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
+@property (nonatomic, readonly, strong) BlinkEngageUser * _Nonnull user;
+/// Currency styling is applied when SDK views are loaded.
+/// Changing this property does not refresh views that are already on screen.
+/// <blockquote>
+/// Important: Assign new values <em>on the main thread</em> before presenting any SDK UI.
+///
+/// </blockquote>
+@property (nonatomic, strong) BlinkEngageRewardConfig * _Nonnull rewardConfig;
 @property (nonatomic, strong) Appearance * _Nonnull appearance;
-/// The display name for the reward currency shown to users (e.g. in balances and reward text).
-/// Used in UI strings such as “25,000 pts”. The default is <code>"pts"</code>.
-@property (nonatomic, copy) NSString * _Nonnull rewardCurrencyName;
-/// The conversion rate from dollars to reward currency (e.g. how many reward units per $1).
-/// Used when converting payout amounts to the in-app reward amount for display and calculations.
-/// The default is <code>100.0</code> (e.g. $1 = 100 reward units).
-@property (nonatomic) double rewardCurrencyPerDollar;
-/// The fraction of the reward amount paid out to the user for scanned receipts.
-/// Valid range is <code>0.4</code> (40%) to <code>1.0</code> (100%). The default is <code>0.6</code> (60%).
-/// Values outside the range are clamped to the nearest bound.
-/// note:
-/// Applies to all reward types except offer wall coupons.
-@property (nonatomic) double userPayoutPercentage;
-/// When <code>true</code>, uses test ad units so you can verify ad flow without serving real ads.
-/// The default is <code>false</code>. Enable only during development; leave disabled in production.
-@property (nonatomic) BOOL debugModeEnabled;
-/// Called when the user has earned a reward.
-/// \param context A string describing the reward context (e.g. “Promo”, “ScanFinished”, “Boost”).
-///
-/// \param scanResults A serialized BRScanResults data from BlinkReceipt.
-///
-/// \param rewardAmount The amount of reward earned, as an NSNumber (in reward currency units).
-///
-/// \param blinkReceiptId Same value as <code>BRScanResults.blinkReceiptId</code> when present.
-///
-///
-/// returns:
-/// An optional NSNumber, if a return value is relevant (custom implementation).
-@property (nonatomic, copy) NSNumber * _Nullable (^ _Nullable rewardCallback)(NSString * _Nonnull, NSDictionary<NSString *, id> * _Nullable, NSNumber * _Nullable, NSString * _Nullable);
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -9701,15 +11391,24 @@ SWIFT_CLASS_NAMED("OffersWallViewController")
 @interface OffersWallViewController : UIViewController
 @property (nonatomic, weak) id <OffersWallViewControllerDelegate> _Nullable delegate;
 @property (nonatomic, readonly) enum OfferWallViewType offersType;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init;
 /// Initializes the offer wall with the given view type (all offers or clipped offers only).
 /// \param offerWallViewType <code>.all</code> for all offers, <code>.clipped</code> for offers the user has clipped.
 ///
-- (nonnull instancetype)initWithOfferWallViewType:(enum OfferWallViewType)offerWallViewType OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithOfferWallViewType:(enum OfferWallViewType)offerWallViewType;
+/// Designated initializer. Pass <code>BlinkEngageSDK/rewardConfig</code> (or a copy) so reward copy stays stable for this presentation.
+- (nonnull instancetype)initWithOfferWallViewType:(enum OfferWallViewType)offerWallViewType rewardCurrencyConfig:(BlinkEngageRewardConfig * _Nonnull)rewardCurrencyConfig OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 - (void)viewWillAppear:(BOOL)animated;
+- (void)viewDidAppear:(BOOL)animated;
+- (void)viewWillDisappear:(BOOL)animated;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
+@end
+
+@class UIPresentationController;
+@interface OffersWallViewController (SWIFT_EXTENSION(BlinkEngage)) <UIAdaptivePresentationControllerDelegate>
+- (void)presentationControllerDidDismiss:(UIPresentationController * _Nonnull)presentationController;
 @end
 
 SWIFT_PROTOCOL("_TtP11BlinkEngage32OffersWallViewControllerDelegate_")
@@ -9720,34 +11419,94 @@ SWIFT_PROTOCOL("_TtP11BlinkEngage32OffersWallViewControllerDelegate_")
 - (void)offerWall:(OffersWallViewController * _Nonnull)viewController didUpdateClippedOffersCount:(NSInteger)count;
 @end
 
+/// Controls where <code>BlinkEngageRewardConfig/currencyCode</code> appears relative to the numeric amount.
+/// Only applies when <code>BlinkEngageRewardConfig/currencyCode</code> is non-<code>nil</code>.
+/// When <code>currencyCode</code> is <code>nil</code>, this value is ignored.
+typedef SWIFT_ENUM(NSInteger, RewardCurrencyCodePosition, open) {
+/// Symbol before the amount (e.g. <code>$1,234</code>).
+  RewardCurrencyCodePositionLeading = 0,
+/// Symbol after the amount (e.g. <code>1,234€</code>).
+  RewardCurrencyCodePositionTrailing = 1,
+};
+
+/// How the SDK presents the reward amount on list rows (offer cells, receipt lines, boosts).
+typedef SWIFT_ENUM(NSInteger, RewardCurrencyLabelStyle, open) {
+/// Reward icon to the left of grouped digits (custom <code>BlinkEngageRewardConfig/currencyImage</code> or built-in default when <code>nil</code>).
+  RewardCurrencyLabelStyleCurrencyImage = 0,
+/// <code>BlinkEngageRewardConfig/currencyCode</code> beside grouped digits (leading or trailing per <code>RewardCurrencyCodePosition</code>). No icon.
+  RewardCurrencyLabelStyleCurrencyCode = 1,
+/// Grouped digits followed by <code>BlinkEngageRewardConfig/currencyName</code>. No icon.
+  RewardCurrencyLabelStyleCurrencyName = 2,
+};
+
+/// How toast and celebration copy refers to the reward currency.
+typedef SWIFT_ENUM(NSInteger, RewardCurrencyMessagingTextStyle, open) {
+/// Reward name next to amounts (e.g. “You earned 250 points for this receipt!”).
+  RewardCurrencyMessagingTextStyleCurrencyName = 0,
+/// <code>BlinkEngageRewardConfig/currencyCode</code> formatting (e.g. “You earned $250 for this receipt!”).
+  RewardCurrencyMessagingTextStyleCurrencyCode = 1,
+/// Generic copy without a numeric amount (e.g. “You earned a reward for this receipt!”).
+  RewardCurrencyMessagingTextStyleNoAmount = 2,
+};
+
+/// Precision used when rounding the converted reward amount before display.
+/// The SDK multiplies a dollar payout by <code>currencyPerDollar</code> and then applies
+/// this rounding strategy to the result.
+/// Pick <code>whole</code> for unit-style currencies (points, gems, coins) where fractional
+/// values don’t make sense. Pick <code>decimal</code> when you need to show fractional
+/// amounts (e.g. <code>$0.15</code>, <code>€1.20</code>, <code>0.50 credits</code>).
+typedef SWIFT_ENUM(NSInteger, RewardCurrencyRounding, open) {
+/// Round up to the next whole unit. <code>1.4 → 2</code>, <code>1.6 → 2</code>, <code>0.5 → 1</code>, <code>0.05 → 1</code>.
+/// Default. Use for any currency that is only meaningful as an integer
+/// (points, gems, coins, tokens).
+  RewardCurrencyRoundingWhole = 0,
+/// Keep two decimal places, always rendered with two fraction digits.
+/// <code>0.155 → 0.16</code>, <code>2.13 → 2.13</code>, <code>1.5 → 1.50</code>, <code>0 → 0.00</code>.
+/// Use when the reward should display fractional amounts (e.g. <code>$0.15</code>,
+/// <code>€1.20</code>, <code>0.50 credits</code>).
+  RewardCurrencyRoundingDecimal = 1,
+};
+
+@class NSDictionary;
 @class UIColor;
-@class UIImage;
-/// Protocol for customizing the appearance of BlinkEngage SDK screens.
-/// Conform to this protocol and assign your theme to
-/// <code>BlinkEngageSDK.shared.appearance.theme</code> to override colors, fonts, and images.
-/// For any key, return <code>nil</code> from the corresponding method to use the SDK default.
+/// Implement this protocol to override the SDK’s default colors, fonts, and
+/// icons, then wrap your implementation in an <code>Appearance</code> and assign it to
+/// <code>BlinkEngageSDK/appearance</code>.
+/// Every method uses an <em>opt-in</em> model: return <code>nil</code> for any key you don’t
+/// want to customize and the SDK keeps its built-in value.
+/// The SDK resolves fonts in this order:
+/// <ol>
+///   <li>
+///     The value returned by <code>fontName(forKey:)</code> for the specific key.
+///   </li>
+///   <li>
+///     A match in <code>globalFontMatrix</code> for the label’s weight.
+///   </li>
+///   <li>
+///     The system font at the SDK’s built-in size and weight.
+///   </li>
+/// </ol>
 SWIFT_PROTOCOL("_TtP11BlinkEngage5Theme_")
 @protocol Theme
-/// When you return <code>nil</code> from <code>image(forKey: .offerRewardIcon)</code>, this controls
-/// whether the default reward icon is shown (<code>true</code>) or hidden (<code>false</code>).
-/// Ignored when you return a custom reward icon image.
-@property (nonatomic, readonly) BOOL isRewardIconEnabled;
-/// When <code>true</code>, the Stores screen loads merchant logos from their URLs when available.
-/// When <code>false</code>, the default storefront icon is always shown.
+/// Controls whether the Stores screen attempts to load merchant logos from
+/// their remote URLs. Return <code>false</code> to always show the built-in
+/// storefront icon instead.
 @property (nonatomic, readonly) BOOL isMerchantIconEnabled;
-/// Optional mapping of font weight to font name, used when you return <code>nil</code> from
-/// <code>fontName(forKey:)</code> for a given key. Keys: <code>NSNumber</code> wrapping
-/// <code>UIFont.Weight.rawValue</code>; values: font name strings. Return <code>nil</code> to use
-/// system fonts when no key-specific font is set.
+/// A weight-to-font-name map applied to every label that doesn’t have a
+/// per-key font override.
+/// Keys are <code>NSNumber(value: UIFont.Weight.rawValue)</code>, values are font
+/// name strings (e.g. <code>"Outfit-Bold"</code>). Return <code>nil</code> to fall through to
+/// the system font for all non-overridden labels.
 @property (nonatomic, readonly, strong) NSDictionary * _Nullable globalFontMatrix;
-/// Returns a custom color for the given key, or <code>nil</code> to use the SDK default.
+/// Returns a color for the given key, or <code>nil</code> to keep the SDK default.
 - (UIColor * _Nullable)colorForKey:(enum AppearanceColorKey)key SWIFT_WARN_UNUSED_RESULT;
-/// Returns a custom font name for the given key (e.g. <code>"Outfit-Bold"</code>), or <code>nil</code> to use
-/// the SDK default. The SDK applies the appropriate size for each key.
+/// Returns a font <em>name</em> (e.g. <code>"Outfit-SemiBold"</code>) for the given key,
+/// or <code>nil</code> to fall back to <code>globalFontMatrix</code> and then the system font.
+/// The SDK controls the point size internally.
 - (NSString * _Nullable)fontNameForKey:(enum AppearanceFontNameKey)key SWIFT_WARN_UNUSED_RESULT;
-/// Returns a custom image for the given key, or <code>nil</code> to use the SDK default.
-/// For the reward icon, when you return <code>nil</code>, visibility is controlled by
-/// <code>isRewardIconEnabled</code>.
+/// Returns an image for the given key, or <code>nil</code> to keep the SDK default.
+/// The SDK renders custom images as template when a matching color key
+/// exists, preserving your tint.
 - (UIImage * _Nullable)imageForKey:(enum AppearanceIconKey)key SWIFT_WARN_UNUSED_RESULT;
 @end
 
@@ -13649,6 +15408,37 @@ struct BlinkEngage_OfferWallViewType {
   _Alignas(8) char _storage[8];
 };
 
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage26RewardCurrencyCodePositionO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage26RewardCurrencyCodePositionO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_RewardCurrencyCodePosition {
+  _Alignas(8) char _storage[8];
+};
+
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage28RewardCurrencyImageLocationsV8rawValueSivg(SWIFT_CONTEXT const void * _Nonnull _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $s11BlinkEngage28RewardCurrencyImageLocationsV8rawValueACSi_tcfC(SWIFT_INDIRECT_RESULT void * _Nonnull, ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN void $s11BlinkEngage28RewardCurrencyImageLocationsV9offerCellACvgZ(SWIFT_INDIRECT_RESULT void * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $s11BlinkEngage28RewardCurrencyImageLocationsV012receiptTotalC0ACvgZ(SWIFT_INDIRECT_RESULT void * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $s11BlinkEngage28RewardCurrencyImageLocationsV12receiptBoostACvgZ(SWIFT_INDIRECT_RESULT void * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $s11BlinkEngage28RewardCurrencyImageLocationsV11receiptTaskACvgZ(SWIFT_INDIRECT_RESULT void * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN void $s11BlinkEngage28RewardCurrencyImageLocationsV3allACvgZ(SWIFT_INDIRECT_RESULT void * _Nonnull) SWIFT_NOEXCEPT SWIFT_CALL; // _
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage24RewardCurrencyLabelStyleO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage24RewardCurrencyLabelStyleO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_RewardCurrencyLabelStyle {
+  _Alignas(8) char _storage[8];
+};
+
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage32RewardCurrencyMessagingTextStyleO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage32RewardCurrencyMessagingTextStyleO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_RewardCurrencyMessagingTextStyle {
+  _Alignas(8) char _storage[8];
+};
+
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage22RewardCurrencyRoundingO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage22RewardCurrencyRoundingO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_RewardCurrencyRounding {
+  _Alignas(8) char _storage[8];
+};
+
 
 #ifdef __cplusplus
 }
@@ -13670,7 +15460,10 @@ inline const constexpr bool isUsableInGenericContext<BlinkEngage::AppearanceColo
 } // namespace swift
 
 namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
-/// Keys for custom colors. Return a color for a key from your <code>Theme</code> to customize that part of the UI (backgrounds, labels, icon tints).
+/// Identifiers for every color the SDK can resolve from your <code>Theme</code>.
+/// Pass these to <code>Theme/color(forKey:)</code> and return a <code>UIColor</code>, or <code>nil</code>
+/// to keep the SDK default. Each case maps to one background, text color,
+/// or icon tint in the SDK’s UI.
 namespace _impl {
 
 class _impl_AppearanceColorKey;
@@ -15017,7 +16810,11 @@ inline const constexpr bool isUsableInGenericContext<BlinkEngage::AppearanceFont
 } // namespace swift
 
 namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
-/// Keys for custom fonts. Return a font name (e.g. <code>"Outfit-Bold"</code>) for a key from your <code>Theme</code> to use that font for the corresponding label; return <code>nil</code> to use the default or your <code>globalFontMatrix</code> by weight.
+/// Identifiers for every font name the SDK can resolve from your <code>Theme</code>.
+/// Pass these to <code>Theme/fontName(forKey:)</code> and return a font family name
+/// (e.g. <code>"Outfit-Bold"</code>), or <code>nil</code> to fall back to
+/// <code>Theme/globalFontMatrix</code> and then the system font. The SDK controls
+/// the point size for every label internally — you only supply the name.
 namespace _impl {
 
 class _impl_AppearanceFontNameKey;
@@ -15824,7 +17621,12 @@ inline const constexpr bool isUsableInGenericContext<BlinkEngage::AppearanceIcon
 } // namespace swift
 
 namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
-/// Keys for custom images. Return an image for a key from your <code>Theme</code> to replace that icon; return <code>nil</code> to use the default (if any). When you return <code>nil</code>, the matching color key may still be used to tint the default icon.
+/// Identifiers for every icon the SDK can resolve from your <code>Theme</code>.
+/// Pass these to <code>Theme/image(forKey:)</code> and return a <code>UIImage</code>, or <code>nil</code>
+/// to keep the SDK’s built-in asset. When you return <code>nil</code>, the matching
+/// <code>AppearanceColorKey</code> still tints the default icon.
+/// Supply images at the minimum size listed in each case’s documentation
+/// (in points); include @2x and @3x variants for Retina screens.
 namespace _impl {
 
 class _impl_AppearanceIconKey;
@@ -15876,7 +17678,6 @@ public:
   }
 
   enum class cases {
-    offerRewardIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyOfferRewardIcon"),
     offerWallFloatingButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyOfferWallFloatingButtonIcon"),
     missedEarningsNavigationEditButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyMissedEarningsNavigationEditButtonIcon"),
     missedEarningsFieldEditIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyMissedEarningsFieldEditIcon"),
@@ -15889,14 +17690,6 @@ public:
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
-  inline const static struct _impl_offerRewardIcon {  // impl struct for case offerRewardIcon
-    SWIFT_INLINE_THUNK constexpr operator cases() const {
-      return cases::offerRewardIcon;
-    }
-    SWIFT_INLINE_THUNK AppearanceIconKey operator()() const;
-  } offerRewardIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceIconKey@AppearanceIconKeyOfferRewardIcon");
-  SWIFT_INLINE_THUNK bool isOfferRewardIcon() const;
-
   inline const static struct _impl_offerWallFloatingButtonIcon {  // impl struct for case offerWallFloatingButtonIcon
     SWIFT_INLINE_THUNK constexpr operator cases() const {
       return cases::offerWallFloatingButtonIcon;
@@ -15964,15 +17757,14 @@ public:
 #pragma clang diagnostic pop
   SWIFT_INLINE_THUNK operator cases() const {
     switch (_getEnumTag()) {
-      case 0: return cases::offerRewardIcon;
-      case 1: return cases::offerWallFloatingButtonIcon;
-      case 2: return cases::missedEarningsNavigationEditButtonIcon;
-      case 3: return cases::missedEarningsFieldEditIcon;
-      case 4: return cases::postScanReceiptButtonIcon;
-      case 5: return cases::postScanBoostDefaultIcon;
-      case 6: return cases::postScanSuccessIcon;
-      case 7: return cases::ugcBarcodeDetectedIcon;
-      case 8: return cases::ugcToastMessageWarningIcon;
+      case 0: return cases::offerWallFloatingButtonIcon;
+      case 1: return cases::missedEarningsNavigationEditButtonIcon;
+      case 2: return cases::missedEarningsFieldEditIcon;
+      case 3: return cases::postScanReceiptButtonIcon;
+      case 4: return cases::postScanBoostDefaultIcon;
+      case 5: return cases::postScanSuccessIcon;
+      case 6: return cases::ugcBarcodeDetectedIcon;
+      case 7: return cases::ugcToastMessageWarningIcon;
       default: abort();
     }
   }
@@ -16270,6 +18062,967 @@ template<>
 inline const constexpr bool isValueType<BlinkEngage::OfferWallViewType> = true;
 template<>
 struct implClassFor<BlinkEngage::OfferWallViewType> { using type = BlinkEngage::_impl::_impl_OfferWallViewType; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyCodePosition") RewardCurrencyCodePosition;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::RewardCurrencyCodePosition> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// Controls where <code>BlinkEngageRewardConfig/currencyCode</code> appears relative to the numeric amount.
+/// Only applies when <code>BlinkEngageRewardConfig/currencyCode</code> is non-<code>nil</code>.
+/// When <code>currencyCode</code> is <code>nil</code>, this value is ignored.
+namespace _impl {
+
+class _impl_RewardCurrencyCodePosition;
+
+// Type metadata accessor for RewardCurrencyCodePosition
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage26RewardCurrencyCodePositionOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyCodePosition") RewardCurrencyCodePosition final {
+public:
+  SWIFT_INLINE_THUNK ~RewardCurrencyCodePosition() noexcept {
+    auto metadata = _impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyCodePosition(const RewardCurrencyCodePosition &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyCodePosition &operator =(const RewardCurrencyCodePosition &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyCodePosition &operator =(RewardCurrencyCodePosition &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyCodePosition(RewardCurrencyCodePosition &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    leading SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyCodePosition@RewardCurrencyCodePositionLeading"),
+    trailing SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyCodePosition@RewardCurrencyCodePositionTrailing")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_leading {  // impl struct for case leading
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::leading;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyCodePosition operator()() const;
+  } leading SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyCodePosition@RewardCurrencyCodePositionLeading");
+  SWIFT_INLINE_THUNK bool isLeading() const;
+
+  inline const static struct _impl_trailing {  // impl struct for case trailing
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::trailing;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyCodePosition operator()() const;
+  } trailing SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyCodePosition@RewardCurrencyCodePositionTrailing");
+  SWIFT_INLINE_THUNK bool isTrailing() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::leading;
+      case 1: return cases::trailing;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyCodePosition> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage26RewardCurrencyCodePositionO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage26RewardCurrencyCodePositionO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK RewardCurrencyCodePosition() noexcept {}
+  static SWIFT_INLINE_THUNK RewardCurrencyCodePosition _make() noexcept { return RewardCurrencyCodePosition(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_RewardCurrencyCodePosition;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage26RewardCurrencyCodePositionOD;
+  static inline constexpr $s11BlinkEngage26RewardCurrencyCodePositionOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_RewardCurrencyCodePosition {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(RewardCurrencyCodePosition &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const RewardCurrencyCodePosition &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyCodePosition returnNewValue(T callable) {
+    auto result = RewardCurrencyCodePosition::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::RewardCurrencyCodePosition> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage26RewardCurrencyCodePositionOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::RewardCurrencyCodePosition> = true;
+template<>
+struct implClassFor<BlinkEngage::RewardCurrencyCodePosition> { using type = BlinkEngage::_impl::_impl_RewardCurrencyCodePosition; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+class SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV") RewardCurrencyImageLocations;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::RewardCurrencyImageLocations> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+namespace _impl {
+
+class _impl_RewardCurrencyImageLocations;
+
+// Type metadata accessor for RewardCurrencyImageLocations
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage28RewardCurrencyImageLocationsVMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV") RewardCurrencyImageLocations final {
+public:
+  SWIFT_INLINE_THUNK ~RewardCurrencyImageLocations() noexcept {
+    auto metadata = _impl::$s11BlinkEngage28RewardCurrencyImageLocationsVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations(const RewardCurrencyImageLocations &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage28RewardCurrencyImageLocationsVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    _storage = swift::_impl::OpaqueStorage(vwTable->size, vwTable->getAlignment());
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations &operator =(const RewardCurrencyImageLocations &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage28RewardCurrencyImageLocationsVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations &operator =(RewardCurrencyImageLocations &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyImageLocations(RewardCurrencyImageLocations &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV8rawValueSivp");
+  static SWIFT_INLINE_THUNK RewardCurrencyImageLocations init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV8rawValueACSi_tcfc");
+  static SWIFT_INLINE_THUNK RewardCurrencyImageLocations getOfferCell() SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV9offerCellACvpZ");
+  static SWIFT_INLINE_THUNK RewardCurrencyImageLocations getReceiptTotalReward() SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV012receiptTotalC0ACvpZ");
+  static SWIFT_INLINE_THUNK RewardCurrencyImageLocations getReceiptBoost() SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV12receiptBoostACvpZ");
+  static SWIFT_INLINE_THUNK RewardCurrencyImageLocations getReceiptTask() SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV11receiptTaskACvpZ");
+  static SWIFT_INLINE_THUNK RewardCurrencyImageLocations getAll() SWIFT_SYMBOL("s:11BlinkEngage28RewardCurrencyImageLocationsV3allACvpZ");
+private:
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations(swift::_impl::ValueWitnessTable * _Nonnull vwTable) noexcept : _storage(vwTable->size, vwTable->getAlignment()) {}
+  static SWIFT_INLINE_THUNK RewardCurrencyImageLocations _make() noexcept {
+    auto metadata = _impl::$s11BlinkEngage28RewardCurrencyImageLocationsVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    return RewardCurrencyImageLocations(vwTable);
+  }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage.getOpaquePointer(); }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage.getOpaquePointer(); }
+
+  swift::_impl::OpaqueStorage _storage;
+  friend class _impl::_impl_RewardCurrencyImageLocations;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage28RewardCurrencyImageLocationsVD;
+  static inline constexpr $s11BlinkEngage28RewardCurrencyImageLocationsVD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_RewardCurrencyImageLocations {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(RewardCurrencyImageLocations &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const RewardCurrencyImageLocations &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyImageLocations returnNewValue(T callable) {
+    auto result = RewardCurrencyImageLocations::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage28RewardCurrencyImageLocationsVMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::RewardCurrencyImageLocations> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsVMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::RewardCurrencyImageLocations> = true;
+template<>
+inline const constexpr bool isOpaqueLayout<BlinkEngage::RewardCurrencyImageLocations> = true;
+template<>
+struct implClassFor<BlinkEngage::RewardCurrencyImageLocations> { using type = BlinkEngage::_impl::_impl_RewardCurrencyImageLocations; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle") RewardCurrencyLabelStyle;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::RewardCurrencyLabelStyle> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// How the SDK presents the reward amount on list rows (offer cells, receipt lines, boosts).
+namespace _impl {
+
+class _impl_RewardCurrencyLabelStyle;
+
+// Type metadata accessor for RewardCurrencyLabelStyle
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage24RewardCurrencyLabelStyleOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle") RewardCurrencyLabelStyle final {
+public:
+  SWIFT_INLINE_THUNK ~RewardCurrencyLabelStyle() noexcept {
+    auto metadata = _impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyLabelStyle(const RewardCurrencyLabelStyle &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyLabelStyle &operator =(const RewardCurrencyLabelStyle &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyLabelStyle &operator =(RewardCurrencyLabelStyle &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyLabelStyle(RewardCurrencyLabelStyle &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    currencyImage SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle@RewardCurrencyLabelStyleCurrencyImage"),
+    currencyCode SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle@RewardCurrencyLabelStyleCurrencyCode"),
+    currencyName SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle@RewardCurrencyLabelStyleCurrencyName")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_currencyImage {  // impl struct for case currencyImage
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::currencyImage;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyLabelStyle operator()() const;
+  } currencyImage SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle@RewardCurrencyLabelStyleCurrencyImage");
+  SWIFT_INLINE_THUNK bool isCurrencyImage() const;
+
+  inline const static struct _impl_currencyCode {  // impl struct for case currencyCode
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::currencyCode;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyLabelStyle operator()() const;
+  } currencyCode SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle@RewardCurrencyLabelStyleCurrencyCode");
+  SWIFT_INLINE_THUNK bool isCurrencyCode() const;
+
+  inline const static struct _impl_currencyName {  // impl struct for case currencyName
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::currencyName;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyLabelStyle operator()() const;
+  } currencyName SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyLabelStyle@RewardCurrencyLabelStyleCurrencyName");
+  SWIFT_INLINE_THUNK bool isCurrencyName() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::currencyImage;
+      case 1: return cases::currencyCode;
+      case 2: return cases::currencyName;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyLabelStyle> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage24RewardCurrencyLabelStyleO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage24RewardCurrencyLabelStyleO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK RewardCurrencyLabelStyle() noexcept {}
+  static SWIFT_INLINE_THUNK RewardCurrencyLabelStyle _make() noexcept { return RewardCurrencyLabelStyle(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_RewardCurrencyLabelStyle;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage24RewardCurrencyLabelStyleOD;
+  static inline constexpr $s11BlinkEngage24RewardCurrencyLabelStyleOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_RewardCurrencyLabelStyle {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(RewardCurrencyLabelStyle &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const RewardCurrencyLabelStyle &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyLabelStyle returnNewValue(T callable) {
+    auto result = RewardCurrencyLabelStyle::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::RewardCurrencyLabelStyle> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage24RewardCurrencyLabelStyleOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::RewardCurrencyLabelStyle> = true;
+template<>
+struct implClassFor<BlinkEngage::RewardCurrencyLabelStyle> { using type = BlinkEngage::_impl::_impl_RewardCurrencyLabelStyle; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle") RewardCurrencyMessagingTextStyle;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::RewardCurrencyMessagingTextStyle> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// How toast and celebration copy refers to the reward currency.
+namespace _impl {
+
+class _impl_RewardCurrencyMessagingTextStyle;
+
+// Type metadata accessor for RewardCurrencyMessagingTextStyle
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle") RewardCurrencyMessagingTextStyle final {
+public:
+  SWIFT_INLINE_THUNK ~RewardCurrencyMessagingTextStyle() noexcept {
+    auto metadata = _impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle(const RewardCurrencyMessagingTextStyle &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle &operator =(const RewardCurrencyMessagingTextStyle &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle &operator =(RewardCurrencyMessagingTextStyle &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyMessagingTextStyle(RewardCurrencyMessagingTextStyle &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    currencyName SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle@RewardCurrencyMessagingTextStyleCurrencyName"),
+    currencyCode SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle@RewardCurrencyMessagingTextStyleCurrencyCode"),
+    noAmount SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle@RewardCurrencyMessagingTextStyleNoAmount")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_currencyName {  // impl struct for case currencyName
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::currencyName;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle operator()() const;
+  } currencyName SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle@RewardCurrencyMessagingTextStyleCurrencyName");
+  SWIFT_INLINE_THUNK bool isCurrencyName() const;
+
+  inline const static struct _impl_currencyCode {  // impl struct for case currencyCode
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::currencyCode;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle operator()() const;
+  } currencyCode SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle@RewardCurrencyMessagingTextStyleCurrencyCode");
+  SWIFT_INLINE_THUNK bool isCurrencyCode() const;
+
+  inline const static struct _impl_noAmount {  // impl struct for case noAmount
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::noAmount;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle operator()() const;
+  } noAmount SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyMessagingTextStyle@RewardCurrencyMessagingTextStyleNoAmount");
+  SWIFT_INLINE_THUNK bool isNoAmount() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::currencyName;
+      case 1: return cases::currencyCode;
+      case 2: return cases::noAmount;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyMessagingTextStyle> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage32RewardCurrencyMessagingTextStyleO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage32RewardCurrencyMessagingTextStyleO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle() noexcept {}
+  static SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle _make() noexcept { return RewardCurrencyMessagingTextStyle(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_RewardCurrencyMessagingTextStyle;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage32RewardCurrencyMessagingTextStyleOD;
+  static inline constexpr $s11BlinkEngage32RewardCurrencyMessagingTextStyleOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_RewardCurrencyMessagingTextStyle {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(RewardCurrencyMessagingTextStyle &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const RewardCurrencyMessagingTextStyle &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyMessagingTextStyle returnNewValue(T callable) {
+    auto result = RewardCurrencyMessagingTextStyle::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::RewardCurrencyMessagingTextStyle> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::RewardCurrencyMessagingTextStyle> = true;
+template<>
+struct implClassFor<BlinkEngage::RewardCurrencyMessagingTextStyle> { using type = BlinkEngage::_impl::_impl_RewardCurrencyMessagingTextStyle; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyRounding") RewardCurrencyRounding;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::RewardCurrencyRounding> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// Precision used when rounding the converted reward amount before display.
+/// The SDK multiplies a dollar payout by <code>currencyPerDollar</code> and then applies
+/// this rounding strategy to the result.
+/// Pick <code>whole</code> for unit-style currencies (points, gems, coins) where fractional
+/// values don’t make sense. Pick <code>decimal</code> when you need to show fractional
+/// amounts (e.g. <code>$0.15</code>, <code>€1.20</code>, <code>0.50 credits</code>).
+namespace _impl {
+
+class _impl_RewardCurrencyRounding;
+
+// Type metadata accessor for RewardCurrencyRounding
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage22RewardCurrencyRoundingOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyRounding") RewardCurrencyRounding final {
+public:
+  SWIFT_INLINE_THUNK ~RewardCurrencyRounding() noexcept {
+    auto metadata = _impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyRounding(const RewardCurrencyRounding &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyRounding &operator =(const RewardCurrencyRounding &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyRounding &operator =(RewardCurrencyRounding &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyRounding(RewardCurrencyRounding &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    whole SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyRounding@RewardCurrencyRoundingWhole"),
+    decimal SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyRounding@RewardCurrencyRoundingDecimal")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_whole {  // impl struct for case whole
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::whole;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyRounding operator()() const;
+  } whole SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyRounding@RewardCurrencyRoundingWhole");
+  SWIFT_INLINE_THUNK bool isWhole() const;
+
+  inline const static struct _impl_decimal {  // impl struct for case decimal
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::decimal;
+    }
+    SWIFT_INLINE_THUNK RewardCurrencyRounding operator()() const;
+  } decimal SWIFT_SYMBOL("c:@M@BlinkEngage@E@RewardCurrencyRounding@RewardCurrencyRoundingDecimal");
+  SWIFT_INLINE_THUNK bool isDecimal() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::whole;
+      case 1: return cases::decimal;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyRounding> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage22RewardCurrencyRoundingO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage22RewardCurrencyRoundingO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK RewardCurrencyRounding() noexcept {}
+  static SWIFT_INLINE_THUNK RewardCurrencyRounding _make() noexcept { return RewardCurrencyRounding(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_RewardCurrencyRounding;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage22RewardCurrencyRoundingOD;
+  static inline constexpr $s11BlinkEngage22RewardCurrencyRoundingOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_RewardCurrencyRounding {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(RewardCurrencyRounding &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const RewardCurrencyRounding &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER RewardCurrencyRounding returnNewValue(T callable) {
+    auto result = RewardCurrencyRounding::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::RewardCurrencyRounding> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage22RewardCurrencyRoundingOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::RewardCurrencyRounding> = true;
+template<>
+struct implClassFor<BlinkEngage::RewardCurrencyRounding> { using type = BlinkEngage::_impl::_impl_RewardCurrencyRounding; };
 } // namespace
 #pragma clang diagnostic pop
 } // namespace swift
@@ -17732,17 +20485,9 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   SWIFT_INLINE_THUNK swift::Int AppearanceFontNameKey::getRawValue() const {
   return BlinkEngage::_impl::$s11BlinkEngage21AppearanceFontNameKeyO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
   }
-  SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_offerRewardIcon::operator()() const {
-    auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(0);
-    return result;
-  }
-  SWIFT_INLINE_THUNK  bool AppearanceIconKey::isOfferRewardIcon() const {
-    return *this == AppearanceIconKey::offerRewardIcon;
-  }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_offerWallFloatingButtonIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(1);
+    result._destructiveInjectEnumTag(0);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isOfferWallFloatingButtonIcon() const {
@@ -17750,7 +20495,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_missedEarningsNavigationEditButtonIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(2);
+    result._destructiveInjectEnumTag(1);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isMissedEarningsNavigationEditButtonIcon() const {
@@ -17758,7 +20503,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_missedEarningsFieldEditIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(3);
+    result._destructiveInjectEnumTag(2);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isMissedEarningsFieldEditIcon() const {
@@ -17766,7 +20511,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_postScanReceiptButtonIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(4);
+    result._destructiveInjectEnumTag(3);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isPostScanReceiptButtonIcon() const {
@@ -17774,7 +20519,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_postScanBoostDefaultIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(5);
+    result._destructiveInjectEnumTag(4);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isPostScanBoostDefaultIcon() const {
@@ -17782,7 +20527,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_postScanSuccessIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(6);
+    result._destructiveInjectEnumTag(5);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isPostScanSuccessIcon() const {
@@ -17790,7 +20535,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_ugcBarcodeDetectedIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(7);
+    result._destructiveInjectEnumTag(6);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isUgcBarcodeDetectedIcon() const {
@@ -17798,7 +20543,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_ugcToastMessageWarningIcon::operator()() const {
     auto result = AppearanceIconKey::_make();
-    result._destructiveInjectEnumTag(8);
+    result._destructiveInjectEnumTag(7);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceIconKey::isUgcToastMessageWarningIcon() const {
@@ -17835,6 +20580,151 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK swift::Int OfferWallViewType::getRawValue() const {
   return BlinkEngage::_impl::$s11BlinkEngage17OfferWallViewTypeO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyCodePosition RewardCurrencyCodePosition::_impl_leading::operator()() const {
+    auto result = RewardCurrencyCodePosition::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyCodePosition::isLeading() const {
+    return *this == RewardCurrencyCodePosition::leading;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyCodePosition RewardCurrencyCodePosition::_impl_trailing::operator()() const {
+    auto result = RewardCurrencyCodePosition::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyCodePosition::isTrailing() const {
+    return *this == RewardCurrencyCodePosition::trailing;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyCodePosition> RewardCurrencyCodePosition::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<RewardCurrencyCodePosition>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage26RewardCurrencyCodePositionO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int RewardCurrencyCodePosition::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage26RewardCurrencyCodePositionO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK swift::Int RewardCurrencyImageLocations::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsV8rawValueSivg(_getOpaquePointer());
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations RewardCurrencyImageLocations::init(swift::Int rawValue) {
+  return BlinkEngage::_impl::_impl_RewardCurrencyImageLocations::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsV8rawValueACSi_tcfC(result, rawValue);
+  });
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations RewardCurrencyImageLocations::getOfferCell() {
+  return BlinkEngage::_impl::_impl_RewardCurrencyImageLocations::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsV9offerCellACvgZ(result);
+  });
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations RewardCurrencyImageLocations::getReceiptTotalReward() {
+  return BlinkEngage::_impl::_impl_RewardCurrencyImageLocations::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsV012receiptTotalC0ACvgZ(result);
+  });
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations RewardCurrencyImageLocations::getReceiptBoost() {
+  return BlinkEngage::_impl::_impl_RewardCurrencyImageLocations::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsV12receiptBoostACvgZ(result);
+  });
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations RewardCurrencyImageLocations::getReceiptTask() {
+  return BlinkEngage::_impl::_impl_RewardCurrencyImageLocations::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsV11receiptTaskACvgZ(result);
+  });
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyImageLocations RewardCurrencyImageLocations::getAll() {
+  return BlinkEngage::_impl::_impl_RewardCurrencyImageLocations::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::$s11BlinkEngage28RewardCurrencyImageLocationsV3allACvgZ(result);
+  });
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyLabelStyle RewardCurrencyLabelStyle::_impl_currencyImage::operator()() const {
+    auto result = RewardCurrencyLabelStyle::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyLabelStyle::isCurrencyImage() const {
+    return *this == RewardCurrencyLabelStyle::currencyImage;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyLabelStyle RewardCurrencyLabelStyle::_impl_currencyCode::operator()() const {
+    auto result = RewardCurrencyLabelStyle::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyLabelStyle::isCurrencyCode() const {
+    return *this == RewardCurrencyLabelStyle::currencyCode;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyLabelStyle RewardCurrencyLabelStyle::_impl_currencyName::operator()() const {
+    auto result = RewardCurrencyLabelStyle::_make();
+    result._destructiveInjectEnumTag(2);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyLabelStyle::isCurrencyName() const {
+    return *this == RewardCurrencyLabelStyle::currencyName;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyLabelStyle> RewardCurrencyLabelStyle::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<RewardCurrencyLabelStyle>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage24RewardCurrencyLabelStyleO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int RewardCurrencyLabelStyle::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage24RewardCurrencyLabelStyleO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle RewardCurrencyMessagingTextStyle::_impl_currencyName::operator()() const {
+    auto result = RewardCurrencyMessagingTextStyle::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyMessagingTextStyle::isCurrencyName() const {
+    return *this == RewardCurrencyMessagingTextStyle::currencyName;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle RewardCurrencyMessagingTextStyle::_impl_currencyCode::operator()() const {
+    auto result = RewardCurrencyMessagingTextStyle::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyMessagingTextStyle::isCurrencyCode() const {
+    return *this == RewardCurrencyMessagingTextStyle::currencyCode;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyMessagingTextStyle RewardCurrencyMessagingTextStyle::_impl_noAmount::operator()() const {
+    auto result = RewardCurrencyMessagingTextStyle::_make();
+    result._destructiveInjectEnumTag(2);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyMessagingTextStyle::isNoAmount() const {
+    return *this == RewardCurrencyMessagingTextStyle::noAmount;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyMessagingTextStyle> RewardCurrencyMessagingTextStyle::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<RewardCurrencyMessagingTextStyle>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int RewardCurrencyMessagingTextStyle::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage32RewardCurrencyMessagingTextStyleO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyRounding RewardCurrencyRounding::_impl_whole::operator()() const {
+    auto result = RewardCurrencyRounding::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyRounding::isWhole() const {
+    return *this == RewardCurrencyRounding::whole;
+  }
+  SWIFT_INLINE_THUNK RewardCurrencyRounding RewardCurrencyRounding::_impl_decimal::operator()() const {
+    auto result = RewardCurrencyRounding::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool RewardCurrencyRounding::isDecimal() const {
+    return *this == RewardCurrencyRounding::decimal;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<RewardCurrencyRounding> RewardCurrencyRounding::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<RewardCurrencyRounding>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage22RewardCurrencyRoundingO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int RewardCurrencyRounding::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage22RewardCurrencyRoundingO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
   }
 
 } // namespace BlinkEngage

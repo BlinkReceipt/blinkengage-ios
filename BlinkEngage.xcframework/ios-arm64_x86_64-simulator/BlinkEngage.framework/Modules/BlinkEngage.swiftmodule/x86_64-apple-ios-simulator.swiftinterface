@@ -3,7 +3,10 @@
 // swift-module-flags: -target x86_64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name BlinkEngage
 // swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1.2
 import AVFoundation
+import AdSupport
+import AppTrackingTransparency
 import Combine
+import CryptoKit
 import Foundation
 import GoogleMobileAds
 import Network
@@ -12,76 +15,6 @@ import UIKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-@_inheritsConvenienceInitializers @objc final public class Appearance : ObjectiveC.NSObject {
-  @objc final public let theme: (any BlinkEngage.Theme)?
-  @objc override dynamic public init()
-  @objc public init(theme: (any BlinkEngage.Theme)?)
-  @objc deinit
-}
-@_inheritsConvenienceInitializers @objc public class BlinkEngageUser : ObjectiveC.NSObject {
-  @objc public var emailHash: Swift.String? {
-    @objc get
-    @objc set
-  }
-  @objc public var phoneHash: Swift.String? {
-    @objc get
-    @objc set
-  }
-  @objc public var clientUserId: Swift.String? {
-    @objc get
-    @objc set
-  }
-  @objc override dynamic public init()
-  @objc deinit
-}
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class BlinkEngageSDK : ObjectiveC.NSObject {
-  @objc final public let user: BlinkEngage.BlinkEngageUser
-  @objc public static let shared: BlinkEngage.BlinkEngageSDK
-  @_Concurrency.MainActor @objc public var appearance: BlinkEngage.Appearance
-  @objc public var rewardCurrencyName: Swift.String
-  @objc public var rewardCurrencyPerDollar: Swift.Double
-  @objc public var userPayoutPercentage: Swift.Double {
-    @objc get
-    @objc set
-  }
-  @objc public var debugModeEnabled: Swift.Bool {
-    @objc get
-    @objc set
-  }
-  @objc public var rewardCallback: ((_ context: Swift.String, _ scanResults: [Swift.String : Any]?, _ rewardAmount: Foundation.NSNumber?, _ blinkReceiptId: Swift.String?) -> Foundation.NSNumber?)?
-  @objc deinit
-}
-@objc public protocol Theme {
-  @objc var isRewardIconEnabled: Swift.Bool { get }
-  @objc var isMerchantIconEnabled: Swift.Bool { get }
-  @objc var globalFontMatrix: Foundation.NSDictionary? { get }
-  @objc func color(forKey key: BlinkEngage.AppearanceColorKey) -> UIKit.UIColor?
-  @objc func fontName(forKey key: BlinkEngage.AppearanceFontNameKey) -> Swift.String?
-  @objc func image(forKey key: BlinkEngage.AppearanceIconKey) -> UIKit.UIImage?
-}
-@objc public protocol OffersWallViewControllerDelegate {
-  @objc optional func offerWallDidSelectFloatingAction(_ viewController: BlinkEngage.OffersWallViewController)
-  @objc optional func offerWallShouldDisplayFloatingAction(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.Bool
-  @objc optional func offerWall(_ viewController: BlinkEngage.OffersWallViewController, didUpdateClippedOffersCount count: Swift.Int)
-}
-@_hasMissingDesignatedInitializers @objc(OffersWallViewController) @_Concurrency.MainActor @preconcurrency public class OffersWallViewController : UIKit.UIViewController {
-  @objc @_Concurrency.MainActor @preconcurrency weak public var delegate: (any BlinkEngage.OffersWallViewControllerDelegate)?
-  @objc @_Concurrency.MainActor @preconcurrency final public let offersType: BlinkEngage.OfferWallViewType
-  @_Concurrency.MainActor @preconcurrency @objc dynamic public init()
-  @objc @_Concurrency.MainActor @preconcurrency public init(offerWallViewType: BlinkEngage.OfferWallViewType)
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
-  @objc deinit
-}
-@objc public enum OfferWallViewType : Swift.Int {
-  case all = 0
-  case clipped = 1
-  public init?(rawValue: Swift.Int)
-  public typealias RawValue = Swift.Int
-  public var rawValue: Swift.Int {
-    get
-  }
-}
 @objc public enum AppearanceColorKey : Swift.Int {
   case offerWallHeaderBackground
   case offerWallHeaderTitleLabel
@@ -207,7 +140,6 @@ import _SwiftConcurrencyShims
   }
 }
 @objc public enum AppearanceIconKey : Swift.Int {
-  case offerRewardIcon
   case offerWallFloatingButtonIcon
   case missedEarningsNavigationEditButtonIcon
   case missedEarningsFieldEditIcon
@@ -292,9 +224,147 @@ import _SwiftConcurrencyShims
     get
   }
 }
-extension BlinkEngage.OfferWallViewType : Swift.Equatable {}
-extension BlinkEngage.OfferWallViewType : Swift.Hashable {}
-extension BlinkEngage.OfferWallViewType : Swift.RawRepresentable {}
+public struct RewardCurrencyImageLocations : Swift.OptionSet, Swift.Sendable {
+  public let rawValue: Swift.Int
+  public init(rawValue: Swift.Int)
+  public static let offerCell: BlinkEngage.RewardCurrencyImageLocations
+  public static let receiptTotalReward: BlinkEngage.RewardCurrencyImageLocations
+  public static let receiptBoost: BlinkEngage.RewardCurrencyImageLocations
+  public static let receiptTask: BlinkEngage.RewardCurrencyImageLocations
+  public static let all: BlinkEngage.RewardCurrencyImageLocations
+  public typealias ArrayLiteralElement = BlinkEngage.RewardCurrencyImageLocations
+  public typealias Element = BlinkEngage.RewardCurrencyImageLocations
+  public typealias RawValue = Swift.Int
+}
+@objc extension BlinkEngage.BlinkEngageRewardConfig {
+  @objc public static let imageLocationOfferCell: Swift.Int
+  @objc public static let imageLocationReceiptTotalReward: Swift.Int
+  @objc public static let imageLocationReceiptBoost: Swift.Int
+  @objc public static let imageLocationReceiptTask: Swift.Int
+  @objc public static let imageLocationAll: Swift.Int
+}
+@objc public enum RewardCurrencyCodePosition : Swift.Int {
+  case leading = 0
+  case trailing = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum RewardCurrencyLabelStyle : Swift.Int {
+  case currencyImage = 0
+  case currencyCode = 1
+  case currencyName = 2
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum RewardCurrencyMessagingTextStyle : Swift.Int {
+  case currencyName = 0
+  case currencyCode = 1
+  case noAmount = 2
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum RewardCurrencyRounding : Swift.Int {
+  case whole = 0
+  case decimal = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc final public class BlinkEngageRewardConfig : ObjectiveC.NSObject {
+  @objc final public let rewardCurrencyLabelStyle: BlinkEngage.RewardCurrencyLabelStyle
+  @objc final public let rewardCurrencyMessagingTextStyle: BlinkEngage.RewardCurrencyMessagingTextStyle
+  @objc final public let currencyName: Swift.String
+  @objc final public let currencyCode: Swift.String?
+  @objc final public let currencyCodePosition: BlinkEngage.RewardCurrencyCodePosition
+  @objc final public let currencyPerDollar: Swift.Double
+  @objc final public let userPayoutPercentage: Swift.Double
+  @objc final public let rewardRounding: BlinkEngage.RewardCurrencyRounding
+  @objc final public let currencyImage: UIKit.UIImage?
+  final public let currencyImageLocations: BlinkEngage.RewardCurrencyImageLocations
+  @objc final public let rewardCallback: (_ context: Swift.String, _ rewardAmount: Foundation.NSNumber?, _ blinkReceiptId: Swift.String?) -> Foundation.NSNumber?
+  public init(currencyName: Swift.String = "points", currencyCode: Swift.String? = nil, currencyCodePosition: BlinkEngage.RewardCurrencyCodePosition = .leading, currencyPerDollar: Swift.Double = 100.0, userPayoutPercentage: Swift.Double = 0.6, currencyImage: UIKit.UIImage? = nil, currencyImageLocations: BlinkEngage.RewardCurrencyImageLocations = .all, rewardCurrencyLabelStyle: BlinkEngage.RewardCurrencyLabelStyle = .currencyImage, rewardCurrencyMessagingTextStyle: BlinkEngage.RewardCurrencyMessagingTextStyle = .currencyName, rewardRounding: BlinkEngage.RewardCurrencyRounding = .whole, rewardCallback: @escaping (_ context: Swift.String, _ rewardAmount: Foundation.NSNumber?, _ blinkReceiptId: Swift.String?) -> Foundation.NSNumber?)
+  @objc convenience public init(currencyName: Swift.String, currencyCode: Swift.String?, currencyCodePosition: BlinkEngage.RewardCurrencyCodePosition, currencyPerDollar: Swift.Double, userPayoutPercentage: Swift.Double, currencyImage: UIKit.UIImage?, currencyImageLocations: Swift.Int, rewardLabelStyle: BlinkEngage.RewardCurrencyLabelStyle, messagingTextStyle: BlinkEngage.RewardCurrencyMessagingTextStyle, rewardRounding: BlinkEngage.RewardCurrencyRounding, rewardCallback: @escaping (_ context: Swift.String, _ rewardAmount: Foundation.NSNumber?, _ blinkReceiptId: Swift.String?) -> Foundation.NSNumber?)
+  @objc deinit
+}
+@objc public protocol Theme {
+  @objc var isMerchantIconEnabled: Swift.Bool { get }
+  @objc var globalFontMatrix: Foundation.NSDictionary? { get }
+  @objc func color(forKey key: BlinkEngage.AppearanceColorKey) -> UIKit.UIColor?
+  @objc func fontName(forKey key: BlinkEngage.AppearanceFontNameKey) -> Swift.String?
+  @objc func image(forKey key: BlinkEngage.AppearanceIconKey) -> UIKit.UIImage?
+}
+@objc public protocol OffersWallViewControllerDelegate {
+  @objc optional func offerWallDidSelectFloatingAction(_ viewController: BlinkEngage.OffersWallViewController)
+  @objc optional func offerWallShouldDisplayFloatingAction(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.Bool
+  @objc optional func offerWall(_ viewController: BlinkEngage.OffersWallViewController, didUpdateClippedOffersCount count: Swift.Int)
+}
+@_hasMissingDesignatedInitializers @objc(OffersWallViewController) @_Concurrency.MainActor @preconcurrency public class OffersWallViewController : UIKit.UIViewController {
+  @objc @_Concurrency.MainActor @preconcurrency weak public var delegate: (any BlinkEngage.OffersWallViewControllerDelegate)?
+  @objc @_Concurrency.MainActor @preconcurrency final public let offersType: BlinkEngage.OfferWallViewType
+  @_Concurrency.MainActor @preconcurrency @objc convenience dynamic public init()
+  @objc @_Concurrency.MainActor @preconcurrency convenience public init(offerWallViewType: BlinkEngage.OfferWallViewType)
+  @objc @_Concurrency.MainActor @preconcurrency public init(offerWallViewType: BlinkEngage.OfferWallViewType, rewardCurrencyConfig: BlinkEngage.BlinkEngageRewardConfig)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidAppear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewWillDisappear(_ animated: Swift.Bool)
+  @objc deinit
+}
+extension BlinkEngage.OffersWallViewController : UIKit.UIAdaptivePresentationControllerDelegate {
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func presentationControllerDidDismiss(_ presentationController: UIKit.UIPresentationController)
+}
+@objc public enum OfferWallViewType : Swift.Int {
+  case all = 0
+  case clipped = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @objc public class BlinkEngageUser : ObjectiveC.NSObject {
+  @objc public var emailHash: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc public var phoneHash: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc public var clientUserId: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class BlinkEngageSDK : ObjectiveC.NSObject {
+  @objc(startWithDebugMode:) public static func start(debugMode: Swift.Bool)
+  @objc public static var shared: BlinkEngage.BlinkEngageSDK {
+    @objc get
+  }
+  @objc final public let user: BlinkEngage.BlinkEngageUser
+  @objc public var rewardConfig: BlinkEngage.BlinkEngageRewardConfig
+  @_Concurrency.MainActor @objc public var appearance: BlinkEngage.Appearance
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc final public class Appearance : ObjectiveC.NSObject {
+  @objc final public let theme: (any BlinkEngage.Theme)?
+  @objc override dynamic public init()
+  @objc public init(theme: (any BlinkEngage.Theme)?)
+  @objc deinit
+}
 extension BlinkEngage.AppearanceColorKey : Swift.Equatable {}
 extension BlinkEngage.AppearanceColorKey : Swift.Hashable {}
 extension BlinkEngage.AppearanceColorKey : Swift.RawRepresentable {}
@@ -304,3 +374,18 @@ extension BlinkEngage.AppearanceIconKey : Swift.RawRepresentable {}
 extension BlinkEngage.AppearanceFontNameKey : Swift.Equatable {}
 extension BlinkEngage.AppearanceFontNameKey : Swift.Hashable {}
 extension BlinkEngage.AppearanceFontNameKey : Swift.RawRepresentable {}
+extension BlinkEngage.RewardCurrencyCodePosition : Swift.Equatable {}
+extension BlinkEngage.RewardCurrencyCodePosition : Swift.Hashable {}
+extension BlinkEngage.RewardCurrencyCodePosition : Swift.RawRepresentable {}
+extension BlinkEngage.RewardCurrencyLabelStyle : Swift.Equatable {}
+extension BlinkEngage.RewardCurrencyLabelStyle : Swift.Hashable {}
+extension BlinkEngage.RewardCurrencyLabelStyle : Swift.RawRepresentable {}
+extension BlinkEngage.RewardCurrencyMessagingTextStyle : Swift.Equatable {}
+extension BlinkEngage.RewardCurrencyMessagingTextStyle : Swift.Hashable {}
+extension BlinkEngage.RewardCurrencyMessagingTextStyle : Swift.RawRepresentable {}
+extension BlinkEngage.RewardCurrencyRounding : Swift.Equatable {}
+extension BlinkEngage.RewardCurrencyRounding : Swift.Hashable {}
+extension BlinkEngage.RewardCurrencyRounding : Swift.RawRepresentable {}
+extension BlinkEngage.OfferWallViewType : Swift.Equatable {}
+extension BlinkEngage.OfferWallViewType : Swift.Hashable {}
+extension BlinkEngage.OfferWallViewType : Swift.RawRepresentable {}
