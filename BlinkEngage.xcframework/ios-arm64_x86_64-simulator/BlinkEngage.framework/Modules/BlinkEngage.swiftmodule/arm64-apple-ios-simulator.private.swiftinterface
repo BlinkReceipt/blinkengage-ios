@@ -15,19 +15,6 @@ import UIKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-@objc public protocol Theme {
-  @objc var isMerchantIconEnabled: Swift.Bool { get }
-  @objc var globalFontMatrix: Foundation.NSDictionary? { get }
-  @objc func color(forKey key: BlinkEngage.AppearanceColorKey) -> UIKit.UIColor?
-  @objc func fontName(forKey key: BlinkEngage.AppearanceFontNameKey) -> Swift.String?
-  @objc func image(forKey key: BlinkEngage.AppearanceIconKey) -> UIKit.UIImage?
-}
-@_inheritsConvenienceInitializers @objc final public class Appearance : ObjectiveC.NSObject {
-  @objc final public let theme: (any BlinkEngage.Theme)?
-  @objc override dynamic public init()
-  @objc public init(theme: (any BlinkEngage.Theme)?)
-  @objc deinit
-}
 @objc public protocol OffersWallViewControllerDelegate {
   @objc optional func offerWallDidSelectFloatingAction(_ viewController: BlinkEngage.OffersWallViewController)
   @objc optional func offerWallShouldDisplayFloatingAction(_ viewController: BlinkEngage.OffersWallViewController) -> Swift.Bool
@@ -47,14 +34,18 @@ import _SwiftConcurrencyShims
 extension BlinkEngage.OffersWallViewController : UIKit.UIAdaptivePresentationControllerDelegate {
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func presentationControllerDidDismiss(_ presentationController: UIKit.UIPresentationController)
 }
-@objc public enum OfferWallViewType : Swift.Int {
-  case all = 0
-  case clipped = 1
-  public init?(rawValue: Swift.Int)
-  public typealias RawValue = Swift.Int
-  public var rawValue: Swift.Int {
-    get
-  }
+@objc public protocol Theme {
+  @objc var isMerchantIconEnabled: Swift.Bool { get }
+  @objc var globalFontMatrix: Foundation.NSDictionary? { get }
+  @objc func color(forKey key: BlinkEngage.AppearanceColorKey) -> UIKit.UIColor?
+  @objc func fontName(forKey key: BlinkEngage.AppearanceFontNameKey) -> Swift.String?
+  @objc func image(forKey key: BlinkEngage.AppearanceIconKey) -> UIKit.UIImage?
+}
+@_inheritsConvenienceInitializers @objc final public class Appearance : ObjectiveC.NSObject {
+  @objc final public let theme: (any BlinkEngage.Theme)?
+  @objc override dynamic public init()
+  @objc public init(theme: (any BlinkEngage.Theme)?)
+  @objc deinit
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class BlinkEngageSDK : ObjectiveC.NSObject {
   @objc(startWithDebugMode:) public static func start(debugMode: Swift.Bool)
@@ -65,6 +56,15 @@ extension BlinkEngage.OffersWallViewController : UIKit.UIAdaptivePresentationCon
   @objc public var rewardConfig: BlinkEngage.BlinkEngageRewardConfig
   @_Concurrency.MainActor @objc public var appearance: BlinkEngage.Appearance
   @objc deinit
+}
+@objc public enum OfferWallViewType : Swift.Int {
+  case all = 0
+  case clipped = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
 }
 @objc public enum AppearanceColorKey : Swift.Int {
   case offerWallHeaderBackground
