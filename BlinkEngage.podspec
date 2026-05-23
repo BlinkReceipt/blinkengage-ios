@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
   
   spec.name         = "BlinkEngage"
-  spec.version      = "1.5.1"
+  spec.version      = "1.6.0"
   spec.summary      = "BlinkEngage SDK"
   spec.description  = "This is the BlinkEngage extension for the BlinkReceipt SDK"
   

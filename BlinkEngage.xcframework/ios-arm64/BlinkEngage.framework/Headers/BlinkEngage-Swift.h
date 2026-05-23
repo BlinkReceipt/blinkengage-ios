@@ -729,6 +729,39 @@ typedef SWIFT_ENUM(NSInteger, AppearanceFontNameKey, open) {
   AppearanceFontNameKeyUgcSubmitButtonLabel = 65,
 };
 
+/// Semantic color roles used by <code>Theme/color(forGlobalKey:)</code>.
+/// Use this enum to define a small app-wide palette that the SDK can apply
+/// across related UI elements. Per-key colors returned from
+/// <code>Theme/color(forKey:)</code> still take priority over these global roles.
+typedef SWIFT_ENUM(NSInteger, AppearanceGlobalColorKey, open) {
+/// Primary brand color for main actions, progress, and prominent interactive elements.
+  AppearanceGlobalColorKeyPrimary = 0,
+/// Secondary brand color for supporting accents and secondary action surfaces.
+  AppearanceGlobalColorKeySecondary = 1,
+/// Success color for completed, clipped, or valid states.
+  AppearanceGlobalColorKeySuccess = 2,
+/// Warning color for cautionary states and non-blocking alerts.
+  AppearanceGlobalColorKeyWarning = 3,
+/// Error color for destructive, invalid, or blocking states.
+  AppearanceGlobalColorKeyError = 4,
+/// Border, divider, and neutral icon color.
+  AppearanceGlobalColorKeyBorder = 5,
+/// Primary text color for titles and high-emphasis copy.
+  AppearanceGlobalColorKeyTextPrimary = 6,
+/// Secondary text color for captions, metadata, and muted copy.
+  AppearanceGlobalColorKeyTextSecondary = 7,
+/// Accent text color for links, rewards, and branded inline emphasis.
+  AppearanceGlobalColorKeyTextAccent = 8,
+/// Main page or screen background color.
+  AppearanceGlobalColorKeyBackground = 9,
+/// Card, modal, row, or elevated surface background color.
+  AppearanceGlobalColorKeySurfaceBackground = 10,
+/// Soft accent background color for tinted pills, badges, and highlights.
+  AppearanceGlobalColorKeyAccentBackground = 11,
+/// Foreground content on dark, saturated, or inverse surfaces.
+  AppearanceGlobalColorKeyBackgroundInverse = 12,
+};
+
 /// Identifiers for every icon the SDK can resolve from your <code>Theme</code>.
 /// Pass these to <code>Theme/image(forKey:)</code> and return a <code>UIImage</code>, or <code>nil</code>
 /// to keep the SDK’s built-in asset. When you return <code>nil</code>, the matching
@@ -923,8 +956,8 @@ SWIFT_CLASS("_TtC11BlinkEngage23BlinkEngageRewardConfig")
 /// <em>Required</em> — no default value. The host app must always provide this closure.
 /// <ul>
 ///   <li>
-///     <code>context</code>: One of <code>"ScanFinished"</code>, <code>"Promo"</code>, <code>"Boost"</code>, or
-///     <code>"BarcodeCollection"</code>.
+///     <code>context</code>: One of <code>"ScanFinished"</code>, <code>"Promo"</code>, <code>"Boost"</code>, <code>"BarcodeCollection"</code>,
+///     <code>"BoostCreditEarned"</code>, or <code>"BoostCreditApplied"</code>.
 ///   </li>
 ///   <li>
 ///     <code>rewardAmount</code>: Amount earned, or <code>nil</code> for <code>"ScanFinished"</code>.
@@ -1137,6 +1170,18 @@ typedef SWIFT_ENUM(NSInteger, RewardCurrencyRounding, open) {
 ///     The system font at the SDK’s built-in size and weight.
 ///   </li>
 /// </ol>
+/// The SDK resolves colors in this order:
+/// <ol>
+///   <li>
+///     The value returned by <code>color(forKey:)</code> for the specific key.
+///   </li>
+///   <li>
+///     The value returned by <code>color(forGlobalKey:)</code> for the key’s semantic color role.
+///   </li>
+///   <li>
+///     The built-in default color for that key.
+///   </li>
+/// </ol>
 SWIFT_PROTOCOL("_TtP11BlinkEngage5Theme_")
 @protocol Theme
 /// Controls whether the Stores screen attempts to load merchant logos from
@@ -1149,6 +1194,13 @@ SWIFT_PROTOCOL("_TtP11BlinkEngage5Theme_")
 /// name strings (e.g. <code>"Outfit-Bold"</code>). Return <code>nil</code> to fall through to
 /// the system font for all non-overridden labels.
 @property (nonatomic, readonly, strong) NSDictionary * _Nullable globalFontMatrix;
+@optional
+/// Returns a color for a semantic role, or <code>nil</code> to keep the SDK default for that role.
+/// The SDK calls this only after <code>color(forKey:)</code> returns <code>nil</code> for a key that maps to
+/// an <code>AppearanceGlobalColorKey</code>. Implement this method to apply a shared palette without
+/// matching every individual <code>AppearanceColorKey</code>.
+- (UIColor * _Nullable)colorForGlobalKey:(enum AppearanceGlobalColorKey)key SWIFT_WARN_UNUSED_RESULT;
+@required
 /// Returns a color for the given key, or <code>nil</code> to keep the SDK default.
 - (UIColor * _Nullable)colorForKey:(enum AppearanceColorKey)key SWIFT_WARN_UNUSED_RESULT;
 /// Returns a font <em>name</em> (e.g. <code>"Outfit-SemiBold"</code>) for the given key,
@@ -5047,6 +5099,12 @@ struct BlinkEngage_AppearanceFontNameKey {
   _Alignas(8) char _storage[8];
 };
 
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage24AppearanceGlobalColorKeyO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage24AppearanceGlobalColorKeyO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_AppearanceGlobalColorKey {
+  _Alignas(8) char _storage[8];
+};
+
 SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage17AppearanceIconKeyO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
 SWIFT_EXTERN ptrdiff_t $s11BlinkEngage17AppearanceIconKeyO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
 struct BlinkEngage_AppearanceIconKey {
@@ -7354,6 +7412,316 @@ template<>
 inline const constexpr bool isValueType<BlinkEngage::AppearanceFontNameKey> = true;
 template<>
 struct implClassFor<BlinkEngage::AppearanceFontNameKey> { using type = BlinkEngage::_impl::_impl_AppearanceFontNameKey; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey") AppearanceGlobalColorKey;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::AppearanceGlobalColorKey> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// Semantic color roles used by <code>Theme/color(forGlobalKey:)</code>.
+/// Use this enum to define a small app-wide palette that the SDK can apply
+/// across related UI elements. Per-key colors returned from
+/// <code>Theme/color(forKey:)</code> still take priority over these global roles.
+namespace _impl {
+
+class _impl_AppearanceGlobalColorKey;
+
+// Type metadata accessor for AppearanceGlobalColorKey
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage24AppearanceGlobalColorKeyOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey") AppearanceGlobalColorKey final {
+public:
+  SWIFT_INLINE_THUNK ~AppearanceGlobalColorKey() noexcept {
+    auto metadata = _impl::$s11BlinkEngage24AppearanceGlobalColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey(const AppearanceGlobalColorKey &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage24AppearanceGlobalColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey &operator =(const AppearanceGlobalColorKey &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage24AppearanceGlobalColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey &operator =(AppearanceGlobalColorKey &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER AppearanceGlobalColorKey(AppearanceGlobalColorKey &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    primary SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyPrimary"),
+    secondary SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeySecondary"),
+    success SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeySuccess"),
+    warning SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyWarning"),
+    error SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyError"),
+    border SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyBorder"),
+    textPrimary SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyTextPrimary"),
+    textSecondary SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyTextSecondary"),
+    textAccent SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyTextAccent"),
+    background SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyBackground"),
+    surfaceBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeySurfaceBackground"),
+    accentBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyAccentBackground"),
+    backgroundInverse SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyBackgroundInverse")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_primary {  // impl struct for case primary
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::primary;
+    }
+    SWIFT_INLINE_THUNK AppearanceGlobalColorKey operator()() const;
+  } primary SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyPrimary");
+  SWIFT_INLINE_THUNK bool isPrimary() const;
+
+  inline const static struct _impl_secondary {  // impl struct for case secondary
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::secondary;
+    }
+    SWIFT_INLINE_THUNK AppearanceGlobalColorKey operator()() const;
+  } secondary SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeySecondary");
+  SWIFT_INLINE_THUNK bool isSecondary() const;
+
+  inline const static struct _impl_success {  // impl struct for case success
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::success;
+    }
+    SWIFT_INLINE_THUNK AppearanceGlobalColorKey operator()() const;
+  } success SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeySuccess");
+  SWIFT_INLINE_THUNK bool isSuccess() const;
+
+  inline const static struct _impl_warning {  // impl struct for case warning
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::warning;
+    }
+    SWIFT_INLINE_THUNK AppearanceGlobalColorKey operator()() const;
+  } warning SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyWarning");
+  SWIFT_INLINE_THUNK bool isWarning() const;
+
+  inline const static struct _impl_error {  // impl struct for case error
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::error;
+    }
+    SWIFT_INLINE_THUNK AppearanceGlobalColorKey operator()() const;
+  } error SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyError");
+  SWIFT_INLINE_THUNK bool isError() const;
+
+  inline const static struct _impl_border {  // impl struct for case border
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::border;
+    }
+    SWIFT_INLINE_THUNK AppearanceGlobalColorKey operator()() const;
+  } border SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyBorder");
+  SWIFT_INLINE_THUNK bool isBorder() const;
+
+  inline const static struct _impl_textPrimary {  // impl struct for case textPrimary
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::textPrimary;
+    }
+    SWIFT_INLINE_THUNK AppearanceGlobalColorKey operator()() const;
+  } textPrimary SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyTextPrimary");
+  SWIFT_INLINE_THUNK bool isTextPrimary() const;
+
+  inline const static struct _impl_textSecondary {  // impl struct for case textSecondary
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::textSecondary;
+    }
+    SWIFT_INLINE_THUNK AppearanceGlobalColorKey operator()() const;
+  } textSecondary SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyTextSecondary");
+  SWIFT_INLINE_THUNK bool isTextSecondary() const;
+
+  inline const static struct _impl_textAccent {  // impl struct for case textAccent
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::textAccent;
+    }
+    SWIFT_INLINE_THUNK AppearanceGlobalColorKey operator()() const;
+  } textAccent SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyTextAccent");
+  SWIFT_INLINE_THUNK bool isTextAccent() const;
+
+  inline const static struct _impl_background {  // impl struct for case background
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::background;
+    }
+    SWIFT_INLINE_THUNK AppearanceGlobalColorKey operator()() const;
+  } background SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyBackground");
+  SWIFT_INLINE_THUNK bool isBackground() const;
+
+  inline const static struct _impl_surfaceBackground {  // impl struct for case surfaceBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::surfaceBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceGlobalColorKey operator()() const;
+  } surfaceBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeySurfaceBackground");
+  SWIFT_INLINE_THUNK bool isSurfaceBackground() const;
+
+  inline const static struct _impl_accentBackground {  // impl struct for case accentBackground
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::accentBackground;
+    }
+    SWIFT_INLINE_THUNK AppearanceGlobalColorKey operator()() const;
+  } accentBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyAccentBackground");
+  SWIFT_INLINE_THUNK bool isAccentBackground() const;
+
+  inline const static struct _impl_backgroundInverse {  // impl struct for case backgroundInverse
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::backgroundInverse;
+    }
+    SWIFT_INLINE_THUNK AppearanceGlobalColorKey operator()() const;
+  } backgroundInverse SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceGlobalColorKey@AppearanceGlobalColorKeyBackgroundInverse");
+  SWIFT_INLINE_THUNK bool isBackgroundInverse() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::primary;
+      case 1: return cases::secondary;
+      case 2: return cases::success;
+      case 3: return cases::warning;
+      case 4: return cases::error;
+      case 5: return cases::border;
+      case 6: return cases::textPrimary;
+      case 7: return cases::textSecondary;
+      case 8: return cases::textAccent;
+      case 9: return cases::background;
+      case 10: return cases::surfaceBackground;
+      case 11: return cases::accentBackground;
+      case 12: return cases::backgroundInverse;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<AppearanceGlobalColorKey> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage24AppearanceGlobalColorKeyO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage24AppearanceGlobalColorKeyO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey() noexcept {}
+  static SWIFT_INLINE_THUNK AppearanceGlobalColorKey _make() noexcept { return AppearanceGlobalColorKey(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage24AppearanceGlobalColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage24AppearanceGlobalColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage24AppearanceGlobalColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_AppearanceGlobalColorKey;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage24AppearanceGlobalColorKeyOD;
+  static inline constexpr $s11BlinkEngage24AppearanceGlobalColorKeyOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_AppearanceGlobalColorKey {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(AppearanceGlobalColorKey &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const AppearanceGlobalColorKey &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER AppearanceGlobalColorKey returnNewValue(T callable) {
+    auto result = AppearanceGlobalColorKey::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage24AppearanceGlobalColorKeyOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::AppearanceGlobalColorKey> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage24AppearanceGlobalColorKeyOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::AppearanceGlobalColorKey> = true;
+template<>
+struct implClassFor<BlinkEngage::AppearanceGlobalColorKey> { using type = BlinkEngage::_impl::_impl_AppearanceGlobalColorKey; };
 } // namespace
 #pragma clang diagnostic pop
 } // namespace swift
@@ -10315,6 +10683,118 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK swift::Int AppearanceFontNameKey::getRawValue() const {
   return BlinkEngage::_impl::$s11BlinkEngage21AppearanceFontNameKeyO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey AppearanceGlobalColorKey::_impl_primary::operator()() const {
+    auto result = AppearanceGlobalColorKey::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceGlobalColorKey::isPrimary() const {
+    return *this == AppearanceGlobalColorKey::primary;
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey AppearanceGlobalColorKey::_impl_secondary::operator()() const {
+    auto result = AppearanceGlobalColorKey::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceGlobalColorKey::isSecondary() const {
+    return *this == AppearanceGlobalColorKey::secondary;
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey AppearanceGlobalColorKey::_impl_success::operator()() const {
+    auto result = AppearanceGlobalColorKey::_make();
+    result._destructiveInjectEnumTag(2);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceGlobalColorKey::isSuccess() const {
+    return *this == AppearanceGlobalColorKey::success;
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey AppearanceGlobalColorKey::_impl_warning::operator()() const {
+    auto result = AppearanceGlobalColorKey::_make();
+    result._destructiveInjectEnumTag(3);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceGlobalColorKey::isWarning() const {
+    return *this == AppearanceGlobalColorKey::warning;
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey AppearanceGlobalColorKey::_impl_error::operator()() const {
+    auto result = AppearanceGlobalColorKey::_make();
+    result._destructiveInjectEnumTag(4);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceGlobalColorKey::isError() const {
+    return *this == AppearanceGlobalColorKey::error;
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey AppearanceGlobalColorKey::_impl_border::operator()() const {
+    auto result = AppearanceGlobalColorKey::_make();
+    result._destructiveInjectEnumTag(5);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceGlobalColorKey::isBorder() const {
+    return *this == AppearanceGlobalColorKey::border;
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey AppearanceGlobalColorKey::_impl_textPrimary::operator()() const {
+    auto result = AppearanceGlobalColorKey::_make();
+    result._destructiveInjectEnumTag(6);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceGlobalColorKey::isTextPrimary() const {
+    return *this == AppearanceGlobalColorKey::textPrimary;
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey AppearanceGlobalColorKey::_impl_textSecondary::operator()() const {
+    auto result = AppearanceGlobalColorKey::_make();
+    result._destructiveInjectEnumTag(7);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceGlobalColorKey::isTextSecondary() const {
+    return *this == AppearanceGlobalColorKey::textSecondary;
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey AppearanceGlobalColorKey::_impl_textAccent::operator()() const {
+    auto result = AppearanceGlobalColorKey::_make();
+    result._destructiveInjectEnumTag(8);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceGlobalColorKey::isTextAccent() const {
+    return *this == AppearanceGlobalColorKey::textAccent;
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey AppearanceGlobalColorKey::_impl_background::operator()() const {
+    auto result = AppearanceGlobalColorKey::_make();
+    result._destructiveInjectEnumTag(9);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceGlobalColorKey::isBackground() const {
+    return *this == AppearanceGlobalColorKey::background;
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey AppearanceGlobalColorKey::_impl_surfaceBackground::operator()() const {
+    auto result = AppearanceGlobalColorKey::_make();
+    result._destructiveInjectEnumTag(10);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceGlobalColorKey::isSurfaceBackground() const {
+    return *this == AppearanceGlobalColorKey::surfaceBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey AppearanceGlobalColorKey::_impl_accentBackground::operator()() const {
+    auto result = AppearanceGlobalColorKey::_make();
+    result._destructiveInjectEnumTag(11);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceGlobalColorKey::isAccentBackground() const {
+    return *this == AppearanceGlobalColorKey::accentBackground;
+  }
+  SWIFT_INLINE_THUNK AppearanceGlobalColorKey AppearanceGlobalColorKey::_impl_backgroundInverse::operator()() const {
+    auto result = AppearanceGlobalColorKey::_make();
+    result._destructiveInjectEnumTag(12);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceGlobalColorKey::isBackgroundInverse() const {
+    return *this == AppearanceGlobalColorKey::backgroundInverse;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<AppearanceGlobalColorKey> AppearanceGlobalColorKey::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<AppearanceGlobalColorKey>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage24AppearanceGlobalColorKeyO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int AppearanceGlobalColorKey::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage24AppearanceGlobalColorKeyO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
   }
   SWIFT_INLINE_THUNK AppearanceIconKey AppearanceIconKey::_impl_offerWallFloatingButtonIcon::operator()() const {
     auto result = AppearanceIconKey::_make();

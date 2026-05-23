@@ -104,7 +104,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 ### Styling (Theme)
 
-Control colors, fonts, and images across the SDK (offer wall, receipt summary, loading screen, error modals, missed earnings, etc.) by implementing the `Theme` protocol and passing your theme when creating `Appearance`:
+Control colors, fonts, and images across the SDK (offer wall, receipt summary, loading screen, error modals, missed earnings, etc.) by implementing the `Theme` protocol and passing your theme when creating `Appearance`.
+
+**Color resolution:** `color(forKey:)` → `color(forGlobalKey:)` (when the key maps to a semantic color role) → SDK built-in default. Per-key colors always override global colors.
 
 ```swift
 class BlinkEngageTheme: NSObject, Theme {
@@ -124,11 +126,30 @@ class BlinkEngageTheme: NSObject, Theme {
         ] as NSDictionary
     }
 
+    func color(forGlobalKey key: AppearanceGlobalColorKey) -> UIColor? {
+        switch key {
+        case .primary:           return UIColor(red: 0, green: 0.38, blue: 0.95, alpha: 1)
+        case .secondary:         return UIColor(red: 0.4, green: 0.2, blue: 0.8, alpha: 1)
+        case .success:           return .systemGreen
+        case .warning:           return .systemOrange
+        case .error:             return .systemRed
+        case .border:            return .separator
+        case .textPrimary:       return .label
+        case .textSecondary:     return .secondaryLabel
+        case .textAccent:        return UIColor(red: 0, green: 0.38, blue: 0.95, alpha: 1)
+        case .background:        return .systemBackground
+        case .surfaceBackground: return .secondarySystemBackground
+        case .accentBackground:  return UIColor(red: 0, green: 0.38, blue: 0.95, alpha: 0.1)
+        case .backgroundInverse: return .label
+        default:                 return nil
+        }
+    }
+
     func color(forKey key: AppearanceColorKey) -> UIColor? {
         switch key {
         case .postScanHeaderBackground: return .systemBlue
         case .offerWallHeaderBackground: return .systemIndigo
-        default: return nil  // Use SDK default for all other keys
+        default: return nil  // Fall through to global roles (when mapped), then SDK defaults
         }
     }
 
@@ -145,8 +166,73 @@ class BlinkEngageTheme: NSObject, Theme {
 BlinkEngageSDK.shared.appearance = Appearance(theme: BlinkEngageTheme())
 ```
 
-- Return `nil` from `color`, `fontName`, or `image` for any key to use the SDK default.
-- Use `AppearanceColorKey`, `AppearanceFontNameKey`, and `AppearanceIconKey` (see SDK headers) for the full list of customizable keys.
+See `AppearanceColorKey`, `AppearanceGlobalColorKey`, `AppearanceFontNameKey`, and `AppearanceIconKey` in the SDK headers for the complete list of customizable keys.
+
+#### Objective-C
+
+Adopt `Theme` from Objective-C the same way: implement `globalFontMatrix`, `colorForGlobalKey:`, `colorForKey:`, `fontNameForKey:`, and `imageForKey:`. Import the generated Swift header (e.g. `#import <BlinkEngage/BlinkEngage-Swift.h>`) for `AppearanceGlobalColorKey` constants.
+
+```objc
+@interface BlinkEngageTheme : NSObject <Theme>
+@end
+
+@implementation BlinkEngageTheme
+
+- (BOOL)isMerchantIconEnabled {
+    return YES;
+}
+
+- (NSDictionary *)globalFontMatrix {
+    return @{
+        @(UIFontWeightRegular): @"Outfit-Regular",
+        @(UIFontWeightMedium): @"Outfit-Medium",
+        @(UIFontWeightSemibold): @"Outfit-SemiBold",
+        @(UIFontWeightBold): @"Outfit-Bold",
+    };
+}
+
+- (UIColor *)colorForGlobalKey:(AppearanceGlobalColorKey)key {
+    switch (key) {
+        case AppearanceGlobalColorKeyPrimary:           return [UIColor colorWithRed:0 green:0.38 blue:0.95 alpha:1];
+        case AppearanceGlobalColorKeySecondary:         return [UIColor colorWithRed:0.4 green:0.2 blue:0.8 alpha:1];
+        case AppearanceGlobalColorKeySuccess:           return UIColor.systemGreenColor;
+        case AppearanceGlobalColorKeyWarning:           return UIColor.systemOrangeColor;
+        case AppearanceGlobalColorKeyError:             return UIColor.systemRedColor;
+        case AppearanceGlobalColorKeyBorder:            return UIColor.separatorColor;
+        case AppearanceGlobalColorKeyTextPrimary:       return UIColor.labelColor;
+        case AppearanceGlobalColorKeyTextSecondary:     return UIColor.secondaryLabelColor;
+        case AppearanceGlobalColorKeyTextAccent:        return [UIColor colorWithRed:0 green:0.38 blue:0.95 alpha:1];
+        case AppearanceGlobalColorKeyBackground:        return UIColor.systemBackgroundColor;
+        case AppearanceGlobalColorKeySurfaceBackground: return UIColor.secondarySystemBackgroundColor;
+        case AppearanceGlobalColorKeyAccentBackground:  return [UIColor colorWithRed:0 green:0.38 blue:0.95 alpha:0.1];
+        case AppearanceGlobalColorKeyBackgroundInverse: return UIColor.labelColor;
+        default:                                        return nil;
+    }
+}
+
+- (UIColor *)colorForKey:(AppearanceColorKey)key {
+    // Use case constants from the generated Swift header (e.g. `AppearanceColorKeyPostScanHeaderBackground`).
+    if (key == AppearanceColorKeyPostScanHeaderBackground) {
+        return UIColor.systemBlueColor;
+    }
+    return nil;
+}
+
+- (NSString *)fontNameForKey:(AppearanceFontNameKey)key {
+    return nil;
+}
+
+- (UIImage *)imageForKey:(AppearanceIconKey)key {
+    return nil;
+}
+
+@end
+```
+
+- Return `nil` from `color(forKey:)` to fall through to global roles (when mapped), then SDK defaults.
+- `color(forGlobalKey:)` / `colorForGlobalKey:` is **optional** — omit the method entirely to skip the global color tier for all keys. Return `nil` from individual cases to skip that role for just those keys.
+- Return `nil` from `fontName(forKey:)` / `fontNameForKey:` or `image(forKey:)` / `imageForKey:` for SDK defaults there.
+- Use `AppearanceColorKey`, `AppearanceGlobalColorKey`, `AppearanceFontNameKey`, and `AppearanceIconKey` (see SDK headers) for the full list of customizable keys.
 - To use default styling, pass `Appearance(theme: nil)` or `Appearance()`.
 
 ### Presenting Offer Wall
