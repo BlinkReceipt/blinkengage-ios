@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+// swift-compiler-version: Apple Swift version 6.2.3 effective-5.10 (swiftlang-6.2.3.3.21 clang-1700.6.3.2)
 // swift-module-flags: -target arm64-apple-ios15.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name BlinkEngage
-// swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1.2
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=swift-6 -interface-compiler-version 6.2.3
 import AVFoundation
 import AdSupport
 import AppTrackingTransparency
@@ -18,7 +18,9 @@ import _SwiftConcurrencyShims
 @_inheritsConvenienceInitializers @objc final public class Appearance : ObjectiveC.NSObject {
   @objc final public let theme: (any BlinkEngage.Theme)?
   @objc override dynamic public init()
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public init(theme: (any BlinkEngage.Theme)?)
+  #endif
   @objc deinit
 }
 @objc public enum AppearanceGlobalColorKey : Swift.Int {
@@ -35,17 +37,15 @@ import _SwiftConcurrencyShims
   case surfaceBackground
   case accentBackground
   case backgroundInverse
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
 }
 @objc public enum AppearanceColorKey : Swift.Int {
-  case offerWallHeaderBackground
-  case offerWallHeaderTitleLabel
-  case offerWallHeaderSubtitleLabel
-  case offerWallHeaderBackButtonIcon
   case offerWallBackground
   case offerWallSectionHeaderLabel
   case offerWallSectionHeaderShowMoreIcon
@@ -166,7 +166,9 @@ import _SwiftConcurrencyShims
   case ugcRetakeButtonBackground
   case ugcSubmitButtonLabel
   case ugcSubmitButtonBackground
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -181,15 +183,26 @@ import _SwiftConcurrencyShims
   case postScanSuccessIcon
   case ugcBarcodeDetectedIcon
   case ugcToastMessageWarningIcon
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum AppearanceTextKey : Swift.Int {
+  case offerWallFloatingButtonExpandedLabel
+  case offerWallFloatingButtonCollapsedLabel
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
 }
 @objc public enum AppearanceFontNameKey : Swift.Int {
-  case offerWallHeaderTitleLabel
-  case offerWallHeaderSubtitleLabel
   case offerWallSectionHeaderLabel
   case offerWallFloatingButtonLabel
   case offerRewardPointsLabel
@@ -254,29 +267,45 @@ import _SwiftConcurrencyShims
   case ugcProductInfoLabel
   case ugcRetakeButtonLabel
   case ugcSubmitButtonLabel
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
 }
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class BlinkEngageSDK : ObjectiveC.NSObject {
-  @objc(startWithDebugMode:) public static func start(debugMode: Swift.Bool)
-  @objc public static var shared: BlinkEngage.BlinkEngageSDK {
-    @objc get
-  }
-  @objc final public let user: BlinkEngage.BlinkEngageUser
-  @objc public var rewardConfig: BlinkEngage.BlinkEngageRewardConfig
-  @_Concurrency.MainActor @objc public var appearance: BlinkEngage.Appearance
-  @objc deinit
-}
 @objc public protocol Theme {
   @objc var isMerchantIconEnabled: Swift.Bool { get }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc var globalFontMatrix: Foundation.NSDictionary? { get }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc optional func color(forGlobalKey key: BlinkEngage.AppearanceGlobalColorKey) -> UIKit.UIColor?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc func color(forKey key: BlinkEngage.AppearanceColorKey) -> UIKit.UIColor?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc func fontName(forKey key: BlinkEngage.AppearanceFontNameKey) -> Swift.String?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc func image(forKey key: BlinkEngage.AppearanceIconKey) -> UIKit.UIImage?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc func text(forKey key: BlinkEngage.AppearanceTextKey) -> Swift.String?
+  #endif
+}
+@objc public enum OfferWallViewType : Swift.Int {
+  case all = 0
+  case clipped = 1
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
 }
 @objc public protocol OffersWallViewControllerDelegate {
   @objc optional func offerWallDidSelectFloatingAction(_ viewController: BlinkEngage.OffersWallViewController)
@@ -296,31 +325,6 @@ import _SwiftConcurrencyShims
 }
 extension BlinkEngage.OffersWallViewController : UIKit.UIAdaptivePresentationControllerDelegate {
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func presentationControllerDidDismiss(_ presentationController: UIKit.UIPresentationController)
-}
-@objc public enum OfferWallViewType : Swift.Int {
-  case all = 0
-  case clipped = 1
-  public init?(rawValue: Swift.Int)
-  public typealias RawValue = Swift.Int
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-@_inheritsConvenienceInitializers @objc public class BlinkEngageUser : ObjectiveC.NSObject {
-  @objc public var emailHash: Swift.String? {
-    @objc get
-    @objc set
-  }
-  @objc public var phoneHash: Swift.String? {
-    @objc get
-    @objc set
-  }
-  @objc public var clientUserId: Swift.String? {
-    @objc get
-    @objc set
-  }
-  @objc override dynamic public init()
-  @objc deinit
 }
 public struct RewardCurrencyImageLocations : Swift.OptionSet, Swift.Sendable {
   public let rawValue: Swift.Int
@@ -344,7 +348,9 @@ public struct RewardCurrencyImageLocations : Swift.OptionSet, Swift.Sendable {
 @objc public enum RewardCurrencyCodePosition : Swift.Int {
   case leading = 0
   case trailing = 1
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -354,7 +360,9 @@ public struct RewardCurrencyImageLocations : Swift.OptionSet, Swift.Sendable {
   case currencyImage = 0
   case currencyCode = 1
   case currencyName = 2
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -364,7 +372,9 @@ public struct RewardCurrencyImageLocations : Swift.OptionSet, Swift.Sendable {
   case currencyName = 0
   case currencyCode = 1
   case noAmount = 2
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -373,7 +383,9 @@ public struct RewardCurrencyImageLocations : Swift.OptionSet, Swift.Sendable {
 @objc public enum RewardCurrencyRounding : Swift.Int {
   case whole = 0
   case decimal = 1
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -391,8 +403,48 @@ public struct RewardCurrencyImageLocations : Swift.OptionSet, Swift.Sendable {
   @objc final public let currencyImage: UIKit.UIImage?
   final public let currencyImageLocations: BlinkEngage.RewardCurrencyImageLocations
   @objc final public let rewardCallback: (_ context: Swift.String, _ rewardAmount: Foundation.NSNumber?, _ blinkReceiptId: Swift.String?) -> Foundation.NSNumber?
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(currencyName: Swift.String = "points", currencyCode: Swift.String? = nil, currencyCodePosition: BlinkEngage.RewardCurrencyCodePosition = .leading, currencyPerDollar: Swift.Double = 100.0, userPayoutPercentage: Swift.Double = 0.6, currencyImage: UIKit.UIImage? = nil, currencyImageLocations: BlinkEngage.RewardCurrencyImageLocations = .all, rewardCurrencyLabelStyle: BlinkEngage.RewardCurrencyLabelStyle = .currencyImage, rewardCurrencyMessagingTextStyle: BlinkEngage.RewardCurrencyMessagingTextStyle = .currencyName, rewardRounding: BlinkEngage.RewardCurrencyRounding = .whole, rewardCallback: @escaping (_ context: Swift.String, _ rewardAmount: Foundation.NSNumber?, _ blinkReceiptId: Swift.String?) -> Foundation.NSNumber?)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc convenience public init(currencyName: Swift.String, currencyCode: Swift.String?, currencyCodePosition: BlinkEngage.RewardCurrencyCodePosition, currencyPerDollar: Swift.Double, userPayoutPercentage: Swift.Double, currencyImage: UIKit.UIImage?, currencyImageLocations: Swift.Int, rewardLabelStyle: BlinkEngage.RewardCurrencyLabelStyle, messagingTextStyle: BlinkEngage.RewardCurrencyMessagingTextStyle, rewardRounding: BlinkEngage.RewardCurrencyRounding, rewardCallback: @escaping (_ context: Swift.String, _ rewardAmount: Foundation.NSNumber?, _ blinkReceiptId: Swift.String?) -> Foundation.NSNumber?)
+  #endif
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class BlinkEngageSDK : ObjectiveC.NSObject {
+  @objc(startWithDebugMode:) public static func start(debugMode: Swift.Bool)
+  @objc public static var shared: BlinkEngage.BlinkEngageSDK {
+    @objc get
+  }
+  @objc final public let user: BlinkEngage.BlinkEngageUser
+  @objc public var rewardConfig: BlinkEngage.BlinkEngageRewardConfig
+  @_Concurrency.MainActor @objc public var appearance: BlinkEngage.Appearance
+  @objc public var eventCallback: ((_ eventName: Swift.String, _ metadata: [Swift.String : Any]?) -> Swift.Void)?
+  @objc deinit
+}
+extension BlinkEngage.BlinkEngageSDK {
+  @objc public static let eventScanSessionStarted: Swift.String
+  @objc public static let eventAdLoadingStarted: Swift.String
+  @objc public static let eventPostScanViewed: Swift.String
+  @objc public static let eventOfferWallViewed: Swift.String
+  @objc public static let eventOfferDetailViewed: Swift.String
+  @objc public static let eventOfferClipped: Swift.String
+  @objc public static let eventMetadataOfferTitle: Swift.String
+}
+@_inheritsConvenienceInitializers @objc public class BlinkEngageUser : ObjectiveC.NSObject {
+  @objc public var emailHash: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc public var phoneHash: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc public var clientUserId: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public init()
   @objc deinit
 }
 extension BlinkEngage.AppearanceGlobalColorKey : Swift.Equatable {}
@@ -404,6 +456,9 @@ extension BlinkEngage.AppearanceColorKey : Swift.RawRepresentable {}
 extension BlinkEngage.AppearanceIconKey : Swift.Equatable {}
 extension BlinkEngage.AppearanceIconKey : Swift.Hashable {}
 extension BlinkEngage.AppearanceIconKey : Swift.RawRepresentable {}
+extension BlinkEngage.AppearanceTextKey : Swift.Equatable {}
+extension BlinkEngage.AppearanceTextKey : Swift.Hashable {}
+extension BlinkEngage.AppearanceTextKey : Swift.RawRepresentable {}
 extension BlinkEngage.AppearanceFontNameKey : Swift.Equatable {}
 extension BlinkEngage.AppearanceFontNameKey : Swift.Hashable {}
 extension BlinkEngage.AppearanceFontNameKey : Swift.RawRepresentable {}

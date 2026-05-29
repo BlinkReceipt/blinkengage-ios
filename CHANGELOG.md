@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.7.0
+
+### Added
+- **Client event callback** — Optional callback for host-app analytics covering scan start, ad loading, receipt summary, offer wall (all offers), offer detail, and offer clipped.
+- **Appearance text overrides** — New `AppearanceTextKey` enum and `Theme.text(forKey:)` let host apps customize on-screen labels and button titles. Initial keys: offer wall floating action button expanded (`"Scan Receipt"` default) and collapsed (`"Scan"` default).
+
+### Changed
+- **Offer wall filtered lists** — Removed the SDK's built-in header from store- and carousel-group offer lists. The selected store or group name is shown in the navigation bar instead; push these screens from the same navigation stack as the offer wall so your host navigation bar styling applies there as well.
+
+### Breaking changes
+- **`Theme` text method** — Implement `text(forKey:)` on your `Theme` type and return `nil` for keys you do not customize.
+- **Removed offer-list header theme keys** — `offerWallHeaderBackground`, `offerWallHeaderTitleLabel`, `offerWallHeaderSubtitleLabel`, `offerWallHeaderBackButtonIcon`, and the header title/subtitle font keys. Remove these from your `Theme` if present.
+
 ## 1.6.0
 - **Global color palette:** Implement the new optional `color(forGlobalKey:)` method on `Theme` to define a small semantic palette that the SDK applies across all screens — without overriding every individual `AppearanceColorKey`. Available roles: `primary`, `secondary`, `success`, `warning`, `error`, `border`, `textPrimary`, `textSecondary`, `textAccent`, `background`, `surfaceBackground`, `accentBackground`, `backgroundInverse`.
 - **Hard currency boost deferral:** For apps operating in hard currency mode, Google rewarded boost credits are now deferred to comply with Google's rewarded ad policy. Your `BlinkEngageRewardConfig` reward callback may receive two new context strings:

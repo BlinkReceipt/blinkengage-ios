@@ -19,7 +19,7 @@ This framework extends the [BlinkReceipt SDK](https://github.com/BlinkReceipt/bl
 
 ### CocoaPods
 ```ruby
-pod 'BlinkEngage', '~> 1.4.0'
+pod 'BlinkEngage', '~> 1.7.0'
 ```
 Then run: `pod install`
 
@@ -33,12 +33,12 @@ import BlinkReceipt
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        // Call before any BRScanManager.shared() calls
+        BlinkEngageSDK.start(debugMode: false)
+
         // Configure BlinkReceipt SDK (required for scanning experience). If you don't have BOTH of these keys, talk to your Account Management team.
         BRScanManager.shared().licenseKey = "YOUR-BLINKRECEIPT-LICENSE-KEY"
         BRScanManager.shared().prodIntelKey = "YOUR-BLINKRECEIPT-PRODINTEL-KEY"
-
-        // Enable BlinkEngage integration in BlinkReceipt
-        BRScanManager.shared().enableBlinkEngage = true
         
         
         // Configure BlinkEngage SDK
@@ -74,16 +74,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Styling: pass a custom Theme (e.g. BlinkEngageTheme from [Styling (Theme)](#styling-theme) below).
         BlinkEngageSDK.shared.appearance = Appearance(theme: BlinkEngageTheme())
-        
-        // Optional: Enable debug mode for development (shows test ad units)
-        BlinkEngageSDK.shared.debugModeEnabled = false
+
+        // Optional: forward SDK events to your analytics (separate from reward callbacks)
+        BlinkEngageSDK.shared.eventCallback = { eventName, metadata in
+            MyAnalytics.track(eventName, properties: metadata)
+        }
         
         // Set up reward callback
         // Depending on `context`, this callback will either solicit a reward amount from the host app, which it should return as an `NSNumber`, or it will inform the host app, via the `rewardAmount` parameter, of an amount (in host app currency) that BlinkEngage awarded to the user
-        BlinkEngageSDK.shared.rewardCallback = { context, scanResults, rewardAmount, blinkReceiptId in
+        BlinkEngageSDK.shared.rewardCallback = { context, rewardAmount, blinkReceiptId in
             switch context {
             case "ScanFinished":
-                return NSNumber(value: 10.0) // Base reward for scan completion; use scanResults if amount varies.
+                return NSNumber(value: 10.0) // Base reward for scan completion
             case "Promo":
                 print("User earned \(rewardAmount?.doubleValue ?? 0) points from promo (receipt: \(blinkReceiptId ?? "nil"))")
                 return nil
@@ -148,7 +150,7 @@ class BlinkEngageTheme: NSObject, Theme {
     func color(forKey key: AppearanceColorKey) -> UIColor? {
         switch key {
         case .postScanHeaderBackground: return .systemBlue
-        case .offerWallHeaderBackground: return .systemIndigo
+        case .offerWallFloatingButtonBackground: return .systemIndigo
         default: return nil  // Fall through to global roles (when mapped), then SDK defaults
         }
     }
@@ -170,7 +172,7 @@ See `AppearanceColorKey`, `AppearanceGlobalColorKey`, `AppearanceFontNameKey`, a
 
 #### Objective-C
 
-Adopt `Theme` from Objective-C the same way: implement `globalFontMatrix`, `colorForGlobalKey:`, `colorForKey:`, `fontNameForKey:`, and `imageForKey:`. Import the generated Swift header (e.g. `#import <BlinkEngage/BlinkEngage-Swift.h>`) for `AppearanceGlobalColorKey` constants.
+Adopt `Theme` from Objective-C the same way: implement `globalFontMatrix`, `colorForGlobalKey:`, `colorForKey:`, `fontNameForKey:`, `imageForKey:`, and `textForKey:`. Import the generated Swift header (e.g. `#import <BlinkEngage/BlinkEngage-Swift.h>`) for `AppearanceGlobalColorKey` constants.
 
 ```objc
 @interface BlinkEngageTheme : NSObject <Theme>
@@ -226,39 +228,72 @@ Adopt `Theme` from Objective-C the same way: implement `globalFontMatrix`, `colo
     return nil;
 }
 
+- (NSString *)textForKey:(AppearanceTextKey)key {
+    return nil;
+}
+
 @end
 ```
 
 - Return `nil` from `color(forKey:)` to fall through to global roles (when mapped), then SDK defaults.
 - `color(forGlobalKey:)` / `colorForGlobalKey:` is **optional** — omit the method entirely to skip the global color tier for all keys. Return `nil` from individual cases to skip that role for just those keys.
-- Return `nil` from `fontName(forKey:)` / `fontNameForKey:` or `image(forKey:)` / `imageForKey:` for SDK defaults there.
-- Use `AppearanceColorKey`, `AppearanceGlobalColorKey`, `AppearanceFontNameKey`, and `AppearanceIconKey` (see SDK headers) for the full list of customizable keys.
+- Return `nil` from `fontName(forKey:)` / `fontNameForKey:`, `image(forKey:)` / `imageForKey:`, or `text(forKey:)` / `textForKey:` for SDK defaults there.
+- Use `AppearanceColorKey`, `AppearanceGlobalColorKey`, `AppearanceFontNameKey`, `AppearanceIconKey`, and `AppearanceTextKey` (see SDK headers) for the full list of customizable keys.
 - To use default styling, pass `Appearance(theme: nil)` or `Appearance()`.
 
 ### Presenting Offer Wall
-```swift
-class YourViewController: UIViewController {
-    
-    func displayOfferWall() {
-        // Show all offers (default), or use .clipped to show only offers the user has clipped
-        let offerWallViewController = OffersWallViewController(offerWallViewType: .all)
-        offerWallViewController.delegate = self
-        present(offerWallViewController, animated: true)
-    }
-}
 
-extension YourViewController: OffersWallViewControllerDelegate {
-    // We’ll present a floating “Scan Receipt” action button and this callback will be triggered if the user clicks it.
+Wrap ``OffersWallViewController`` in a `UINavigationController` before
+presenting it. Store tiles and carousel "Show more" actions push filtered offer
+lists that rely on the navigation bar for their title. Style the navigation bar
+with your brand colors, set a root title, add a close button, and present the
+navigation controller full screen.
+
+```swift
+class YourViewController: UIViewController, OffersWallViewControllerDelegate {
+
+    private let navigationBarColor = UIColor(named: "BrandPrimary") ?? .systemBlue
+
+    func presentOfferWall(offerWallViewType: OfferWallViewType = .all, title: String = "Offers") {
+        let offerWall = OffersWallViewController(offerWallViewType: offerWallViewType)
+        offerWall.delegate = self
+        offerWall.title = title
+        offerWall.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .close,
+            target: self,
+            action: #selector(dismissOfferWall)
+        )
+
+        let navigationController = UINavigationController(rootViewController: offerWall)
+        configureHostNavigationBar(navigationController)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
+    }
+
+    @objc private func dismissOfferWall() {
+        dismiss(animated: true)
+    }
+
+    private func configureHostNavigationBar(_ navigationController: UINavigationController) {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = navigationBarColor
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationController.navigationBar.standardAppearance = appearance
+        navigationController.navigationBar.scrollEdgeAppearance = appearance
+        navigationController.navigationBar.tintColor = .white
+    }
+
     func offerWallDidSelectFloatingAction(_ viewController: OffersWallViewController) {
-        // Handle floating action button tap
+        dismiss(animated: true) {
+            // Start receipt scan from your host flow.
+        }
     }
-    
-    // A floating help icon will be presented to the user at X, Y and Z points in the journey
+
     func offerWallShouldDisplayFloatingAction(_ viewController: OffersWallViewController) -> Bool {
-        return true // or false to hide floating action
+        true
     }
-    
-    // Called when the offer list loads or when the user clips/unclips an offer. Use the count to update a badge or other UI.
+
     func offerWall(_ viewController: OffersWallViewController, didUpdateClippedOffersCount count: Int) {
         tabBarItem.badgeValue = count > 0 ? "\(count)" : nil
     }
@@ -279,19 +314,66 @@ func offerWall(_ viewController: OffersWallViewController, didUpdateClippedOffer
 - **`.all`** — Show all offers (default).
 - **`.clipped`** — Show only offers the user has clipped.
 
-**All offers (default):**
 ```swift
-let offerWall = OffersWallViewController(offerWallViewType: .all)
-offerWall.delegate = self
-present(offerWall, animated: true)
+func presentAllOffers() {
+    let offerWall = OffersWallViewController(offerWallViewType: .all)
+    offerWall.delegate = self
+    offerWall.title = "Offers"
+    offerWall.navigationItem.leftBarButtonItem = UIBarButtonItem(
+        barButtonSystemItem: .close,
+        target: self,
+        action: #selector(dismissOfferWall)
+    )
+    let nav = UINavigationController(rootViewController: offerWall)
+    configureHostNavigationBar(nav)
+    nav.modalPresentationStyle = .fullScreen
+    present(nav, animated: true)
+}
+
+func presentClippedOffers() {
+    let clippedWall = OffersWallViewController(offerWallViewType: .clipped)
+    clippedWall.delegate = self
+    clippedWall.title = "Saved Offers"
+    clippedWall.navigationItem.leftBarButtonItem = UIBarButtonItem(
+        barButtonSystemItem: .close,
+        target: self,
+        action: #selector(dismissOfferWall)
+    )
+    let nav = UINavigationController(rootViewController: clippedWall)
+    configureHostNavigationBar(nav)
+    nav.modalPresentationStyle = .fullScreen
+    present(nav, animated: true)
+}
+
+@objc private func dismissOfferWall() {
+    dismiss(animated: true)
+}
+
+private func configureHostNavigationBar(_ navigationController: UINavigationController) {
+    let appearance = UINavigationBarAppearance()
+    appearance.configureWithOpaqueBackground()
+    appearance.backgroundColor = UIColor(named: "BrandPrimary") ?? .systemBlue
+    appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+    navigationController.navigationBar.standardAppearance = appearance
+    navigationController.navigationBar.scrollEdgeAppearance = appearance
+    navigationController.navigationBar.tintColor = .white
+}
 ```
 
-**Clipped offers only:**
-```swift
-let clippedWall = OffersWallViewController(offerWallViewType: .clipped)
-clippedWall.delegate = self
-present(clippedWall, animated: true)
-```
+### Client events (analytics)
+
+Assign `BlinkEngageSDK.shared.eventCallback` to receive SDK event names. This is separate from `BlinkEngageRewardConfig` reward callbacks and from the SDK's internal analytics.
+
+| Event name | When it fires | Metadata |
+|---|---|---|
+| `scan_session_started` | A BlinkReceipt scan session begins. | — |
+| `ad_loading_started` | The ad loading screen is shown while the receipt is processed. | — |
+| `post_scan_viewed` | The post-scan screen is shown after a successful scan. | — |
+| `offer_wall_viewed` | The all-offers wall is shown (`OfferWallViewType.all` only). | — |
+| `offer_detail_viewed` | An offer detail screen is opened (once per unique offer per app session). | `offer_title` |
+| `offer_clipped` | The user successfully clips an offer. | `offer_title` |
+
+Swift and Objective-C constants are available on `BlinkEngageSDK` (for example `BlinkEngageSDK.eventOfferWallViewed`). See the [Client Events](https://blinkreceipt.github.io/blinkengage-ios/documentation/blinkengage/clientevents) documentation for details.
 
 ### Receipt Scanning Flow
 ```swift
@@ -300,7 +382,8 @@ class YourViewController: UIViewController {
     
     func scanReceipt() {
         let scanOptions = BRScanOptions()
-        
+        scanOptions.enableBlinkEngage = true
+
         BRScanManager.shared().startStaticCamera(
             from: self,
             cameraType: .standard,
