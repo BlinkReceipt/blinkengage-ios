@@ -281,6 +281,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import CoreFoundation;
 @import Foundation;
 @import ObjectiveC;
 @import UIKit;
@@ -516,70 +517,72 @@ typedef SWIFT_ENUM(NSInteger, AppearanceColorKey, open) {
   AppearanceColorKeyMissedEarningsNavigationTitleLabel = 86,
 /// “Edit this receipt if any details are off” subtitle.
   AppearanceColorKeyMissedEarningsNavigationDescriptionLabel = 87,
+/// Title, subtitle, and back-button tint when shown in the host navigation bar (reopened receipts).
+  AppearanceColorKeyMissedEarningsNavigationBarText = 88,
 /// Pen icon tint on the header edit button.
-  AppearanceColorKeyMissedEarningsNavigationEditButtonIcon = 88,
+  AppearanceColorKeyMissedEarningsNavigationEditButtonIcon = 89,
 /// Circle behind the header edit icon.
-  AppearanceColorKeyMissedEarningsNavigationEditButtonBackground = 89,
+  AppearanceColorKeyMissedEarningsNavigationEditButtonBackground = 90,
 /// Checkmark icon tint on the header save button.
-  AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon = 90,
+  AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon = 91,
 /// Circle behind the header save icon.
-  AppearanceColorKeyMissedEarningsNavigationSaveButtonBackground = 91,
+  AppearanceColorKeyMissedEarningsNavigationSaveButtonBackground = 92,
 /// Small pen icon on each editable field row.
-  AppearanceColorKeyMissedEarningsFieldEditIcon = 92,
+  AppearanceColorKeyMissedEarningsFieldEditIcon = 93,
 /// “Add new field” control text and icon tint.
-  AppearanceColorKeyMissedEarningsAddNewFieldLabel = 93,
+  AppearanceColorKeyMissedEarningsAddNewFieldLabel = 94,
 /// Highlight background on rows the user has changed.
-  AppearanceColorKeyMissedEarningsModifiedFieldBackground = 94,
+  AppearanceColorKeyMissedEarningsModifiedFieldBackground = 95,
 /// Group labels (“Merchant”, “Date”, “Products”).
-  AppearanceColorKeyMissedEarningsListSectionTitleLabel = 95,
+  AppearanceColorKeyMissedEarningsListSectionTitleLabel = 96,
 /// Value text in the merchant name and date rows.
-  AppearanceColorKeyMissedEarningsTripItemLabel = 96,
+  AppearanceColorKeyMissedEarningsTripItemLabel = 97,
 /// Edit modal headline (e.g. “Merchant Name”, “Receipt Date”).
-  AppearanceColorKeyMissedEarningsEditModalTitleLabel = 97,
+  AppearanceColorKeyMissedEarningsEditModalTitleLabel = 98,
 /// Instruction line below the edit modal title.
-  AppearanceColorKeyMissedEarningsEditModalSubtitleLabel = 98,
+  AppearanceColorKeyMissedEarningsEditModalSubtitleLabel = 99,
 /// Caption above a text field (e.g. “Captured Merchant Name”).
-  AppearanceColorKeyMissedEarningsEditModalInputLabel = 99,
+  AppearanceColorKeyMissedEarningsEditModalInputLabel = 100,
 /// Dimmed hint inside empty text fields.
-  AppearanceColorKeyMissedEarningsEditModalInputPlaceholderLabel = 100,
+  AppearanceColorKeyMissedEarningsEditModalInputPlaceholderLabel = 101,
 /// Typed value and helper captions in the edit form.
-  AppearanceColorKeyMissedEarningsEditModalInputValueLabel = 101,
+  AppearanceColorKeyMissedEarningsEditModalInputValueLabel = 102,
 /// Cancel button text in the edit modal footer.
-  AppearanceColorKeyMissedEarningsEditModalCancelButtonLabel = 102,
+  AppearanceColorKeyMissedEarningsEditModalCancelButtonLabel = 103,
 /// Save button text in the edit modal footer.
-  AppearanceColorKeyMissedEarningsEditModalSaveButtonLabel = 103,
+  AppearanceColorKeyMissedEarningsEditModalSaveButtonLabel = 104,
 /// Filled background of the modal save button.
-  AppearanceColorKeyMissedEarningsEditModalSaveButtonBackground = 104,
+  AppearanceColorKeyMissedEarningsEditModalSaveButtonBackground = 105,
 /// Edit modal card container background.
-  AppearanceColorKeyMissedEarningsEditModalBackground = 105,
+  AppearanceColorKeyMissedEarningsEditModalBackground = 106,
 /// Selected-date highlight on the date picker.
-  AppearanceColorKeyMissedEarningsEditModalDatePicker = 106,
+  AppearanceColorKeyMissedEarningsEditModalDatePicker = 107,
 /// Alert headline (e.g. “No updates made”).
-  AppearanceColorKeyMissedEarningsAlertTitleLabel = 107,
+  AppearanceColorKeyMissedEarningsAlertTitleLabel = 108,
 /// Alert body text.
-  AppearanceColorKeyMissedEarningsAlertMessageLabel = 108,
+  AppearanceColorKeyMissedEarningsAlertMessageLabel = 109,
 /// 4 pt stroke around the barcode detection region.
-  AppearanceColorKeyUgcBarcodeDetectedBorder = 109,
+  AppearanceColorKeyUgcBarcodeDetectedBorder = 110,
 /// Icon tint shown on barcode detection.
-  AppearanceColorKeyUgcBarcodeDetectedIcon = 110,
+  AppearanceColorKeyUgcBarcodeDetectedIcon = 111,
 /// Close / torch button icon tint in the header.
-  AppearanceColorKeyUgcNavigationButtonIcon = 111,
+  AppearanceColorKeyUgcNavigationButtonIcon = 112,
 /// Circle behind each header control button.
-  AppearanceColorKeyUgcNavigationButtonBackground = 112,
+  AppearanceColorKeyUgcNavigationButtonBackground = 113,
 /// Product info pill background (product name + UPC).
-  AppearanceColorKeyUgcProductInfoBackground = 113,
+  AppearanceColorKeyUgcProductInfoBackground = 114,
 /// Text and icon tint inside the product info pill.
-  AppearanceColorKeyUgcProductInfoLabel = 114,
+  AppearanceColorKeyUgcProductInfoLabel = 115,
 /// Warning icon in the instructional toast.
-  AppearanceColorKeyUgcToastMessageWarningIcon = 115,
+  AppearanceColorKeyUgcToastMessageWarningIcon = 116,
 /// “Retake” button text in the capture footer.
-  AppearanceColorKeyUgcRetakeButtonLabel = 116,
+  AppearanceColorKeyUgcRetakeButtonLabel = 117,
 /// “Retake” button background.
-  AppearanceColorKeyUgcRetakeButtonBackground = 117,
+  AppearanceColorKeyUgcRetakeButtonBackground = 118,
 /// “Submit” button text in the capture footer.
-  AppearanceColorKeyUgcSubmitButtonLabel = 118,
+  AppearanceColorKeyUgcSubmitButtonLabel = 119,
 /// “Submit” button background.
-  AppearanceColorKeyUgcSubmitButtonBackground = 119,
+  AppearanceColorKeyUgcSubmitButtonBackground = 120,
 };
 
 /// Identifiers for every font name the SDK can resolve from your <code>Theme</code>.
@@ -951,49 +954,7 @@ SWIFT_CLASS("_TtC11BlinkEngage23BlinkEngageRewardConfig")
 /// seealso:
 /// <code>currencyImageLocations</code>
 @property (nonatomic, readonly, strong) UIImage * _Nullable currencyImage;
-/// Closure invoked each time the user earns a reward.
-/// <em>Required</em> — no default value. The host app must always provide this closure.
-/// <ul>
-///   <li>
-///     <code>context</code>: One of <code>"ScanFinished"</code>, <code>"Promo"</code>, <code>"Boost"</code>, <code>"BarcodeCollection"</code>,
-///     <code>"BoostCreditEarned"</code>, or <code>"BoostCreditApplied"</code>.
-///   </li>
-///   <li>
-///     <code>rewardAmount</code>: Amount earned, or <code>nil</code> for <code>"ScanFinished"</code>.
-///   </li>
-///   <li>
-///     <code>blinkReceiptId</code>: The receipt identifier from BlinkReceipt
-///     (<code>BRScanResults.blinkReceiptId</code>), or <code>nil</code> when unavailable.
-///   </li>
-/// </ul>
-/// Return an <code>NSNumber</code> for <code>"ScanFinished"</code> (the scan reward the host
-/// app awards). Return <code>nil</code> for all other contexts.
-/// <blockquote>
-/// Important: The return value for <code>"ScanFinished"</code> is used as-is in
-/// reward currency units and is <em>not</em> passed through <code>rewardRounding</code>.
-/// When <code>rewardRounding</code> is <code>.whole</code>, return a whole-number value
-/// (e.g. <code>NSNumber(value: 10)</code>) to keep the display consistent.
-/// Fractional values are valid only when <code>rewardRounding</code> is <code>.decimal</code>.
-///
-/// </blockquote>
-/// \code
-/// let config = BlinkEngageRewardConfig(
-///     rewardCallback: { context, amount, blinkReceiptId in
-///         switch context {
-///         case "ScanFinished":
-///             return NSNumber(value: 10)
-///         default:
-///             return nil
-///         }
-///     }
-/// )
-///
-/// \endcode
 @property (nonatomic, readonly, copy) NSNumber * _Nullable (^ _Nonnull rewardCallback)(NSString * _Nonnull, NSNumber * _Nullable, NSString * _Nullable);
-/// Objective-C initializer.
-/// Pass <code>currencyImageLocations</code> as a bitwise OR of the
-/// <code>imageLocation…</code> class constants (e.g.
-/// <code>BlinkEngageRewardConfig.imageLocationOfferCell | BlinkEngageRewardConfig.imageLocationReceiptBoost</code>).
 - (nonnull instancetype)initWithCurrencyName:(NSString * _Nonnull)currencyName currencyCode:(NSString * _Nullable)currencyCode currencyCodePosition:(enum RewardCurrencyCodePosition)currencyCodePosition currencyPerDollar:(double)currencyPerDollar userPayoutPercentage:(double)userPayoutPercentage currencyImage:(UIImage * _Nullable)currencyImage currencyImageLocations:(NSInteger)currencyImageLocations rewardLabelStyle:(enum RewardCurrencyLabelStyle)rewardLabelStyle messagingTextStyle:(enum RewardCurrencyMessagingTextStyle)messagingTextStyle rewardRounding:(enum RewardCurrencyRounding)rewardRounding rewardCallback:(NSNumber * _Nullable (^ _Nonnull)(NSString * _Nonnull, NSNumber * _Nullable, NSString * _Nullable))rewardCallback;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
@@ -1040,12 +1001,6 @@ SWIFT_CLASS("_TtC11BlinkEngage14BlinkEngageSDK")
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BlinkEngageSDK * _Nonnull shared;)
 + (BlinkEngageSDK * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly, strong) BlinkEngageUser * _Nonnull user;
-/// Currency styling is applied when SDK views are loaded.
-/// Changing this property does not refresh views that are already on screen.
-/// <blockquote>
-/// Important: Assign new values <em>on the main thread</em> before presenting any SDK UI.
-///
-/// </blockquote>
 @property (nonatomic, strong) BlinkEngageRewardConfig * _Nonnull rewardConfig;
 @property (nonatomic, strong) Appearance * _Nonnull appearance;
 /// Called when an SDK event occurs.
@@ -1076,6 +1031,29 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BlinkEngageS
 @property (nonatomic, copy) void (^ _Nullable eventCallback)(NSString * _Nonnull, NSDictionary<NSString *, id> * _Nullable);
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@class ReceiptDetailsViewController;
+@class NSError;
+@interface BlinkEngageSDK (SWIFT_EXTENSION(BlinkEngage))
+/// Returns a view controller that shows receipt details for a previously completed scan.
+/// Use this when the user opens a receipt from history or another entry point outside the
+/// live scan flow. The host app presents the returned <code>ReceiptDetailsViewController</code> and
+/// assigns <code>ReceiptDetailsViewController/onClose</code> to dismiss it when the user taps <em>Continue</em>.
+/// note:
+/// Errors use the <code>BlinkEngageReceiptSummary</code> domain.
+/// important:
+/// The current user must be registered with the SDK, same as for a live scan.
+/// note:
+/// From Objective-C, use <code>loadReceiptDetailsForBlinkReceiptId:completion:</code>.
+/// \param blinkReceiptId The receipt identifier delivered to your
+/// <code>BlinkEngageRewardConfig</code> reward callback.
+///
+/// \param completion Called on the main queue when loading finishes.
+/// On success, the view controller is non-<code>nil</code> and <code>error</code> is <code>nil</code>.
+/// On failure, the view controller is <code>nil</code> and <code>error</code> describes the reason.
+///
+- (void)loadReceiptDetailsForBlinkReceiptId:(NSString * _Nonnull)blinkReceiptId completion:(void (^ _Nonnull)(ReceiptDetailsViewController * _Nullable, NSError * _Nullable))completion;
 @end
 
 @interface BlinkEngageSDK (SWIFT_EXTENSION(BlinkEngage))
@@ -1150,6 +1128,44 @@ SWIFT_PROTOCOL("_TtP11BlinkEngage32OffersWallViewControllerDelegate_")
 - (void)offerWallDidSelectFloatingAction:(OffersWallViewController * _Nonnull)viewController;
 - (BOOL)offerWallShouldDisplayFloatingAction:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
 - (void)offerWall:(OffersWallViewController * _Nonnull)viewController didUpdateClippedOffersCount:(NSInteger)count;
+@end
+
+/// A view controller that displays the details of a previously completed receipt scan.
+/// The screen reconstructs the receipt summary from the data captured during the original scan.
+/// Use it to let users revisit a receipt from history or any entry point outside the live scan flow.
+/// Instances are created exclusively by the SDK. Obtain one through
+/// <code>BlinkEngageSDK/loadReceiptDetails(forBlinkReceiptId:completion:)</code>, then present it and assign
+/// <code>onClose</code> to dismiss it when the user taps <em>Continue</em>. Initializing this view controller
+/// directly is not supported.
+SWIFT_CLASS_NAMED("ReceiptDetailsViewController")
+@interface ReceiptDetailsViewController : UIViewController
+/// A closure invoked when the user taps the <em>Continue</em> button.
+/// Assign this to dismiss the view controller, for example by calling <code>dismiss(animated:)</code>
+/// on the presenting view controller or popping it from a navigation stack. If left <code>nil</code>,
+/// tapping <em>Continue</em> has no effect.
+@property (nonatomic, copy) void (^ _Nullable onClose)(void);
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER SWIFT_UNAVAILABLE_MSG("Use BlinkEngageSDK.loadReceiptDetails(forBlinkReceiptId:completion:).");
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER SWIFT_UNAVAILABLE_MSG("Use BlinkEngageSDK.loadReceiptDetails(forBlinkReceiptId:completion:).");
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
+@property (nonatomic, readonly) UIInterfaceOrientationMask supportedInterfaceOrientations;
+@property (nonatomic, readonly) UIInterfaceOrientation preferredInterfaceOrientationForPresentation;
+@property (nonatomic, readonly) BOOL shouldAutorotate;
+- (void)viewDidLoad;
+- (void)viewDidLayoutSubviews;
+@end
+
+@class UITableView;
+@class NSIndexPath;
+@class UITableViewCell;
+@class UIView;
+@interface ReceiptDetailsViewController (SWIFT_EXTENSION(BlinkEngage)) <UITableViewDataSource, UITableViewDelegate>
+- (NSInteger)numberOfSectionsInTableView:(UITableView * _Nonnull)tableView SWIFT_WARN_UNUSED_RESULT;
+- (NSInteger)tableView:(UITableView * _Nonnull)tableView numberOfRowsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
+- (UITableViewCell * _Nonnull)tableView:(UITableView * _Nonnull)tableView cellForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
+- (UIView * _Nullable)tableView:(UITableView * _Nonnull)tableView viewForHeaderInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
+- (CGFloat)tableView:(UITableView * _Nonnull)tableView heightForHeaderInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
+- (CGFloat)tableView:(UITableView * _Nonnull)tableView heightForFooterInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
+- (UIView * _Nullable)tableView:(UITableView * _Nonnull)tableView viewForFooterInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
 @end
 
 /// Controls where <code>BlinkEngageRewardConfig/currencyCode</code> appears relative to the numeric amount.
@@ -5377,6 +5393,7 @@ public:
     purchaseRowMetadataLabelColor SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPurchaseRowMetadataLabelColor"),
     missedEarningsNavigationTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationTitleLabel"),
     missedEarningsNavigationDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationDescriptionLabel"),
+    missedEarningsNavigationBarText SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationBarText"),
     missedEarningsNavigationEditButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationEditButtonIcon"),
     missedEarningsNavigationEditButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationEditButtonBackground"),
     missedEarningsNavigationSaveButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon"),
@@ -6117,6 +6134,14 @@ public:
   } missedEarningsNavigationDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationDescriptionLabel");
   SWIFT_INLINE_THUNK bool isMissedEarningsNavigationDescriptionLabel() const;
 
+  inline const static struct _impl_missedEarningsNavigationBarText {  // impl struct for case missedEarningsNavigationBarText
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationBarText;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsNavigationBarText SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationBarText");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationBarText() const;
+
   inline const static struct _impl_missedEarningsNavigationEditButtonIcon {  // impl struct for case missedEarningsNavigationEditButtonIcon
     SWIFT_INLINE_THUNK constexpr operator cases() const {
       return cases::missedEarningsNavigationEditButtonIcon;
@@ -6464,38 +6489,39 @@ public:
       case 85: return cases::purchaseRowMetadataLabelColor;
       case 86: return cases::missedEarningsNavigationTitleLabel;
       case 87: return cases::missedEarningsNavigationDescriptionLabel;
-      case 88: return cases::missedEarningsNavigationEditButtonIcon;
-      case 89: return cases::missedEarningsNavigationEditButtonBackground;
-      case 90: return cases::missedEarningsNavigationSaveButtonIcon;
-      case 91: return cases::missedEarningsNavigationSaveButtonBackground;
-      case 92: return cases::missedEarningsFieldEditIcon;
-      case 93: return cases::missedEarningsAddNewFieldLabel;
-      case 94: return cases::missedEarningsModifiedFieldBackground;
-      case 95: return cases::missedEarningsListSectionTitleLabel;
-      case 96: return cases::missedEarningsTripItemLabel;
-      case 97: return cases::missedEarningsEditModalTitleLabel;
-      case 98: return cases::missedEarningsEditModalSubtitleLabel;
-      case 99: return cases::missedEarningsEditModalInputLabel;
-      case 100: return cases::missedEarningsEditModalInputPlaceholderLabel;
-      case 101: return cases::missedEarningsEditModalInputValueLabel;
-      case 102: return cases::missedEarningsEditModalCancelButtonLabel;
-      case 103: return cases::missedEarningsEditModalSaveButtonLabel;
-      case 104: return cases::missedEarningsEditModalSaveButtonBackground;
-      case 105: return cases::missedEarningsEditModalBackground;
-      case 106: return cases::missedEarningsEditModalDatePicker;
-      case 107: return cases::missedEarningsAlertTitleLabel;
-      case 108: return cases::missedEarningsAlertMessageLabel;
-      case 109: return cases::ugcBarcodeDetectedBorder;
-      case 110: return cases::ugcBarcodeDetectedIcon;
-      case 111: return cases::ugcNavigationButtonIcon;
-      case 112: return cases::ugcNavigationButtonBackground;
-      case 113: return cases::ugcProductInfoBackground;
-      case 114: return cases::ugcProductInfoLabel;
-      case 115: return cases::ugcToastMessageWarningIcon;
-      case 116: return cases::ugcRetakeButtonLabel;
-      case 117: return cases::ugcRetakeButtonBackground;
-      case 118: return cases::ugcSubmitButtonLabel;
-      case 119: return cases::ugcSubmitButtonBackground;
+      case 88: return cases::missedEarningsNavigationBarText;
+      case 89: return cases::missedEarningsNavigationEditButtonIcon;
+      case 90: return cases::missedEarningsNavigationEditButtonBackground;
+      case 91: return cases::missedEarningsNavigationSaveButtonIcon;
+      case 92: return cases::missedEarningsNavigationSaveButtonBackground;
+      case 93: return cases::missedEarningsFieldEditIcon;
+      case 94: return cases::missedEarningsAddNewFieldLabel;
+      case 95: return cases::missedEarningsModifiedFieldBackground;
+      case 96: return cases::missedEarningsListSectionTitleLabel;
+      case 97: return cases::missedEarningsTripItemLabel;
+      case 98: return cases::missedEarningsEditModalTitleLabel;
+      case 99: return cases::missedEarningsEditModalSubtitleLabel;
+      case 100: return cases::missedEarningsEditModalInputLabel;
+      case 101: return cases::missedEarningsEditModalInputPlaceholderLabel;
+      case 102: return cases::missedEarningsEditModalInputValueLabel;
+      case 103: return cases::missedEarningsEditModalCancelButtonLabel;
+      case 104: return cases::missedEarningsEditModalSaveButtonLabel;
+      case 105: return cases::missedEarningsEditModalSaveButtonBackground;
+      case 106: return cases::missedEarningsEditModalBackground;
+      case 107: return cases::missedEarningsEditModalDatePicker;
+      case 108: return cases::missedEarningsAlertTitleLabel;
+      case 109: return cases::missedEarningsAlertMessageLabel;
+      case 110: return cases::ugcBarcodeDetectedBorder;
+      case 111: return cases::ugcBarcodeDetectedIcon;
+      case 112: return cases::ugcNavigationButtonIcon;
+      case 113: return cases::ugcNavigationButtonBackground;
+      case 114: return cases::ugcProductInfoBackground;
+      case 115: return cases::ugcProductInfoLabel;
+      case 116: return cases::ugcToastMessageWarningIcon;
+      case 117: return cases::ugcRetakeButtonLabel;
+      case 118: return cases::ugcRetakeButtonBackground;
+      case 119: return cases::ugcSubmitButtonLabel;
+      case 120: return cases::ugcSubmitButtonBackground;
       default: abort();
     }
   }
@@ -10056,9 +10082,17 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationDescriptionLabel() const {
     return *this == AppearanceColorKey::missedEarningsNavigationDescriptionLabel;
   }
-  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationEditButtonIcon::operator()() const {
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationBarText::operator()() const {
     auto result = AppearanceColorKey::_make();
     result._destructiveInjectEnumTag(88);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationBarText() const {
+    return *this == AppearanceColorKey::missedEarningsNavigationBarText;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationEditButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(89);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationEditButtonIcon() const {
@@ -10066,7 +10100,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationEditButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(89);
+    result._destructiveInjectEnumTag(90);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationEditButtonBackground() const {
@@ -10074,7 +10108,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationSaveButtonIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(90);
+    result._destructiveInjectEnumTag(91);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationSaveButtonIcon() const {
@@ -10082,7 +10116,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationSaveButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(91);
+    result._destructiveInjectEnumTag(92);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationSaveButtonBackground() const {
@@ -10090,7 +10124,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsFieldEditIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(92);
+    result._destructiveInjectEnumTag(93);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsFieldEditIcon() const {
@@ -10098,7 +10132,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsAddNewFieldLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(93);
+    result._destructiveInjectEnumTag(94);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsAddNewFieldLabel() const {
@@ -10106,7 +10140,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsModifiedFieldBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(94);
+    result._destructiveInjectEnumTag(95);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsModifiedFieldBackground() const {
@@ -10114,7 +10148,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsListSectionTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(95);
+    result._destructiveInjectEnumTag(96);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsListSectionTitleLabel() const {
@@ -10122,7 +10156,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsTripItemLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(96);
+    result._destructiveInjectEnumTag(97);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsTripItemLabel() const {
@@ -10130,7 +10164,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(97);
+    result._destructiveInjectEnumTag(98);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalTitleLabel() const {
@@ -10138,7 +10172,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalSubtitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(98);
+    result._destructiveInjectEnumTag(99);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalSubtitleLabel() const {
@@ -10146,7 +10180,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalInputLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(99);
+    result._destructiveInjectEnumTag(100);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalInputLabel() const {
@@ -10154,7 +10188,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalInputPlaceholderLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(100);
+    result._destructiveInjectEnumTag(101);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalInputPlaceholderLabel() const {
@@ -10162,7 +10196,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalInputValueLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(101);
+    result._destructiveInjectEnumTag(102);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalInputValueLabel() const {
@@ -10170,7 +10204,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalCancelButtonLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(102);
+    result._destructiveInjectEnumTag(103);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalCancelButtonLabel() const {
@@ -10178,7 +10212,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalSaveButtonLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(103);
+    result._destructiveInjectEnumTag(104);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalSaveButtonLabel() const {
@@ -10186,7 +10220,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalSaveButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(104);
+    result._destructiveInjectEnumTag(105);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalSaveButtonBackground() const {
@@ -10194,7 +10228,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(105);
+    result._destructiveInjectEnumTag(106);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalBackground() const {
@@ -10202,7 +10236,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalDatePicker::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(106);
+    result._destructiveInjectEnumTag(107);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalDatePicker() const {
@@ -10210,7 +10244,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsAlertTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(107);
+    result._destructiveInjectEnumTag(108);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsAlertTitleLabel() const {
@@ -10218,7 +10252,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsAlertMessageLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(108);
+    result._destructiveInjectEnumTag(109);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsAlertMessageLabel() const {
@@ -10226,7 +10260,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcBarcodeDetectedBorder::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(109);
+    result._destructiveInjectEnumTag(110);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcBarcodeDetectedBorder() const {
@@ -10234,7 +10268,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcBarcodeDetectedIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(110);
+    result._destructiveInjectEnumTag(111);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcBarcodeDetectedIcon() const {
@@ -10242,7 +10276,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcNavigationButtonIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(111);
+    result._destructiveInjectEnumTag(112);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcNavigationButtonIcon() const {
@@ -10250,7 +10284,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcNavigationButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(112);
+    result._destructiveInjectEnumTag(113);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcNavigationButtonBackground() const {
@@ -10258,7 +10292,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcProductInfoBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(113);
+    result._destructiveInjectEnumTag(114);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcProductInfoBackground() const {
@@ -10266,7 +10300,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcProductInfoLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(114);
+    result._destructiveInjectEnumTag(115);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcProductInfoLabel() const {
@@ -10274,7 +10308,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcToastMessageWarningIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(115);
+    result._destructiveInjectEnumTag(116);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcToastMessageWarningIcon() const {
@@ -10282,7 +10316,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcRetakeButtonLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(116);
+    result._destructiveInjectEnumTag(117);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcRetakeButtonLabel() const {
@@ -10290,7 +10324,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcRetakeButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(117);
+    result._destructiveInjectEnumTag(118);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcRetakeButtonBackground() const {
@@ -10298,7 +10332,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcSubmitButtonLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(118);
+    result._destructiveInjectEnumTag(119);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcSubmitButtonLabel() const {
@@ -10306,7 +10340,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcSubmitButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(119);
+    result._destructiveInjectEnumTag(120);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcSubmitButtonBackground() const {
@@ -11508,6 +11542,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import CoreFoundation;
 @import Foundation;
 @import ObjectiveC;
 @import UIKit;
@@ -11743,70 +11778,72 @@ typedef SWIFT_ENUM(NSInteger, AppearanceColorKey, open) {
   AppearanceColorKeyMissedEarningsNavigationTitleLabel = 86,
 /// “Edit this receipt if any details are off” subtitle.
   AppearanceColorKeyMissedEarningsNavigationDescriptionLabel = 87,
+/// Title, subtitle, and back-button tint when shown in the host navigation bar (reopened receipts).
+  AppearanceColorKeyMissedEarningsNavigationBarText = 88,
 /// Pen icon tint on the header edit button.
-  AppearanceColorKeyMissedEarningsNavigationEditButtonIcon = 88,
+  AppearanceColorKeyMissedEarningsNavigationEditButtonIcon = 89,
 /// Circle behind the header edit icon.
-  AppearanceColorKeyMissedEarningsNavigationEditButtonBackground = 89,
+  AppearanceColorKeyMissedEarningsNavigationEditButtonBackground = 90,
 /// Checkmark icon tint on the header save button.
-  AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon = 90,
+  AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon = 91,
 /// Circle behind the header save icon.
-  AppearanceColorKeyMissedEarningsNavigationSaveButtonBackground = 91,
+  AppearanceColorKeyMissedEarningsNavigationSaveButtonBackground = 92,
 /// Small pen icon on each editable field row.
-  AppearanceColorKeyMissedEarningsFieldEditIcon = 92,
+  AppearanceColorKeyMissedEarningsFieldEditIcon = 93,
 /// “Add new field” control text and icon tint.
-  AppearanceColorKeyMissedEarningsAddNewFieldLabel = 93,
+  AppearanceColorKeyMissedEarningsAddNewFieldLabel = 94,
 /// Highlight background on rows the user has changed.
-  AppearanceColorKeyMissedEarningsModifiedFieldBackground = 94,
+  AppearanceColorKeyMissedEarningsModifiedFieldBackground = 95,
 /// Group labels (“Merchant”, “Date”, “Products”).
-  AppearanceColorKeyMissedEarningsListSectionTitleLabel = 95,
+  AppearanceColorKeyMissedEarningsListSectionTitleLabel = 96,
 /// Value text in the merchant name and date rows.
-  AppearanceColorKeyMissedEarningsTripItemLabel = 96,
+  AppearanceColorKeyMissedEarningsTripItemLabel = 97,
 /// Edit modal headline (e.g. “Merchant Name”, “Receipt Date”).
-  AppearanceColorKeyMissedEarningsEditModalTitleLabel = 97,
+  AppearanceColorKeyMissedEarningsEditModalTitleLabel = 98,
 /// Instruction line below the edit modal title.
-  AppearanceColorKeyMissedEarningsEditModalSubtitleLabel = 98,
+  AppearanceColorKeyMissedEarningsEditModalSubtitleLabel = 99,
 /// Caption above a text field (e.g. “Captured Merchant Name”).
-  AppearanceColorKeyMissedEarningsEditModalInputLabel = 99,
+  AppearanceColorKeyMissedEarningsEditModalInputLabel = 100,
 /// Dimmed hint inside empty text fields.
-  AppearanceColorKeyMissedEarningsEditModalInputPlaceholderLabel = 100,
+  AppearanceColorKeyMissedEarningsEditModalInputPlaceholderLabel = 101,
 /// Typed value and helper captions in the edit form.
-  AppearanceColorKeyMissedEarningsEditModalInputValueLabel = 101,
+  AppearanceColorKeyMissedEarningsEditModalInputValueLabel = 102,
 /// Cancel button text in the edit modal footer.
-  AppearanceColorKeyMissedEarningsEditModalCancelButtonLabel = 102,
+  AppearanceColorKeyMissedEarningsEditModalCancelButtonLabel = 103,
 /// Save button text in the edit modal footer.
-  AppearanceColorKeyMissedEarningsEditModalSaveButtonLabel = 103,
+  AppearanceColorKeyMissedEarningsEditModalSaveButtonLabel = 104,
 /// Filled background of the modal save button.
-  AppearanceColorKeyMissedEarningsEditModalSaveButtonBackground = 104,
+  AppearanceColorKeyMissedEarningsEditModalSaveButtonBackground = 105,
 /// Edit modal card container background.
-  AppearanceColorKeyMissedEarningsEditModalBackground = 105,
+  AppearanceColorKeyMissedEarningsEditModalBackground = 106,
 /// Selected-date highlight on the date picker.
-  AppearanceColorKeyMissedEarningsEditModalDatePicker = 106,
+  AppearanceColorKeyMissedEarningsEditModalDatePicker = 107,
 /// Alert headline (e.g. “No updates made”).
-  AppearanceColorKeyMissedEarningsAlertTitleLabel = 107,
+  AppearanceColorKeyMissedEarningsAlertTitleLabel = 108,
 /// Alert body text.
-  AppearanceColorKeyMissedEarningsAlertMessageLabel = 108,
+  AppearanceColorKeyMissedEarningsAlertMessageLabel = 109,
 /// 4 pt stroke around the barcode detection region.
-  AppearanceColorKeyUgcBarcodeDetectedBorder = 109,
+  AppearanceColorKeyUgcBarcodeDetectedBorder = 110,
 /// Icon tint shown on barcode detection.
-  AppearanceColorKeyUgcBarcodeDetectedIcon = 110,
+  AppearanceColorKeyUgcBarcodeDetectedIcon = 111,
 /// Close / torch button icon tint in the header.
-  AppearanceColorKeyUgcNavigationButtonIcon = 111,
+  AppearanceColorKeyUgcNavigationButtonIcon = 112,
 /// Circle behind each header control button.
-  AppearanceColorKeyUgcNavigationButtonBackground = 112,
+  AppearanceColorKeyUgcNavigationButtonBackground = 113,
 /// Product info pill background (product name + UPC).
-  AppearanceColorKeyUgcProductInfoBackground = 113,
+  AppearanceColorKeyUgcProductInfoBackground = 114,
 /// Text and icon tint inside the product info pill.
-  AppearanceColorKeyUgcProductInfoLabel = 114,
+  AppearanceColorKeyUgcProductInfoLabel = 115,
 /// Warning icon in the instructional toast.
-  AppearanceColorKeyUgcToastMessageWarningIcon = 115,
+  AppearanceColorKeyUgcToastMessageWarningIcon = 116,
 /// “Retake” button text in the capture footer.
-  AppearanceColorKeyUgcRetakeButtonLabel = 116,
+  AppearanceColorKeyUgcRetakeButtonLabel = 117,
 /// “Retake” button background.
-  AppearanceColorKeyUgcRetakeButtonBackground = 117,
+  AppearanceColorKeyUgcRetakeButtonBackground = 118,
 /// “Submit” button text in the capture footer.
-  AppearanceColorKeyUgcSubmitButtonLabel = 118,
+  AppearanceColorKeyUgcSubmitButtonLabel = 119,
 /// “Submit” button background.
-  AppearanceColorKeyUgcSubmitButtonBackground = 119,
+  AppearanceColorKeyUgcSubmitButtonBackground = 120,
 };
 
 /// Identifiers for every font name the SDK can resolve from your <code>Theme</code>.
@@ -12178,49 +12215,7 @@ SWIFT_CLASS("_TtC11BlinkEngage23BlinkEngageRewardConfig")
 /// seealso:
 /// <code>currencyImageLocations</code>
 @property (nonatomic, readonly, strong) UIImage * _Nullable currencyImage;
-/// Closure invoked each time the user earns a reward.
-/// <em>Required</em> — no default value. The host app must always provide this closure.
-/// <ul>
-///   <li>
-///     <code>context</code>: One of <code>"ScanFinished"</code>, <code>"Promo"</code>, <code>"Boost"</code>, <code>"BarcodeCollection"</code>,
-///     <code>"BoostCreditEarned"</code>, or <code>"BoostCreditApplied"</code>.
-///   </li>
-///   <li>
-///     <code>rewardAmount</code>: Amount earned, or <code>nil</code> for <code>"ScanFinished"</code>.
-///   </li>
-///   <li>
-///     <code>blinkReceiptId</code>: The receipt identifier from BlinkReceipt
-///     (<code>BRScanResults.blinkReceiptId</code>), or <code>nil</code> when unavailable.
-///   </li>
-/// </ul>
-/// Return an <code>NSNumber</code> for <code>"ScanFinished"</code> (the scan reward the host
-/// app awards). Return <code>nil</code> for all other contexts.
-/// <blockquote>
-/// Important: The return value for <code>"ScanFinished"</code> is used as-is in
-/// reward currency units and is <em>not</em> passed through <code>rewardRounding</code>.
-/// When <code>rewardRounding</code> is <code>.whole</code>, return a whole-number value
-/// (e.g. <code>NSNumber(value: 10)</code>) to keep the display consistent.
-/// Fractional values are valid only when <code>rewardRounding</code> is <code>.decimal</code>.
-///
-/// </blockquote>
-/// \code
-/// let config = BlinkEngageRewardConfig(
-///     rewardCallback: { context, amount, blinkReceiptId in
-///         switch context {
-///         case "ScanFinished":
-///             return NSNumber(value: 10)
-///         default:
-///             return nil
-///         }
-///     }
-/// )
-///
-/// \endcode
 @property (nonatomic, readonly, copy) NSNumber * _Nullable (^ _Nonnull rewardCallback)(NSString * _Nonnull, NSNumber * _Nullable, NSString * _Nullable);
-/// Objective-C initializer.
-/// Pass <code>currencyImageLocations</code> as a bitwise OR of the
-/// <code>imageLocation…</code> class constants (e.g.
-/// <code>BlinkEngageRewardConfig.imageLocationOfferCell | BlinkEngageRewardConfig.imageLocationReceiptBoost</code>).
 - (nonnull instancetype)initWithCurrencyName:(NSString * _Nonnull)currencyName currencyCode:(NSString * _Nullable)currencyCode currencyCodePosition:(enum RewardCurrencyCodePosition)currencyCodePosition currencyPerDollar:(double)currencyPerDollar userPayoutPercentage:(double)userPayoutPercentage currencyImage:(UIImage * _Nullable)currencyImage currencyImageLocations:(NSInteger)currencyImageLocations rewardLabelStyle:(enum RewardCurrencyLabelStyle)rewardLabelStyle messagingTextStyle:(enum RewardCurrencyMessagingTextStyle)messagingTextStyle rewardRounding:(enum RewardCurrencyRounding)rewardRounding rewardCallback:(NSNumber * _Nullable (^ _Nonnull)(NSString * _Nonnull, NSNumber * _Nullable, NSString * _Nullable))rewardCallback;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
@@ -12267,12 +12262,6 @@ SWIFT_CLASS("_TtC11BlinkEngage14BlinkEngageSDK")
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BlinkEngageSDK * _Nonnull shared;)
 + (BlinkEngageSDK * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly, strong) BlinkEngageUser * _Nonnull user;
-/// Currency styling is applied when SDK views are loaded.
-/// Changing this property does not refresh views that are already on screen.
-/// <blockquote>
-/// Important: Assign new values <em>on the main thread</em> before presenting any SDK UI.
-///
-/// </blockquote>
 @property (nonatomic, strong) BlinkEngageRewardConfig * _Nonnull rewardConfig;
 @property (nonatomic, strong) Appearance * _Nonnull appearance;
 /// Called when an SDK event occurs.
@@ -12303,6 +12292,29 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BlinkEngageS
 @property (nonatomic, copy) void (^ _Nullable eventCallback)(NSString * _Nonnull, NSDictionary<NSString *, id> * _Nullable);
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@class ReceiptDetailsViewController;
+@class NSError;
+@interface BlinkEngageSDK (SWIFT_EXTENSION(BlinkEngage))
+/// Returns a view controller that shows receipt details for a previously completed scan.
+/// Use this when the user opens a receipt from history or another entry point outside the
+/// live scan flow. The host app presents the returned <code>ReceiptDetailsViewController</code> and
+/// assigns <code>ReceiptDetailsViewController/onClose</code> to dismiss it when the user taps <em>Continue</em>.
+/// note:
+/// Errors use the <code>BlinkEngageReceiptSummary</code> domain.
+/// important:
+/// The current user must be registered with the SDK, same as for a live scan.
+/// note:
+/// From Objective-C, use <code>loadReceiptDetailsForBlinkReceiptId:completion:</code>.
+/// \param blinkReceiptId The receipt identifier delivered to your
+/// <code>BlinkEngageRewardConfig</code> reward callback.
+///
+/// \param completion Called on the main queue when loading finishes.
+/// On success, the view controller is non-<code>nil</code> and <code>error</code> is <code>nil</code>.
+/// On failure, the view controller is <code>nil</code> and <code>error</code> describes the reason.
+///
+- (void)loadReceiptDetailsForBlinkReceiptId:(NSString * _Nonnull)blinkReceiptId completion:(void (^ _Nonnull)(ReceiptDetailsViewController * _Nullable, NSError * _Nullable))completion;
 @end
 
 @interface BlinkEngageSDK (SWIFT_EXTENSION(BlinkEngage))
@@ -12377,6 +12389,44 @@ SWIFT_PROTOCOL("_TtP11BlinkEngage32OffersWallViewControllerDelegate_")
 - (void)offerWallDidSelectFloatingAction:(OffersWallViewController * _Nonnull)viewController;
 - (BOOL)offerWallShouldDisplayFloatingAction:(OffersWallViewController * _Nonnull)viewController SWIFT_WARN_UNUSED_RESULT;
 - (void)offerWall:(OffersWallViewController * _Nonnull)viewController didUpdateClippedOffersCount:(NSInteger)count;
+@end
+
+/// A view controller that displays the details of a previously completed receipt scan.
+/// The screen reconstructs the receipt summary from the data captured during the original scan.
+/// Use it to let users revisit a receipt from history or any entry point outside the live scan flow.
+/// Instances are created exclusively by the SDK. Obtain one through
+/// <code>BlinkEngageSDK/loadReceiptDetails(forBlinkReceiptId:completion:)</code>, then present it and assign
+/// <code>onClose</code> to dismiss it when the user taps <em>Continue</em>. Initializing this view controller
+/// directly is not supported.
+SWIFT_CLASS_NAMED("ReceiptDetailsViewController")
+@interface ReceiptDetailsViewController : UIViewController
+/// A closure invoked when the user taps the <em>Continue</em> button.
+/// Assign this to dismiss the view controller, for example by calling <code>dismiss(animated:)</code>
+/// on the presenting view controller or popping it from a navigation stack. If left <code>nil</code>,
+/// tapping <em>Continue</em> has no effect.
+@property (nonatomic, copy) void (^ _Nullable onClose)(void);
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER SWIFT_UNAVAILABLE_MSG("Use BlinkEngageSDK.loadReceiptDetails(forBlinkReceiptId:completion:).");
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER SWIFT_UNAVAILABLE_MSG("Use BlinkEngageSDK.loadReceiptDetails(forBlinkReceiptId:completion:).");
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
+@property (nonatomic, readonly) UIInterfaceOrientationMask supportedInterfaceOrientations;
+@property (nonatomic, readonly) UIInterfaceOrientation preferredInterfaceOrientationForPresentation;
+@property (nonatomic, readonly) BOOL shouldAutorotate;
+- (void)viewDidLoad;
+- (void)viewDidLayoutSubviews;
+@end
+
+@class UITableView;
+@class NSIndexPath;
+@class UITableViewCell;
+@class UIView;
+@interface ReceiptDetailsViewController (SWIFT_EXTENSION(BlinkEngage)) <UITableViewDataSource, UITableViewDelegate>
+- (NSInteger)numberOfSectionsInTableView:(UITableView * _Nonnull)tableView SWIFT_WARN_UNUSED_RESULT;
+- (NSInteger)tableView:(UITableView * _Nonnull)tableView numberOfRowsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
+- (UITableViewCell * _Nonnull)tableView:(UITableView * _Nonnull)tableView cellForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
+- (UIView * _Nullable)tableView:(UITableView * _Nonnull)tableView viewForHeaderInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
+- (CGFloat)tableView:(UITableView * _Nonnull)tableView heightForHeaderInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
+- (CGFloat)tableView:(UITableView * _Nonnull)tableView heightForFooterInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
+- (UIView * _Nullable)tableView:(UITableView * _Nonnull)tableView viewForFooterInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
 @end
 
 /// Controls where <code>BlinkEngageRewardConfig/currencyCode</code> appears relative to the numeric amount.
@@ -16604,6 +16654,7 @@ public:
     purchaseRowMetadataLabelColor SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyPurchaseRowMetadataLabelColor"),
     missedEarningsNavigationTitleLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationTitleLabel"),
     missedEarningsNavigationDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationDescriptionLabel"),
+    missedEarningsNavigationBarText SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationBarText"),
     missedEarningsNavigationEditButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationEditButtonIcon"),
     missedEarningsNavigationEditButtonBackground SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationEditButtonBackground"),
     missedEarningsNavigationSaveButtonIcon SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationSaveButtonIcon"),
@@ -17344,6 +17395,14 @@ public:
   } missedEarningsNavigationDescriptionLabel SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationDescriptionLabel");
   SWIFT_INLINE_THUNK bool isMissedEarningsNavigationDescriptionLabel() const;
 
+  inline const static struct _impl_missedEarningsNavigationBarText {  // impl struct for case missedEarningsNavigationBarText
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::missedEarningsNavigationBarText;
+    }
+    SWIFT_INLINE_THUNK AppearanceColorKey operator()() const;
+  } missedEarningsNavigationBarText SWIFT_SYMBOL("c:@M@BlinkEngage@E@AppearanceColorKey@AppearanceColorKeyMissedEarningsNavigationBarText");
+  SWIFT_INLINE_THUNK bool isMissedEarningsNavigationBarText() const;
+
   inline const static struct _impl_missedEarningsNavigationEditButtonIcon {  // impl struct for case missedEarningsNavigationEditButtonIcon
     SWIFT_INLINE_THUNK constexpr operator cases() const {
       return cases::missedEarningsNavigationEditButtonIcon;
@@ -17691,38 +17750,39 @@ public:
       case 85: return cases::purchaseRowMetadataLabelColor;
       case 86: return cases::missedEarningsNavigationTitleLabel;
       case 87: return cases::missedEarningsNavigationDescriptionLabel;
-      case 88: return cases::missedEarningsNavigationEditButtonIcon;
-      case 89: return cases::missedEarningsNavigationEditButtonBackground;
-      case 90: return cases::missedEarningsNavigationSaveButtonIcon;
-      case 91: return cases::missedEarningsNavigationSaveButtonBackground;
-      case 92: return cases::missedEarningsFieldEditIcon;
-      case 93: return cases::missedEarningsAddNewFieldLabel;
-      case 94: return cases::missedEarningsModifiedFieldBackground;
-      case 95: return cases::missedEarningsListSectionTitleLabel;
-      case 96: return cases::missedEarningsTripItemLabel;
-      case 97: return cases::missedEarningsEditModalTitleLabel;
-      case 98: return cases::missedEarningsEditModalSubtitleLabel;
-      case 99: return cases::missedEarningsEditModalInputLabel;
-      case 100: return cases::missedEarningsEditModalInputPlaceholderLabel;
-      case 101: return cases::missedEarningsEditModalInputValueLabel;
-      case 102: return cases::missedEarningsEditModalCancelButtonLabel;
-      case 103: return cases::missedEarningsEditModalSaveButtonLabel;
-      case 104: return cases::missedEarningsEditModalSaveButtonBackground;
-      case 105: return cases::missedEarningsEditModalBackground;
-      case 106: return cases::missedEarningsEditModalDatePicker;
-      case 107: return cases::missedEarningsAlertTitleLabel;
-      case 108: return cases::missedEarningsAlertMessageLabel;
-      case 109: return cases::ugcBarcodeDetectedBorder;
-      case 110: return cases::ugcBarcodeDetectedIcon;
-      case 111: return cases::ugcNavigationButtonIcon;
-      case 112: return cases::ugcNavigationButtonBackground;
-      case 113: return cases::ugcProductInfoBackground;
-      case 114: return cases::ugcProductInfoLabel;
-      case 115: return cases::ugcToastMessageWarningIcon;
-      case 116: return cases::ugcRetakeButtonLabel;
-      case 117: return cases::ugcRetakeButtonBackground;
-      case 118: return cases::ugcSubmitButtonLabel;
-      case 119: return cases::ugcSubmitButtonBackground;
+      case 88: return cases::missedEarningsNavigationBarText;
+      case 89: return cases::missedEarningsNavigationEditButtonIcon;
+      case 90: return cases::missedEarningsNavigationEditButtonBackground;
+      case 91: return cases::missedEarningsNavigationSaveButtonIcon;
+      case 92: return cases::missedEarningsNavigationSaveButtonBackground;
+      case 93: return cases::missedEarningsFieldEditIcon;
+      case 94: return cases::missedEarningsAddNewFieldLabel;
+      case 95: return cases::missedEarningsModifiedFieldBackground;
+      case 96: return cases::missedEarningsListSectionTitleLabel;
+      case 97: return cases::missedEarningsTripItemLabel;
+      case 98: return cases::missedEarningsEditModalTitleLabel;
+      case 99: return cases::missedEarningsEditModalSubtitleLabel;
+      case 100: return cases::missedEarningsEditModalInputLabel;
+      case 101: return cases::missedEarningsEditModalInputPlaceholderLabel;
+      case 102: return cases::missedEarningsEditModalInputValueLabel;
+      case 103: return cases::missedEarningsEditModalCancelButtonLabel;
+      case 104: return cases::missedEarningsEditModalSaveButtonLabel;
+      case 105: return cases::missedEarningsEditModalSaveButtonBackground;
+      case 106: return cases::missedEarningsEditModalBackground;
+      case 107: return cases::missedEarningsEditModalDatePicker;
+      case 108: return cases::missedEarningsAlertTitleLabel;
+      case 109: return cases::missedEarningsAlertMessageLabel;
+      case 110: return cases::ugcBarcodeDetectedBorder;
+      case 111: return cases::ugcBarcodeDetectedIcon;
+      case 112: return cases::ugcNavigationButtonIcon;
+      case 113: return cases::ugcNavigationButtonBackground;
+      case 114: return cases::ugcProductInfoBackground;
+      case 115: return cases::ugcProductInfoLabel;
+      case 116: return cases::ugcToastMessageWarningIcon;
+      case 117: return cases::ugcRetakeButtonLabel;
+      case 118: return cases::ugcRetakeButtonBackground;
+      case 119: return cases::ugcSubmitButtonLabel;
+      case 120: return cases::ugcSubmitButtonBackground;
       default: abort();
     }
   }
@@ -21283,9 +21343,17 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationDescriptionLabel() const {
     return *this == AppearanceColorKey::missedEarningsNavigationDescriptionLabel;
   }
-  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationEditButtonIcon::operator()() const {
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationBarText::operator()() const {
     auto result = AppearanceColorKey::_make();
     result._destructiveInjectEnumTag(88);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationBarText() const {
+    return *this == AppearanceColorKey::missedEarningsNavigationBarText;
+  }
+  SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationEditButtonIcon::operator()() const {
+    auto result = AppearanceColorKey::_make();
+    result._destructiveInjectEnumTag(89);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationEditButtonIcon() const {
@@ -21293,7 +21361,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationEditButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(89);
+    result._destructiveInjectEnumTag(90);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationEditButtonBackground() const {
@@ -21301,7 +21369,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationSaveButtonIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(90);
+    result._destructiveInjectEnumTag(91);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationSaveButtonIcon() const {
@@ -21309,7 +21377,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsNavigationSaveButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(91);
+    result._destructiveInjectEnumTag(92);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsNavigationSaveButtonBackground() const {
@@ -21317,7 +21385,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsFieldEditIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(92);
+    result._destructiveInjectEnumTag(93);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsFieldEditIcon() const {
@@ -21325,7 +21393,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsAddNewFieldLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(93);
+    result._destructiveInjectEnumTag(94);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsAddNewFieldLabel() const {
@@ -21333,7 +21401,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsModifiedFieldBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(94);
+    result._destructiveInjectEnumTag(95);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsModifiedFieldBackground() const {
@@ -21341,7 +21409,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsListSectionTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(95);
+    result._destructiveInjectEnumTag(96);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsListSectionTitleLabel() const {
@@ -21349,7 +21417,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsTripItemLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(96);
+    result._destructiveInjectEnumTag(97);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsTripItemLabel() const {
@@ -21357,7 +21425,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(97);
+    result._destructiveInjectEnumTag(98);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalTitleLabel() const {
@@ -21365,7 +21433,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalSubtitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(98);
+    result._destructiveInjectEnumTag(99);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalSubtitleLabel() const {
@@ -21373,7 +21441,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalInputLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(99);
+    result._destructiveInjectEnumTag(100);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalInputLabel() const {
@@ -21381,7 +21449,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalInputPlaceholderLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(100);
+    result._destructiveInjectEnumTag(101);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalInputPlaceholderLabel() const {
@@ -21389,7 +21457,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalInputValueLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(101);
+    result._destructiveInjectEnumTag(102);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalInputValueLabel() const {
@@ -21397,7 +21465,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalCancelButtonLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(102);
+    result._destructiveInjectEnumTag(103);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalCancelButtonLabel() const {
@@ -21405,7 +21473,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalSaveButtonLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(103);
+    result._destructiveInjectEnumTag(104);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalSaveButtonLabel() const {
@@ -21413,7 +21481,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalSaveButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(104);
+    result._destructiveInjectEnumTag(105);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalSaveButtonBackground() const {
@@ -21421,7 +21489,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(105);
+    result._destructiveInjectEnumTag(106);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalBackground() const {
@@ -21429,7 +21497,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsEditModalDatePicker::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(106);
+    result._destructiveInjectEnumTag(107);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsEditModalDatePicker() const {
@@ -21437,7 +21505,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsAlertTitleLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(107);
+    result._destructiveInjectEnumTag(108);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsAlertTitleLabel() const {
@@ -21445,7 +21513,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_missedEarningsAlertMessageLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(108);
+    result._destructiveInjectEnumTag(109);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isMissedEarningsAlertMessageLabel() const {
@@ -21453,7 +21521,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcBarcodeDetectedBorder::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(109);
+    result._destructiveInjectEnumTag(110);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcBarcodeDetectedBorder() const {
@@ -21461,7 +21529,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcBarcodeDetectedIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(110);
+    result._destructiveInjectEnumTag(111);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcBarcodeDetectedIcon() const {
@@ -21469,7 +21537,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcNavigationButtonIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(111);
+    result._destructiveInjectEnumTag(112);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcNavigationButtonIcon() const {
@@ -21477,7 +21545,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcNavigationButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(112);
+    result._destructiveInjectEnumTag(113);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcNavigationButtonBackground() const {
@@ -21485,7 +21553,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcProductInfoBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(113);
+    result._destructiveInjectEnumTag(114);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcProductInfoBackground() const {
@@ -21493,7 +21561,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcProductInfoLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(114);
+    result._destructiveInjectEnumTag(115);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcProductInfoLabel() const {
@@ -21501,7 +21569,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcToastMessageWarningIcon::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(115);
+    result._destructiveInjectEnumTag(116);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcToastMessageWarningIcon() const {
@@ -21509,7 +21577,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcRetakeButtonLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(116);
+    result._destructiveInjectEnumTag(117);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcRetakeButtonLabel() const {
@@ -21517,7 +21585,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcRetakeButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(117);
+    result._destructiveInjectEnumTag(118);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcRetakeButtonBackground() const {
@@ -21525,7 +21593,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcSubmitButtonLabel::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(118);
+    result._destructiveInjectEnumTag(119);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcSubmitButtonLabel() const {
@@ -21533,7 +21601,7 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK AppearanceColorKey AppearanceColorKey::_impl_ugcSubmitButtonBackground::operator()() const {
     auto result = AppearanceColorKey::_make();
-    result._destructiveInjectEnumTag(119);
+    result._destructiveInjectEnumTag(120);
     return result;
   }
   SWIFT_INLINE_THUNK  bool AppearanceColorKey::isUgcSubmitButtonBackground() const {

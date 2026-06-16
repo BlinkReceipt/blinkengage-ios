@@ -134,6 +134,7 @@ import _SwiftConcurrencyShims
   case purchaseRowMetadataLabelColor
   case missedEarningsNavigationTitleLabel
   case missedEarningsNavigationDescriptionLabel
+  case missedEarningsNavigationBarText
   case missedEarningsNavigationEditButtonIcon
   case missedEarningsNavigationEditButtonBackground
   case missedEarningsNavigationSaveButtonIcon
@@ -326,6 +327,40 @@ import _SwiftConcurrencyShims
 extension BlinkEngage.OffersWallViewController : UIKit.UIAdaptivePresentationControllerDelegate {
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func presentationControllerDidDismiss(_ presentationController: UIKit.UIPresentationController)
 }
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc(ReceiptDetailsViewController) @_Concurrency.MainActor @preconcurrency final public class ReceiptDetailsViewController : UIKit.UIViewController {
+  @objc @_Concurrency.MainActor @preconcurrency final public var onClose: (() -> Swift.Void)?
+  #if compiler(>=5.3) && $NonescapableTypes
+  @available(*, unavailable, message: "Use BlinkEngageSDK.loadReceiptDetails(forBlinkReceiptId:completion:).")
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  #endif
+  @available(*, unavailable, message: "Use BlinkEngageSDK.loadReceiptDetails(forBlinkReceiptId:completion:).")
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public init()
+  @_Concurrency.MainActor @preconcurrency @objc override final public var supportedInterfaceOrientations: UIKit.UIInterfaceOrientationMask {
+    @objc get
+  }
+  @_Concurrency.MainActor @preconcurrency @objc override final public var preferredInterfaceOrientationForPresentation: UIKit.UIInterfaceOrientation {
+    @objc get
+  }
+  @_Concurrency.MainActor @preconcurrency @objc override final public var shouldAutorotate: Swift.Bool {
+    @objc get
+  }
+  @_Concurrency.MainActor @preconcurrency @objc override final public func viewDidLoad()
+  @_Concurrency.MainActor @preconcurrency @objc override final public func viewDidLayoutSubviews()
+  @objc deinit
+}
+extension BlinkEngage.ReceiptDetailsViewController : UIKit.UITableViewDataSource, UIKit.UITableViewDelegate {
+  @_Concurrency.MainActor @preconcurrency @objc final public func numberOfSections(in tableView: UIKit.UITableView) -> Swift.Int
+  @_Concurrency.MainActor @preconcurrency @objc final public func tableView(_ tableView: UIKit.UITableView, numberOfRowsInSection section: Swift.Int) -> Swift.Int
+  @_Concurrency.MainActor @preconcurrency @objc final public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @preconcurrency @objc final public func tableView(_ tableView: UIKit.UITableView, viewForHeaderInSection section: Swift.Int) -> UIKit.UIView?
+  #endif
+  @_Concurrency.MainActor @preconcurrency @objc final public func tableView(_ tableView: UIKit.UITableView, heightForHeaderInSection section: Swift.Int) -> CoreFoundation.CGFloat
+  @_Concurrency.MainActor @preconcurrency @objc final public func tableView(_ tableView: UIKit.UITableView, heightForFooterInSection section: Swift.Int) -> CoreFoundation.CGFloat
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @preconcurrency @objc final public func tableView(_ tableView: UIKit.UITableView, viewForFooterInSection section: Swift.Int) -> UIKit.UIView?
+  #endif
+}
 public struct RewardCurrencyImageLocations : Swift.OptionSet, Swift.Sendable {
   public let rawValue: Swift.Int
   public init(rawValue: Swift.Int)
@@ -430,6 +465,11 @@ extension BlinkEngage.BlinkEngageSDK {
   @objc public static let eventOfferDetailViewed: Swift.String
   @objc public static let eventOfferClipped: Swift.String
   @objc public static let eventMetadataOfferTitle: Swift.String
+}
+extension BlinkEngage.BlinkEngageSDK {
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @objc(loadReceiptDetailsForBlinkReceiptId:completion:) dynamic public func loadReceiptDetails(forBlinkReceiptId blinkReceiptId: Swift.String, completion: @escaping (BlinkEngage.ReceiptDetailsViewController?, Foundation.NSError?) -> Swift.Void)
+  #endif
 }
 @_inheritsConvenienceInitializers @objc public class BlinkEngageUser : ObjectiveC.NSObject {
   @objc public var emailHash: Swift.String? {

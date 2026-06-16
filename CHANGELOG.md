@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.8.0
+
+### Added
+- **Receipt details (history reopen)** — `BlinkEngageSDK.loadReceiptDetails(forBlinkReceiptId:completion:)` returns a `ReceiptDetailsViewController` for a previously completed scan. Provide the `blinkReceiptId` from your reward callback to load a past receipt, then present it and assign `onClose` to dismiss. Missed earnings corrections are available from receipt details within 12 hours of the scan.
+
 ## 1.7.0
 
 ### Added
