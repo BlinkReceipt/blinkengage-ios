@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.9.0
+
+### Added
+- **Grouped earnings** — Multiple products qualifying for the same promotion are now shown as a single earnings row instead of one row per product.
+- **Offer fine print** — Offer details now include a "More Details" section with the offer's full terms.
+
+### Changed
+- **Clip failure feedback** — A "Clip failed, retry later" message is now shown when an offer fails to clip.
+
 ## 1.8.0
 
 ### Added
