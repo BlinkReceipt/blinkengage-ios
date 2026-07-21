@@ -10,7 +10,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		3SUfnPcZspzDtYYLrh/Fb+3wL4E=
+		AkAlp+9u28ILLxTWYvUXIfTyGNw=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		KtTFc8nRtkeuxC+g05GgZymP9LI=
+		85DwkjHph4V9FefsgGz/rdmQ7f8=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -50,11 +50,23 @@
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		S9lelurpQ526kEuph1nJrCkYgmQ=
+		Q0cVDgrhntZD/HN3g2JlWobuLBg=
 		</data>
 		<key>boost.png</key>
 		<data>
 		cymumpjZXrrIq0DLLmGRtkO6WMg=
+		</data>
+		<key>btn_tap.png</key>
+		<data>
+		CvcpGMcigoCkImt4/vv3EmDa/ak=
+		</data>
+		<key>btn_tap@2x.png</key>
+		<data>
+		Auv7BdFkXw+2ttoADfiOfncY8IA=
+		</data>
+		<key>btn_tap@3x.png</key>
+		<data>
+		mEDLYJ8GvUcSKRpGTNXw5AkeRLo=
 		</data>
 		<key>calendar.png</key>
 		<data>
@@ -216,9 +228,45 @@
 		<data>
 		rhKzU2Tvl7bvTv2fpUZdkkoS/qc=
 		</data>
+		<key>scan_field_check_off.png</key>
+		<data>
+		EuuOKbhxdfJYrrFU23dAv9wwIpI=
+		</data>
+		<key>scan_field_check_off@2x.png</key>
+		<data>
+		XlOBSXhOXk6RgxN+jkYvX3ovoks=
+		</data>
+		<key>scan_field_check_off@3x.png</key>
+		<data>
+		3myChekYqYq1YGlcozPDW+HQhLU=
+		</data>
+		<key>scan_field_check_on.png</key>
+		<data>
+		WvYqJaKNqqtPUr5dVaYNN2Y+a9I=
+		</data>
+		<key>scan_field_check_on@2x.png</key>
+		<data>
+		xnHyXIvUy8c7PXDn2yyyKYZ/wBU=
+		</data>
+		<key>scan_field_check_on@3x.png</key>
+		<data>
+		pnugOoqUwsBbPrItEOXeLq620B8=
+		</data>
 		<key>sparkle.json</key>
 		<data>
 		Eb2pM3x4lqOd0jd+tEt7dVDFf1w=
+		</data>
+		<key>speed.png</key>
+		<data>
+		KqiVgzR7RozvKrFzJ2/8Ua5Vm70=
+		</data>
+		<key>speed@2x.png</key>
+		<data>
+		SmcfwripJGjLpLeP6fuLAcBqFzI=
+		</data>
+		<key>speed@3x.png</key>
+		<data>
+		vNoQzBLi5M9gPgnNrIdW3fVbEeU=
 		</data>
 		<key>spinner.json</key>
 		<data>
@@ -231,6 +279,18 @@
 		<key>success_confetti.json</key>
 		<data>
 		k8Bu3zzHVBDj03GV5T+9saIeXz0=
+		</data>
+		<key>time.png</key>
+		<data>
+		/9DtcjnrxgnCYupOb/yVcQLjZ0Q=
+		</data>
+		<key>time@2x.png</key>
+		<data>
+		/RhtOCw7NdvLD5rm2CXdwrOvyoo=
+		</data>
+		<key>time@3x.png</key>
+		<data>
+		Y37dy3Dxz0NU6VSUwj4JUb09h0E=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -274,7 +334,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			HPAmSA5IFJMAUGCpw9uzK0Yp/UY/zk+f8joGInx1Cts=
+			S1GCTa7LzBPuet5u/+/damXRhVOKZNWQy5lga6F9/MI=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -309,7 +369,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			dcGwmCrwxDOVkwgvwlnYMNRPDEGc/6RhrD0iGtuaaF0=
+			geTsFduzmkMkKn2czA0Lqazwz/bZZ0yYOVKv7nVanws=
 			</data>
 		</dict>
 		<key>boost.png</key>
@@ -317,6 +377,27 @@
 			<key>hash2</key>
 			<data>
 			rNt3dCEwIAjXeGT/4b+CRNoeJifVhsd8EBRmXtjClq8=
+			</data>
+		</dict>
+		<key>btn_tap.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			QE7wUsrRu1QmXJrf82hPkI4italW7ww1JpNqtXOOMew=
+			</data>
+		</dict>
+		<key>btn_tap@2x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			CTBdwjJHtvLHrrCG98jnJKf6K6EjQq5n9oThcwmBVF0=
+			</data>
+		</dict>
+		<key>btn_tap@3x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			SoeJ0c0OlHyfDxIc2EM1M2yh1ycKBLoUn05JtcgTcR4=
 			</data>
 		</dict>
 		<key>calendar.png</key>
@@ -599,11 +680,74 @@
 			Uh5oiFCCFw9Zj0EXj0zH9Tvt3NONJXaCoRbwkvI5jnM=
 			</data>
 		</dict>
+		<key>scan_field_check_off.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ftB0hDPruz0PJgXxGxx9fCiO2LWYwmgnmFDbZtWNAqw=
+			</data>
+		</dict>
+		<key>scan_field_check_off@2x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			1BmOj6QmKOArev34fj/8Icz5WyUukIv6UCSmnFgqmeI=
+			</data>
+		</dict>
+		<key>scan_field_check_off@3x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			hhglz7+q7dgf4TKJf945QEe1BKEij6E0vsnBBxNce+M=
+			</data>
+		</dict>
+		<key>scan_field_check_on.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			t2iL33CCyS7uuOyHWX0WE8m65009/MVOkD/NG6jeaQk=
+			</data>
+		</dict>
+		<key>scan_field_check_on@2x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			uGJWg2X6+VMMakO3XmuFUppaAM+z3JJkVLW9V04b328=
+			</data>
+		</dict>
+		<key>scan_field_check_on@3x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			qTlCZRH78fHAO1ECwMKXzuin5bFnc418XzQC+wtWD1U=
+			</data>
+		</dict>
 		<key>sparkle.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			8GRNKWLfB8SKI4h0gqRwRdtc1vk3hjma0ck8UWkAQnE=
+			</data>
+		</dict>
+		<key>speed.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			TJYPK/AEU1/Ou+JYHLEu+27ANwggNpuoOY1ybPQUIWU=
+			</data>
+		</dict>
+		<key>speed@2x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			nRfxFlVShVTbLtWRyr+nA3zBCTrxTO+IPCW4Jzo5uzI=
+			</data>
+		</dict>
+		<key>speed@3x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			cuA8YO7yxSNBou5afdhQt3PgiDRhnMl0hY86Plw5jUY=
 			</data>
 		</dict>
 		<key>spinner.json</key>
@@ -625,6 +769,27 @@
 			<key>hash2</key>
 			<data>
 			9hm3yKOwk3aEP+0kotZINMYn+YNSbNLqtwx/lFzXp/8=
+			</data>
+		</dict>
+		<key>time.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Pj8EPPEHnWpdLnhpPWoLqB+QWKTNQYPtydUnlrJCQM4=
+			</data>
+		</dict>
+		<key>time@2x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			UbBMb5cDP1UY61o4Z/y6vt63kful7J/ViQxouFpsrgc=
+			</data>
+		</dict>
+		<key>time@3x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			RNysUq3v1v+qjKIS8qRAcjTml2jAcX964xh7zZG8qRk=
 			</data>
 		</dict>
 	</dict>

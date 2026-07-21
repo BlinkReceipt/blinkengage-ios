@@ -1,5 +1,21 @@
 # Change Log
 
+## 1.10.0
+
+### Added
+- **View original receipt** — Duplicate receipts include a **View original** button to open the previously submitted receipt.
+- **Request review** — Receipts flagged during scanning (duplicate, unreadable, missing information, too old, or over the scan limit) can be submitted for manual review, with an optional note. The SDK confirms the request and closes the post scan flow.
+- **Missing information entry** — When a scan is missing the merchant, date, or total, users can enter the missing details manually or retake the photo, then submit the receipt for review.
+
+### Changed
+- **Duplicate receipts** — No longer shown as a blocking error. The post scan screen opens normally with a "We've seen this" status card; no rewards are offered for the duplicate scan.
+- **Unreadable receipts** — A clear "We couldn't read this receipt" screen with **Submit anyway** and **Retake photo** options replaces the generic error.
+- **Unverified receipts** — No longer shown as a blocking error. The post scan screen opens normally with a "Receipt couldn't be verified" status card; no rewards are offered.
+- **Older receipts** — Receipts outside the rewards window show a dedicated screen with **Request review** and **Close** options instead of a generic error.
+- **Scan limits** — When a submission limit is exceeded, a dedicated screen shows which limit was reached and offers **Request review**.
+- **Historical receipts** — Reopened duplicate or unverified receipts show the same status card, zero rewards, and no missed earnings corrections.
+- **Offer wall performance** — Faster image loading and smoother scrolling.
+
 ## 1.9.0
 
 ### Added
