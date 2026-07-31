@@ -357,7 +357,7 @@ typedef SWIFT_ENUM(NSInteger, AppearanceColorKey, open) {
   AppearanceColorKeyOfferWallMoreMerchantsIcon = 6,
 /// Points or dollar value shown on the card.
   AppearanceColorKeyOfferRewardPointsLabel = 7,
-/// Promo badge label (e.g. “BUY 2”) on the card.
+/// Promo badge label (e.g. “BUY 2”, “SPEND $25”) on the card.
   AppearanceColorKeyOfferTagLabel = 8,
 /// Promo badge pill background on the card.
   AppearanceColorKeyOfferTagBackground = 9,
@@ -597,7 +597,7 @@ typedef SWIFT_ENUM(NSInteger, AppearanceFontNameKey, open) {
   AppearanceFontNameKeyOfferWallFloatingButtonLabel = 1,
 /// Points or dollar value on the card.
   AppearanceFontNameKeyOfferRewardPointsLabel = 2,
-/// Promo badge label (e.g. “BUY 2”).
+/// Promo badge label (e.g. “BUY 2”, “SPEND $25”).
   AppearanceFontNameKeyOfferTagLabel = 3,
 /// Brand or offer title on the card.
   AppearanceFontNameKeyOfferBrandLabel = 4,
