@@ -1,5 +1,25 @@
 # Change Log
 
+## 1.12.0
+
+### Added
+- **Base scan override** — When the backend returns an override for a banner, the receipt summary shows that amount instead of the host app's base scan reward. If no override is returned, the host app value is used as before.
+
+### Changed
+- **Missing merchant only** — A scan missing only the merchant no longer interrupts the user. It finalizes as a normal scan and earns as expected. The missing-fields reviewer no longer asks for merchant.
+- **Missing date or total recovery** — After the user enters a missing date and/or total (or retakes the photo), the SDK continues into the standard post-scan flow (loading screen, then receipt summary) instead of stopping on the review-pending screen. Manual corrections are sent with the review request only and are not merged into the scan results. Dates outside the rewards window and totals below $0.00 are rejected in the reviewer.
+
+### Fixed
+- **Offer wall empty state flash** — Opening the offer wall no longer briefly shows "No offers available" while offers are still loading. The loading state stays until the request finishes.
+
+## 1.11.0
+
+### Added
+- **Merchant promos** — Support for spend-based promos that reward any purchase at a given retailer. They appear on the offer wall with a SPEND $25 badge, and a promo that qualifies for a scanned receipt shows up in Your Earnings as a "Merchant Boost" row.
+
+### Fixed
+- **Dark mode backgrounds** — On devices in dark mode, the request review sheet and the manual date and field entry screens used dark system backgrounds inside their light cards, leaving the comment field, date picker, and loading spinner unreadable. These screens now stay in light mode.
+
 ## 1.10.0
 
 ### Added
