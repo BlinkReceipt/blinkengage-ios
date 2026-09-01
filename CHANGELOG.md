@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.13.0
+
+### Changed
+- **Report button** — The icon-only button that opens missed earnings (receipt summary header and receipt details navigation bar) is now a text pill reading "Report".
+- **Missed earnings footer** — When missed earnings is available, the **Your Earnings** section now ends with a two-line "Missing rewards? / Update your receipt" action that opens the same correction flow as the Report button.
+
+### Breaking changes
+- **Receipt button theme keys** — `AppearanceColorKey.postScanReceiptButtonIcon` is replaced by `AppearanceColorKey.postScanReceiptButtonLabel` (the button's text color), and `AppearanceIconKey.postScanReceiptButtonIcon` is removed. New optional key: `AppearanceFontNameKey.postScanReceiptButtonLabel`. The button copy is always "Report".
+
 ## 1.12.0
 
 ### Added

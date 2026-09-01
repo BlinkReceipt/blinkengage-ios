@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/BlinkEngage-Swift.h</key>
 		<data>
-		RKHm9ucHlLwIhce1qE0xhZ78KD4=
+		t35wtTYJeDYSzFxE+uQ0lvmwifI=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		yUEAV25fIirpM+WdWtVqvvp/NNs=
+		tBXzhCCeV86Tep9ttTLEVo4cMYQ=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -18,19 +18,19 @@
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		xMDK47l1/Pxm6hbMD97tNSksO+w=
+		TaBnGnsCO6/NtS8JjNvDxaVIGWc=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		SF/lnJXFL5WJG95Ild1bVHOSAmE=
+		EwO/474Cp5pfd3VHBYfpMuOcat0=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		xMDK47l1/Pxm6hbMD97tNSksO+w=
+		TaBnGnsCO6/NtS8JjNvDxaVIGWc=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		mHx9DPCTTOH20W7U/R/4GBQFsH0=
+		LkARtNh8pAHzFBl5/DbRzb9ZbkQ=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -38,19 +38,19 @@
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		lbx20YCRu+3yA7dzZ5ehlHMtneM=
+		GpBZQV/rnARx8dZVO1tZKH5YCCE=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		gjS/S1ckF+uvvHXkuhUpKtCi2nE=
+		T3Lh0yc96cZhUetNmH3lIsovRNc=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		lbx20YCRu+3yA7dzZ5ehlHMtneM=
+		GpBZQV/rnARx8dZVO1tZKH5YCCE=
 		</data>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		H/bwsxxdZUV5n+kRdg4wHyUphZw=
+		g+Tn5PDlQL8DTN5e7ZKb2CW0RdY=
 		</data>
 		<key>boost.png</key>
 		<data>
@@ -212,18 +212,6 @@
 		<data>
 		gv5JmVX1o0jM3bqnM3EEqB3xk7o=
 		</data>
-		<key>receipt.png</key>
-		<data>
-		tbljsd0M4Yu3OJOsX1+D7+rZMxY=
-		</data>
-		<key>receipt@2x.png</key>
-		<data>
-		vCPsWgRI22gQvTnddXP6ducKGAw=
-		</data>
-		<key>receipt@3x.png</key>
-		<data>
-		XivdyKPDqCxG/U0kGoP4D7cRm2k=
-		</data>
 		<key>reward_sound.m4a</key>
 		<data>
 		rhKzU2Tvl7bvTv2fpUZdkkoS/qc=
@@ -299,7 +287,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			c4BWUR33XmMXEYXMk0NW2q4Yq+8lWq2oxtvr1zK1DBA=
+			1VxUVUDNaHtk9o4jRdhBznqJTf6VQTN/pbn0ZGG1MHQ=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -313,28 +301,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			qKXMQw6dT2PTahLgAIuQhDydOZMgZ1gxsIG0AbwuHH8=
+			juqkD2Pt2uc782jFHet2Ma+TqwJiVBR6fYOHfodQ204=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mkN+Nf31kT31Mio4SbGJ4f2oMYIgS33WhLEXvTz6Ink=
+			ybqDHAVjNgRV551lBxjRYwYZCDfjxFNdc8qj2PGlT9I=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qKXMQw6dT2PTahLgAIuQhDydOZMgZ1gxsIG0AbwuHH8=
+			juqkD2Pt2uc782jFHet2Ma+TqwJiVBR6fYOHfodQ204=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			T7irt70ebACdAYgfDxNC8JiyG5swI3DwlGqfhmYCvxk=
+			LZkeTBDCL8ovgJfPfaWFOYX9vq0W8JA3MDPV71BsRH4=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -348,28 +336,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			barfDSHQmGNJNoGFXRipmAO7UcqU4skT9MSkSqmvyvE=
+			4j6hm/7KeSvAZ0TVa2K15UQuu8viV0sJ1RA/JPe2muw=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			w29L11FhQEJzGOPmDSG1cvU/asNdTlzXejRhLlqkPgI=
+			1NgFCsQSGfHpjZWHMyhb4PYVnlbbdHqo34+dU26jX74=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			barfDSHQmGNJNoGFXRipmAO7UcqU4skT9MSkSqmvyvE=
+			4j6hm/7KeSvAZ0TVa2K15UQuu8viV0sJ1RA/JPe2muw=
 			</data>
 		</dict>
 		<key>Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			n8lDvtL+0Vx5MKHVQ9bBB06EoeXTdgOGWbn1TKw+A4c=
+			yY2urtoqbWyOq7SlRRBpud7sxlJekXpKNTU6aKbrt28=
 			</data>
 		</dict>
 		<key>boost.png</key>
@@ -650,27 +638,6 @@
 			<key>hash2</key>
 			<data>
 			YutsluqnhO5o+9nobgEYRbO3/9ym+hEMl+4QP1S1xeY=
-			</data>
-		</dict>
-		<key>receipt.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			XhTRldVIl9c4ewzKa9A+GVZbL69MS7AnSzn1zY0Kpsg=
-			</data>
-		</dict>
-		<key>receipt@2x.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			jbYkrMwRdMLayeFvDSGFXCaV4aibg8+T6G4f6oyOg8Q=
-			</data>
-		</dict>
-		<key>receipt@3x.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			tX5gERwodYUG2pn6jAV/zg6uXCQBEUy7zWJ+FARUlVU=
 			</data>
 		</dict>
 		<key>reward_sound.m4a</key>

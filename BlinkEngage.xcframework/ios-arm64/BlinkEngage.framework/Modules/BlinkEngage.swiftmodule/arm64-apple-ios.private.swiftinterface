@@ -104,7 +104,7 @@ import _SwiftConcurrencyShims
   case postScanHeaderBackground
   case postScanTotalPointsBackground
   case postScanTotalPointsLabel
-  case postScanReceiptButtonIcon
+  case postScanReceiptButtonLabel
   case postScanReceiptButtonBackground
   case postScanFooterButtonTitle
   case postScanFooterBackground
@@ -179,7 +179,6 @@ import _SwiftConcurrencyShims
   case offerWallFloatingButtonIcon
   case missedEarningsNavigationEditButtonIcon
   case missedEarningsFieldEditIcon
-  case postScanReceiptButtonIcon
   case postScanBoostDefaultIcon
   case postScanSuccessIcon
   case ugcBarcodeDetectedIcon
@@ -235,6 +234,7 @@ import _SwiftConcurrencyShims
   case errorModalDescriptionLabel
   case errorModalBackButtonLabel
   case postScanTotalPointsLabel
+  case postScanReceiptButtonLabel
   case postScanFooterButtonTitle
   case postScanMerchantNameLabel
   case postScanTripInfoLabel
@@ -356,6 +356,7 @@ extension BlinkEngage.ReceiptDetailsViewController : UIKit.UITableViewDataSource
   @_Concurrency.MainActor @preconcurrency @objc final public func tableView(_ tableView: UIKit.UITableView, viewForHeaderInSection section: Swift.Int) -> UIKit.UIView?
   #endif
   @_Concurrency.MainActor @preconcurrency @objc final public func tableView(_ tableView: UIKit.UITableView, heightForHeaderInSection section: Swift.Int) -> CoreFoundation.CGFloat
+  @_Concurrency.MainActor @preconcurrency @objc final public func tableView(_ tableView: UIKit.UITableView, estimatedHeightForFooterInSection section: Swift.Int) -> CoreFoundation.CGFloat
   @_Concurrency.MainActor @preconcurrency @objc final public func tableView(_ tableView: UIKit.UITableView, heightForFooterInSection section: Swift.Int) -> CoreFoundation.CGFloat
   #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc final public func tableView(_ tableView: UIKit.UITableView, viewForFooterInSection section: Swift.Int) -> UIKit.UIView?
