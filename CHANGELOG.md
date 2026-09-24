@@ -1,5 +1,21 @@
 # Change Log
 
+## 1.14.0
+
+### Added
+- **Client-Side Offer Feed** — Render the SDK's offers in your own UI. The SDK hands over the offer groups as plain data and opens its own offer details and group screens for whatever the user picks. Because your app draws the feed, it also reports what the user sees and taps.
+
+### Changed
+- **Missed earnings after missing information** — Receipts that reached the post scan screen by entering a missing date or total no longer offer missed earnings; those receipts already have a review request.
+
+### Fixed
+- **Camera focus** — The product capture and barcode scan camera refocuses when the subject changes.
+- **Product capture on small screens** — Fixed the take-photo button not being visible on smaller iPhones, which made it impossible to capture a picture of the product.
+- **Receipt total** — Totals on the post scan screen always show two decimal places, for example `$5.00`.
+
+### Breaking changes
+- **SDK start on the main actor** — `BlinkEngageSDK.start(debugMode:)` is now marked `@MainActor`, matching the main-thread requirement it already enforced. Calls from an app delegate, a SwiftUI `App` initializer, or Objective-C are unchanged. A Swift call from a nonisolated context no longer compiles: mark the calling function `@MainActor`, or wrap the call in `MainActor.assumeIsolated { }` if you already guarantee the main thread. Such a call previously crashed at runtime, so this only surfaces the failure earlier.
+
 ## 1.13.0
 
 ### Changed

@@ -794,13 +794,112 @@ typedef SWIFT_ENUM(NSInteger, AppearanceTextKey, open) {
   AppearanceTextKeyOfferWallFloatingButtonCollapsedLabel = 1,
 };
 
+@class NSString;
+@class NSNumber;
+@class NSURL;
+@class NSDate;
+/// One offer, ready for host-side rendering.
+SWIFT_CLASS("_TtC11BlinkEngage16BlinkEngageOffer")
+@interface BlinkEngageOffer : NSObject
+/// Identifier for this offer, unique within the feed.
+@property (nonatomic, readonly) NSInteger identifier;
+/// Offer title; nil when the offer has none.
+@property (nonatomic, readonly, copy) NSString * _Nullable title;
+/// Reward amount in reward-currency units — the same units the SDK’s own screens
+/// display. Nil when the offer has no reward value.
+@property (nonatomic, readonly, strong) NSNumber * _Nullable rewardValue;
+/// URL of the offer’s primary image, when it has one.
+@property (nonatomic, readonly, copy) NSURL * _Nullable imageURL;
+/// Names of the merchants this offer is restricted to. Empty when the offer is not
+/// merchant-restricted.
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull eligibleMerchants;
+/// Whether the offer must be clipped before purchase.
+@property (nonatomic, readonly) BOOL isClipRequired;
+/// Whether this user has already clipped the offer.
+@property (nonatomic, readonly) BOOL isClipped;
+/// Minimum qualifying quantity, when applicable.
+@property (nonatomic, readonly, strong) NSNumber * _Nullable minimumQuantity;
+/// Ready-to-display badge strings (e.g. “In-Store Only”) — render them verbatim
+/// rather than constructing badge text locally. Empty when the offer has none.
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull tags;
+/// When the clipped offer expires; present only after the offer has been clipped.
+@property (nonatomic, readonly, copy) NSDate * _Nullable clipExpirationDate;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@class BlinkEngageOfferGroup;
+/// The offer groups for the host app to render in its own UI, handing selections back
+/// to the SDK’s screens.
+SWIFT_CLASS("_TtC11BlinkEngage20BlinkEngageOfferFeed")
+@interface BlinkEngageOfferFeed : NSObject
+/// The feed’s groups.
+@property (nonatomic, readonly, copy) NSArray<BlinkEngageOfferGroup *> * _Nonnull groups;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+enum BlinkEngageOfferFeedEventType : NSInteger;
+/// One reportable offer feed interaction: what the user did, and what they did it to.
+/// <code>BlinkEngageOfferFeedEventType/didAppear</code> and <code>BlinkEngageOfferFeedEventType/didTap</code>
+/// describe an offer; <code>BlinkEngageOfferFeedEventType/viewAll</code> describes a group. Build the
+/// event with the initializer that matches, then pass it to
+/// <code>BlinkEngageSDK/reportOfferFeedEvent(_:)</code>.
+SWIFT_CLASS("_TtC11BlinkEngage25BlinkEngageOfferFeedEvent")
+@interface BlinkEngageOfferFeedEvent : NSObject
+/// What the user did.
+@property (nonatomic, readonly) enum BlinkEngageOfferFeedEventType type;
+/// The offer the interaction was on, for offer events.
+@property (nonatomic, readonly, strong) BlinkEngageOffer * _Nullable offer;
+/// The group the interaction was on, for group events.
+@property (nonatomic, readonly, strong) BlinkEngageOfferGroup * _Nullable group;
+/// Creates an event for a single offer.
+/// \param offer The offer the user saw or tapped.
+///
+/// \param type <code>BlinkEngageOfferFeedEventType/didAppear</code> or
+/// <code>BlinkEngageOfferFeedEventType/didTap</code>.
+///
+- (nonnull instancetype)initWithOffer:(BlinkEngageOffer * _Nonnull)offer type:(enum BlinkEngageOfferFeedEventType)type OBJC_DESIGNATED_INITIALIZER;
+/// Creates an event for a group.
+/// \param group The group the user opened.
+///
+/// \param type <code>BlinkEngageOfferFeedEventType/viewAll</code>.
+///
+- (nonnull instancetype)initWithGroup:(BlinkEngageOfferGroup * _Nonnull)group type:(enum BlinkEngageOfferFeedEventType)type OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// An interaction with the offers a host app rendered from
+/// <code>BlinkEngageSDK/loadOfferFeed(completion:)</code>.
+typedef SWIFT_ENUM(NSInteger, BlinkEngageOfferFeedEventType, open) {
+/// An offer became visible on screen.
+  BlinkEngageOfferFeedEventTypeDidAppear = 0,
+/// The user tapped an offer.
+  BlinkEngageOfferFeedEventTypeDidTap = 1,
+/// The user asked to see a group’s full list of offers.
+  BlinkEngageOfferFeedEventTypeViewAll = 2,
+};
+
+/// One feed group (“Clip to Earn”, “Trending”, …) with its offers.
+SWIFT_CLASS("_TtC11BlinkEngage21BlinkEngageOfferGroup")
+@interface BlinkEngageOfferGroup : NSObject
+/// Numeric identifier for this group. May be <code>nil</code>; the group can still be handed
+/// to <code>BlinkEngageSDK/offerGroupViewController(for:)</code>.
+@property (nonatomic, readonly, strong) NSNumber * _Nullable identifier;
+/// The group’s title.
+@property (nonatomic, readonly, copy) NSString * _Nonnull title;
+/// The group’s offers.
+@property (nonatomic, readonly, copy) NSArray<BlinkEngageOffer *> * _Nonnull offers;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 enum RewardCurrencyLabelStyle : NSInteger;
 enum RewardCurrencyMessagingTextStyle : NSInteger;
-@class NSString;
 enum RewardCurrencyCodePosition : NSInteger;
 enum RewardCurrencyRounding : NSInteger;
 @class UIImage;
-@class NSNumber;
 /// Configuration that controls how reward amounts are formatted and displayed across the SDK.
 /// <h2>Overview</h2>
 /// <code>BlinkEngageRewardConfig</code> lets the host app control reward presentation —
@@ -1052,6 +1151,66 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BlinkEngageS
 /// On failure, the view controller is <code>nil</code> and <code>error</code> describes the reason.
 ///
 - (void)loadReceiptDetailsForBlinkReceiptId:(NSString * _Nonnull)blinkReceiptId completion:(void (^ _Nonnull)(ReceiptDetailsViewController * _Nullable, NSError * _Nullable))completion;
+@end
+
+@interface BlinkEngageSDK (SWIFT_EXTENSION(BlinkEngage))
+/// Fetches the Client-Side Offer Feed for the host app to render in its own UI.
+/// Completion runs on the main thread with either the feed or an error; the feed
+/// being disabled remotely yields an error, not an empty feed.
+/// Concurrent calls share one request, so loading on screen appearance is safe.
+/// important:
+/// The feed requires a registered user. On a first launch, registration is
+/// still in flight for a moment after <code>BlinkEngageSDK/start(debugMode:)</code>; a call made
+/// in that window waits for the registration to finish rather than failing, so the
+/// completion can take a moment longer on first launch.
+/// Errors use domain <code>"BlinkEngageOfferFeed"</code> with two codes hosts can branch on:
+/// <code>1</code> — no registered user and no registration in progress (host misconfiguration, or
+/// the in-flight registration failed),
+/// <code>2</code> — feed unavailable (fetch failed or the feature is disabled remotely; treat
+/// as off rather than retrying in a loop). An empty feed is a success, not an error —
+/// the feed can legitimately contain zero groups.
+- (void)loadOfferFeedWithCompletion:(void (^ _Nonnull)(BlinkEngageOfferFeed * _Nullable, NSError * _Nullable))completion;
+/// Reports one interaction a user made with the host-rendered offer feed.
+/// The host app renders the feed, so only it can tell when an offer was seen or tapped.
+/// Build a <code>BlinkEngageOfferFeedEvent</code> for the offer or group involved:
+/// <ul>
+///   <li>
+///     <code>BlinkEngageOfferFeedEventType/didAppear</code> — an offer became visible on screen
+///     (for example from <code>collectionView(_:willDisplay:forItemAt:)</code>). Report every offer
+///     that becomes visible, every time; loading the feed is not itself a view.
+///   </li>
+///   <li>
+///     <code>BlinkEngageOfferFeedEventType/didTap</code> — report at the same moment the host opens
+///     <code>offerDetailsViewController(for:)</code>.
+///   </li>
+///   <li>
+///     <code>BlinkEngageOfferFeedEventType/viewAll</code> — report at the same moment the host opens
+///     <code>offerGroupViewController(for:)</code>, whatever the host’s control for it looks like.
+///   </li>
+/// </ul>
+/// \param event The interaction to report.
+///
+- (void)reportOfferFeedEvent:(BlinkEngageOfferFeedEvent * _Nonnull)event;
+@end
+
+@class UIViewController;
+@interface BlinkEngageSDK (SWIFT_EXTENSION(BlinkEngage))
+/// The screen for one feed offer — the same offer details screen the SDK’s own offer wall
+/// opens, with clipping, eligible merchants, and reward display wired up.
+/// Present or push the returned controller from the host’s own UI.
+/// Returns <code>nil</code> when the offer can no longer be resolved against the most recent
+/// <code>loadOfferFeed(completion:)</code> response — e.g. the feed was reloaded and this offer is no
+/// longer part of it, or no feed has been loaded this session. Reload the feed and rebuild
+/// the host UI from the fresh <code>BlinkEngageOfferFeed</code> in that case.
+- (UIViewController * _Nullable)offerDetailsViewControllerFor:(BlinkEngageOffer * _Nonnull)offer SWIFT_WARN_UNUSED_RESULT;
+/// A list screen scoped to one feed group — the same screen the SDK’s own offer wall opens
+/// for a section, titled with the group’s title.
+/// Present or push the returned controller from the host’s own UI.
+/// Returns <code>nil</code> when the group can no longer be resolved against the most recent
+/// <code>loadOfferFeed(completion:)</code> response — e.g. the feed was reloaded and this group
+/// is no longer part of it, or no feed has been loaded this session. Reload the feed
+/// and rebuild the host UI from the fresh <code>BlinkEngageOfferFeed</code> in that case.
+- (UIViewController * _Nullable)offerGroupViewControllerFor:(BlinkEngageOfferGroup * _Nonnull)group SWIFT_WARN_UNUSED_RESULT;
 @end
 
 @interface BlinkEngageSDK (SWIFT_EXTENSION(BlinkEngage))
@@ -5191,6 +5350,12 @@ struct BlinkEngage_AppearanceTextKey {
   _Alignas(8) char _storage[8];
 };
 
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage0aB18OfferFeedEventTypeO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage0aB18OfferFeedEventTypeO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_BlinkEngageOfferFeedEventType {
+  _Alignas(8) char _storage[8];
+};
+
 SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage17OfferWallViewTypeO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
 SWIFT_EXTERN ptrdiff_t $s11BlinkEngage17OfferWallViewTypeO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
 struct BlinkEngage_OfferWallViewType {
@@ -8219,6 +8384,214 @@ struct implClassFor<BlinkEngage::AppearanceTextKey> { using type = BlinkEngage::
 
 namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
 
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType") BlinkEngageOfferFeedEventType;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::BlinkEngageOfferFeedEventType> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// An interaction with the offers a host app rendered from
+/// <code>BlinkEngageSDK/loadOfferFeed(completion:)</code>.
+namespace _impl {
+
+class _impl_BlinkEngageOfferFeedEventType;
+
+// Type metadata accessor for BlinkEngageOfferFeedEventType
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage0aB18OfferFeedEventTypeOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType") BlinkEngageOfferFeedEventType final {
+public:
+  SWIFT_INLINE_THUNK ~BlinkEngageOfferFeedEventType() noexcept {
+    auto metadata = _impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType(const BlinkEngageOfferFeedEventType &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType &operator =(const BlinkEngageOfferFeedEventType &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType &operator =(BlinkEngageOfferFeedEventType &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER BlinkEngageOfferFeedEventType(BlinkEngageOfferFeedEventType &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    didAppear SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType@BlinkEngageOfferFeedEventTypeDidAppear"),
+    didTap SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType@BlinkEngageOfferFeedEventTypeDidTap"),
+    viewAll SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType@BlinkEngageOfferFeedEventTypeViewAll")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_didAppear {  // impl struct for case didAppear
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::didAppear;
+    }
+    SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType operator()() const;
+  } didAppear SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType@BlinkEngageOfferFeedEventTypeDidAppear");
+  SWIFT_INLINE_THUNK bool isDidAppear() const;
+
+  inline const static struct _impl_didTap {  // impl struct for case didTap
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::didTap;
+    }
+    SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType operator()() const;
+  } didTap SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType@BlinkEngageOfferFeedEventTypeDidTap");
+  SWIFT_INLINE_THUNK bool isDidTap() const;
+
+  inline const static struct _impl_viewAll {  // impl struct for case viewAll
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::viewAll;
+    }
+    SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType operator()() const;
+  } viewAll SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType@BlinkEngageOfferFeedEventTypeViewAll");
+  SWIFT_INLINE_THUNK bool isViewAll() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::didAppear;
+      case 1: return cases::didTap;
+      case 2: return cases::viewAll;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<BlinkEngageOfferFeedEventType> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage0aB18OfferFeedEventTypeO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage0aB18OfferFeedEventTypeO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType() noexcept {}
+  static SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType _make() noexcept { return BlinkEngageOfferFeedEventType(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_BlinkEngageOfferFeedEventType;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage0aB18OfferFeedEventTypeOD;
+  static inline constexpr $s11BlinkEngage0aB18OfferFeedEventTypeOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_BlinkEngageOfferFeedEventType {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(BlinkEngageOfferFeedEventType &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const BlinkEngageOfferFeedEventType &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER BlinkEngageOfferFeedEventType returnNewValue(T callable) {
+    auto result = BlinkEngageOfferFeedEventType::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::BlinkEngageOfferFeedEventType> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::BlinkEngageOfferFeedEventType> = true;
+template<>
+struct implClassFor<BlinkEngage::BlinkEngageOfferFeedEventType> { using type = BlinkEngage::_impl::_impl_BlinkEngageOfferFeedEventType; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
 class SWIFT_SYMBOL("c:@M@BlinkEngage@E@OfferWallViewType") OfferWallViewType;
 } // end namespace 
 
@@ -11080,6 +11453,38 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK swift::Int AppearanceTextKey::getRawValue() const {
   return BlinkEngage::_impl::$s11BlinkEngage17AppearanceTextKeyO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType BlinkEngageOfferFeedEventType::_impl_didAppear::operator()() const {
+    auto result = BlinkEngageOfferFeedEventType::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool BlinkEngageOfferFeedEventType::isDidAppear() const {
+    return *this == BlinkEngageOfferFeedEventType::didAppear;
+  }
+  SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType BlinkEngageOfferFeedEventType::_impl_didTap::operator()() const {
+    auto result = BlinkEngageOfferFeedEventType::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool BlinkEngageOfferFeedEventType::isDidTap() const {
+    return *this == BlinkEngageOfferFeedEventType::didTap;
+  }
+  SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType BlinkEngageOfferFeedEventType::_impl_viewAll::operator()() const {
+    auto result = BlinkEngageOfferFeedEventType::_make();
+    result._destructiveInjectEnumTag(2);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool BlinkEngageOfferFeedEventType::isViewAll() const {
+    return *this == BlinkEngageOfferFeedEventType::viewAll;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<BlinkEngageOfferFeedEventType> BlinkEngageOfferFeedEventType::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<BlinkEngageOfferFeedEventType>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage0aB18OfferFeedEventTypeO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int BlinkEngageOfferFeedEventType::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage0aB18OfferFeedEventTypeO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
   }
   SWIFT_INLINE_THUNK OfferWallViewType OfferWallViewType::_impl_all::operator()() const {
     auto result = OfferWallViewType::_make();
@@ -12054,13 +12459,112 @@ typedef SWIFT_ENUM(NSInteger, AppearanceTextKey, open) {
   AppearanceTextKeyOfferWallFloatingButtonCollapsedLabel = 1,
 };
 
+@class NSString;
+@class NSNumber;
+@class NSURL;
+@class NSDate;
+/// One offer, ready for host-side rendering.
+SWIFT_CLASS("_TtC11BlinkEngage16BlinkEngageOffer")
+@interface BlinkEngageOffer : NSObject
+/// Identifier for this offer, unique within the feed.
+@property (nonatomic, readonly) NSInteger identifier;
+/// Offer title; nil when the offer has none.
+@property (nonatomic, readonly, copy) NSString * _Nullable title;
+/// Reward amount in reward-currency units — the same units the SDK’s own screens
+/// display. Nil when the offer has no reward value.
+@property (nonatomic, readonly, strong) NSNumber * _Nullable rewardValue;
+/// URL of the offer’s primary image, when it has one.
+@property (nonatomic, readonly, copy) NSURL * _Nullable imageURL;
+/// Names of the merchants this offer is restricted to. Empty when the offer is not
+/// merchant-restricted.
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull eligibleMerchants;
+/// Whether the offer must be clipped before purchase.
+@property (nonatomic, readonly) BOOL isClipRequired;
+/// Whether this user has already clipped the offer.
+@property (nonatomic, readonly) BOOL isClipped;
+/// Minimum qualifying quantity, when applicable.
+@property (nonatomic, readonly, strong) NSNumber * _Nullable minimumQuantity;
+/// Ready-to-display badge strings (e.g. “In-Store Only”) — render them verbatim
+/// rather than constructing badge text locally. Empty when the offer has none.
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull tags;
+/// When the clipped offer expires; present only after the offer has been clipped.
+@property (nonatomic, readonly, copy) NSDate * _Nullable clipExpirationDate;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@class BlinkEngageOfferGroup;
+/// The offer groups for the host app to render in its own UI, handing selections back
+/// to the SDK’s screens.
+SWIFT_CLASS("_TtC11BlinkEngage20BlinkEngageOfferFeed")
+@interface BlinkEngageOfferFeed : NSObject
+/// The feed’s groups.
+@property (nonatomic, readonly, copy) NSArray<BlinkEngageOfferGroup *> * _Nonnull groups;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+enum BlinkEngageOfferFeedEventType : NSInteger;
+/// One reportable offer feed interaction: what the user did, and what they did it to.
+/// <code>BlinkEngageOfferFeedEventType/didAppear</code> and <code>BlinkEngageOfferFeedEventType/didTap</code>
+/// describe an offer; <code>BlinkEngageOfferFeedEventType/viewAll</code> describes a group. Build the
+/// event with the initializer that matches, then pass it to
+/// <code>BlinkEngageSDK/reportOfferFeedEvent(_:)</code>.
+SWIFT_CLASS("_TtC11BlinkEngage25BlinkEngageOfferFeedEvent")
+@interface BlinkEngageOfferFeedEvent : NSObject
+/// What the user did.
+@property (nonatomic, readonly) enum BlinkEngageOfferFeedEventType type;
+/// The offer the interaction was on, for offer events.
+@property (nonatomic, readonly, strong) BlinkEngageOffer * _Nullable offer;
+/// The group the interaction was on, for group events.
+@property (nonatomic, readonly, strong) BlinkEngageOfferGroup * _Nullable group;
+/// Creates an event for a single offer.
+/// \param offer The offer the user saw or tapped.
+///
+/// \param type <code>BlinkEngageOfferFeedEventType/didAppear</code> or
+/// <code>BlinkEngageOfferFeedEventType/didTap</code>.
+///
+- (nonnull instancetype)initWithOffer:(BlinkEngageOffer * _Nonnull)offer type:(enum BlinkEngageOfferFeedEventType)type OBJC_DESIGNATED_INITIALIZER;
+/// Creates an event for a group.
+/// \param group The group the user opened.
+///
+/// \param type <code>BlinkEngageOfferFeedEventType/viewAll</code>.
+///
+- (nonnull instancetype)initWithGroup:(BlinkEngageOfferGroup * _Nonnull)group type:(enum BlinkEngageOfferFeedEventType)type OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// An interaction with the offers a host app rendered from
+/// <code>BlinkEngageSDK/loadOfferFeed(completion:)</code>.
+typedef SWIFT_ENUM(NSInteger, BlinkEngageOfferFeedEventType, open) {
+/// An offer became visible on screen.
+  BlinkEngageOfferFeedEventTypeDidAppear = 0,
+/// The user tapped an offer.
+  BlinkEngageOfferFeedEventTypeDidTap = 1,
+/// The user asked to see a group’s full list of offers.
+  BlinkEngageOfferFeedEventTypeViewAll = 2,
+};
+
+/// One feed group (“Clip to Earn”, “Trending”, …) with its offers.
+SWIFT_CLASS("_TtC11BlinkEngage21BlinkEngageOfferGroup")
+@interface BlinkEngageOfferGroup : NSObject
+/// Numeric identifier for this group. May be <code>nil</code>; the group can still be handed
+/// to <code>BlinkEngageSDK/offerGroupViewController(for:)</code>.
+@property (nonatomic, readonly, strong) NSNumber * _Nullable identifier;
+/// The group’s title.
+@property (nonatomic, readonly, copy) NSString * _Nonnull title;
+/// The group’s offers.
+@property (nonatomic, readonly, copy) NSArray<BlinkEngageOffer *> * _Nonnull offers;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 enum RewardCurrencyLabelStyle : NSInteger;
 enum RewardCurrencyMessagingTextStyle : NSInteger;
-@class NSString;
 enum RewardCurrencyCodePosition : NSInteger;
 enum RewardCurrencyRounding : NSInteger;
 @class UIImage;
-@class NSNumber;
 /// Configuration that controls how reward amounts are formatted and displayed across the SDK.
 /// <h2>Overview</h2>
 /// <code>BlinkEngageRewardConfig</code> lets the host app control reward presentation —
@@ -12312,6 +12816,66 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BlinkEngageS
 /// On failure, the view controller is <code>nil</code> and <code>error</code> describes the reason.
 ///
 - (void)loadReceiptDetailsForBlinkReceiptId:(NSString * _Nonnull)blinkReceiptId completion:(void (^ _Nonnull)(ReceiptDetailsViewController * _Nullable, NSError * _Nullable))completion;
+@end
+
+@interface BlinkEngageSDK (SWIFT_EXTENSION(BlinkEngage))
+/// Fetches the Client-Side Offer Feed for the host app to render in its own UI.
+/// Completion runs on the main thread with either the feed or an error; the feed
+/// being disabled remotely yields an error, not an empty feed.
+/// Concurrent calls share one request, so loading on screen appearance is safe.
+/// important:
+/// The feed requires a registered user. On a first launch, registration is
+/// still in flight for a moment after <code>BlinkEngageSDK/start(debugMode:)</code>; a call made
+/// in that window waits for the registration to finish rather than failing, so the
+/// completion can take a moment longer on first launch.
+/// Errors use domain <code>"BlinkEngageOfferFeed"</code> with two codes hosts can branch on:
+/// <code>1</code> — no registered user and no registration in progress (host misconfiguration, or
+/// the in-flight registration failed),
+/// <code>2</code> — feed unavailable (fetch failed or the feature is disabled remotely; treat
+/// as off rather than retrying in a loop). An empty feed is a success, not an error —
+/// the feed can legitimately contain zero groups.
+- (void)loadOfferFeedWithCompletion:(void (^ _Nonnull)(BlinkEngageOfferFeed * _Nullable, NSError * _Nullable))completion;
+/// Reports one interaction a user made with the host-rendered offer feed.
+/// The host app renders the feed, so only it can tell when an offer was seen or tapped.
+/// Build a <code>BlinkEngageOfferFeedEvent</code> for the offer or group involved:
+/// <ul>
+///   <li>
+///     <code>BlinkEngageOfferFeedEventType/didAppear</code> — an offer became visible on screen
+///     (for example from <code>collectionView(_:willDisplay:forItemAt:)</code>). Report every offer
+///     that becomes visible, every time; loading the feed is not itself a view.
+///   </li>
+///   <li>
+///     <code>BlinkEngageOfferFeedEventType/didTap</code> — report at the same moment the host opens
+///     <code>offerDetailsViewController(for:)</code>.
+///   </li>
+///   <li>
+///     <code>BlinkEngageOfferFeedEventType/viewAll</code> — report at the same moment the host opens
+///     <code>offerGroupViewController(for:)</code>, whatever the host’s control for it looks like.
+///   </li>
+/// </ul>
+/// \param event The interaction to report.
+///
+- (void)reportOfferFeedEvent:(BlinkEngageOfferFeedEvent * _Nonnull)event;
+@end
+
+@class UIViewController;
+@interface BlinkEngageSDK (SWIFT_EXTENSION(BlinkEngage))
+/// The screen for one feed offer — the same offer details screen the SDK’s own offer wall
+/// opens, with clipping, eligible merchants, and reward display wired up.
+/// Present or push the returned controller from the host’s own UI.
+/// Returns <code>nil</code> when the offer can no longer be resolved against the most recent
+/// <code>loadOfferFeed(completion:)</code> response — e.g. the feed was reloaded and this offer is no
+/// longer part of it, or no feed has been loaded this session. Reload the feed and rebuild
+/// the host UI from the fresh <code>BlinkEngageOfferFeed</code> in that case.
+- (UIViewController * _Nullable)offerDetailsViewControllerFor:(BlinkEngageOffer * _Nonnull)offer SWIFT_WARN_UNUSED_RESULT;
+/// A list screen scoped to one feed group — the same screen the SDK’s own offer wall opens
+/// for a section, titled with the group’s title.
+/// Present or push the returned controller from the host’s own UI.
+/// Returns <code>nil</code> when the group can no longer be resolved against the most recent
+/// <code>loadOfferFeed(completion:)</code> response — e.g. the feed was reloaded and this group
+/// is no longer part of it, or no feed has been loaded this session. Reload the feed
+/// and rebuild the host UI from the fresh <code>BlinkEngageOfferFeed</code> in that case.
+- (UIViewController * _Nullable)offerGroupViewControllerFor:(BlinkEngageOfferGroup * _Nonnull)group SWIFT_WARN_UNUSED_RESULT;
 @end
 
 @interface BlinkEngageSDK (SWIFT_EXTENSION(BlinkEngage))
@@ -16451,6 +17015,12 @@ struct BlinkEngage_AppearanceTextKey {
   _Alignas(8) char _storage[8];
 };
 
+SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage0aB18OfferFeedEventTypeO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
+SWIFT_EXTERN ptrdiff_t $s11BlinkEngage0aB18OfferFeedEventTypeO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
+struct BlinkEngage_BlinkEngageOfferFeedEventType {
+  _Alignas(8) char _storage[8];
+};
+
 SWIFT_EXTERN struct swift_interop_returnStub_BlinkEngage_uint64_t_0_8_uint8_t_8_9 $s11BlinkEngage17OfferWallViewTypeO8rawValueACSgSi_tcfC(ptrdiff_t rawValue) SWIFT_NOEXCEPT SWIFT_CALL; // init(rawValue:)
 SWIFT_EXTERN ptrdiff_t $s11BlinkEngage17OfferWallViewTypeO8rawValueSivg(struct swift_interop_passStub_BlinkEngage_uint64_t_0_8 _self) SWIFT_NOEXCEPT SWIFT_CALL; // _
 struct BlinkEngage_OfferWallViewType {
@@ -19479,6 +20049,214 @@ struct implClassFor<BlinkEngage::AppearanceTextKey> { using type = BlinkEngage::
 
 namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
 
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType") BlinkEngageOfferFeedEventType;
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+inline const constexpr bool isUsableInGenericContext<BlinkEngage::BlinkEngageOfferFeedEventType> = true;
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+/// An interaction with the offers a host app rendered from
+/// <code>BlinkEngageSDK/loadOfferFeed(completion:)</code>.
+namespace _impl {
+
+class _impl_BlinkEngageOfferFeedEventType;
+
+// Type metadata accessor for BlinkEngageOfferFeedEventType
+SWIFT_EXTERN swift::_impl::MetadataResponseTy $s11BlinkEngage0aB18OfferFeedEventTypeOMa(swift::_impl::MetadataRequestTy) SWIFT_NOEXCEPT SWIFT_CALL;
+
+
+} // namespace _impl
+
+class SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType") BlinkEngageOfferFeedEventType final {
+public:
+  SWIFT_INLINE_THUNK ~BlinkEngageOfferFeedEventType() noexcept {
+    auto metadata = _impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->destroy(_getOpaquePointer(), metadata._0);
+  }
+  SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType(const BlinkEngageOfferFeedEventType &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  }
+  SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType &operator =(const BlinkEngageOfferFeedEventType &other) noexcept {
+    auto metadata = _impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->assignWithCopy(_getOpaquePointer(), const_cast<char *>(other._getOpaquePointer()), metadata._0);
+  return *this;
+  }
+  SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType &operator =(BlinkEngageOfferFeedEventType &&other) = delete;
+  [[noreturn]] SWIFT_INLINE_PRIVATE_HELPER BlinkEngageOfferFeedEventType(BlinkEngageOfferFeedEventType &&) noexcept {
+  swift::_impl::_fatalError_Cxx_move_of_Swift_value_type_not_supported_yet();
+  swift::_impl::_swift_stdlib_reportFatalError("swift", 5, "C++ does not support moving a Swift value yet", 45, 0);
+  abort();
+  }
+
+  enum class cases {
+    didAppear SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType@BlinkEngageOfferFeedEventTypeDidAppear"),
+    didTap SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType@BlinkEngageOfferFeedEventTypeDidTap"),
+    viewAll SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType@BlinkEngageOfferFeedEventTypeViewAll")
+  };
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"  // allow use of inline static data member
+  inline const static struct _impl_didAppear {  // impl struct for case didAppear
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::didAppear;
+    }
+    SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType operator()() const;
+  } didAppear SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType@BlinkEngageOfferFeedEventTypeDidAppear");
+  SWIFT_INLINE_THUNK bool isDidAppear() const;
+
+  inline const static struct _impl_didTap {  // impl struct for case didTap
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::didTap;
+    }
+    SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType operator()() const;
+  } didTap SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType@BlinkEngageOfferFeedEventTypeDidTap");
+  SWIFT_INLINE_THUNK bool isDidTap() const;
+
+  inline const static struct _impl_viewAll {  // impl struct for case viewAll
+    SWIFT_INLINE_THUNK constexpr operator cases() const {
+      return cases::viewAll;
+    }
+    SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType operator()() const;
+  } viewAll SWIFT_SYMBOL("c:@M@BlinkEngage@E@BlinkEngageOfferFeedEventType@BlinkEngageOfferFeedEventTypeViewAll");
+  SWIFT_INLINE_THUNK bool isViewAll() const;
+
+#pragma clang diagnostic pop
+  SWIFT_INLINE_THUNK operator cases() const {
+    switch (_getEnumTag()) {
+      case 0: return cases::didAppear;
+      case 1: return cases::didTap;
+      case 2: return cases::viewAll;
+      default: abort();
+    }
+  }
+
+  static SWIFT_INLINE_THUNK swift::Optional<BlinkEngageOfferFeedEventType> init(swift::Int rawValue) SWIFT_SYMBOL("s:11BlinkEngage0aB18OfferFeedEventTypeO8rawValueACSgSi_tcfc");
+  SWIFT_INLINE_THUNK swift::Int getRawValue() const SWIFT_SYMBOL("s:11BlinkEngage0aB18OfferFeedEventTypeO8rawValueSivp");
+private:
+  SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType() noexcept {}
+  static SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType _make() noexcept { return BlinkEngageOfferFeedEventType(); }
+  SWIFT_INLINE_THUNK const char * _Nonnull _getOpaquePointer() const noexcept { return _storage; }
+  SWIFT_INLINE_THUNK char * _Nonnull _getOpaquePointer() noexcept { return _storage; }
+
+  SWIFT_INLINE_THUNK char * _Nonnull _destructiveProjectEnumData() noexcept {
+    auto metadata = _impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveProjectEnumData(_getOpaquePointer(), metadata._0);
+    return _getOpaquePointer();
+  }
+  SWIFT_INLINE_THUNK void _destructiveInjectEnumTag(unsigned tag) noexcept {
+    auto metadata = _impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    enumVWTable->destructiveInjectEnumTag(_getOpaquePointer(), tag, metadata._0);
+  }
+  SWIFT_INLINE_THUNK unsigned _getEnumTag() const noexcept {
+    auto metadata = _impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    const auto *enumVWTable = reinterpret_cast<swift::_impl::EnumValueWitnessTable *>(vwTable);
+    return enumVWTable->getEnumTag(_getOpaquePointer(), metadata._0);
+  }
+  alignas(8) char _storage[8];
+  friend class _impl::_impl_BlinkEngageOfferFeedEventType;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-identifier"
+  typedef char $s11BlinkEngage0aB18OfferFeedEventTypeOD;
+  static inline constexpr $s11BlinkEngage0aB18OfferFeedEventTypeOD __swift_mangled_name = 0;
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop
+};
+
+namespace _impl {
+
+class _impl_BlinkEngageOfferFeedEventType {
+public:
+  static SWIFT_INLINE_THUNK char * _Nonnull getOpaquePointer(BlinkEngageOfferFeedEventType &object) { return object._getOpaquePointer(); }
+  static SWIFT_INLINE_THUNK const char * _Nonnull getOpaquePointer(const BlinkEngageOfferFeedEventType &object) { return object._getOpaquePointer(); }
+  template<class T>
+  static SWIFT_INLINE_PRIVATE_HELPER BlinkEngageOfferFeedEventType returnNewValue(T callable) {
+    auto result = BlinkEngageOfferFeedEventType::_make();
+    callable(result._getOpaquePointer());
+    return result;
+  }
+  static SWIFT_INLINE_THUNK void initializeWithTake(char * _Nonnull destStorage, char * _Nonnull srcStorage) {
+    auto metadata = _impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0);
+    auto *vwTableAddr = reinterpret_cast<swift::_impl::ValueWitnessTable **>(metadata._0) - 1;
+#ifdef __arm64e__
+    auto *vwTable = reinterpret_cast<swift::_impl::ValueWitnessTable *>(ptrauth_auth_data(reinterpret_cast<void *>(*vwTableAddr), ptrauth_key_process_independent_data, ptrauth_blend_discriminator(vwTableAddr, 11839)));
+#else
+    auto *vwTable = *vwTableAddr;
+#endif
+    vwTable->initializeWithTake(destStorage, srcStorage, metadata._0);
+  }
+};
+
+} // namespace _impl
+
+} // end namespace 
+
+namespace swift SWIFT_PRIVATE_ATTR {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template<>
+struct TypeMetadataTrait<BlinkEngage::BlinkEngageOfferFeedEventType> {
+  static SWIFT_INLINE_PRIVATE_HELPER void * _Nonnull getTypeMetadata() {
+    return BlinkEngage::_impl::$s11BlinkEngage0aB18OfferFeedEventTypeOMa(0)._0;
+  }
+};
+namespace _impl{
+template<>
+inline const constexpr bool isValueType<BlinkEngage::BlinkEngageOfferFeedEventType> = true;
+template<>
+struct implClassFor<BlinkEngage::BlinkEngageOfferFeedEventType> { using type = BlinkEngage::_impl::_impl_BlinkEngageOfferFeedEventType; };
+} // namespace
+#pragma clang diagnostic pop
+} // namespace swift
+
+namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
+
 class SWIFT_SYMBOL("c:@M@BlinkEngage@E@OfferWallViewType") OfferWallViewType;
 } // end namespace 
 
@@ -22340,6 +23118,38 @@ namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
   }
   SWIFT_INLINE_THUNK swift::Int AppearanceTextKey::getRawValue() const {
   return BlinkEngage::_impl::$s11BlinkEngage17AppearanceTextKeyO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
+  }
+  SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType BlinkEngageOfferFeedEventType::_impl_didAppear::operator()() const {
+    auto result = BlinkEngageOfferFeedEventType::_make();
+    result._destructiveInjectEnumTag(0);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool BlinkEngageOfferFeedEventType::isDidAppear() const {
+    return *this == BlinkEngageOfferFeedEventType::didAppear;
+  }
+  SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType BlinkEngageOfferFeedEventType::_impl_didTap::operator()() const {
+    auto result = BlinkEngageOfferFeedEventType::_make();
+    result._destructiveInjectEnumTag(1);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool BlinkEngageOfferFeedEventType::isDidTap() const {
+    return *this == BlinkEngageOfferFeedEventType::didTap;
+  }
+  SWIFT_INLINE_THUNK BlinkEngageOfferFeedEventType BlinkEngageOfferFeedEventType::_impl_viewAll::operator()() const {
+    auto result = BlinkEngageOfferFeedEventType::_make();
+    result._destructiveInjectEnumTag(2);
+    return result;
+  }
+  SWIFT_INLINE_THUNK  bool BlinkEngageOfferFeedEventType::isViewAll() const {
+    return *this == BlinkEngageOfferFeedEventType::viewAll;
+  }
+  SWIFT_INLINE_THUNK swift::Optional<BlinkEngageOfferFeedEventType> BlinkEngageOfferFeedEventType::init(swift::Int rawValue) {
+  return swift::_impl::_impl_Optional<BlinkEngageOfferFeedEventType>::returnNewValue([&](char * _Nonnull result) SWIFT_INLINE_THUNK_ATTRIBUTES {
+    BlinkEngage::_impl::swift_interop_returnDirect_BlinkEngage_uint64_t_0_8_uint8_t_8_9(result, BlinkEngage::_impl::$s11BlinkEngage0aB18OfferFeedEventTypeO8rawValueACSgSi_tcfC(rawValue));
+  });
+  }
+  SWIFT_INLINE_THUNK swift::Int BlinkEngageOfferFeedEventType::getRawValue() const {
+  return BlinkEngage::_impl::$s11BlinkEngage0aB18OfferFeedEventTypeO8rawValueSivg(BlinkEngage::_impl::swift_interop_passDirect_BlinkEngage_uint64_t_0_8(_getOpaquePointer()));
   }
   SWIFT_INLINE_THUNK OfferWallViewType OfferWallViewType::_impl_all::operator()() const {
     auto result = OfferWallViewType::_make();

@@ -297,6 +297,49 @@ import _SwiftConcurrencyShims
   @objc func text(forKey key: BlinkEngage.AppearanceTextKey) -> Swift.String?
   #endif
 }
+@_hasMissingDesignatedInitializers @objc final public class BlinkEngageOfferFeed : ObjectiveC.NSObject {
+  @objc final public let groups: [BlinkEngage.BlinkEngageOfferGroup]
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc final public class BlinkEngageOfferGroup : ObjectiveC.NSObject {
+  @objc final public let identifier: Foundation.NSNumber?
+  @objc final public let title: Swift.String
+  @objc final public let offers: [BlinkEngage.BlinkEngageOffer]
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc final public class BlinkEngageOffer : ObjectiveC.NSObject {
+  @objc final public let identifier: Swift.Int
+  @objc final public let title: Swift.String?
+  @objc final public let rewardValue: Foundation.NSNumber?
+  @objc final public let imageURL: Foundation.URL?
+  @objc final public let eligibleMerchants: [Swift.String]
+  @objc final public let isClipRequired: Swift.Bool
+  @objc final public let isClipped: Swift.Bool
+  @objc final public let minimumQuantity: Foundation.NSNumber?
+  @objc final public let tags: [Swift.String]
+  @objc final public let clipExpirationDate: Foundation.Date?
+  @objc deinit
+}
+@objc public enum BlinkEngageOfferFeedEventType : Swift.Int {
+  case didAppear
+  case didTap
+  case viewAll
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc final public class BlinkEngageOfferFeedEvent : ObjectiveC.NSObject {
+  @objc final public let type: BlinkEngage.BlinkEngageOfferFeedEventType
+  @objc final public let offer: BlinkEngage.BlinkEngageOffer?
+  @objc final public let group: BlinkEngage.BlinkEngageOfferGroup?
+  @objc public init(offer: BlinkEngage.BlinkEngageOffer, type: BlinkEngage.BlinkEngageOfferFeedEventType)
+  @objc public init(group: BlinkEngage.BlinkEngageOfferGroup, type: BlinkEngage.BlinkEngageOfferFeedEventType)
+  @objc deinit
+}
 @objc public enum OfferWallViewType : Swift.Int {
   case all = 0
   case clipped = 1
@@ -448,7 +491,7 @@ public struct RewardCurrencyImageLocations : Swift.OptionSet, Swift.Sendable {
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class BlinkEngageSDK : ObjectiveC.NSObject {
-  @objc(startWithDebugMode:) public static func start(debugMode: Swift.Bool)
+  @_Concurrency.MainActor @objc(startWithDebugMode:) public static func start(debugMode: Swift.Bool)
   @objc public static var shared: BlinkEngage.BlinkEngageSDK {
     @objc get
   }
@@ -466,6 +509,20 @@ extension BlinkEngage.BlinkEngageSDK {
   @objc public static let eventOfferDetailViewed: Swift.String
   @objc public static let eventOfferClipped: Swift.String
   @objc public static let eventMetadataOfferTitle: Swift.String
+}
+extension BlinkEngage.BlinkEngageSDK {
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @objc dynamic public func loadOfferFeed(completion: @escaping (BlinkEngage.BlinkEngageOfferFeed?, (any Swift.Error)?) -> Swift.Void)
+  #endif
+  @_Concurrency.MainActor @objc(reportOfferFeedEvent:) dynamic public func reportOfferFeedEvent(_ event: BlinkEngage.BlinkEngageOfferFeedEvent)
+}
+extension BlinkEngage.BlinkEngageSDK {
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @objc dynamic public func offerDetailsViewController(for offer: BlinkEngage.BlinkEngageOffer) -> UIKit.UIViewController?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @objc dynamic public func offerGroupViewController(for group: BlinkEngage.BlinkEngageOfferGroup) -> UIKit.UIViewController?
+  #endif
 }
 extension BlinkEngage.BlinkEngageSDK {
   #if compiler(>=5.3) && $NonescapableTypes
@@ -503,6 +560,9 @@ extension BlinkEngage.AppearanceTextKey : Swift.RawRepresentable {}
 extension BlinkEngage.AppearanceFontNameKey : Swift.Equatable {}
 extension BlinkEngage.AppearanceFontNameKey : Swift.Hashable {}
 extension BlinkEngage.AppearanceFontNameKey : Swift.RawRepresentable {}
+extension BlinkEngage.BlinkEngageOfferFeedEventType : Swift.Equatable {}
+extension BlinkEngage.BlinkEngageOfferFeedEventType : Swift.Hashable {}
+extension BlinkEngage.BlinkEngageOfferFeedEventType : Swift.RawRepresentable {}
 extension BlinkEngage.OfferWallViewType : Swift.Equatable {}
 extension BlinkEngage.OfferWallViewType : Swift.Hashable {}
 extension BlinkEngage.OfferWallViewType : Swift.RawRepresentable {}
