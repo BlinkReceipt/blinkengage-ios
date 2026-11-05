@@ -10,6 +10,7 @@ import CryptoKit
 import Foundation
 import GoogleMobileAds
 import Network
+import Security
 import Swift
 import UIKit
 import _Concurrency
@@ -60,7 +61,6 @@ import _SwiftConcurrencyShims
   case offerBrandLabel
   case offerDescriptionLabel
   case offerEligibleMerchantsLabel
-  case offerDetailsExpirationLabel
   case offerDetailsClipLabel
   case offerClipButtonIcon
   case offerClipButtonBackground
@@ -68,17 +68,11 @@ import _SwiftConcurrencyShims
   case offerClippedButtonBackground
   case offerClippedToastMessageLabel
   case offerClippedToastMessageBackground
-  case offerDetailsClipRequiredLabel
-  case offerDetailsClipRequiredBackground
   case offerDetailsSectionHeaderTitleLabel
   case offerDetailsSectionHeaderToggleLabel
   case offerDetailsSectionBodyLabel
-  case offerDetailsShortDescription
   case offerDetailsTitleLabel
   case offerDetailsEarnRewardLabel
-  case offerDetailsFinePrintLabel
-  case offerDetailsBuyOptionLabel
-  case offerDetailsBuyOptionBackground
   case offerDetailsTagChipLabel
   case offerDetailsTagChipBorder
   case offerDetailsSectionNumberedListBadgeLabel
@@ -91,11 +85,9 @@ import _SwiftConcurrencyShims
   case storesListItemDefaultIcon
   case storesListItemTitleLabel
   case storesListItemSubtitleLabel
-  case adLoadingLoadingBarLabel
   case adLoadingLoadingBarBackground
   case adLoadingLoadingBarProgress
   case adLoadingDefaultTitleLabel
-  case adLoadingDefaultDescriptionLabel
   case errorModalIconBackground
   case errorModalTitleLabel
   case errorModalDescriptionLabel
@@ -110,13 +102,9 @@ import _SwiftConcurrencyShims
   case postScanFooterBackground
   case postScanMerchantNameLabel
   case postScanTripInfoLabel
-  case postScanNoBoostsLabel
   case postScanSectionHeaderTitleLabel
   case postScanSuccessTitleLabel
   case postScanSuccessDescriptionLabel
-  case postScanBoostTitleLabel
-  case postScanBoostDescriptionLabel
-  case postScanBoostSkipButtonLabel
   case postScanBoostClaimButtonLabel
   case postScanBoostClaimButtonIcon
   case postScanBoostClaimButtonBackground
@@ -157,7 +145,6 @@ import _SwiftConcurrencyShims
   case missedEarningsAlertTitleLabel
   case missedEarningsAlertMessageLabel
   case ugcBarcodeDetectedBorder
-  case ugcBarcodeDetectedIcon
   case ugcNavigationButtonIcon
   case ugcNavigationButtonBackground
   case ugcProductInfoBackground
@@ -179,9 +166,7 @@ import _SwiftConcurrencyShims
   case offerWallFloatingButtonIcon
   case missedEarningsNavigationEditButtonIcon
   case missedEarningsFieldEditIcon
-  case postScanBoostDefaultIcon
   case postScanSuccessIcon
-  case ugcBarcodeDetectedIcon
   case ugcToastMessageWarningIcon
   #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
@@ -210,24 +195,18 @@ import _SwiftConcurrencyShims
   case offerBrandLabel
   case offerDescriptionLabel
   case offerEligibleMerchantsLabel
-  case offerDetailsExpirationLabel
   case offerDetailsClipLabel
   case offerClippedToastMessageLabel
-  case offerDetailsClipRequiredLabel
   case offerDetailsSectionHeaderTitleLabel
   case offerDetailsSectionHeaderToggleLabel
   case offerDetailsSectionBodyLabel
-  case offerDetailsShortDescription
   case offerDetailsTitleLabel
   case offerDetailsEarnRewardLabel
-  case offerDetailsFinePrintLabel
-  case offerDetailsBuyOptionLabel
   case offerDetailsTagChipLabel
   case storesHeaderTitleLabel
   case storesListSectionHeaderLabel
   case storesListItemTitleLabel
   case storesListItemSubtitleLabel
-  case adLoadingLoadingBarLabel
   case adLoadingDefaultTitleLabel
   case adLoadingDefaultDescriptionLabel
   case errorModalTitleLabel
@@ -238,13 +217,9 @@ import _SwiftConcurrencyShims
   case postScanFooterButtonTitle
   case postScanMerchantNameLabel
   case postScanTripInfoLabel
-  case postScanNoBoostsLabel
   case postScanSectionHeaderTitleLabel
   case postScanSuccessTitleLabel
   case postScanSuccessDescriptionLabel
-  case postScanBoostTitleLabel
-  case postScanBoostDescriptionLabel
-  case postScanBoostSkipButtonLabel
   case postScanBoostClaimButtonLabel
   case postScanPurchasePointsLabel
   case postScanInlineProductTaskPointsLabel
@@ -405,6 +380,39 @@ extension BlinkEngage.ReceiptDetailsViewController : UIKit.UITableViewDataSource
   @_Concurrency.MainActor @preconcurrency @objc final public func tableView(_ tableView: UIKit.UITableView, viewForFooterInSection section: Swift.Int) -> UIKit.UIView?
   #endif
 }
+@objc public enum BlinkConsentStatus : Swift.Int {
+  case unknown
+  case optedOut
+  case notOptedOut
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum BlinkRdpOwner : Swift.Int {
+  case publisher
+  case actual
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc final public class BlinkPrivacy : ObjectiveC.NSObject {
+  @objc final public let sellOrShareStatus: BlinkEngage.BlinkConsentStatus
+  @objc final public let personalizationStatus: BlinkEngage.BlinkConsentStatus
+  @objc final public let disclosureVersion: Swift.String?
+  @objc final public let rdpOwner: BlinkEngage.BlinkRdpOwner
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc public init(sellOrShareStatus: BlinkEngage.BlinkConsentStatus, personalizationStatus: BlinkEngage.BlinkConsentStatus, disclosureVersion: Swift.String?, rdpOwner: BlinkEngage.BlinkRdpOwner)
+  #endif
+  @objc deinit
+}
 public struct RewardCurrencyImageLocations : Swift.OptionSet, Swift.Sendable {
   public let rawValue: Swift.Int
   public init(rawValue: Swift.Int)
@@ -491,13 +499,17 @@ public struct RewardCurrencyImageLocations : Swift.OptionSet, Swift.Sendable {
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class BlinkEngageSDK : ObjectiveC.NSObject {
-  @_Concurrency.MainActor @objc(startWithDebugMode:) public static func start(debugMode: Swift.Bool)
+  @_Concurrency.MainActor @objc(startWithDebugMode:privacy:) public static func start(debugMode: Swift.Bool, privacy: BlinkEngage.BlinkPrivacy)
   @objc public static var shared: BlinkEngage.BlinkEngageSDK {
     @objc get
   }
   @objc final public let user: BlinkEngage.BlinkEngageUser
   @objc public var rewardConfig: BlinkEngage.BlinkEngageRewardConfig
   @_Concurrency.MainActor @objc public var appearance: BlinkEngage.Appearance
+  @_Concurrency.MainActor @objc public var privacy: BlinkEngage.BlinkPrivacy {
+    @objc get
+    @objc set
+  }
   @objc public var eventCallback: ((_ eventName: Swift.String, _ metadata: [Swift.String : Any]?) -> Swift.Void)?
   @objc deinit
 }
@@ -566,6 +578,12 @@ extension BlinkEngage.BlinkEngageOfferFeedEventType : Swift.RawRepresentable {}
 extension BlinkEngage.OfferWallViewType : Swift.Equatable {}
 extension BlinkEngage.OfferWallViewType : Swift.Hashable {}
 extension BlinkEngage.OfferWallViewType : Swift.RawRepresentable {}
+extension BlinkEngage.BlinkConsentStatus : Swift.Equatable {}
+extension BlinkEngage.BlinkConsentStatus : Swift.Hashable {}
+extension BlinkEngage.BlinkConsentStatus : Swift.RawRepresentable {}
+extension BlinkEngage.BlinkRdpOwner : Swift.Equatable {}
+extension BlinkEngage.BlinkRdpOwner : Swift.Hashable {}
+extension BlinkEngage.BlinkRdpOwner : Swift.RawRepresentable {}
 extension BlinkEngage.RewardCurrencyCodePosition : Swift.Equatable {}
 extension BlinkEngage.RewardCurrencyCodePosition : Swift.Hashable {}
 extension BlinkEngage.RewardCurrencyCodePosition : Swift.RawRepresentable {}

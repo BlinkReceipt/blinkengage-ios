@@ -1,5 +1,22 @@
 # Change Log
 
+## 1.15.0
+
+### Added
+- **Ad consent** — The SDK now accepts the user's privacy and consent state from your app and applies it to ad serving.
+
+### Changed
+- **Ad-loading appearance** — The ad-loading status text, supporting text, and progress bar now follow your theme's ad-loading colors and fonts. The screen has a dark background, so check any values you return for those keys stay legible.
+
+### Breaking changes
+- **Required privacy at SDK start** — `BlinkEngageSDK.start(debugMode:)` is now `start(debugMode:privacy:)` (`startWithDebugMode:privacy:` from Objective-C) and takes a `BlinkPrivacy`. Assign a new instance to `BlinkEngageSDK.shared.privacy` whenever the user's consent state changes.
+- **Removed theme keys** — Appearance keys for UI the SDK does not render, plus overlapping ad-loading keys, are gone. Themes that reference them no longer compile; delete the cases.
+  - From both `AppearanceColorKey` and `AppearanceFontNameKey`: `postScanNoBoostsLabel`, `postScanBoostTitleLabel`, `postScanBoostDescriptionLabel`, `postScanBoostSkipButtonLabel`, `offerDetailsShortDescription`, `offerDetailsExpirationLabel`, `offerDetailsClipRequiredLabel`, `offerDetailsFinePrintLabel`, `offerDetailsBuyOptionLabel`, `adLoadingLoadingBarLabel`
+  - From `AppearanceColorKey` only: `offerDetailsClipRequiredBackground`, `offerDetailsBuyOptionBackground`, `ugcBarcodeDetectedIcon`, `adLoadingDefaultDescriptionLabel`
+  - From `AppearanceIconKey`: `postScanBoostDefaultIcon`, `ugcBarcodeDetectedIcon`
+  - For ad-loading copy, use `AppearanceColorKey.adLoadingDefaultTitleLabel` with the remaining font keys. The other removed keys have no replacement and change nothing on screen.
+  - Raw values of the remaining cases in these enums shifted, so match cases by name.
+
 ## 1.14.0
 
 ### Added
