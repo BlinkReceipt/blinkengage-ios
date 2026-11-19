@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.15.1
+
+### Fixed
+- **Base scan amount** — The base scan reward your app returns is no longer changed by the SDK. Users see, and the server receives, the amount as given, or as BlinkEngage adjusts it for the receipt. For example, with 1,000 points per dollar, a 25-point reward used to become 30 points; it now stays 25.
+
 ## 1.15.0
 
 ### Added

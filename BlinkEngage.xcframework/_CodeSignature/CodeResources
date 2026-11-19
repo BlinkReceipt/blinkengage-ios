@@ -6,15 +6,15 @@
 	<dict>
 		<key>ios-arm64/BlinkEngage.framework/BlinkEngage</key>
 		<data>
-		h9J8PgNAbLWdnojno/UoGC7fEuw=
+		fDtoIGjW7Y6kAAV/gojZGToPLTA=
 		</data>
 		<key>ios-arm64/BlinkEngage.framework/Headers/BlinkEngage-Swift.h</key>
 		<data>
-		o+K7xrMrQ5NYcF0DuJ6t84WUyaI=
+		LZLDEs24KtfWjHmrVMxhMyAMomg=
 		</data>
 		<key>ios-arm64/BlinkEngage.framework/Info.plist</key>
 		<data>
-		iP62ha4QNUKZWP2iZ5NpWtmPOOw=
+		B/WrlbIgUlojivjfx7heBUqWwEY=
 		</data>
 		<key>ios-arm64/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -26,7 +26,7 @@
 		</data>
 		<key>ios-arm64/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		HhJRaXLBEGPHLLGGx2Ne9VgRMiI=
+		K2n9GKxBbjuRcJjBzEc8Bub/1f4=
 		</data>
 		<key>ios-arm64/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
@@ -254,15 +254,15 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/BlinkEngage</key>
 		<data>
-		kahwX1dN9GDFjxpiEZv+HNw7RiI=
+		0SZJkh8GYFR23q3f77luIkW/XMw=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Headers/BlinkEngage-Swift.h</key>
 		<data>
-		wXeaR0gShH/KVGBTLlmHjatE5t8=
+		FGHoHicYqD6GoILpHl/OHBH7hvk=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Info.plist</key>
 		<data>
-		vzoBop2jEZDmMkcu+DNGne7KayM=
+		izg/4zgMR9NwlO1ohis+ER+X0SI=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -274,7 +274,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		KU1o/n+5jnlD9QPOVh+RW+0iJSI=
+		OnXp+roxkcdNqftCFwu/DwZozaA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
@@ -290,7 +290,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		sgncMqn0lrQGvt+TC4sPUUZ5fhU=
+		DpbGuUtzyX3c0WSCT4mPpKARU1E=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
@@ -298,7 +298,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/_CodeSignature/CodeResources</key>
 		<data>
-		gF0OqTQ8tuHkAD2QlUu4q+yfZXU=
+		mDAbcayGoXrsd6TWLDMkXLN8Xpc=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/btn_tap.png</key>
 		<data>
@@ -527,21 +527,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			/WOzsA2zUOBN7STBBRppASilyc2zgA9bB5UGtfTlLn4=
+			EQzIAJdJSqPrLQX1IM9DM3Jewg8YgjvfC78JuapkQwE=
 			</data>
 		</dict>
 		<key>ios-arm64/BlinkEngage.framework/Headers/BlinkEngage-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			m7Tj9O+SF+fNNTPIB4glhhFDHB5czQHqkqHdlniLAL0=
+			XmyENzPwN+gtlk9AazYsw7KSwkAiZARSfgjlXY4xSRE=
 			</data>
 		</dict>
 		<key>ios-arm64/BlinkEngage.framework/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			3W3fw91fkw+tVcZEMnt3YNdk3ge0Bm+ItNi8aa1odeU=
+			etm9wp6NTb9QDIDB1NoVNwgYRXStoHGoqcCc4ElKeGc=
 			</data>
 		</dict>
 		<key>ios-arm64/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -562,7 +562,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			uqnXVUO8+Ta/JGkJaa1HF3AyBWoNtJwD97h702DxtjQ=
+			kSupgCapkBTiJOLeCCuGweQHhx2laU43Xk0gQ+fghxA=
 			</data>
 		</dict>
 		<key>ios-arm64/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios.swiftinterface</key>
@@ -961,21 +961,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			o3uhcshlHgK11BKlUKLhbRFSl/gA0QX9kVmxUNO6C1A=
+			Q4dgUwWzuHGK1A7zpr3H7Erk3ZsOZSEKn0jw974vi2w=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Headers/BlinkEngage-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			3YZj5pU7g4/JDsmmcUp/p3ezgN+LlPBSZFndFZjzJeY=
+			juyTb7KAXyUhKyHxaKfSURZwuJngkYE/b3PvWnfFS/I=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			nOSzBGs9xzlANjCeR6Nun3g7TTYN9VHxZk0bPd9U6os=
+			5ddoijffrGH0p4eT+jSDwsthSYZQ45Q5jc+q05TyXgE=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -996,7 +996,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			STgIbDh16DmYSZVAtF87ohbmB4HHGjs6mH/f/hqkG8A=
+			SjInxxkGVUgYGtMFyp60rZhj12jv31Xbh5rSlJaMDQY=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
@@ -1024,7 +1024,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			8FAQWO+U5RCW6lrHzlAFaNExmc3+IKet4eVkUkCWKBY=
+			tINOdmWcpJYg3J40xeJlCcEPMnkUg+HFvi+Aq9wVFSI=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/Modules/BlinkEngage.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
@@ -1038,7 +1038,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			JhBUH2DP9SeXUeOksiNNvKYkuqYtyMn4CUTaXymqqWU=
+			T5qrfdA9gK26a6AYGKk/Be/Q9L7o796bRPhYEmnqdNU=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BlinkEngage.framework/btn_tap.png</key>

@@ -995,11 +995,11 @@ SWIFT_CLASS("_TtC11BlinkEngage23BlinkEngageRewardConfig")
 /// <em>Default:</em> <code>0.6</code> (60 %). Clamped to <code>0.4 … 1.0</code> on init.
 /// Applies to all reward types except offer-wall coupons.
 @property (nonatomic, readonly) double userPayoutPercentage;
-/// Precision used to round the converted reward amount before display.
-/// <em>Default:</em> <code>RewardCurrencyRounding.whole</code> (round up to the next whole
-/// unit — appropriate for points, gems, coins, and other integer-only
-/// currencies).
-/// Set to <code>RewardCurrencyRounding.decimal</code> when the reward should display
+/// Rounding for dollar payouts converted into reward currency on offer and boost rows.
+/// <em>Default:</em> <code>RewardCurrencyRounding/whole</code>. Does not apply to the base scan
+/// amount, whether returned from <code>"ScanFinished"</code> (see <code>rewardCallback</code>) or adjusted
+/// by BlinkEngage for the receipt.
+/// Set to <code>RewardCurrencyRounding/decimal</code> when those rewards should display
 /// fractional amounts (e.g. <code>$0.15</code>, <code>€1.20</code>, <code>0.50 credits</code>).
 @property (nonatomic, readonly) enum RewardCurrencyRounding rewardRounding;
 /// Custom reward icon for <code>RewardCurrencyLabelStyle/currencyImage</code> mode.
@@ -1367,21 +1367,24 @@ typedef SWIFT_ENUM(NSInteger, RewardCurrencyMessagingTextStyle, open) {
   RewardCurrencyMessagingTextStyleNoAmount = 2,
 };
 
-/// Precision used when rounding the converted reward amount before display.
+/// Precision used when rounding dollar payouts converted into reward currency for
+/// offers, promos, and boosts before display.
 /// The SDK multiplies a dollar payout by <code>currencyPerDollar</code> and then applies
-/// this rounding strategy to the result.
-/// Pick <code>whole</code> for unit-style currencies (points, gems, coins) where fractional
-/// values don’t make sense. Pick <code>decimal</code> when you need to show fractional
-/// amounts (e.g. <code>$0.15</code>, <code>€1.20</code>, <code>0.50 credits</code>).
+/// this rounding strategy to the result. It does <em>not</em> apply to the base scan amount,
+/// whether your app returns it from <code>"ScanFinished"</code> or BlinkEngage adjusts it for the
+/// receipt; that amount is shown and reported as given.
+/// Pick <code>whole</code> for unit-style currencies (points, gems, coins) on offer and boost
+/// rows. Pick <code>decimal</code> when those rewards should show fractional amounts (e.g.
+/// <code>$0.15</code>, <code>€1.20</code>, <code>0.50 credits</code>).
 typedef SWIFT_ENUM(NSInteger, RewardCurrencyRounding, open) {
 /// Round up to the next whole unit. <code>1.4 → 2</code>, <code>1.6 → 2</code>, <code>0.5 → 1</code>, <code>0.05 → 1</code>.
-/// Default. Use for any currency that is only meaningful as an integer
-/// (points, gems, coins, tokens).
+/// Default for offer and boost conversion. Fractional <code>"ScanFinished"</code> returns
+/// (for example <code>2.5</code> points) remain valid and are displayed without this rounding.
   RewardCurrencyRoundingWhole = 0,
-/// Keep two decimal places, always rendered with two fraction digits.
-/// <code>0.155 → 0.16</code>, <code>2.13 → 2.13</code>, <code>1.5 → 1.50</code>, <code>0 → 0.00</code>.
-/// Use when the reward should display fractional amounts (e.g. <code>$0.15</code>,
-/// <code>€1.20</code>, <code>0.50 credits</code>).
+/// Keep two decimal places when converting dollar payouts for offers and boosts.
+/// Display uses at least two fraction digits (<code>1.5 → 1.50</code>, <code>2 → 2.00</code>).
+/// Use when offer and boost rewards should display fractional amounts (e.g.
+/// <code>$0.15</code>, <code>€1.20</code>, <code>0.50 credits</code>).
   RewardCurrencyRoundingDecimal = 1,
 };
 
@@ -9728,12 +9731,15 @@ inline const constexpr bool isUsableInGenericContext<BlinkEngage::RewardCurrency
 } // namespace swift
 
 namespace BlinkEngage SWIFT_PRIVATE_ATTR SWIFT_SYMBOL_MODULE("BlinkEngage") {
-/// Precision used when rounding the converted reward amount before display.
+/// Precision used when rounding dollar payouts converted into reward currency for
+/// offers, promos, and boosts before display.
 /// The SDK multiplies a dollar payout by <code>currencyPerDollar</code> and then applies
-/// this rounding strategy to the result.
-/// Pick <code>whole</code> for unit-style currencies (points, gems, coins) where fractional
-/// values don’t make sense. Pick <code>decimal</code> when you need to show fractional
-/// amounts (e.g. <code>$0.15</code>, <code>€1.20</code>, <code>0.50 credits</code>).
+/// this rounding strategy to the result. It does <em>not</em> apply to the base scan amount,
+/// whether your app returns it from <code>"ScanFinished"</code> or BlinkEngage adjusts it for the
+/// receipt; that amount is shown and reported as given.
+/// Pick <code>whole</code> for unit-style currencies (points, gems, coins) on offer and boost
+/// rows. Pick <code>decimal</code> when those rewards should show fractional amounts (e.g.
+/// <code>$0.15</code>, <code>€1.20</code>, <code>0.50 credits</code>).
 namespace _impl {
 
 class _impl_RewardCurrencyRounding;
